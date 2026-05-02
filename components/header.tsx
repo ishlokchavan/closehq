@@ -31,21 +31,25 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         scrolled
-          ? 'bg-ink/85 backdrop-blur-xl border-b border-bone/5'
+          ? 'bg-ink/95 backdrop-blur-2xl border-b border-gold/20'
           : 'bg-transparent border-b border-transparent',
       )}
     >
       <div className="container-x flex items-center justify-between h-16 md:h-20">
-        <Logo />
+        <Logo variant={scrolled ? 'light' : 'dark'} />
 
-        <nav className="hidden lg:flex items-center gap-9">
+        <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-bone/70 hover:text-bone transition-colors font-medium"
+              className={cn(
+                'text-sm hover:text-gold transition-colors duration-300 font-medium relative group',
+                scrolled ? 'text-bone/70' : 'text-ink/70'
+              )}
             >
               {link.label}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-gold to-transparent group-hover:w-full transition-all duration-300" />
             </a>
           ))}
         </nav>
@@ -57,7 +61,7 @@ export function Header() {
             rel="noopener noreferrer"
             onClick={() => trackEvent('whatsapp_click', { source: 'header' })}
           >
-            <Button variant="ghost" size="sm">
+            <Button variant={scrolled ? 'ghost' : 'outline'} size="sm">
               WhatsApp
             </Button>
           </a>

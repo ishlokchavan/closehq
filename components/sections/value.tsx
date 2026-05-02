@@ -1,110 +1,152 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { TrendingUp, Banknote, Coins, Zap } from 'lucide-react';
+import { TrendingUp, Banknote, Zap, Shield } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 import { SectionLabel } from '@/components/ui/section-label';
 
 const VALUES = [
   {
     icon: TrendingUp,
-    figure: 'Up to 90%',
+    figure: '90%',
     title: 'Commission to you',
-    body: 'Keep what you earn. Industry-leading splits for top performers — clearly tiered, no surprises.',
+    body: 'Keep what you earn. Industry-leading splits for high performers — no hidden cuts, no desk fees.',
+    accent: 'from-gold',
   },
   {
     icon: Banknote,
-    figure: 'On SPA',
-    title: 'Advance commission',
-    body: 'Get paid as soon as the SPA is signed. No waiting on developer cycles for your cash flow.',
-  },
-  {
-    icon: Coins,
-    figure: 'AED 0',
-    title: 'Monthly fees',
-    body: 'No desk fees, no licensing surcharges, no recurring drag. You only pay when you win.',
+    figure: 'Instant',
+    title: 'Advance on SPA',
+    body: 'Get paid immediately when the SPA is signed. No waiting on developer cycles or escrow delays.',
+    accent: 'from-blue-400',
   },
   {
     icon: Zap,
     figure: '~48h',
     title: 'Fast payouts',
-    body: 'Cleared SPAs trigger fast settlements. Typical turnaround is under two business days.',
+    body: 'Cleared SPAs trigger instant settlements. Typical turnaround under two business days.',
+    accent: 'from-emerald-400',
+  },
+  {
+    icon: Shield,
+    figure: 'AED 0',
+    title: 'Monthly fees',
+    body: 'Zero desk fees, zero licensing charges, zero monthly drag. You only pay when you win.',
+    accent: 'from-rose-400',
   },
 ];
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 export function Value() {
   return (
     <section
       id="commission"
-      className="relative bg-bone-100 text-ink py-24 md:py-32"
+      className="relative bg-gradient-to-b from-bone-100 to-white text-ink py-28 md:py-40 overflow-hidden"
     >
-      <div className="container-x">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-16 md:mb-20">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-gold/5 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-gold/3 via-transparent to-transparent rounded-full blur-3xl" />
+      </div>
+
+      <div className="container-x relative">
+        {/* Header */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-20 md:mb-24">
           <div className="lg:col-span-5">
             <Reveal>
               <SectionLabel
                 number="01"
-                label="The economics"
+                label="Why we win"
                 variant="light"
               />
             </Reveal>
             <Reveal delay={0.1}>
-              <h2 className="display-md mt-6 text-balance">
-                The math of a
-                <br />
-                <span className="italic font-normal text-gold-dark">
-                  fairer brokerage.
+              <h2 className="display-md mt-8 text-balance text-ink">
+                <span className="block">Economics that</span>
+                <span className="block bg-gradient-to-r from-gold to-gold/70 bg-clip-text text-transparent">
+                  actually favor you
                 </span>
               </h2>
             </Reveal>
           </div>
-          <div className="lg:col-span-6 lg:col-start-7 lg:pt-4">
+          <div className="lg:col-span-7 flex items-end">
             <Reveal delay={0.2}>
-              <p className="text-lg text-ink/70 leading-relaxed text-pretty">
-                Traditional brokerages were built when agents needed an office,
-                a license, and a phone book. None of that is true anymore. We
-                strip the overhead and pay it back to the people doing the work
-                — you.
+              <p className="text-lg text-ink/70 leading-relaxed max-w-lg">
+                Traditional brokerages were built when agents needed offices, licenses, and phone books. We stripped the overhead and passed the savings back to you — the people doing the actual work.
               </p>
             </Reveal>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-ink/10 border border-ink/10">
-          {VALUES.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{
-                duration: 0.7,
-                delay: i * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="group relative bg-bone-100 p-8 md:p-10 hover:bg-bone-200 transition-colors duration-500"
-            >
-              <div className="flex items-start justify-between gap-6">
-                <div>
-                  <div className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50 mb-3">
-                    0{i + 1}
+        {/* Premium value cards grid */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+        >
+          {VALUES.map((value) => {
+            const Icon = value.icon;
+            return (
+              <motion.div
+                key={value.title}
+                variants={item}
+                className="group relative"
+              >
+                {/* Glow background */}
+                <div className={`absolute -inset-px bg-gradient-to-br ${value.accent} to-transparent opacity-0 group-hover:opacity-100 rounded-2xl blur-xl transition-opacity duration-500`} />
+
+                {/* Card */}
+                <div className="relative h-full backdrop-blur-sm bg-white/40 border border-white/60 hover:border-gold/40 rounded-2xl p-8 md:p-10 transition-all duration-500 overflow-hidden">
+                  {/* Inner glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                  <div className="relative space-y-6">
+                    {/* Icon + Figure */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className={`text-5xl md:text-6xl font-display font-light bg-gradient-to-br ${value.accent} to-transparent bg-clip-text text-transparent mb-2`}>
+                          {value.figure}
+                        </div>
+                        <h3 className="text-lg md:text-xl font-medium text-ink group-hover:text-gold transition-colors duration-300">
+                          {value.title}
+                        </h3>
+                      </div>
+                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-gold/10 to-gold/5 group-hover:from-gold/20 group-hover:to-gold/10 border border-gold/20 transition-all duration-300">
+                        <Icon className="h-6 w-6 text-ink/70 group-hover:text-gold transition-colors duration-300" strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm md:text-base text-ink/70 group-hover:text-ink/80 leading-relaxed transition-colors duration-300">
+                      {value.body}
+                    </p>
+
+                    {/* Accent line */}
+                    <div className={`h-px w-0 group-hover:w-12 bg-gradient-to-r ${value.accent} to-transparent transition-all duration-500`} />
                   </div>
-                  <div className="font-display text-4xl md:text-5xl font-light tracking-tighter text-ink mb-2">
-                    {item.figure}
-                  </div>
-                  <h3 className="text-lg font-medium text-ink">{item.title}</h3>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/15 bg-bone-100 group-hover:border-gold group-hover:bg-gold/10 transition-all duration-500">
-                  <item.icon
-                    className="h-5 w-5 text-ink/70 group-hover:text-gold-dark transition-colors duration-500"
-                    strokeWidth={1.5}
-                  />
-                </div>
-              </div>
-              <p className="mt-6 text-ink/60 leading-relaxed">{item.body}</p>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

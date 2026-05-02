@@ -37,7 +37,7 @@ export function How() {
       <div className="container-x relative">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel number="02" label="How it works" />
+            <SectionLabel number="06" label="How it works" />
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="display-md mt-6 text-bone text-balance">

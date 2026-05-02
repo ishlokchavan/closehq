@@ -99,7 +99,7 @@ export function LeadForm() {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <Field
+              <FormField
                 label="Full name"
                 error={errors.name?.message}
                 required
@@ -109,11 +109,11 @@ export function LeadForm() {
                   type="text"
                   autoComplete="name"
                   placeholder="Ahmed Al Mansoori"
-                  className="form-input"
+                  className="w-full h-12 px-4 bg-white/10 border border-ink/20 text-ink placeholder-ink/40 text-sm transition-all focus:outline-none focus:border-gold focus:bg-white/15"
                 />
-              </Field>
+              </FormField>
 
-              <Field
+              <FormField
                 label="Phone (WhatsApp)"
                 error={errors.phone?.message}
                 required
@@ -123,22 +123,22 @@ export function LeadForm() {
                   type="tel"
                   autoComplete="tel"
                   placeholder="+971 50 123 4567"
-                  className="form-input"
+                  className="w-full h-12 px-4 bg-white/10 border border-ink/20 text-ink placeholder-ink/40 text-sm transition-all focus:outline-none focus:border-gold focus:bg-white/15"
                 />
-              </Field>
+              </FormField>
             </div>
 
-            <Field label="Email (optional)" error={errors.email?.message}>
+            <FormField label="Email (optional)" error={errors.email?.message}>
               <input
                 {...register('email')}
                 type="email"
                 autoComplete="email"
                 placeholder="you@example.com"
-                className="form-input"
+                className="w-full h-12 px-4 bg-white/10 border border-ink/20 text-ink placeholder-ink/40 text-sm transition-all focus:outline-none focus:border-gold focus:bg-white/15"
               />
-            </Field>
+            </FormField>
 
-            <Field
+            <FormField
               label="Are you a real estate agent?"
               error={errors.isAgent?.message}
               required
@@ -153,7 +153,7 @@ export function LeadForm() {
                         'flex items-center justify-center h-12 cursor-pointer border text-sm uppercase tracking-[0.18em] font-medium transition-all',
                         selected
                           ? 'bg-gold text-ink border-gold'
-                          : 'bg-transparent text-bone/70 border-bone/15 hover:border-bone/40',
+                          : 'bg-white/10 text-ink/70 border-ink/20 hover:border-ink/40',
                       )}
                     >
                       <input
@@ -167,9 +167,9 @@ export function LeadForm() {
                   );
                 })}
               </div>
-            </Field>
+            </FormField>
 
-            <Field
+            <FormField
               label="Monthly deal volume"
               error={errors.dealSize?.message}
               required
@@ -177,7 +177,7 @@ export function LeadForm() {
               <div className="relative">
                 <select
                   {...register('dealSize')}
-                  className="form-input appearance-none pr-10"
+                  className="w-full h-12 px-4 bg-white/10 border border-ink/20 text-ink text-sm transition-all focus:outline-none focus:border-gold focus:bg-white/15 appearance-none pr-10"
                   defaultValue=""
                 >
                   <option value="" disabled>
@@ -191,12 +191,12 @@ export function LeadForm() {
                 </select>
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-bone/40"
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink/40"
                 >
                   ▾
                 </span>
               </div>
-            </Field>
+            </FormField>
 
             {serverError && (
               <div className="text-sm text-red-400 border border-red-400/30 bg-red-400/5 px-4 py-3">
@@ -229,33 +229,6 @@ export function LeadForm() {
               </p>
             </div>
 
-            <style jsx>{`
-              .form-input {
-                width: 100%;
-                height: 3rem;
-                padding: 0 1rem;
-                background-color: transparent;
-                border: 1px solid rgba(244, 241, 234, 0.15);
-                color: #f4f1ea;
-                font-size: 0.95rem;
-                transition: all 0.2s ease;
-                outline: none;
-              }
-              .form-input::placeholder {
-                color: rgba(244, 241, 234, 0.3);
-              }
-              .form-input:focus {
-                border-color: #c8a862;
-                background-color: rgba(200, 168, 98, 0.04);
-              }
-              select.form-input {
-                color: #f4f1ea;
-              }
-              select.form-input option {
-                background-color: #0a0a0b;
-                color: #f4f1ea;
-              }
-            `}</style>
           </motion.form>
         )}
       </AnimatePresence>
@@ -263,7 +236,7 @@ export function LeadForm() {
   );
 }
 
-function Field({
+function FormField({
   label,
   error,
   required,
@@ -277,7 +250,7 @@ function Field({
   return (
     <div>
       <div className="flex items-baseline justify-between mb-2">
-        <label className="block text-[11px] font-mono uppercase tracking-[0.22em] text-bone/60">
+        <label className="block text-[11px] font-mono uppercase tracking-[0.22em] text-ink/70">
           {label}
           {required && <span className="text-gold ml-1">*</span>}
         </label>

@@ -10,24 +10,21 @@ const PERKS = [
     label: 'Yacht access',
     title: 'Bvlgari, Dubai Harbour, Canal',
     body: 'Take prospects on the water. We coordinate vessel, captain, and concierge for serious viewings.',
-    image:
-      'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1200&q=80&auto=format&fit=crop',
+    image: '/images/perks-yacht.jpg',
     alt: 'Luxury yacht moored in Dubai Harbour at golden hour',
   },
   {
     label: 'Chauffeur fleet',
     title: 'Rolls-Royce & Maybach pickup',
     body: 'Move buyers between off-plan showrooms and finished units in the way they expect to be moved.',
-    image:
-      'https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=1200&q=80&auto=format&fit=crop',
+    image: '/images/perks-car.jpg',
     alt: 'Black luxury sedan parked in front of a Dubai high-rise',
   },
   {
     label: 'Stay & rental support',
     title: 'Furnished holiday homes',
     body: 'Place out-of-town buyers in vetted short-term rentals so they can decide while living the lifestyle.',
-    image:
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80&auto=format&fit=crop',
+    image: '/images/perks-apartment.jpg',
     alt: 'Modern Dubai apartment interior with skyline view',
   },
 ];
@@ -38,7 +35,7 @@ export function Perks() {
       <div className="container-x">
         <div className="max-w-3xl">
           <Reveal>
-            <SectionLabel number="03" label="The closing kit" />
+            <SectionLabel number="08" label="The closing kit" />
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="display-md mt-6 text-bone text-balance">
