@@ -94,7 +94,7 @@ export function Hero() {
               >
                 <span className="block">Keep 90%</span>
                 <span className="block bg-gradient-to-r from-gold via-gold/90 to-gold/70 bg-clip-text text-transparent">
-                  Get paid in 48h
+                  Get paid in 24h
                 </span>
               </motion.h1>
             </motion.div>
@@ -223,7 +223,7 @@ export function Hero() {
                 >
                   {[
                     { value: '90%', label: 'Commission Cap', desc: 'Industry-leading splits' },
-                    { value: '48h', label: 'Fast Payout', desc: 'After SPA signature' },
+                    { value: '24h', label: 'Fast Payout', desc: 'After SPA signature' },
                     { value: 'AED 0', label: 'Monthly Fees', desc: 'Zero desk charges' },
                   ].map((stat) => (
                     <motion.div key={stat.label} variants={item} className="group">

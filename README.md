@@ -152,7 +152,7 @@ Motion: `cubic-bezier(0.22, 1, 0.36, 1)` (a refined ease-out) used universally f
 
 A few things that aren't obvious from looking at the code:
 
-1. **Hero KPI rail.** Three numbers (`90%`, `48h`, `0`) sit beside the headline. People scan numbers before they read prose; this delivers the value prop pre-attentively.
+1. **Hero KPI rail.** Three numbers (`90%`, `24h`, `0`) sit beside the headline. People scan numbers before they read prose; this delivers the value prop pre-attentively.
 2. **Dual primary CTA.** "Start closing deals" (form) **+** "Speak on WhatsApp" (chat). In the GCC, WhatsApp converts higher than form-fill for many buyers — we offer both, and track each separately.
 3. **Form is short by design.** 5 fields, with phone (not email) required. Email is optional — Dubai agents respond on WhatsApp, not email. Lower friction = higher submit rate.
 4. **Honeypot field.** A hidden `website` input that bots fill but humans never see. Pretends to succeed for bots, never reaches the webhook.

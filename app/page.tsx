@@ -2,6 +2,7 @@ import { Header } from '@/components/header';
 import { Hero } from '@/components/sections/hero';
 import { Trust } from '@/components/sections/trust';
 import { Value } from '@/components/sections/value';
+import { AgentTypes } from '@/components/sections/agent-types';
 import { Calculator } from '@/components/sections/calculator';
 import { Gallery } from '@/components/sections/gallery';
 import { How } from '@/components/sections/how';
@@ -22,6 +23,7 @@ export default function HomePage() {
         <Hero />
         <Trust />
         <Value />
+        <AgentTypes />
         <Calculator />
         <Gallery />
         <How />

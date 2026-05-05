@@ -7,7 +7,8 @@ import { SectionLabel } from '@/components/ui/section-label';
 
 const GALLERY_ITEMS = [
   {
-    src: '/images/gallery-premium-development.jpg',
+    // src: '/images/gallery-premium-development.jpg',
+    src: '/images/gallery-premium_apt.jpg',
     alt: 'Modern luxury property development',
     title: 'Premium Developments',
     category: 'Off-Plan',

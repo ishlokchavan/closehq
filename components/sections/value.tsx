@@ -22,7 +22,7 @@ const VALUES = [
   },
   {
     icon: Zap,
-    figure: '~48h',
+    figure: '~24h',
     title: 'Fast payouts',
     body: 'Cleared SPAs trigger instant settlements. Typical turnaround under two business days.',
     accent: 'from-emerald-400',
