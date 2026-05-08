@@ -5,15 +5,15 @@ import { Check, ChevronRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const OFFPLAN_BENEFITS = [
-  'Instant SPA advances',
-  '90% split',
+  'Paid the day buyer signs',
+  'Up to 100% commission',
   'Developer access',
-  'Early deal priority',
+  'Early launch priority',
 ];
 
 const SECONDARY_BENEFITS = [
-  '90% split',
-  'Fast payouts (~24h)',
+  'Up to 100% commission',
+  'Paid in 24 hours',
   'Yacht, car & rentals',
   'No capital required',
 ];
@@ -35,7 +35,7 @@ function PathCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="card-surface p-10 md:p-14 flex flex-col"
+      className="card-surface p-8 sm:p-10 md:p-12 lg:p-14 flex flex-col"
     >
       <p className="text-base font-medium text-graphite tracking-tight">{eyebrow}</p>
       <h3 className="display-md mt-3 mb-8">{title}</h3>
@@ -59,12 +59,12 @@ function PathCard({
 
 export function AgentTypes() {
   return (
-    <section className="bg-mist py-24 md:py-32">
+    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Off-plan or secondary. Both pay 90%.
+              Off-plan or secondary. Same 100%.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>

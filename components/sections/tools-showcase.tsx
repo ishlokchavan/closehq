@@ -38,7 +38,7 @@ const item = {
 
 export function ToolsShowcase() {
   return (
-    <section className="bg-paper py-24 md:py-32">
+    <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
@@ -76,7 +76,7 @@ export function ToolsShowcase() {
                   className="object-cover"
                 />
               </div>
-              <div className="p-8 md:p-10">
+              <div className="p-6 sm:p-8 md:p-10">
                 <h3 className="display-sm">{tool.title}</h3>
                 <p
                   className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"

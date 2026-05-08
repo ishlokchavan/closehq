@@ -24,7 +24,7 @@ const item = {
 
 export function Gallery() {
   return (
-    <section className="bg-mist py-24 md:py-32">
+    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
           <Reveal>

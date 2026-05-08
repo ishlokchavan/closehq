@@ -30,16 +30,16 @@ const PERKS = [
 
 export function Perks() {
   return (
-    <section id="perks" className="bg-ink text-white py-24 md:py-32">
+    <section id="perks" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
-            <h2 className="display-lg text-balance text-white">
+            <h2 className="display-lg text-balance">
               Tools to close at this level.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="subhead mt-6 max-w-2xl text-white/70">
+            <p className="subhead mt-6 max-w-2xl">
               Dubai buyers expect an experience, not just a viewing. Our agents get the same arsenal a top-tier brokerage would charge you for — included.
             </p>
           </Reveal>
@@ -54,7 +54,7 @@ export function Perks() {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="relative aspect-[4/5] rounded-apple overflow-hidden bg-ink-800">
+              <div className="relative aspect-[4/5] rounded-apple overflow-hidden bg-mist">
                 <Image
                   src={perk.image}
                   alt={perk.alt}
@@ -67,12 +67,12 @@ export function Perks() {
                 />
               </div>
               <figcaption className="mt-5">
-                <p className="text-sm font-medium text-white/60 tracking-tight">
+                <p className="text-sm font-medium text-graphite tracking-tight">
                   {perk.label}
                 </p>
-                <p className="display-sm mt-1 text-white">{perk.title}</p>
+                <p className="display-sm mt-1">{perk.title}</p>
                 <p
-                  className="mt-3 text-[17px] text-white/70 leading-[1.5]"
+                  className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
                   style={{ letterSpacing: '-0.012em' }}
                 >
                   {perk.body}

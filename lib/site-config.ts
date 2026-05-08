@@ -1,13 +1,13 @@
 export const siteConfig = {
-  name: 'CloseHQ',
-  legalName: 'CloseHQ Real Estate Platform',
+  name: 'iClose',
+  legalName: 'iClose Real Estate Platform',
   description:
-    'Close Dubai property deals on your terms. Up to 90% commission, advance on SPA, and no monthly fees — for freelance agents and connectors.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://closehq.ae',
+    'Close Dubai property deals on your terms. Earn up to 100% commission, paid within 24 hours, and stay completely anonymous — built for freelance agents and connectors.',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://iclose.ae',
   ogImage: '/og-image.jpg',
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '971501234567',
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'deals@closehq.ae',
-  whatsappMessage: 'Hi, I want to start closing deals with your platform',
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'deals@iclose.ae',
+  whatsappMessage: 'Hi, I want to start closing deals with iClose',
   address: {
     locality: 'Dubai',
     country: 'AE',
@@ -20,6 +20,7 @@ export const siteConfig = {
     'real estate platform Dubai',
     'broker license free Dubai',
     'property agent Dubai commission',
+    'iClose Dubai',
   ],
 } as const;
 

@@ -11,9 +11,18 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label="CloseHQ — home"
-      className={cn('inline-flex items-baseline gap-0.5', className)}
+      aria-label="iClose — home"
+      className={cn('inline-flex items-baseline', className)}
     >
+      <span
+        className={cn(
+          'font-display text-[22px] font-medium tracking-tight',
+          variant === 'light' ? 'text-white' : 'text-ink',
+        )}
+        style={{ letterSpacing: '-0.02em' }}
+      >
+        i
+      </span>
       <span
         className={cn(
           'font-display text-[22px] font-semibold tracking-tight',
@@ -22,15 +31,6 @@ export function Logo({
         style={{ letterSpacing: '-0.02em' }}
       >
         Close
-      </span>
-      <span
-        className={cn(
-          'font-display text-[22px] font-normal tracking-tight',
-          variant === 'light' ? 'text-white/60' : 'text-graphite',
-        )}
-        style={{ letterSpacing: '-0.02em' }}
-      >
-        HQ
       </span>
     </Link>
   );

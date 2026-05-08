@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 
 const LEGAL = {
   entity: 'Edingrad Realestate L.L.C',
-  brand: 'CloseHQ',
+  brand: 'iClose',
   rera: '33689',
   tradeLicense: '1140509',
   address: 'Churchill Tower, Office 1906, Business Bay, Dubai, UAE',
-  privacyEmail: 'privacy@closehq.ae',
-  contactEmail: 'deals@closehq.ae',
+  privacyEmail: 'privacy@iclose.ae',
+  contactEmail: 'deals@iclose.ae',
   whatsapp: '+971 58 543 0292',
   whatsappLink: 'https://wa.me/971585430292',
   lastUpdated: 'May 7, 2026',
@@ -32,7 +32,7 @@ export default function TermsPage() {
             href="/"
             className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/40 hover:text-ink transition-colors"
           >
-            ← Back to CloseHQ
+            ← Back to iClose
           </Link>
         </div>
       </div>

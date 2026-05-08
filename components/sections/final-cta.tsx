@@ -7,12 +7,12 @@ import { LeadForm } from '@/components/lead-form';
 
 export function FinalCTA() {
   return (
-    <section id="apply" className="bg-mist py-24 md:py-32">
+    <section id="apply" className="bg-mist py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Ready to keep 90%?
+              Ready to keep 100%?
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -32,7 +32,7 @@ export function FinalCTA() {
               className="space-y-3"
             >
               {[
-                'Instant SPA advance',
+                'Paid the moment the buyer signs',
                 'Zero monthly fees',
                 'Dedicated broker support',
                 'RERA & SCA approved',
@@ -65,7 +65,7 @@ export function FinalCTA() {
             transition={{ duration: 0.7 }}
             className="lg:col-span-7"
           >
-            <div className="card-surface p-8 md:p-12">
+            <div className="card-surface p-6 sm:p-8 md:p-12">
               <h3 className="display-sm">Apply now.</h3>
               <p className="mt-2 text-base text-graphite-dark" style={{ letterSpacing: '-0.012em' }}>
                 Tell us a bit about yourself.

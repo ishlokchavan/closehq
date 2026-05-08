@@ -7,7 +7,7 @@ import { trackEvent } from '@/lib/analytics';
 
 export function Referral() {
   return (
-    <section className="bg-mist py-24 md:py-32">
+    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
@@ -48,7 +48,7 @@ export function Referral() {
               </p>
               <div
                 className="font-display font-semibold text-ink leading-none"
-                style={{ fontSize: 'clamp(8rem, 16vw, 14rem)', letterSpacing: '-0.05em' }}
+                style={{ fontSize: 'clamp(5.5rem, 14vw, 13rem)', letterSpacing: '-0.05em' }}
               >
                 5%
               </div>

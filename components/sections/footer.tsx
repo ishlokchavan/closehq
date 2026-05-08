@@ -8,18 +8,19 @@ const SECTIONS = [
   {
     title: 'Platform',
     links: [
-      { href: '#commission', label: 'Commission' },
+      { href: '#plans', label: 'Plans' },
       { href: '#how', label: 'How it works' },
+      { href: '#training', label: 'Training' },
       { href: '#perks', label: 'Perks' },
-      { href: '#vs', label: 'Why CloseHQ' },
+      { href: '#vs', label: 'Why iClose' },
       { href: '#apply', label: 'Apply' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { href: '#commission', label: 'Commission split' },
-      { href: '#how', label: 'Onboarding' },
+      { href: '#commission', label: 'Commission' },
+      { href: '#training', label: 'iClose Academy' },
       { href: '#perks', label: 'Concierge' },
       { href: '/privacy', label: 'Privacy policy' },
       { href: '/terms', label: 'Terms of service' },
@@ -32,7 +33,7 @@ export function Footer() {
 
   return (
     <footer className="bg-mist border-t border-hairline">
-      <div className="container-wide pt-16 md:pt-20 pb-8">
+      <div className="container-wide pt-12 sm:pt-14 md:pt-20 pb-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
           <div className="col-span-2">
             <Logo variant="dark" />

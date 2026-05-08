@@ -7,12 +7,12 @@ const TESTIMONIALS = [
   {
     initials: 'A.M.',
     location: 'Off-Plan Specialist',
-    quote: 'Switched six months ago. Earnings nearly doubled. The 90% split is game-changing.',
+    quote: 'Switched six months ago. Earnings nearly doubled. Keeping the full commission is game-changing.',
   },
   {
     initials: 'F.A.',
     location: 'Independent Broker',
-    quote: 'No desk fees. Instant SPA advances. This is what brokers in Dubai have been waiting for.',
+    quote: 'No desk fees. Paid the moment the buyer signs. This is what brokers in Dubai have been waiting for.',
   },
   {
     initials: 'M.H.',
@@ -32,7 +32,7 @@ const item = {
 
 export function Testimonials() {
   return (
-    <section className="bg-paper py-24 md:py-32">
+    <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
@@ -58,7 +58,7 @@ export function Testimonials() {
             <motion.figure
               key={t.initials}
               variants={item}
-              className="card-mist p-10 md:p-12 flex flex-col"
+              className="card-mist p-8 sm:p-10 md:p-12 flex flex-col"
             >
               <blockquote
                 className="display-sm text-ink leading-[1.25] text-balance"

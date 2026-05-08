@@ -5,24 +5,24 @@ import { Reveal } from '@/components/ui/reveal';
 
 const VALUES = [
   {
-    figure: '90%',
+    figure: 'Up to 100%.',
     title: 'Commission to you.',
-    body: 'Industry-leading splits for high performers. No hidden cuts, no desk fees, no surprises at month-end.',
+    body: 'Industry-leading splits, all the way to a true 100% on Atelier. No hidden cuts, no surprises at month-end.',
   },
   {
-    figure: 'Instant.',
-    title: 'Advance on SPA.',
-    body: 'Get paid the moment the SPA is signed. No waiting on developer cycles or escrow delays.',
+    figure: '24 hours.',
+    title: 'Paid when buyer signs.',
+    body: 'The moment the buyer commits, your commission lands. Same-day settlement, up to 90/10 advance.',
   },
   {
-    figure: '24h.',
-    title: 'Fast payouts.',
-    body: 'Cleared SPAs trigger same-day settlement. Typical turnaround under two business days.',
+    figure: 'Anonymous.',
+    title: 'Always private.',
+    body: 'Your name, your buyers, and your pipeline are never visible to anyone outside the desk. Ever.',
   },
   {
     figure: 'AED 0.',
-    title: 'Monthly fees.',
-    body: 'Zero desk fees, zero licensing charges, zero monthly drag. You only pay when you win.',
+    title: 'Free to start.',
+    body: 'Test the platform on the Starter tier with zero monthly cost. Upgrade only when you’re closing.',
   },
 ];
 
@@ -37,7 +37,7 @@ const item = {
 
 export function Value() {
   return (
-    <section id="commission" className="bg-paper py-24 md:py-32">
+    <section id="commission" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
@@ -63,7 +63,7 @@ export function Value() {
             <motion.div
               key={value.title}
               variants={item}
-              className="card-mist p-10 md:p-12"
+              className="card-mist p-8 sm:p-10 md:p-12"
             >
               <div className="display-md text-ink mb-5">{value.figure}</div>
               <h3 className="display-sm mb-3">{value.title}</h3>

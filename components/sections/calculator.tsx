@@ -14,7 +14,7 @@ export function Calculator() {
   const calculations = useMemo(() => {
     const grossCommission = (unitPrice * commissionRate) / 100;
     const theirPayout = (grossCommission * theirSplit) / 100;
-    const closeHQPayout = grossCommission * 0.9;
+    const closeHQPayout = grossCommission;
     const youLose = closeHQPayout - theirPayout;
     return { grossCommission, theirPayout, closeHQPayout, youLose };
   }, [unitPrice, commissionRate, theirSplit]);
@@ -28,7 +28,7 @@ export function Calculator() {
     }).format(value);
 
   return (
-    <section className="bg-paper py-24 md:py-32">
+    <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
         <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
           <Reveal>
@@ -43,8 +43,8 @@ export function Calculator() {
           </Reveal>
         </div>
 
-        <div className="card-mist p-8 md:p-14">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="card-mist p-5 sm:p-8 md:p-12 lg:p-14">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Inputs */}
             <div className="space-y-7">
               <Field label="Unit price (AED)">
@@ -93,7 +93,7 @@ export function Calculator() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="card-surface p-8 md:p-10 flex flex-col"
+              className="card-surface p-6 sm:p-8 md:p-10 flex flex-col"
             >
               <p className="text-sm text-graphite font-medium tracking-tight mb-2">
                 Gross commission
@@ -105,7 +105,7 @@ export function Calculator() {
               <div className="hairline my-7" />
 
               <Row label={`Your payout (${theirSplit}%)`} value={formatAED(calculations.theirPayout)} muted />
-              <Row label="On CloseHQ (90%)" value={formatAED(calculations.closeHQPayout)} />
+              <Row label="On iClose Pro Max (100%)" value={formatAED(calculations.closeHQPayout)} />
 
               <div className="hairline my-7" />
 

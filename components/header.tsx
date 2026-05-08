@@ -9,10 +9,11 @@ import { whatsappLink } from '@/lib/site-config';
 import { trackEvent } from '@/lib/analytics';
 
 const navLinks = [
-  { href: '#commission', label: 'Commission' },
+  { href: '#plans', label: 'Plans' },
   { href: '#how', label: 'How it works' },
+  { href: '#training', label: 'Training' },
   { href: '#perks', label: 'Perks' },
-  { href: '#vs', label: 'Why CloseHQ' },
+  { href: '#vs', label: 'Why iClose' },
 ];
 
 export function Header() {
@@ -28,7 +29,7 @@ export function Header() {
       <div className="container-wide flex items-center justify-between h-12">
         <Logo variant="dark" />
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-7 xl:gap-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -75,7 +76,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-paper border-t border-hairline"
+            className="md:hidden bg-paper border-t border-hairline max-h-[calc(100svh-3rem)] overflow-y-auto"
           >
             <div className="container-wide py-4 flex flex-col">
               {navLinks.map((link) => (
@@ -83,13 +84,13 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="py-3 border-b border-hairline/60 text-ink text-[17px] font-normal"
+                  className="py-4 border-b border-hairline/60 text-ink text-[17px] font-normal"
                   style={{ letterSpacing: '-0.012em' }}
                 >
                   {link.label}
                 </a>
               ))}
-              <div className="flex flex-col gap-2 pt-5">
+              <div className="flex flex-col gap-2.5 pt-5 pb-2">
                 <a
                   href={whatsappLink()}
                   target="_blank"

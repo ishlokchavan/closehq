@@ -100,7 +100,7 @@ export function LeadForm() {
                   {...register('name')}
                   type="text"
                   autoComplete="name"
-                  placeholder="Ahmed Al Mansoori"
+                  placeholder="Your full name"
                   className={inputClasses}
                 />
               </FormField>
