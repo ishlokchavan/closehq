@@ -52,20 +52,10 @@ export function Hero() {
         />
       </div>
 
-      {/* Floating accent cards - premium Dubai aesthetic */}
-      <div className="hidden lg:block absolute top-20 right-12 opacity-0 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/30 to-gold/10 rounded-2xl blur-2xl" />
-          <div className="relative backdrop-blur-xl bg-white/40 border border-gold/40 rounded-2xl p-5 text-sm font-mono text-gold">
-            Premium Tier
-          </div>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="container-x relative pt-24 md:pt-28 pb-16 min-h-[100svh] flex flex-col">
         {/* Eyebrow with premium badge */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -77,7 +67,7 @@ export function Hero() {
               For Elite Brokers
             </span>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         <div className="flex-1 grid lg:grid-cols-12 gap-8 lg:gap-16 items-center lg:items-end">
           <div className="lg:col-span-7">

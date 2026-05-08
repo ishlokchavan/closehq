@@ -72,7 +72,8 @@ export function Perks() {
                   src={perk.image}
                   alt={perk.alt}
                   fill
-                  loading="lazy"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  fetchPriority={i < 2 ? 'high' : 'auto'}
                   quality={80}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
