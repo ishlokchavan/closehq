@@ -1,35 +1,28 @@
 import { cn } from '@/lib/utils';
 
 interface SectionLabelProps {
-  number: string;
+  number?: string;
   label: string;
   variant?: 'light' | 'dark';
   className?: string;
 }
 
+// Apple's eyebrow: small, sentence case, medium weight, ink or white
 export function SectionLabel({
-  number,
   label,
-  variant = 'dark',
+  variant = 'light',
   className,
 }: SectionLabelProps) {
   return (
     <div
       className={cn(
-        'flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.25em]',
-        variant === 'light' ? 'text-ink/60' : 'text-bone/60',
+        'text-base font-medium tracking-tight',
+        variant === 'light' ? 'text-ink' : 'text-white',
         className,
       )}
+      style={{ letterSpacing: '-0.012em' }}
     >
-      <span className="text-gold">[{number}]</span>
-      <span
-        className={cn(
-          'h-px w-10',
-          variant === 'light' ? 'bg-ink/20' : 'bg-bone/20',
-        )}
-        aria-hidden
-      />
-      <span>{label}</span>
+      {label}
     </div>
   );
 }

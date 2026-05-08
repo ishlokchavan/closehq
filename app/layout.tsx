@@ -1,19 +1,20 @@
 import type { Metadata, Viewport } from 'next';
-import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
 import './globals.css';
 
-const fontDisplay = Fraunces({
+const fontDisplay = Inter_Tight({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['300', '400', '500'],
+  weight: ['200', '300', '400', '500', '600'],
   display: 'swap',
 });
 
 const fontSans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
+  weight: ['300', '400', '500', '600'],
   display: 'swap',
 });
 
@@ -25,7 +26,7 @@ const fontMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0B',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -126,7 +127,7 @@ export default function RootLayout({
       lang="en"
       className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
     >
-      <body className="font-sans bg-ink text-bone antialiased">
+      <body className="font-sans bg-paper text-ink antialiased">
         {children}
 
         {/* Structured Data */}

@@ -8,46 +8,70 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Apple.com-inspired neutrals
         ink: {
-          DEFAULT: '#0A0A0B',
-          900: '#0A0A0B',
-          800: '#121214',
-          700: '#1A1A1D',
-          600: '#26262B',
+          DEFAULT: '#1d1d1f',
+          900: '#1d1d1f',
+          800: '#2c2c2e',
+          700: '#3a3a3c',
         },
+        graphite: {
+          DEFAULT: '#6e6e73',
+          light: '#86868b',
+          dark: '#424245',
+        },
+        hairline: '#d2d2d7',
+        mist: '#f5f5f7',
+        fog: '#fbfbfd',
+        paper: '#ffffff',
+        accent: {
+          DEFAULT: '#0071e3',
+          hover: '#0077ed',
+          dark: '#0058a3',
+        },
+
+        // Legacy aliases so existing className strings don't break
         bone: {
-          DEFAULT: '#F4F1EA',
-          100: '#FBFAF6',
-          200: '#F4F1EA',
-          300: '#E8E2D5',
+          DEFAULT: '#f5f5f7',
+          100: '#fbfbfd',
+          200: '#f5f5f7',
+          300: '#e8e8ed',
         },
         gold: {
-          DEFAULT: '#C8A862',
-          light: '#D9BD7E',
-          dark: '#9C8245',
-          deep: '#6E5A2D',
+          DEFAULT: '#1d1d1f',
+          light: '#3a3a3c',
+          dark: '#1d1d1f',
+          deep: '#000000',
         },
-        sand: '#B8A582',
+        sand: '#86868b',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'serif'],
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
+        display: ['var(--font-display)', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'SF Pro Text', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'SF Mono', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {
         tightest: '-0.04em',
-        tighter: '-0.025em',
-        widest: '0.25em',
+        tighter: '-0.022em',
+        tight: '-0.015em',
+        widest: '0.18em',
+      },
+      borderRadius: {
+        apple: '18px',
+      },
+      boxShadow: {
+        card: '0 1px 2px rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.04)',
+        'card-hover': '0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08)',
+        elevated: '0 8px 32px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04)',
       },
       animation: {
-        'fade-up': 'fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        'fade-up': 'fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         'fade-in': 'fade-in 1s ease-out forwards',
         marquee: 'marquee 40s linear infinite',
-        shimmer: 'shimmer 3s ease-in-out infinite',
       },
       keyframes: {
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(24px)' },
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         'fade-in': {
@@ -58,16 +82,6 @@ const config: Config = {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
-        shimmer: {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '0.8' },
-        },
-      },
-      backgroundImage: {
-        'gold-gradient':
-          'linear-gradient(135deg, #D9BD7E 0%, #C8A862 50%, #9C8245 100%)',
-        'noise':
-          "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
       },
     },
   },

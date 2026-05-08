@@ -1,9 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Check, Zap } from 'lucide-react';
+import { Check, ChevronRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
-import { SectionLabel } from '@/components/ui/section-label';
 
 const OFFPLAN_BENEFITS = [
   'Instant SPA advances',
@@ -19,181 +18,75 @@ const SECONDARY_BENEFITS = [
   'No capital required',
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
-};
+function PathCard({
+  eyebrow,
+  title,
+  benefits,
+  delay = 0,
+}: {
+  eyebrow: string;
+  title: string;
+  benefits: string[];
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="card-surface p-10 md:p-14 flex flex-col"
+    >
+      <p className="text-base font-medium text-graphite tracking-tight">{eyebrow}</p>
+      <h3 className="display-md mt-3 mb-8">{title}</h3>
 
-const item = {
-  hidden: { opacity: 0, y: 12 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+      <ul className="space-y-4 mb-10">
+        {benefits.map((benefit) => (
+          <li key={benefit} className="flex items-start gap-3 text-[17px] text-ink" style={{ letterSpacing: '-0.012em' }}>
+            <Check className="h-5 w-5 mt-0.5 flex-shrink-0 text-ink" strokeWidth={2} />
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+
+      <a href="#apply" className="applelink mt-auto">
+        Get started
+        <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+      </a>
+    </motion.div>
+  );
+}
 
 export function AgentTypes() {
   return (
-    <section className="relative bg-white py-28 md:py-40 overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-gold/5 via-transparent to-transparent blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-gold/5 via-transparent to-transparent blur-3xl" />
-      </div>
-
-      <div className="container-x relative">
-        {/* Header */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
+    <section className="bg-mist py-24 md:py-32">
+      <div className="container-wide">
+        <div className="max-w-3xl mx-auto text-center mb-14 md:mb-20">
           <Reveal>
-            <SectionLabel number="02" label="Pick your lane" variant="light" />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="display-md mt-8 text-ink text-balance">
-              <span className="block">Off-plan or</span>
-              <span className="block bg-gradient-to-r from-gold via-gold/80 to-gold/60 bg-clip-text text-transparent">
-                secondary market?
-              </span>
+            <h2 className="display-lg text-balance">
+              Off-plan or secondary. Both pay 90%.
             </h2>
           </Reveal>
+          <Reveal delay={0.1}>
+            <p className="subhead mt-6 mx-auto max-w-2xl">
+              Pick the lane that matches how you work today. The economics are identical.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Two column layout */}
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          {/* Offplan card */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7 }}
-            className="group relative"
-          >
-            {/* Glow background */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-gold/30 via-gold/10 to-transparent rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-            {/* Card */}
-            <div className="relative backdrop-blur-xl bg-white/40 border border-gold/30 rounded-3xl p-10 md:p-12 h-full">
-              {/* Header accent */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold/40 via-gold/20 to-transparent rounded-t-3xl" />
-
-              {/* Title */}
-              <h3 className="text-2xl md:text-3xl font-display font-light text-ink mb-1">
-                Off-Plan
-              </h3>
-              <p className="text-sm text-gold mb-8 font-light">
-                Pre-launch properties · Developer networks
-              </p>
-
-              {/* Benefits list */}
-              <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="space-y-4"
-              >
-                {OFFPLAN_BENEFITS.map((benefit) => (
-                  <motion.div
-                    key={benefit}
-                    variants={item}
-                    className="flex items-start gap-3"
-                  >
-                    <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-sm text-ink/80 group-hover:text-ink transition-colors">
-                      {benefit}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* CTA */}
-              <div className="mt-8">
-                <a
-                  href="#apply"
-                  className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-[0.15em] text-gold hover:text-gold/80 transition-colors"
-                >
-                  I'm in
-                  <span>→</span>
-                </a>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Secondary card */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7 }}
-            className="group relative"
-          >
-            {/* Glow background */}
-            <div className="absolute -inset-1 bg-gradient-to-bl from-gold/30 via-gold/10 to-transparent rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-            {/* Card */}
-            <div className="relative backdrop-blur-xl bg-white/40 border border-gold/30 rounded-3xl p-10 md:p-12 h-full">
-              {/* Header accent */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold/40 via-gold/20 to-transparent rounded-t-3xl" />
-
-              {/* Title */}
-              <h3 className="text-2xl md:text-3xl font-display font-light text-ink mb-1">
-                Secondary Market
-              </h3>
-              <p className="text-sm text-gold mb-8 font-light">
-                Resale properties · Quick closings
-              </p>
-
-              {/* Benefits list */}
-              <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="space-y-4"
-              >
-                {SECONDARY_BENEFITS.map((benefit) => (
-                  <motion.div
-                    key={benefit}
-                    variants={item}
-                    className="flex items-start gap-3"
-                  >
-                    <Check className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-sm text-ink/80 group-hover:text-ink transition-colors">
-                      {benefit}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* CTA */}
-              <div className="mt-8">
-                <a
-                  href="#apply"
-                  className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-[0.15em] text-gold hover:text-gold/80 transition-colors"
-                >
-                  I'm in
-                  <span>→</span>
-                </a>
-              </div>
-            </div>
-          </motion.div>
+        <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
+          <PathCard
+            eyebrow="Off-Plan"
+            title="Pre-launch units, developer networks."
+            benefits={OFFPLAN_BENEFITS}
+          />
+          <PathCard
+            eyebrow="Secondary"
+            title="Resale homes, quick closings."
+            benefits={SECONDARY_BENEFITS}
+            delay={0.1}
+          />
         </div>
-
-        {/* Bottom note */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.7 }}
-          className="mt-16 pt-10 border-t border-ink/10 text-center"
-        >
-          <p className="text-xs text-ink/60 font-light">
-            No long-term commitment. Work when you want. Both paths: 90% split, zero fees, closing tools.
-          </p>
-        </motion.div>
       </div>
     </section>
   );

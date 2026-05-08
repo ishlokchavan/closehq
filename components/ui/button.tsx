@@ -1,7 +1,7 @@
 import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
-type ButtonVariant = 'gold' | 'ghost' | 'outline' | 'dark';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'dark' | 'gold' | 'outline';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,30 +10,41 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
 }
 
+// Apple buttons: pill shape, sentence case, no uppercase tracking, subtle hover
 const variantClasses: Record<ButtonVariant, string> = {
-  gold:
-    'bg-gold text-ink hover:bg-gold-light shadow-[0_8px_30px_-8px_rgba(200,168,98,0.5)] hover:shadow-[0_16px_50px_-8px_rgba(200,168,98,0.8)] active:scale-95 hover:scale-105',
+  // Primary — Apple blue pill
+  primary:
+    'bg-accent text-white hover:bg-accent-hover active:bg-accent-dark',
+  // Secondary — soft mist pill
+  secondary:
+    'bg-mist text-ink hover:bg-hairline/60 active:bg-hairline',
+  // Ghost — text-only with underline on hover (Apple "Learn more" style)
   ghost:
-    'bg-transparent text-bone border border-bone/20 hover:border-gold/50 hover:bg-gold/5 hover:text-bone active:scale-95 hover:scale-105',
-  outline:
-    'bg-transparent text-ink border border-ink/20 hover:border-ink/80 hover:bg-ink/5 active:scale-95 hover:scale-105',
+    'bg-transparent text-accent hover:underline underline-offset-2',
+  // Dark — Apple "Buy" black pill
   dark:
-    'bg-ink text-bone hover:bg-ink-700 border border-ink active:scale-95 hover:scale-105',
+    'bg-ink text-white hover:bg-ink-800 active:bg-ink-700',
+  // Outline — hairline border, ink text
+  outline:
+    'bg-transparent text-ink border border-hairline hover:border-ink/50',
+  // Legacy alias — map "gold" to dark/primary so old call sites keep working
+  gold:
+    'bg-ink text-white hover:bg-ink-800 active:bg-ink-700',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-10 px-5 text-xs',
-  md: 'h-12 px-7 text-sm',
-  lg: 'h-14 px-9 text-sm',
+  sm: 'h-8 px-4 text-[13px]',
+  md: 'h-10 px-5 text-[15px]',
+  lg: 'h-12 px-6 text-[17px]',
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'gold', size = 'md', children, ...props }, ref) => {
+  ({ className, variant = 'primary', size = 'md', children, ...props }, ref) => {
     return (
       <button
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center gap-2 font-medium uppercase tracking-[0.18em] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink disabled:opacity-50 disabled:pointer-events-none disabled:scale-100 whitespace-nowrap rounded-lg',
+          'inline-flex items-center justify-center gap-1.5 font-normal rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-40 disabled:pointer-events-none whitespace-nowrap tracking-tight',
           variantClasses[variant],
           sizeClasses[size],
           className,
