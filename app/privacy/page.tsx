@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 };
 
 const LEGAL = {
-  entity: 'Edingrad Realestate L.L.C',
+  entity: '',
   brand: 'iClose',
-  rera: '33689',
-  tradeLicense: '1140509',
-  address: 'Churchill Tower, Office 1906, Business Bay, Dubai, UAE',
+  rera: '',
+  tradeLicense: '',
+  address: '',
   privacyEmail: 'privacy@iclose.ae',
-  whatsapp: '+971 58 543 0292',
-  whatsappLink: 'https://wa.me/971585430292',
+  whatsapp: '',
+  whatsappLink: 'https://wa.me/',
   lastUpdated: 'May 7, 2026',
 };
 
@@ -129,10 +129,10 @@ export default function PrivacyPolicyPage() {
           <Section title="5. Sharing Your Information">
             <p>We do not sell your personal data. We may share your information with:</p>
             <ul>
-              <li>
-                <strong>Edingrad Real Estate LLC</strong> — our parent company, for operational,
+              {/* <li>
+                <strong></strong> — our parent company, for operational,
                 compliance, and financial reporting purposes.
-              </li>
+              </li> */}
               <li>
                 <strong>Developer partners and brokerages</strong> — only as necessary to register a
                 deal, process your commission, or fulfil RERA/DLD disclosure requirements.
@@ -240,19 +240,19 @@ export default function PrivacyPolicyPage() {
                 Operating {LEGAL.brand}
               </div>
               <div className="pt-1">{LEGAL.address}</div>
-              <div>RERA Broker No.: <strong className="text-ink">{LEGAL.rera}</strong></div>
+              {/* <div>RERA Broker No.: <strong className="text-ink">{LEGAL.rera}</strong></div> */}
               <div>
                 Privacy Officer:{' '}
                 <a href={`mailto:${LEGAL.privacyEmail}`} className="text-gold hover:underline">
                   {LEGAL.privacyEmail}
                 </a>
               </div>
-              <div>
+              {/* <div>
                 WhatsApp:{' '}
                 <a href={LEGAL.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
                   {LEGAL.whatsapp}
                 </a>
-              </div>
+              </div> */}
             </address>
             <p className="mt-4">
               If you are unsatisfied with our response, you have the right to lodge a complaint with the
