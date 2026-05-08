@@ -17,7 +17,7 @@ interface Plan {
 
 const PLANS: Plan[] = [
   {
-    name: 'iClose Free',
+    name: 'Plus',
     price: 'Free',
     split: '60 / 40',
     advance: '50 / 50 paid when buyer signs',
@@ -25,24 +25,24 @@ const PLANS: Plan[] = [
     highlights: [
       'Stay completely anonymous',
       'Access to the deal desk',
-      'WhatsApp support',
+      'Email support',
     ],
   },
   {
-    name: 'iClose Plus',
+    name: 'Pro',
     price: 'AED 1,500',
     cadence: '/ month',
     split: '80 / 20',
     advance: '70 / 30 paid when buyer signs',
     emphasis: 'For active brokers closing every month.',
     highlights: [
-      'Everything in Free',
+      'Everything in Plus',
       'iClose Academy training',
       'Priority deal desk',
     ],
   },
   {
-    name: 'iClose Pro',
+    name: 'Pro Max',
     price: 'AED 40,000',
     cadence: '/ year',
     split: '90 / 10',
@@ -52,12 +52,12 @@ const PLANS: Plan[] = [
     highlights: [
       'Labour & visa included',
       'Listings included',
-      'A dedicated coach',
+      'Dedicated relationship manager',
       'iClose Academy + area playbooks',
     ],
   },
   {
-    name: 'iClose Pro Max',
+    name: 'Ultra',
     price: 'AED 100,000',
     cadence: '/ year',
     split: '100 %',
@@ -67,7 +67,7 @@ const PLANS: Plan[] = [
       'Everything done for you',
       'Dedicated account manager',
       'Finance, admin, and invoicing',
-      'Priority coach + concierge',
+      'Priority RM + concierge',
     ],
   },
 ];

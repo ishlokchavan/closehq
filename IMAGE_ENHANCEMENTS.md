@@ -1,7 +1,7 @@
-# CloseHQ Landing Page - Image & Design Enhancements
+# iClose Landing Page - Image & Design Enhancements
 
 ## Overview
-Enhanced the CloseHQ landing page with strategic high-quality imagery inspired by the Dubai Off-Plan Leads design aesthetic. Integrated premium property photography, testimonial visuals, and lifestyle imagery throughout the page to create an aspirational, luxury-focused experience targeting HNW brokers.
+Enhanced the iClose landing page with strategic high-quality imagery inspired by the Dubai Off-Plan Leads design aesthetic. Integrated premium property photography, testimonial visuals, and lifestyle imagery throughout the page to create an aspirational, luxury-focused experience targeting HNW brokers.
 
 ---
 

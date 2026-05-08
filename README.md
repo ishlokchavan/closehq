@@ -1,4 +1,4 @@
-# CloseHQ — Dubai Real Estate Agent Platform
+# iClose — Dubai Real Estate Agent Platform
 
 A high-conversion, SEO-optimized landing page for a Dubai-based real estate agent platform. Built as a performance-first, investor-grade foundation that scales into a full platform (dashboard, listings, login).
 
@@ -70,7 +70,7 @@ Recommended path:
 3. Framework will auto-detect as **Next.js**. Leave defaults.
 4. Under **Environment Variables**, add the keys from `.env.example`. Mark `LEAD_WEBHOOK_URL` as a **Server** variable (not exposed to the browser).
 5. Click **Deploy**.
-6. Add your custom domain (e.g. `closehq.ae`) in **Settings → Domains** and update `NEXT_PUBLIC_SITE_URL` accordingly. Redeploy.
+6. Add your custom domain (e.g. `iclose.ae`) in **Settings → Domains** and update `NEXT_PUBLIC_SITE_URL` accordingly. Redeploy.
 
 CLI alternative:
 
@@ -85,7 +85,7 @@ vercel --prod # promote to production
 ## ✦ Architecture
 
 ```
-closehq/
+iclose/
 ├── app/
 │   ├── api/lead/route.ts      # Edge API: validates + forwards leads
 │   ├── globals.css            # Tailwind + design tokens
@@ -210,4 +210,4 @@ The hero, perks, and final CTA use Unsplash images. Once you have brand-shot pho
 
 ## ✦ License
 
-Proprietary. © CloseHQ.
+Proprietary. © iClose.

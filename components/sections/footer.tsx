@@ -1,8 +1,7 @@
 'use client';
 
 import { Logo } from '@/components/ui/logo';
-import { siteConfig, whatsappLink } from '@/lib/site-config';
-import { trackEvent } from '@/lib/analytics';
+import { siteConfig } from '@/lib/site-config';
 
 const SECTIONS = [
   {
@@ -13,7 +12,7 @@ const SECTIONS = [
       { href: '#training', label: 'Training' },
       { href: '#perks', label: 'Perks' },
       { href: '#vs', label: 'Why iClose' },
-      { href: '#apply', label: 'Apply' },
+      { href: '#apply', label: 'Get started' },
     ],
   },
   {
@@ -77,15 +76,6 @@ export function Footer() {
             © {year} {siteConfig.name}. All rights reserved. Dubai, UAE.
           </div>
           <div className="flex gap-5">
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent('whatsapp_click', { source: 'footer' })}
-              className="hover:text-ink hover:underline underline-offset-2 transition-colors"
-            >
-              WhatsApp
-            </a>
             <a
               href={`mailto:${siteConfig.email}`}
               className="hover:text-ink hover:underline underline-offset-2 transition-colors"

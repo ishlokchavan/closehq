@@ -66,7 +66,7 @@ export function FinalCTA() {
             className="lg:col-span-7"
           >
             <div className="card-surface p-6 sm:p-8 md:p-12">
-              <h3 className="display-sm">Apply now.</h3>
+              <h3 className="display-sm">Get started.</h3>
               <p className="mt-2 text-base text-graphite-dark" style={{ letterSpacing: '-0.012em' }}>
                 Tell us a bit about yourself.
               </p>

@@ -14,9 +14,9 @@ export function Calculator() {
   const calculations = useMemo(() => {
     const grossCommission = (unitPrice * commissionRate) / 100;
     const theirPayout = (grossCommission * theirSplit) / 100;
-    const closeHQPayout = grossCommission;
-    const youLose = closeHQPayout - theirPayout;
-    return { grossCommission, theirPayout, closeHQPayout, youLose };
+    const iclosePayout = grossCommission;
+    const youLose = iclosePayout - theirPayout;
+    return { grossCommission, theirPayout, iclosePayout, youLose };
   }, [unitPrice, commissionRate, theirSplit]);
 
   const formatAED = (value: number) =>
@@ -105,7 +105,7 @@ export function Calculator() {
               <div className="hairline my-7" />
 
               <Row label={`Your payout (${theirSplit}%)`} value={formatAED(calculations.theirPayout)} muted />
-              <Row label="On iClose Pro Max (100%)" value={formatAED(calculations.closeHQPayout)} />
+              <Row label="On iClose Ultra (100%)" value={formatAED(calculations.iclosePayout)} />
 
               <div className="hairline my-7" />
 

@@ -15,7 +15,6 @@ import { Referral } from '@/components/sections/referral';
 import { Comparison } from '@/components/sections/comparison';
 import { FinalCTA } from '@/components/sections/final-cta';
 import { Footer } from '@/components/sections/footer';
-import { WhatsAppFloat } from '@/components/ui/whatsapp-float';
 
 export default function HomePage() {
   return (
@@ -39,7 +38,6 @@ export default function HomePage() {
         <FinalCTA />
       </main>
       <Footer />
-      <WhatsAppFloat />
     </>
   );
 }

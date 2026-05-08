@@ -5,15 +5,16 @@ import { MapPin, UserCheck, Sparkles } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const ACADEMY_TOPICS = [
-  'Area guides — Palm, Downtown, Marina, Hills, Creek',
+  'Area guides — Palm, Downtown, Marina, Hills, Creek, and more',
   'Authority playbooks — own your patch',
   'Live developer briefings & launch calendars',
 ];
 
 const COACH_TOPICS = [
-  'Senior, stable, well-spoken',
-  'Pairs with you long-term — no churn, no carousel',
-  'Pipeline reviews and one-on-one deal coaching',
+  'Sourced from all developers',
+  'Direct line to launch allocations and priority units',
+  'Handles paperwork, NOCs, and developer follow-ups for you',
+  'Stays with you long-term — no churn, no handoffs',
 ];
 
 const REWARDS = [
@@ -29,17 +30,17 @@ export function Training() {
         <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
             <p className="text-base font-medium text-graphite tracking-tight mb-4">
-              Included from iClose Plus
+              Included from Pro
             </p>
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="display-lg text-balance">
-              A school for closers.
+              Built to make you better.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-6 max-w-2xl">
-              Live training, area authority playbooks, and a coach who actually stays. The system that turns a freelance broker into a long-term operator.
+              Live training, area authority playbooks, and a relationship manager pulled from Dubai’s top developers. The infrastructure that turns a freelance broker into a long-term operator.
             </p>
           </Reveal>
         </div>
@@ -55,9 +56,9 @@ export function Training() {
           />
           <TrainingCard
             icon={<UserCheck className="h-5 w-5" strokeWidth={2} />}
-            eyebrow="Your dedicated coach"
-            title="One coach, for the long run."
-            body="A senior, well-spoken professional who doesn’t rotate or churn. They learn your style, your pipeline, and your buyers — so the relationship compounds."
+            eyebrow="Your dedicated relationship manager"
+            title="Direct line to every developer."
+            body="A senior RM hired straight from Dubai’s top developers. They open doors to launch units, push your paperwork through, and handle whatever it takes to get the deal closed."
             topics={COACH_TOPICS}
             featured
             delay={0.08}

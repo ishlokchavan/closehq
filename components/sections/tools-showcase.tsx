@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/reveal';
+import { MobileCarousel } from '@/components/ui/mobile-carousel';
 
 const TOOLS = [
   {
@@ -36,6 +37,32 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
+function ToolCard({ tool }: { tool: (typeof TOOLS)[number] }) {
+  return (
+    <div className="card-mist overflow-hidden h-full flex flex-col">
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <Image
+          src={tool.image}
+          alt={tool.title}
+          fill
+          quality={90}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+        />
+      </div>
+      <div className="p-6 sm:p-8 md:p-10">
+        <h3 className="display-sm">{tool.title}</h3>
+        <p
+          className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
+          style={{ letterSpacing: '-0.012em' }}
+        >
+          {tool.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function ToolsShowcase() {
   return (
     <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
@@ -53,38 +80,27 @@ export function ToolsShowcase() {
           </Reveal>
         </div>
 
+        {/* Mobile: carousel */}
+        <div className="md:hidden">
+          <MobileCarousel
+            ariaLabel="Broker tools"
+            items={TOOLS.map((t) => (
+              <ToolCard key={t.title} tool={t} />
+            ))}
+          />
+        </div>
+
+        {/* Tablet+: grid */}
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+          className="hidden md:grid grid-cols-2 gap-4 md:gap-6"
         >
           {TOOLS.map((tool) => (
-            <motion.div
-              key={tool.title}
-              variants={item}
-              className="card-mist overflow-hidden"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
-                  src={tool.image}
-                  alt={tool.title}
-                  fill
-                  quality={90}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6 sm:p-8 md:p-10">
-                <h3 className="display-sm">{tool.title}</h3>
-                <p
-                  className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
-                  style={{ letterSpacing: '-0.012em' }}
-                >
-                  {tool.description}
-                </p>
-              </div>
+            <motion.div key={tool.title} variants={item}>
+              <ToolCard tool={tool} />
             </motion.div>
           ))}
         </motion.div>

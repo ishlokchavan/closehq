@@ -1,0 +1,74 @@
+'use client';
+
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { cn } from '@/lib/utils';
+
+interface MobileCarouselProps {
+  items: ReactNode[];
+  className?: string;
+  ariaLabel?: string;
+}
+
+/**
+ * Mobile-only horizontal scroll carousel with snap + dot pagination.
+ * Renders as the children list on md+ (parent supplies grid styling there).
+ */
+export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const onScroll = () => {
+      const slideWidth = track.clientWidth;
+      if (slideWidth === 0) return;
+      const idx = Math.round(track.scrollLeft / slideWidth);
+      setActive(Math.max(0, Math.min(items.length - 1, idx)));
+    };
+
+    track.addEventListener('scroll', onScroll, { passive: true });
+    return () => track.removeEventListener('scroll', onScroll);
+  }, [items.length]);
+
+  const scrollTo = (i: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
+  };
+
+  return (
+    <div className={className} aria-label={ariaLabel}>
+      <div
+        ref={trackRef}
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:-mx-6 sm:px-6"
+        style={{ scrollbarWidth: 'none' }}
+      >
+        {items.map((item, i) => (
+          <div
+            key={i}
+            className="snap-center shrink-0 w-full pr-4 last:pr-0"
+            style={{ scrollSnapStop: 'always' }}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 flex items-center justify-center gap-2">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={cn(
+              'h-1.5 rounded-full transition-all duration-300',
+              i === active ? 'w-6 bg-ink' : 'w-1.5 bg-hairline hover:bg-graphite-light',
+            )}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

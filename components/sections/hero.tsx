@@ -4,14 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import { whatsappLink } from '@/lib/site-config';
 import { trackEvent } from '@/lib/analytics';
 
-// Three Dubai-coded shots that cycle: villa, waterfront, skyline
+// Three iconic Dubai shots, fresh from Unsplash + Pexels
 const HERO_IMAGES = [
-  { src: '/images/property-villa.jpg', alt: 'Modern Dubai villa on the Palm' },
-  { src: '/images/property-beachfront.jpg', alt: 'Dubai waterfront residence' },
-  { src: '/images/property-downtown.jpg', alt: 'Dubai skyline with Burj Khalifa' },
+  { src: '/images/hero-burj.jpg', alt: 'Burj Khalifa and Downtown Dubai skyline at sunrise' },
+  { src: '/images/hero-palm.jpg', alt: 'Aerial view of Burj Al Arab and Palm Jumeirah, Dubai' },
+  { src: '/images/hero-night.jpg', alt: 'Dubai Fountain and Downtown Dubai from above at night' },
 ];
 
 export function Hero() {
@@ -57,17 +56,11 @@ export function Hero() {
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
             className="applelink-lg"
           >
-            Apply now
+            Get started
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackEvent('whatsapp_click', { source: 'hero_secondary' })}
-            className="applelink-lg"
-          >
-            Talk to us
+          <a href="#plans" className="applelink-lg">
+            See plans
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </motion.div>
@@ -89,7 +82,7 @@ export function Hero() {
               alt={HERO_IMAGES[index].alt}
               fill
               priority={index === 0}
-              quality={90}
+              quality={85}
               sizes="100vw"
               className="object-cover object-center"
             />

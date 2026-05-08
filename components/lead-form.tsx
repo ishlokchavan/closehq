@@ -72,7 +72,7 @@ export function LeadForm() {
               className="mt-3 text-[17px] text-graphite-dark max-w-md mx-auto leading-[1.5]"
               style={{ letterSpacing: '-0.012em' }}
             >
-              A senior closer from our team will reach out within one business day. Keep an eye on WhatsApp.
+              A senior member of our team will reach out within one business day.
             </p>
           </motion.div>
         ) : (
@@ -105,7 +105,7 @@ export function LeadForm() {
                 />
               </FormField>
 
-              <FormField label="Phone (WhatsApp)" error={errors.phone?.message} required>
+              <FormField label="Phone" error={errors.phone?.message} required>
                 <input
                   {...register('phone')}
                   type="tel"
@@ -194,7 +194,7 @@ export function LeadForm() {
                   </>
                 ) : (
                   <>
-                    Apply to close with us
+                    Get started
                     <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
                   </>
                 )}
