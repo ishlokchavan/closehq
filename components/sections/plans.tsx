@@ -30,8 +30,8 @@ const PLANS: Plan[] = [
   },
   {
     name: 'Pro',
-    price: 'AED 1,500',
-    cadence: '/ month',
+    price: 'AED 1,200',
+    cadence: '/ year',
     split: '80 / 20',
     advance: '70 / 30 paid when buyer signs',
     emphasis: 'For active brokers closing every month.',
