@@ -1,22 +1,27 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { MapPin, Building2, Users, TrendingUp } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const VALUES = [
   {
+    icon: MapPin,
     title: 'Area knowledge.',
     body: "Deep dives into Dubai's most active residential areas — from Marina to Creek Harbour.",
   },
   {
+    icon: Building2,
     title: 'Building profiles.',
     body: 'Unit types, floor plans, price history, and view premiums for every major secondary tower.',
   },
   {
+    icon: Users,
     title: 'Community intelligence.',
     body: 'The demand drivers and buying patterns that turn viewings into signed contracts.',
   },
   {
+    icon: TrendingUp,
     title: 'Cluster mastery.',
     body: 'Spot micro-market moves within communities before clients — or competitors — do.',
   },
@@ -48,14 +53,20 @@ export function Value() {
           viewport={{ once: true, margin: '-80px' }}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          {VALUES.map((v) => (
-            <motion.div key={v.title} variants={item} className="card-mist p-8 sm:p-10">
-              <h3 className="display-sm mb-3">{v.title}</h3>
-              <p className="text-[17px] text-graphite-dark leading-[1.5]" style={{ letterSpacing: '-0.012em' }}>
-                {v.body}
-              </p>
-            </motion.div>
-          ))}
+          {VALUES.map((v) => {
+            const Icon = v.icon;
+            return (
+              <motion.div key={v.title} variants={item} className="card-mist p-8 sm:p-10">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper border border-hairline mb-6">
+                  <Icon className="h-5 w-5 text-ink" strokeWidth={1.5} />
+                </div>
+                <h3 className="display-sm mb-3">{v.title}</h3>
+                <p className="text-[17px] text-graphite-dark leading-[1.5]" style={{ letterSpacing: '-0.012em' }}>
+                  {v.body}
+                </p>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

@@ -6,10 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 
-const navLinks = [
-  { href: '#how', label: 'How it works' },
-  { href: '#learn', label: 'What you learn' },
-  { href: '#faq', label: 'FAQ' },
+const NAV = [
+  { href: '/creators', label: 'For Creators' },
+  { href: '#apply', label: 'For Closers' },
 ];
 
 export function Header() {
@@ -20,10 +19,28 @@ export function Header() {
       <div className="container-wide flex items-center justify-between h-12">
         <Logo variant="dark" />
 
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-2">
+          {NAV.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="px-4 py-1.5 text-[13px] font-normal text-ink/80 hover:text-ink transition-colors rounded-full hover:bg-mist"
+              style={{ letterSpacing: '-0.01em' }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a href="#apply" className="ml-2">
+            <Button variant="primary" size="sm">Get early access</Button>
+          </a>
+        </div>
+
+        {/* Mobile hamburger */}
         <button
           aria-label={open ? 'Close menu' : 'Open menu'}
           onClick={() => setOpen((s) => !s)}
-          className="flex items-center justify-center h-9 w-9 text-ink rounded-full hover:bg-mist transition-colors"
+          className="md:hidden flex items-center justify-center h-9 w-9 text-ink rounded-full hover:bg-mist transition-colors"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -36,10 +53,10 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="bg-paper border-t border-hairline shadow-elevated"
+            className="md:hidden bg-paper border-t border-hairline shadow-elevated"
           >
             <div className="container-wide py-2 flex flex-col">
-              {navLinks.map((link) => (
+              {NAV.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -52,9 +69,7 @@ export function Header() {
               ))}
               <div className="py-4">
                 <a href="#apply" onClick={() => setOpen(false)}>
-                  <Button variant="primary" size="md" className="w-full">
-                    Get early access
-                  </Button>
+                  <Button variant="primary" size="md" className="w-full">Get early access</Button>
                 </a>
               </div>
             </div>

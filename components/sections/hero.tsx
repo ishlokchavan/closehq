@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
-const HERO_IMAGES = [
-  { src: '/images/hero-burj.jpg', alt: 'Downtown Dubai skyline' },
-  { src: '/images/hero-palm.jpg', alt: 'Palm Jumeirah aerial view' },
-  { src: '/images/hero-night.jpg', alt: 'Dubai at night' },
+const AREAS = [
+  { src: '/images/hero-burj.jpg', label: 'Downtown Dubai', sub: 'Burj Khalifa · Opera District' },
+  { src: '/images/hero-palm.jpg', label: 'Palm Jumeirah', sub: 'Palm · JBR · Marina' },
+  { src: '/images/hero-night.jpg', label: 'Dubai Creek', sub: 'Creek Harbour · Ras Al Khor' },
 ];
 
 const STATS = [
@@ -19,16 +18,10 @@ const STATS = [
 ];
 
 export function Hero() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % HERO_IMAGES.length), 5000);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <section className="relative bg-paper pt-12">
-      <div className="container-wide pt-16 sm:pt-20 md:pt-28 pb-8 sm:pb-10 md:pb-14 text-center">
+      {/* Text block */}
+      <div className="container-wide pt-16 sm:pt-20 md:pt-28 pb-10 sm:pb-12 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,43 +62,41 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[2.4/1] overflow-hidden bg-mist">
-        <AnimatePresence mode="sync">
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={HERO_IMAGES[index].src}
-              alt={HERO_IMAGES[index].alt}
-              fill
-              priority={index === 0}
-              quality={85}
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-          {HERO_IMAGES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
-              aria-label={`Image ${i + 1}`}
-              className={
-                'h-1.5 rounded-full transition-all duration-500 ' +
-                (i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/70')
-              }
-            />
+      {/* Area image grid */}
+      <div className="container-wide pb-0">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          {AREAS.map((area, i) => (
+            <motion.div
+              key={area.label}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-apple aspect-[2/3] sm:aspect-[3/4]"
+            >
+              <Image
+                src={area.src}
+                alt={area.label}
+                fill
+                priority={i === 0}
+                quality={80}
+                sizes="(max-width: 768px) 33vw, 400px"
+                className="object-cover object-center scale-[1.02] hover:scale-100 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 md:p-5">
+                <p className="text-white font-medium text-[12px] sm:text-[14px] md:text-[15px] leading-tight" style={{ letterSpacing: '-0.01em' }}>
+                  {area.label}
+                </p>
+                <p className="text-white/60 text-[10px] sm:text-[12px] mt-0.5 hidden sm:block" style={{ letterSpacing: '-0.008em' }}>
+                  {area.sub}
+                </p>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Stat strip */}
       <div className="container-wide py-12 sm:py-14 md:py-20">
         <div className="grid grid-cols-3 divide-x divide-hairline">
           {STATS.map((stat, i) => (
