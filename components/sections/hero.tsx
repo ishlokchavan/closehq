@@ -20,7 +20,6 @@ const STATS = [
 export function Hero() {
   return (
     <section className="relative bg-paper pt-12">
-      {/* Text block */}
       <div className="container-wide pt-16 sm:pt-20 md:pt-28 pb-10 sm:pb-12 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
@@ -38,7 +37,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mt-5 sm:mt-6 subhead text-balance max-w-xl mx-auto px-2"
         >
-          The learning platform for Dubai’s secondary market. Built by specialists, for specialists.
+          Most agents lose deals to specialists. iClose makes you one.
         </motion.p>
 
         <motion.div
@@ -52,7 +51,7 @@ export function Hero() {
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
             className="applelink-lg"
           >
-            Get early access
+            Claim founding access
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
           <a href="#how" className="applelink-lg">
@@ -62,7 +61,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Area image grid */}
       <div className="container-wide pb-0">
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {AREAS.map((area, i) => (
@@ -96,7 +94,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Stat strip */}
       <div className="container-wide py-12 sm:py-14 md:py-20">
         <div className="grid grid-cols-3 divide-x divide-hairline">
           {STATS.map((stat, i) => (

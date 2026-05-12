@@ -8,22 +8,22 @@ const VALUES = [
   {
     icon: MapPin,
     title: 'Area knowledge.',
-    body: "Deep dives into Dubai's most active residential areas — from Marina to Creek Harbour.",
+    body: "Every Dubai residential area, broken down to what drives decisions — demand patterns, price bands, and what actually moves buyers to sign.",
   },
   {
     icon: Building2,
     title: 'Building profiles.',
-    body: 'Unit types, floor plans, price history, and view premiums for every major secondary tower.',
+    body: 'Per-tower data: unit types, floor differentials, view premiums, and price history. Walk into every viewing already knowing what others have to look up.',
   },
   {
     icon: Users,
     title: 'Community intelligence.',
-    body: 'The demand drivers and buying patterns that turn viewings into signed contracts.',
+    body: 'The local dynamics, seasonal patterns, and demand triggers that turn casual viewings into same-day offers.',
   },
   {
     icon: TrendingUp,
     title: 'Cluster mastery.',
-    body: 'Spot micro-market moves within communities before clients — or competitors — do.',
+    body: "Dubai's communities contain micro-markets that move independently. Spot them early. Your clients act on your intelligence — not someone else's.",
   },
 ];
 
@@ -42,7 +42,7 @@ export function Value() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            Everything you need to become the specialist.
+            What separates Dubai's top 10% from everyone else.
           </h2>
         </Reveal>
 

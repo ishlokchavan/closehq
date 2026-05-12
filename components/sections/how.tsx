@@ -9,19 +9,19 @@ const STEPS = [
     number: '1',
     icon: Compass,
     title: 'Choose your focus.',
-    body: 'Pick the areas, buildings, or communities you want to own.',
+    body: 'Pick the areas, buildings, and communities you want to own. Go deep, not wide.',
   },
   {
     number: '2',
     icon: BookOpen,
     title: 'Learn from specialists.',
-    body: 'Video guides and building breakdowns from agents closing deals today.',
+    body: 'Lessons built by agents closing these deals today. Not theory — actual deal intelligence used in the field this week.',
   },
   {
     number: '3',
     icon: Trophy,
     title: 'Close with confidence.',
-    body: 'Walk into every deal knowing more than anyone else in the room.',
+    body: 'Walk into every viewing owning the room. Know the comps, the anomalies, the floor differentials. Charge full fee.',
   },
 ];
 
@@ -31,7 +31,7 @@ export function How() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            From zero to specialist.
+            Three steps to never losing a deal to knowledge again.
           </h2>
         </Reveal>
 

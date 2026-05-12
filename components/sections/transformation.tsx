@@ -5,17 +5,17 @@ import { X, Check } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const BEFORE = [
-  'Guessing when clients ask about specific buildings',
-  'Losing deals to agents who know the area better',
-  "Selling on price because you can't sell on knowledge",
-  'Starting from scratch in every new community',
+  "Stalling when a client asks about a specific tower — and hoping they don't notice",
+  "Watching a deal go to the specialist who knew one thing you didn't",
+  "Cutting your commission because expertise wasn't part of your pitch",
+  'Spending weeks learning a community just to sound credible',
 ];
 
 const AFTER = [
-  'The specialist clients call before anyone else',
-  'Confident answers backed by real building data',
-  'Winning on expertise, not commission discounts',
-  'A reputation that compounds with every deal',
+  'The agent clients WhatsApp first — because you answered before they finished asking',
+  'Winning deals on knowledge that no one else in the room had',
+  'Charging full fee, because your intelligence is the product — not your price',
+  'A specialist reputation that generates referrals while you sleep',
 ];
 
 export function Transformation() {
@@ -24,7 +24,7 @@ export function Transformation() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What changes when you know more.
+            The difference between the agent clients call first and the one they call last.
           </h2>
         </Reveal>
 

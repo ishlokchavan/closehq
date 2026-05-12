@@ -8,23 +8,23 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: "A learning platform for Dubai's secondary real estate market. We turn agents into area specialists through courses, building guides, and content from active Dubai experts.",
+    a: "A specialist learning platform for Dubai's secondary market. Deep, deal-level knowledge — building profiles, area intelligence, community data — from people actively closing deals today. Not generic training.",
   },
   {
     q: 'Who is it for?',
-    a: 'New agents, experienced brokers going deeper, international professionals entering Dubai, and investors who want to buy smarter.',
+    a: "Agents done losing deals to people who know more. New entrants building their foundation. International professionals entering the market. And investors who want to buy with conviction, not guesswork.",
   },
   {
     q: 'When does it launch?',
-    a: "We're accepting early access sign-ups now. Founding members get first access and exclusive pricing when we go live.",
+    a: "We're taking founding member spots now. They come with the lowest price iClose will ever cost and first access to every new market we add.",
   },
   {
     q: 'What does the content look like?',
-    a: 'Video courses, building-by-building guides, area deep-dives, and live sessions from specialists who are actively closing deals.',
+    a: 'Building-by-building guides, area deep-dives, view premium data, price history, and monthly live sessions with active Dubai specialists. Deal intelligence, not classroom theory.',
   },
   {
     q: 'Do I need a real estate license?',
-    a: "No. iClose is for anyone serious about Dubai property — whether you're a licensed agent, an investor, or just getting started.",
+    a: "No. If Dubai real estate matters to you — as an agent, connector, investor, or professional — iClose was built for you.",
   },
 ];
 
@@ -36,7 +36,7 @@ export function FAQ() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            Common questions.
+            Questions worth asking.
           </h2>
         </Reveal>
 
