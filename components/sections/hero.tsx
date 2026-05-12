@@ -6,9 +6,9 @@ import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 const STATS = [
-  { value: '400+', label: 'Properties covered' },
-  { value: '20+', label: 'Specialist instructors' },
-  { value: 'Secondary', label: 'Market focus' },
+  { value: '400+', label: 'Properties profiled' },
+  { value: '20+', label: 'Dubai specialists' },
+  { value: '18+', label: 'Communities covered' },
 ];
 
 export function Hero() {
@@ -19,7 +19,7 @@ export function Hero() {
       <motion.div
         initial={{ scale: 1.06 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
         className="absolute inset-0"
       >
         <Image
@@ -30,7 +30,8 @@ export function Hero() {
           quality={90}
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/75" />
+        {/* Stronger overlay for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
       </motion.div>
 
       {/* Content */}
@@ -44,7 +45,7 @@ export function Hero() {
           className="mb-7 flex justify-center"
         >
           <span
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-[12px] text-white/70"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm text-[12px] text-white/80"
             style={{ letterSpacing: '-0.01em' }}
           >
             Early access open · Dubai’s secondary real estate market
@@ -76,7 +77,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 text-white/65 text-[18px] sm:text-[20px] leading-[1.4] text-balance max-w-lg mx-auto px-2"
+          className="mt-6 text-white/80 text-[18px] sm:text-[20px] leading-[1.45] text-balance max-w-lg mx-auto px-2"
           style={{ letterSpacing: '-0.015em' }}
         >
           Most people exploring this market are still trusting whoever sounds most confident.
@@ -101,7 +102,7 @@ export function Hero() {
           </a>
           <a
             href="#how"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white/90 transition-colors text-[15px]"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors text-[15px]"
             style={{ letterSpacing: '-0.01em' }}
           >
             How it works
@@ -110,12 +111,12 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Stats bar — glass, anchored to bottom of hero */}
+      {/* Stats bar — glass, anchored to bottom */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.7 }}
-        className="relative border-t border-white/10 bg-black/30 backdrop-blur-md"
+        className="relative border-t border-white/10 bg-black/35 backdrop-blur-md"
       >
         <div className="container-wide grid grid-cols-3 divide-x divide-white/10 py-7 sm:py-9">
           {STATS.map((stat) => (

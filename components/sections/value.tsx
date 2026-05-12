@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, Building2, Users, TrendingUp } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
@@ -38,14 +39,36 @@ const item = {
 
 export function Value() {
   return (
-    <section id="learn" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
+    <section id="learn" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
       <div className="container-wide">
-        <Reveal>
-          <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What the most trusted voices on Dubai real estate actually know.
-          </h2>
-        </Reveal>
 
+        {/* Headline left + image right */}
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-16 md:mb-20">
+          <Reveal>
+            <h2 className="display-lg text-balance">
+              What the most trusted voices on Dubai real estate actually know.
+            </h2>
+          </Reveal>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-apple aspect-[4/3]"
+          >
+            <Image
+              src="/images/hero-burj.jpg"
+              alt="Dubai skyline"
+              fill
+              quality={80}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/25 to-transparent" />
+          </motion.div>
+        </div>
+
+        {/* Value cards */}
         <motion.div
           variants={container}
           initial="hidden"

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/reveal';
 
@@ -32,10 +33,22 @@ const item = {
 
 export function Testimonials() {
   return (
-    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
-      <div className="container-wide">
+    <section className="relative bg-neutral-950 py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
+
+      {/* Subtle background texture */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-burj.jpg"
+          alt=""
+          fill
+          className="object-cover object-center opacity-10"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/70 to-neutral-950" />
+      </div>
+
+      <div className="relative container-wide">
         <Reveal>
-          <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
+          <h2 className="display-lg text-white text-balance max-w-xl mb-14 md:mb-16">
             From people who made the shift.
           </h2>
         </Reveal>
@@ -48,15 +61,21 @@ export function Testimonials() {
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
         >
           {TESTIMONIALS.map((t) => (
-            <motion.figure key={t.initials} variants={item} className="card-surface p-8 sm:p-10 flex flex-col">
-              <blockquote className="display-sm text-ink leading-[1.3] text-balance flex-1">
+            <motion.figure
+              key={t.initials}
+              variants={item}
+              className="rounded-apple border border-white/10 bg-white/5 backdrop-blur-sm p-8 sm:p-10 flex flex-col"
+            >
+              <blockquote
+                className="display-sm text-white leading-[1.3] text-balance flex-1"
+              >
                 “{t.quote}”
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">
-                  <span className="text-[12px] font-medium text-ink">{t.initials}</span>
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/10">
+                  <span className="text-[12px] font-medium text-white/60">{t.initials}</span>
                 </div>
-                <span className="text-sm text-graphite-dark tracking-tight">{t.role}</span>
+                <span className="text-sm text-white/40 tracking-tight">{t.role}</span>
               </figcaption>
             </motion.figure>
           ))}
