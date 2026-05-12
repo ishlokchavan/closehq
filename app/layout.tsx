@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'iClose — Up to 100% Commission for Dubai Property Agents',
+    default: 'iClose — Learn Dubai Real Estate from the Specialists',
     template: '%s | iClose',
   },
   description: siteConfig.description,
@@ -47,20 +47,20 @@ export const metadata: Metadata = {
     locale: 'en_AE',
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: 'iClose — Up to 100% Commission for Dubai Property Agents',
+    title: 'iClose — Learn Dubai Real Estate from the Specialists',
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'iClose — Close Dubai property deals on your terms',
+        alt: 'iClose — The Dubai secondary market learning platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'iClose — Up to 100% Commission for Dubai Property Agents',
+    title: 'iClose — Learn Dubai Real Estate from the Specialists',
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -106,8 +106,7 @@ export default function RootLayout({
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      contactType: 'sales',
-      telephone: `+${siteConfig.whatsappNumber}`,
+      contactType: 'customer support',
       email: siteConfig.email,
       areaServed: 'AE',
       availableLanguage: ['English', 'Arabic'],
