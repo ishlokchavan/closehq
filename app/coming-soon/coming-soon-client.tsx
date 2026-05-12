@@ -12,47 +12,52 @@ export default function ComingSoonClient() {
 
   return (
     <>
-      <div className="relative z-10 flex min-h-[calc(100svh-80px)] flex-col items-center justify-center px-6 pb-12 text-center">
+      <div className="relative z-10 flex h-[calc(100svh-72px)] flex-col items-center justify-center px-7 pb-8 text-center">
 
         {/* Badge */}
-        <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/12 px-4 py-1.5 backdrop-blur-sm ring-1 ring-white/20">
+        <div className="mb-7 inline-flex items-center gap-2 rounded-full px-4 py-1.5"
+          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', backdropFilter: 'blur(10px)' }}>
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/70">Coming soon</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase' }}>
+            Coming soon
+          </span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-white font-semibold"
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2.8rem, 9vw, 6.5rem)',
-            lineHeight: '0.93',
-            letterSpacing: '-0.04em',
-            maxWidth: '780px',
-          }}>
+        <h1 style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(2.6rem, 11vw, 5.5rem)',
+          fontWeight: 600,
+          lineHeight: 0.92,
+          letterSpacing: '-0.04em',
+          color: 'white',
+          maxWidth: '640px',
+        }}>
           Real knowledge.<br />
-          <em style={{ fontStyle: 'normal', color: 'rgba(255,255,255,0.4)' }}>Built by insiders.</em>
+          <span style={{ color: 'rgba(255,255,255,0.35)' }}>Built by insiders.</span>
         </h1>
 
-        {/* Sub */}
-        <p className="mt-7 text-white/55 max-w-[360px]"
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
-            lineHeight: '1.6',
-            letterSpacing: '-0.01em',
-          }}>
-          The Dubai real estate education platform — area experts, cluster specialists, 
-          and market insiders sharing what actually works.
+        {/* Subhead */}
+        <p style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
+          lineHeight: 1.65,
+          color: 'rgba(255,255,255,0.45)',
+          maxWidth: '300px',
+          marginTop: '20px',
+        }}>
+          Dubai real estate education. From area experts and market insiders who actually close deals.
         </p>
 
         {/* Success */}
         {submitted && (
-          <div className="mt-10 flex items-center gap-3 rounded-2xl bg-white/10 px-6 py-4 ring-1 ring-white/20 backdrop-blur-sm">
-            <span className="text-xl">✓</span>
+          <div className="mt-10 flex items-center gap-3 rounded-2xl px-5 py-3.5"
+            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}>
+            <span style={{ fontSize: '18px' }}>✓</span>
             <div className="text-left">
-              <p className="text-[14px] font-semibold text-white" style={{ fontFamily: 'var(--font-sans)' }}>You&apos;re on the list</p>
-              <p className="text-[13px] text-white/50" style={{ fontFamily: 'var(--font-sans)' }}>
-                {submitted === 'educator' ? "We'll reach out to build your playbook." : "We'll notify you when access opens."}
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600, color: 'white' }}>You&apos;re on the list</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>
+                {submitted === 'educator' ? "We'll be in touch to build your playbook." : "We'll notify you when access opens."}
               </p>
             </div>
           </div>
@@ -60,35 +65,47 @@ export default function ComingSoonClient() {
 
         {/* CTAs */}
         {!submitted && (
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <button onClick={() => setModal('educator')}
-              className="rounded-full bg-white px-8 py-3 text-[14px] font-semibold text-black transition-all hover:bg-white/90 active:scale-[0.98]"
-              style={{ fontFamily: 'var(--font-sans)' }}>
+          <div className="mt-9 flex flex-col items-center gap-3 w-full max-w-[260px]">
+            <button
+              onClick={() => setModal('educator')}
+              className="w-full rounded-full py-3.5 transition-all active:scale-[0.97]"
+              style={{
+                background: 'white',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: '#0a0a0a',
+                letterSpacing: '-0.01em',
+              }}>
               Become an Educator
             </button>
-            <button onClick={() => setModal('learner')}
-              className="rounded-full bg-white/12 px-8 py-3 text-[14px] font-semibold text-white ring-1 ring-white/25 backdrop-blur-sm transition-all hover:bg-white/20 active:scale-[0.98]"
-              style={{ fontFamily: 'var(--font-sans)' }}>
+            <button
+              onClick={() => setModal('learner')}
+              className="w-full rounded-full py-3.5 transition-all active:scale-[0.97]"
+              style={{
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                backdropFilter: 'blur(8px)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: 'white',
+                letterSpacing: '-0.01em',
+              }}>
               Get Early Access
             </button>
           </div>
         )}
 
-        {/* Minimal value strip */}
-        {!submitted && (
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {[
-              { label: 'Area & building guides', icon: '🗺️' },
-              { label: 'We create the content', icon: '✍️' },
-              { label: 'Expert network access', icon: '🤝' },
-            ].map(item => (
-              <div key={item.label} className="flex items-center gap-2">
-                <span className="text-base">{item.icon}</span>
-                <span className="text-[13px] text-white/45" style={{ fontFamily: 'var(--font-sans)' }}>{item.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Footer strip */}
+        <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-6 px-6">
+          {['Area & cluster guides', 'We create the content', 'Expert network'].map((item, i) => (
+            <span key={item} style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.01em' }}>
+              {item}
+              {i < 2 && <span style={{ margin: '0 0 0 6px', color: 'rgba(255,255,255,0.15)' }}>·</span>}
+            </span>
+          ))}
+        </div>
       </div>
 
       {modal === 'educator' && (

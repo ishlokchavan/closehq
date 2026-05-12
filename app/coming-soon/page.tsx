@@ -4,49 +4,44 @@ import ComingSoonClient from './coming-soon-client'
 
 export const metadata: Metadata = {
   title: 'iClose Academy — Coming Soon',
-  description:
-    'A new kind of real estate education platform. Built by Dubai market insiders, for agents ready to scale.',
-  openGraph: {
-    title: 'iClose Academy — Coming Soon',
-    description: 'Built by Dubai market insiders, for agents ready to scale.',
-    images: ['/images/hero-burj.jpg'],
-  },
+  description: 'A new kind of real estate education platform. Built by Dubai market insiders.',
 }
 
 export default function ComingSoonPage() {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-ink">
-      {/* Full-bleed background */}
+    <main className="relative h-[100svh] w-full overflow-hidden" style={{ background: '#0a0a0a' }}>
+      {/* Background image — darker, blurred edges */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-night.jpg"
-          alt="Dubai skyline at night"
+          src="/images/hero-burj.jpg"
+          alt="Dubai"
           fill
           priority
-          quality={90}
-          className="object-cover object-center"
+          quality={85}
+          className="object-cover object-center opacity-35"
           sizes="100vw"
         />
-        {/* Dark gradient overlay — heavier at bottom so text pops */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/50 to-ink/90" />
-        {/* Subtle noise texture for depth */}
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+        {/* Vignette — dark edges, lighter centre */}
+        <div className="absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.85) 100%)' }} />
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-48"
+          style={{ background: 'linear-gradient(to bottom, transparent, #0a0a0a)' }} />
       </div>
 
       {/* Logo */}
-      <div className="relative z-10 flex items-center justify-between px-6 py-8 sm:px-10">
+      <div className="relative z-10 px-7 pt-8">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
-            <span className="font-display text-[13px] font-semibold text-white">iC</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-[10px]"
+            style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.15)' }}>
+            <span style={{ fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: 600, color: 'white' }}>iC</span>
           </div>
-          <span className="font-display text-[16px] font-semibold tracking-tight text-white">
-            iClose <span className="text-white/50 font-normal">Academy</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '16px', fontWeight: 600, color: 'white', letterSpacing: '-0.02em' }}>
+            iClose <span style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 400 }}>Academy</span>
           </span>
         </div>
       </div>
 
-      {/* Main content */}
       <ComingSoonClient />
     </main>
   )

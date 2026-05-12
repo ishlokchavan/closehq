@@ -4,31 +4,37 @@ import { useState, useTransition } from 'react'
 import { X, ArrowRight } from 'lucide-react'
 import { submitLearnerInterest } from './actions'
 
-const INTERESTS = [
-  { value: 'area_guides', label: 'Area guides' },
-  { value: 'building_profiles', label: 'Building profiles' },
-  { value: 'off_plan', label: 'Off-plan market' },
-  { value: 'secondary', label: 'Secondary market' },
-  { value: 'legal_finance', label: 'Legal & finance' },
-  { value: 'scale', label: 'Scaling up' },
-]
-
+const INTERESTS = ['Area guides', 'Building profiles', 'Off-plan market', 'Secondary market', 'Legal & finance', 'Scaling up']
 const ROLES = ['New agent', 'Experienced agent', 'Investor', 'Relocating', 'Other']
 
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  background: '#f2f2f2',
+  border: 'none',
+  borderRadius: '12px',
+  padding: '12px 16px',
+  fontFamily: 'var(--font-sans)',
+  fontSize: '14px',
+  color: '#1d1d1f',
+  outline: 'none',
+}
+
 export default function LearnerForm({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
-  const [selected, setSelected] = useState<string[]>([])
+  const [interests, setInterests] = useState<string[]>([])
+  const [role, setRole] = useState('')
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState('')
 
-  function toggle(val: string) {
-    setSelected(prev => prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val])
+  function toggleInterest(val: string) {
+    setInterests(prev => prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val])
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError('')
     const fd = new FormData(e.currentTarget)
-    fd.set('interests', selected.join(','))
+    fd.set('interests', interests.join(','))
+    fd.set('role', role)
     startTransition(async () => {
       const result = await submitLearnerInterest(fd)
       if (result.ok) onSuccess()
@@ -36,73 +42,95 @@ export default function LearnerForm({ onClose, onSuccess }: { onClose: () => voi
     })
   }
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-xl" onClick={onClose} />
+  const chipStyle = (active: boolean): React.CSSProperties => ({
+    padding: '7px 14px', borderRadius: '980px',
+    fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 500,
+    cursor: 'pointer', transition: 'all 0.15s',
+    background: active ? '#1d1d1f' : '#f2f2f2',
+    color: active ? 'white' : '#424245',
+    border: 'none',
+  })
 
-      <div className="relative w-full max-w-[420px] rounded-3xl bg-white/95 backdrop-blur-2xl shadow-2xl border border-black/5 overflow-hidden">
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+      <div onClick={onClose}
+        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }} />
+
+      <div style={{
+        position: 'relative', width: '100%', maxWidth: '400px',
+        background: 'white', borderRadius: '28px',
+        boxShadow: '0 32px 80px rgba(0,0,0,0.3)',
+        padding: '28px',
+        display: 'flex', flexDirection: 'column', gap: '20px',
+      }}>
         {/* Header */}
-        <div className="flex items-start justify-between px-7 pt-7 pb-5">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-black/30 mb-1">Early access</p>
-            <h2 className="text-[22px] font-semibold text-black tracking-tight leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#86868b', marginBottom: '4px' }}>
+              Early access
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 600, color: '#1d1d1f', letterSpacing: '-0.025em', lineHeight: 1.1, margin: 0 }}>
               Learn from insiders.
             </h2>
-            <p className="mt-1 text-[13px] text-black/50 leading-snug">Playbooks built by Dubai's best market experts.</p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: '#86868b', marginTop: '4px', lineHeight: 1.4 }}>
+              Playbooks built by Dubai&apos;s best market experts.
+            </p>
           </div>
-          <button onClick={onClose} className="flex h-7 w-7 items-center justify-center rounded-full bg-black/6 text-black/40 hover:bg-black/10 hover:text-black transition-all ml-3 shrink-0">
-            <X className="h-3.5 w-3.5" />
+          <button onClick={onClose} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: '28px', height: '28px', borderRadius: '50%',
+            background: '#f2f2f2', border: 'none', cursor: 'pointer',
+            color: '#86868b', flexShrink: 0, marginLeft: '12px',
+          }}>
+            <X size={14} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-7 pb-7 flex flex-col gap-4">
-          {/* Interest chips */}
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.07em] text-black/30 mb-2.5">What do you want to learn?</p>
-            <div className="flex flex-wrap gap-2">
-              {INTERESTS.map(item => (
-                <button key={item.value} type="button" onClick={() => toggle(item.value)}
-                  className={`rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all ${
-                    selected.includes(item.value)
-                      ? 'bg-black text-white'
-                      : 'bg-black/6 text-black/60 hover:bg-black/10 hover:text-black'
-                  }`}>
-                  {item.label}
-                </button>
-              ))}
-            </div>
+        {/* Interest chips */}
+        <div>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#86868b', marginBottom: '10px' }}>
+            What do you want to learn?
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {INTERESTS.map(item => (
+              <button key={item} type="button" onClick={() => toggleInterest(item)} style={chipStyle(interests.includes(item))}>
+                {item}
+              </button>
+            ))}
           </div>
+        </div>
 
-          {/* Role chips */}
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.07em] text-black/30 mb-2.5">I am a…</p>
-            <div className="flex flex-wrap gap-2">
-              {ROLES.map(role => (
-                <label key={role} className="cursor-pointer">
-                  <input type="radio" name="role" value={role} className="sr-only peer" />
-                  <span className="block rounded-full px-3.5 py-1.5 text-[13px] font-medium bg-black/6 text-black/60 hover:bg-black/10 hover:text-black peer-checked:bg-black peer-checked:text-white transition-all">
-                    {role}
-                  </span>
-                </label>
-              ))}
-            </div>
+        {/* Role chips */}
+        <div>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#86868b', marginBottom: '10px' }}>
+            I am a…
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {ROLES.map(r => (
+              <button key={r} type="button" onClick={() => setRole(r)} style={chipStyle(role === r)}>
+                {r}
+              </button>
+            ))}
           </div>
+        </div>
 
-          {/* Fields */}
-          <div className="flex flex-col gap-3">
-            <input name="fullName" required placeholder="Full name"
-              className="w-full rounded-xl bg-black/5 px-4 py-2.5 text-[14px] text-black placeholder:text-black/30 outline-none focus:bg-black/8 transition-colors border-none" />
-            <input name="phone" required type="tel" placeholder="Phone / WhatsApp"
-              className="w-full rounded-xl bg-black/5 px-4 py-2.5 text-[14px] text-black placeholder:text-black/30 outline-none focus:bg-black/8 transition-colors border-none" />
-            <input name="email" type="email" placeholder="Email (optional)"
-              className="w-full rounded-xl bg-black/5 px-4 py-2.5 text-[14px] text-black placeholder:text-black/30 outline-none focus:bg-black/8 transition-colors border-none" />
-          </div>
+        {/* Fields */}
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <input name="fullName" required placeholder="Full name" style={inputStyle} />
+          <input name="phone" required type="tel" placeholder="Phone / WhatsApp" style={inputStyle} />
+          <input name="email" type="email" placeholder="Email (optional)" style={inputStyle} />
 
-          {error && <p className="text-[12px] text-red-500">{error}</p>}
+          {error && <p style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: '#ff3b30' }}>{error}</p>}
 
-          <button type="submit" disabled={isPending}
-            className="flex items-center justify-center gap-2 w-full rounded-full bg-black py-3 text-[14px] font-semibold text-white transition-all hover:bg-black/85 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed mt-1">
-            {isPending ? 'Submitting…' : <><span>Get Early Access</span><ArrowRight className="h-4 w-4" /></>}
+          <button type="submit" disabled={isPending} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            width: '100%', padding: '14px', borderRadius: '980px',
+            background: '#1d1d1f', color: 'white',
+            fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600,
+            border: 'none', cursor: isPending ? 'not-allowed' : 'pointer',
+            marginTop: '4px', opacity: isPending ? 0.5 : 1, transition: 'all 0.15s',
+          }}>
+            {isPending ? 'Submitting…' : <><span>Get Early Access</span><ArrowRight size={16} /></>}
           </button>
         </form>
       </div>

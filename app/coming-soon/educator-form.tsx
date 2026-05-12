@@ -5,13 +5,21 @@ import { X, ArrowRight } from 'lucide-react'
 import { submitEducatorInterest } from './actions'
 
 const EXPERTISE = [
-  { value: 'area', label: 'Area Expert' },
-  { value: 'building', label: 'Building Expert' },
-  { value: 'community', label: 'Community Expert' },
-  { value: 'cluster', label: 'Cluster Expert' },
-  { value: 'off_plan', label: 'Off-Plan' },
-  { value: 'secondary', label: 'Secondary Market' },
+  'Area Expert', 'Building Expert', 'Community Expert',
+  'Cluster Expert', 'Off-Plan', 'Secondary Market',
 ]
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  background: '#f2f2f2',
+  border: 'none',
+  borderRadius: '12px',
+  padding: '12px 16px',
+  fontFamily: 'var(--font-sans)',
+  fontSize: '14px',
+  color: '#1d1d1f',
+  outline: 'none',
+}
 
 export default function EducatorForm({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
   const [selected, setSelected] = useState<string[]>([])
@@ -35,57 +43,81 @@ export default function EducatorForm({ onClose, onSuccess }: { onClose: () => vo
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-xl" onClick={onClose} />
+    <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+      {/* Backdrop */}
+      <div onClick={onClose}
+        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }} />
 
-      <div className="relative w-full max-w-[420px] rounded-3xl bg-white/95 backdrop-blur-2xl shadow-2xl border border-black/5 overflow-hidden">
+      {/* Card */}
+      <div style={{
+        position: 'relative', width: '100%', maxWidth: '400px',
+        background: 'white', borderRadius: '28px',
+        boxShadow: '0 32px 80px rgba(0,0,0,0.3)',
+        padding: '28px',
+        display: 'flex', flexDirection: 'column', gap: '20px',
+      }}>
         {/* Header */}
-        <div className="flex items-start justify-between px-7 pt-7 pb-5">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-black/30 mb-1">For educators</p>
-            <h2 className="text-[22px] font-semibold text-black tracking-tight leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#86868b', marginBottom: '4px' }}>
+              For educators
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 600, color: '#1d1d1f', letterSpacing: '-0.025em', lineHeight: 1.1, margin: 0 }}>
               Share your expertise.
             </h2>
-            <p className="mt-1 text-[13px] text-black/50 leading-snug">We create the content. Zero cost.</p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: '#86868b', marginTop: '4px', lineHeight: 1.4 }}>
+              We create the content. Zero cost to you.
+            </p>
           </div>
-          <button onClick={onClose} className="flex h-7 w-7 items-center justify-center rounded-full bg-black/6 text-black/40 hover:bg-black/10 hover:text-black transition-all ml-3 shrink-0">
-            <X className="h-3.5 w-3.5" />
+          <button onClick={onClose} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: '28px', height: '28px', borderRadius: '50%',
+            background: '#f2f2f2', border: 'none', cursor: 'pointer',
+            color: '#86868b', flexShrink: 0, marginLeft: '12px',
+          }}>
+            <X size={14} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-7 pb-7 flex flex-col gap-4">
-          {/* Expertise chips */}
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.07em] text-black/30 mb-2.5">Your expertise</p>
-            <div className="flex flex-wrap gap-2">
-              {EXPERTISE.map(item => (
-                <button key={item.value} type="button" onClick={() => toggle(item.value)}
-                  className={`rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all ${
-                    selected.includes(item.value)
-                      ? 'bg-black text-white'
-                      : 'bg-black/6 text-black/60 hover:bg-black/10 hover:text-black'
-                  }`}>
-                  {item.label}
-                </button>
-              ))}
-            </div>
+        {/* Expertise chips */}
+        <div>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#86868b', marginBottom: '10px' }}>
+            Your expertise
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {EXPERTISE.map(item => (
+              <button key={item} type="button" onClick={() => toggle(item)} style={{
+                padding: '7px 14px', borderRadius: '980px',
+                fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 500,
+                cursor: 'pointer', transition: 'all 0.15s',
+                background: selected.includes(item) ? '#1d1d1f' : '#f2f2f2',
+                color: selected.includes(item) ? 'white' : '#424245',
+                border: 'none',
+              }}>
+                {item}
+              </button>
+            ))}
           </div>
+        </div>
 
-          {/* Fields */}
-          <div className="flex flex-col gap-3">
-            <input name="fullName" required placeholder="Full name"
-              className="w-full rounded-xl bg-black/5 px-4 py-2.5 text-[14px] text-black placeholder:text-black/30 outline-none focus:bg-black/8 transition-colors border-none" />
-            <input name="phone" required type="tel" placeholder="Phone / WhatsApp"
-              className="w-full rounded-xl bg-black/5 px-4 py-2.5 text-[14px] text-black placeholder:text-black/30 outline-none focus:bg-black/8 transition-colors border-none" />
-            <input name="email" type="email" placeholder="Email (optional)"
-              className="w-full rounded-xl bg-black/5 px-4 py-2.5 text-[14px] text-black placeholder:text-black/30 outline-none focus:bg-black/8 transition-colors border-none" />
-          </div>
+        {/* Fields */}
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <input name="fullName" required placeholder="Full name" style={inputStyle} />
+          <input name="phone" required type="tel" placeholder="Phone / WhatsApp" style={inputStyle} />
+          <input name="email" type="email" placeholder="Email (optional)" style={inputStyle} />
 
-          {error && <p className="text-[12px] text-red-500">{error}</p>}
+          {error && <p style={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: '#ff3b30' }}>{error}</p>}
 
-          <button type="submit" disabled={isPending || selected.length === 0}
-            className="flex items-center justify-center gap-2 w-full rounded-full bg-black py-3 text-[14px] font-semibold text-white transition-all hover:bg-black/85 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed mt-1">
-            {isPending ? 'Submitting…' : <><span>Join as Educator</span><ArrowRight className="h-4 w-4" /></>}
+          <button type="submit" disabled={isPending || selected.length === 0} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            width: '100%', padding: '14px', borderRadius: '980px',
+            background: selected.length === 0 ? '#e5e5e5' : '#1d1d1f',
+            color: selected.length === 0 ? '#aeaeb2' : 'white',
+            fontFamily: 'var(--font-sans)', fontSize: '14px', fontWeight: 600,
+            border: 'none', cursor: selected.length === 0 ? 'not-allowed' : 'pointer',
+            marginTop: '4px', transition: 'all 0.15s',
+          }}>
+            {isPending ? 'Submitting…' : <><span>Join as Educator</span><ArrowRight size={16} /></>}
           </button>
         </form>
       </div>
