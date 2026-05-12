@@ -1,27 +1,27 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Compass, BookOpen, Trophy } from 'lucide-react';
+import { Compass, BookOpen, Users } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const STEPS = [
   {
     number: '1',
     icon: Compass,
-    title: 'Choose your focus.',
-    body: 'Pick the areas, properties, and communities you want to own. Go deep, not wide.',
+    title: 'Choose your depth.',
+    body: 'Pick the areas, communities, and property types you want to truly understand. Most platforms give you breadth. iClose gives you depth.',
   },
   {
     number: '2',
     icon: BookOpen,
-    title: 'Learn from specialists.',
-    body: 'Lessons built by specialists closing these deals today. Not theory — actual deal intelligence used in the field this week.',
+    title: 'Learn from the inside.',
+    body: 'Every module is built by people active in this market right now — not analysts or educators. People whose knowledge has been tested by real decisions.',
   },
   {
     number: '3',
-    icon: Trophy,
-    title: 'Close with confidence.',
-    body: 'Walk into every viewing owning the room. Know the comps, the anomalies, the floor differentials. Charge full fee.',
+    icon: Users,
+    title: 'Become the person people call.',
+    body: 'The moment your depth surpasses what anyone in your network can offer. That is what iClose builds toward.',
   },
 ];
 
@@ -31,7 +31,7 @@ export function How() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            Three steps to never losing a deal to knowledge again.
+            From curious to credible.
           </h2>
         </Reveal>
 

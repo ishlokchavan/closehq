@@ -5,17 +5,17 @@ import { X, Check } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const BEFORE = [
-  "Stalling when a client asks about a specific tower — and hoping they don't notice",
-  "Watching a deal go to the specialist who knew one thing you didn't",
-  "Cutting your commission because expertise wasn't part of your pitch",
-  'Spending weeks learning a community just to sound credible',
+  'Trusting whoever sounds most confident in the room — and knowing it',
+  "Holding back in Dubai conversations because you don't have the depth to lead them",
+  "Making decisions based on what you've been told, not what you've learned",
+  "Feeling like a spectator in a market you're genuinely interested in",
 ];
 
 const AFTER = [
-  'The closer clients WhatsApp first — because you answered before they finished asking',
-  'Winning deals on knowledge that no one else in the room had',
-  'Charging full fee, because your intelligence is the product — not your price',
-  'A specialist reputation that generates referrals while you sleep',
+  'The person your network calls before they make any move in Dubai',
+  'Walking into any conversation about Dubai property with something real to offer',
+  'Forming your own view of the market — independent of whoever you last spoke to',
+  'A reputation for knowing Dubai that people rely on, not just respect',
 ];
 
 export function Transformation() {
@@ -24,7 +24,7 @@ export function Transformation() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            The difference between the closer clients call first and the one they call last.
+            What changes when you stop relying on other people's read.
           </h2>
         </Reveal>
 

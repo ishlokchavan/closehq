@@ -27,8 +27,8 @@ export function Hero() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="display-xl text-balance"
         >
-          <span className="block">Know every property.</span>
-          <span className="block">Close every deal.</span>
+          <span className="block">There are people in every room</span>
+          <span className="block">who truly understand Dubai real estate.</span>
         </motion.h1>
 
         <motion.p
@@ -37,7 +37,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mt-5 sm:mt-6 subhead text-balance max-w-xl mx-auto px-2"
         >
-          Most people lose deals to specialists. iClose makes you one.
+          Most people exploring this market are still trusting whoever sounds most confident. iClose is for the ones who decide to become that person instead.
         </motion.p>
 
         <motion.div

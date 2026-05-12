@@ -6,18 +6,18 @@ import { Reveal } from '@/components/ui/reveal';
 const TESTIMONIALS = [
   {
     initials: 'S.A.',
-    role: 'Marina Specialist',
-    quote: 'Six weeks in, I stopped guessing and started knowing. Clients started asking for me by name. That had never happened before.',
+    role: 'Dubai Investor',
+    quote: 'I used to form opinions about Dubai based on whoever I had spoken to last. Now I have my own read — and people in my network ask for it.',
   },
   {
     initials: 'K.R.',
-    role: 'JVC Expert',
-    quote: "Three years in the industry and I didn't know half of what the first module taught me. iClose taught me things my brokerage never did.",
+    role: 'Finance Professional',
+    quote: "I thought I understood this market. The first module showed me how much I'd been trusting other people's knowledge as if it were my own.",
   },
   {
     initials: 'M.T.',
-    role: 'Downtown Specialist',
-    quote: "I walked into a viewing with floor-specific price data my client hadn't seen anywhere. We signed the same day.",
+    role: 'Property Consultant',
+    quote: 'Someone asked me about a specific development in a meeting. I did not hesitate. I just knew. That was the moment everything shifted.',
   },
 ];
 
@@ -36,7 +36,7 @@ export function Testimonials() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            From closers who got in first.
+            From people who made the shift.
           </h2>
         </Reveal>
 
@@ -50,7 +50,7 @@ export function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <motion.figure key={t.initials} variants={item} className="card-surface p-8 sm:p-10 flex flex-col">
               <blockquote className="display-sm text-ink leading-[1.3] text-balance flex-1">
-                "{t.quote}"
+                “{t.quote}”
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">

@@ -8,22 +8,22 @@ const VALUES = [
   {
     icon: MapPin,
     title: 'Area knowledge.',
-    body: "Every Dubai residential area, broken down to what drives decisions — demand patterns, price bands, and what actually moves buyers to sign.",
+    body: "Every major Dubai community mapped to what actually drives it — demand patterns, price bands, the dynamics that move people to act. Understanding, not just information.",
   },
   {
     icon: Building2,
-    title: 'Building profiles.',
-    body: 'Per-tower data: unit types, floor differentials, view premiums, and price history. Walk into every viewing already knowing what others have to look up.',
+    title: 'Development intelligence.',
+    body: 'Per-development depth: unit types, floor premiums, view differentials, price history. The difference between knowing a development exists and truly knowing everything about it.',
   },
   {
     icon: Users,
     title: 'Community intelligence.',
-    body: 'The local dynamics, seasonal patterns, and demand triggers that turn casual viewings into same-day offers.',
+    body: "Dubai's communities each move to their own logic. The demand drivers, seasonal patterns, and buyer profiles that separate a well-timed move from a lucky one.",
   },
   {
     icon: TrendingUp,
     title: 'Cluster mastery.',
-    body: "Dubai's communities contain micro-markets that move independently. Spot them early. Your clients act on your intelligence — not someone else's.",
+    body: "Inside Dubai's major communities live micro-markets most outsiders never see. The ones who understand them early become the ones others turn to for their read.",
   },
 ];
 
@@ -42,7 +42,7 @@ export function Value() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What separates Dubai's top 10% from everyone else.
+            What the most trusted voices on Dubai real estate actually know.
           </h2>
         </Reveal>
 

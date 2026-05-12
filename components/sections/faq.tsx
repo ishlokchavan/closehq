@@ -8,23 +8,23 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: "A specialist learning platform for Dubai's secondary market. Deep, deal-level knowledge — building profiles, area intelligence, community data — from people actively closing deals today. Not generic training.",
+    a: "A learning platform for people who want to understand Dubai real estate deeply — not just know about it. The kind of depth that makes you the most informed person in your network when Dubai property comes up.",
   },
   {
     q: 'Who is it for?',
-    a: "Closers done losing deals to people who know more. New entrants building their foundation. International professionals entering the market. And investors who want to buy with conviction, not guesswork.",
+    a: "Internationally minded professionals who keep encountering Dubai real estate and want to understand it properly. Investors who want conviction before they move. And anyone tired of relying on other people’s knowledge in a market they’re serious about.",
   },
   {
     q: 'When does it launch?',
-    a: "We're taking founding member spots now. They come with the lowest price iClose will ever cost and first access to every new market we add.",
+    a: "We’re taking founding member spots now. They come with the lowest price iClose will ever offer and first access when we go live.",
   },
   {
     q: 'What does the content look like?',
-    a: 'Building-by-building guides, area deep-dives, view premium data, price history, and monthly live sessions with active Dubai specialists. Deal intelligence, not classroom theory.',
+    a: 'Deep-dives into Dubai’s communities, development-level intelligence, area analysis, and monthly sessions with specialists actively working this market. Less theory. More the kind of knowledge you’d only get from being on the ground.',
   },
   {
     q: 'Do I need a real estate license?',
-    a: "No. If Dubai real estate matters to you — as a closer, investor, or professional — iClose was built for you.",
+    a: "No. iClose is for anyone who wants to understand Dubai real estate with real depth — whether you’re investing, advising, or simply want to move in this market as someone who’s done the work.",
   },
 ];
 
