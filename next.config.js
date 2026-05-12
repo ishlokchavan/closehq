@@ -19,17 +19,6 @@ const nextConfig = {
     qualities: [70, 75, 80, 85, 90],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
-  async redirects() {
-    return [
-      // Redirect root to coming soon. Remove this when ready to launch the full site.
-      {
-        source: '/',
-        destination: '/coming-soon',
-        permanent: false, // 307 — easy to revert
-      },
-    ]
-  },
-
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
