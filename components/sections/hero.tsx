@@ -5,12 +5,6 @@ import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
-const AREAS = [
-  { src: '/images/hero-burj.jpg', alt: 'Dubai skyline' },
-  { src: '/images/hero-palm.jpg', alt: 'Palm Jumeirah' },
-  { src: '/images/hero-night.jpg', alt: 'Dubai Creek at night' },
-];
-
 const STATS = [
   { value: '400+', label: 'Properties covered' },
   { value: '20+', label: 'Specialist instructors' },
@@ -19,111 +13,122 @@ const STATS = [
 
 export function Hero() {
   return (
-    <section className="relative bg-paper pt-12">
-      <div className="container-wide pt-16 sm:pt-20 md:pt-28 pb-10 sm:pb-12 text-center">
+    <section className="relative min-h-screen flex flex-col overflow-hidden">
 
+      {/* Full-bleed background with cinematic scale-in */}
+      <motion.div
+        initial={{ scale: 1.06 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0"
+      >
+        <Image
+          src="/images/hero-night.jpg"
+          alt="Dubai at night"
+          fill
+          priority
+          quality={90}
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/75" />
+      </motion.div>
+
+      {/* Content */}
+      <div className="relative flex-1 flex flex-col items-center justify-center container-wide text-center pt-28 pb-12">
+
+        {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-6 flex justify-center"
+          className="mb-7 flex justify-center"
         >
           <span
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-mist text-[12px] text-graphite"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-[12px] text-white/70"
             style={{ letterSpacing: '-0.01em' }}
           >
             Early access open · Dubai’s secondary real estate market
           </span>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="display-xl text-balance"
-        >
-          <span className="block">Know Dubai.</span>
-          <span className="block">Be the one they call.</span>
-        </motion.h1>
+        {/* Headline — line-by-line stagger */}
+        <h1 className="display-xl text-white text-balance">
+          <motion.span
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="block"
+          >
+            Know Dubai.
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="block"
+          >
+            Be the one they call.
+          </motion.span>
+        </h1>
 
+        {/* Subhead */}
         <motion.p
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 sm:mt-6 subhead text-balance max-w-lg mx-auto px-2"
+          transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 text-white/65 text-[18px] sm:text-[20px] leading-[1.4] text-balance max-w-lg mx-auto px-2"
+          style={{ letterSpacing: '-0.015em' }}
         >
           Most people exploring this market are still trusting whoever sounds most confident.
           iClose is how you become that person instead.
         </motion.p>
 
+        {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-7 flex items-center justify-center gap-6 flex-wrap"
+          transition={{ duration: 0.7, delay: 0.54, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-9 flex items-center justify-center gap-5 flex-wrap"
         >
           <a
             href="#apply"
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
-            className="applelink-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-ink text-[15px] font-medium hover:bg-white/90 transition-colors"
+            style={{ letterSpacing: '-0.01em' }}
           >
             Get early access
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
-          <a href="#how" className="applelink-lg">
+          <a
+            href="#how"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-white/90 transition-colors text-[15px]"
+            style={{ letterSpacing: '-0.01em' }}
+          >
             How it works
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </motion.div>
       </div>
 
-      {/* Staggered image grid — sides shorter, centre tallest, aligned at bottom */}
-      <div className="container-wide pb-0">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 items-end">
-          {AREAS.map((area, i) => (
-            <motion.div
-              key={area.alt}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative overflow-hidden rounded-apple ${
-                i === 1 ? 'aspect-[2/3]' : 'aspect-[3/4]'
-              }`}
-            >
-              <Image
-                src={area.src}
-                alt={area.alt}
-                fill
-                priority={i === 0}
-                quality={85}
-                sizes="(max-width: 768px) 33vw, 400px"
-                className="object-cover object-center scale-[1.02] hover:scale-100 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      <div className="container-wide py-12 sm:py-14 md:py-20">
-        <div className="grid grid-cols-3 divide-x divide-hairline">
-          {STATS.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="px-4 sm:px-8 text-center"
-            >
-              <div className="display-md text-ink">{stat.value}</div>
-              <div className="mt-1.5 text-sm text-graphite" style={{ letterSpacing: '-0.01em' }}>
+      {/* Stats bar — glass, anchored to bottom of hero */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+        className="relative border-t border-white/10 bg-black/30 backdrop-blur-md"
+      >
+        <div className="container-wide grid grid-cols-3 divide-x divide-white/10 py-7 sm:py-9">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="text-center px-4 sm:px-8">
+              <div className="display-md text-white">{stat.value}</div>
+              <div className="mt-1.5 text-[13px] text-white/50" style={{ letterSpacing: '-0.01em' }}>
                 {stat.label}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
-      </div>
+      </motion.div>
+
     </section>
   );
 }
