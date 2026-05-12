@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: 'Who is it for?',
-    a: "Agents done losing deals to people who know more. New entrants building their foundation. International professionals entering the market. And investors who want to buy with conviction, not guesswork.",
+    a: "Closers done losing deals to people who know more. New entrants building their foundation. International professionals entering the market. And investors who want to buy with conviction, not guesswork.",
   },
   {
     q: 'When does it launch?',
@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: 'Do I need a real estate license?',
-    a: "No. If Dubai real estate matters to you — as an agent, connector, investor, or professional — iClose was built for you.",
+    a: "No. If Dubai real estate matters to you — as a closer, investor, or professional — iClose was built for you.",
   },
 ];
 

@@ -6,13 +6,13 @@ import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 const AREAS = [
-  { src: '/images/hero-burj.jpg', label: 'Downtown Dubai', sub: 'Burj Khalifa · Opera District' },
-  { src: '/images/hero-palm.jpg', label: 'Palm Jumeirah', sub: 'Palm · JBR · Marina' },
-  { src: '/images/hero-night.jpg', label: 'Dubai Creek', sub: 'Creek Harbour · Ras Al Khor' },
+  { src: '/images/hero-burj.jpg', alt: 'Dubai skyline' },
+  { src: '/images/hero-palm.jpg', alt: 'Palm Jumeirah' },
+  { src: '/images/hero-night.jpg', alt: 'Dubai Creek at night' },
 ];
 
 const STATS = [
-  { value: '400+', label: 'Buildings covered' },
+  { value: '400+', label: 'Properties covered' },
   { value: '20+', label: 'Specialist instructors' },
   { value: 'Secondary', label: 'Market focus' },
 ];
@@ -27,7 +27,7 @@ export function Hero() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="display-xl text-balance"
         >
-          <span className="block">Know every building.</span>
+          <span className="block">Know every property.</span>
           <span className="block">Close every deal.</span>
         </motion.h1>
 
@@ -37,7 +37,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mt-5 sm:mt-6 subhead text-balance max-w-xl mx-auto px-2"
         >
-          Most agents lose deals to specialists. iClose makes you one.
+          Most people lose deals to specialists. iClose makes you one.
         </motion.p>
 
         <motion.div
@@ -51,7 +51,7 @@ export function Hero() {
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
             className="applelink-lg"
           >
-            Claim founding access
+            Get early access
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
           <a href="#how" className="applelink-lg">
@@ -65,7 +65,7 @@ export function Hero() {
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {AREAS.map((area, i) => (
             <motion.div
-              key={area.label}
+              key={area.alt}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
@@ -73,22 +73,14 @@ export function Hero() {
             >
               <Image
                 src={area.src}
-                alt={area.label}
+                alt={area.alt}
                 fill
                 priority={i === 0}
                 quality={80}
                 sizes="(max-width: 768px) 33vw, 400px"
                 className="object-cover object-center scale-[1.02] hover:scale-100 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 md:p-5">
-                <p className="text-white font-medium text-[12px] sm:text-[14px] md:text-[15px] leading-tight" style={{ letterSpacing: '-0.01em' }}>
-                  {area.label}
-                </p>
-                <p className="text-white/60 text-[10px] sm:text-[12px] mt-0.5 hidden sm:block" style={{ letterSpacing: '-0.008em' }}>
-                  {area.sub}
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
             </motion.div>
           ))}
         </div>

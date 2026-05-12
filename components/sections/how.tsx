@@ -9,13 +9,13 @@ const STEPS = [
     number: '1',
     icon: Compass,
     title: 'Choose your focus.',
-    body: 'Pick the areas, buildings, and communities you want to own. Go deep, not wide.',
+    body: 'Pick the areas, properties, and communities you want to own. Go deep, not wide.',
   },
   {
     number: '2',
     icon: BookOpen,
     title: 'Learn from specialists.',
-    body: 'Lessons built by agents closing these deals today. Not theory — actual deal intelligence used in the field this week.',
+    body: 'Lessons built by specialists closing these deals today. Not theory — actual deal intelligence used in the field this week.',
   },
   {
     number: '3',

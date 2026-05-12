@@ -12,7 +12,7 @@ const BEFORE = [
 ];
 
 const AFTER = [
-  'The agent clients WhatsApp first — because you answered before they finished asking',
+  'The closer clients WhatsApp first — because you answered before they finished asking',
   'Winning deals on knowledge that no one else in the room had',
   'Charging full fee, because your intelligence is the product — not your price',
   'A specialist reputation that generates referrals while you sleep',
@@ -24,7 +24,7 @@ export function Transformation() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            The difference between the agent clients call first and the one they call last.
+            The difference between the closer clients call first and the one they call last.
           </h2>
         </Reveal>
 

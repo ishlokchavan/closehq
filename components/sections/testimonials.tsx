@@ -12,11 +12,11 @@ const TESTIMONIALS = [
   {
     initials: 'K.R.',
     role: 'JVC Expert',
-    quote: "Three years as an agent and I didn't know half of what the first module taught me. iClose taught me things my agency never did.",
+    quote: "Three years in the industry and I didn't know half of what the first module taught me. iClose taught me things my brokerage never did.",
   },
   {
     initials: 'M.T.',
-    role: 'Downtown Agent',
+    role: 'Downtown Specialist',
     quote: "I walked into a viewing with floor-specific price data my client hadn't seen anywhere. We signed the same day.",
   },
 ];
@@ -36,7 +36,7 @@ export function Testimonials() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            From agents who got in first.
+            From closers who got in first.
           </h2>
         </Reveal>
 
