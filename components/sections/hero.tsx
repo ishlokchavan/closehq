@@ -21,23 +21,39 @@ export function Hero() {
   return (
     <section className="relative bg-paper pt-12">
       <div className="container-wide pt-16 sm:pt-20 md:pt-28 pb-10 sm:pb-12 text-center">
+
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-6 flex justify-center"
+        >
+          <span
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-mist text-[12px] text-graphite"
+            style={{ letterSpacing: '-0.01em' }}
+          >
+            Early access open · Dubai’s secondary real estate market
+          </span>
+        </motion.div>
+
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="display-xl text-balance"
         >
-          <span className="block">There are people in every room</span>
-          <span className="block">who truly understand Dubai real estate.</span>
+          <span className="block">Know Dubai.</span>
+          <span className="block">Be the one they call.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 sm:mt-6 subhead text-balance max-w-xl mx-auto px-2"
+          className="mt-5 sm:mt-6 subhead text-balance max-w-lg mx-auto px-2"
         >
-          Most people exploring this market are still trusting whoever sounds most confident. iClose is for the ones who decide to become that person instead.
+          Most people exploring this market are still trusting whoever sounds most confident.
+          iClose is how you become that person instead.
         </motion.p>
 
         <motion.div
@@ -61,22 +77,25 @@ export function Hero() {
         </motion.div>
       </div>
 
+      {/* Staggered image grid — sides shorter, centre tallest, aligned at bottom */}
       <div className="container-wide pb-0">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 items-end">
           {AREAS.map((area, i) => (
             <motion.div
               key={area.alt}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="relative overflow-hidden rounded-apple aspect-[2/3] sm:aspect-[3/4]"
+              transition={{ duration: 0.9, delay: 0.3 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className={`relative overflow-hidden rounded-apple ${
+                i === 1 ? 'aspect-[2/3]' : 'aspect-[3/4]'
+              }`}
             >
               <Image
                 src={area.src}
                 alt={area.alt}
                 fill
                 priority={i === 0}
-                quality={80}
+                quality={85}
                 sizes="(max-width: 768px) 33vw, 400px"
                 className="object-cover object-center scale-[1.02] hover:scale-100 transition-transform duration-700"
               />
