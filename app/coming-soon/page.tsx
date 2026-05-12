@@ -9,37 +9,48 @@ export const metadata: Metadata = {
 
 export default function ComingSoonPage() {
   return (
-    <main className="relative h-[100svh] w-full overflow-hidden" style={{ background: '#0a0a0a' }}>
-      {/* Background image — darker, blurred edges */}
-      <div className="absolute inset-0 z-0">
+    <main style={{
+      position: 'relative',
+      height: '100svh',
+      width: '100%',
+      overflow: 'hidden',
+      background: '#111',
+    }}>
+      {/* Background */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <Image
           src="/images/hero-burj.jpg"
-          alt="Dubai"
+          alt="Dubai skyline"
           fill
           priority
-          quality={85}
-          className="object-cover object-center opacity-35"
+          quality={90}
+          style={{ objectFit: 'cover', objectPosition: 'center 30%', opacity: 0.55 }}
           sizes="100vw"
         />
-        {/* Vignette — dark edges, lighter centre */}
-        <div className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.85) 100%)' }} />
-        {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-48"
-          style={{ background: 'linear-gradient(to bottom, transparent, #0a0a0a)' }} />
+        {/* Gradient overlay — makes text readable without killing the image */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(160deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.55) 50%, rgba(10,10,10,0.88) 100%)',
+        }} />
       </div>
 
-      {/* Logo */}
-      <div className="relative z-10 px-7 pt-8">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[10px]"
-            style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.15)' }}>
-            <span style={{ fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: 600, color: 'white' }}>iC</span>
-          </div>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '16px', fontWeight: 600, color: 'white', letterSpacing: '-0.02em' }}>
-            iClose <span style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 400 }}>Academy</span>
-          </span>
+      {/* Logo bar */}
+      <div style={{ position: 'relative', zIndex: 10, padding: '28px 28px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: '34px', height: '34px', borderRadius: '10px',
+          background: 'rgba(255,255,255,0.12)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.18)',
+          flexShrink: 0,
+        }}>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '13px', fontWeight: 600, color: 'white' }}>iC</span>
         </div>
+        <span style={{ fontFamily: 'var(--font-display)', fontSize: '16px', fontWeight: 600, color: 'white', letterSpacing: '-0.02em' }}>
+          iClose{' '}
+          <span style={{ color: 'rgba(255,255,255,0.38)', fontWeight: 400 }}>Academy</span>
+        </span>
       </div>
 
       <ComingSoonClient />
