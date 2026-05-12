@@ -6,20 +6,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
-// Three iconic Dubai shots, fresh from Unsplash + Pexels
 const HERO_IMAGES = [
-  { src: '/images/hero-burj.jpg', alt: 'Burj Khalifa and Downtown Dubai skyline at sunrise' },
-  { src: '/images/hero-palm.jpg', alt: 'Aerial view of Burj Al Arab and Palm Jumeirah, Dubai' },
-  { src: '/images/hero-night.jpg', alt: 'Dubai Fountain and Downtown Dubai from above at night' },
+  { src: '/images/hero-burj.jpg', alt: 'Downtown Dubai skyline' },
+  { src: '/images/hero-palm.jpg', alt: 'Palm Jumeirah aerial view' },
+  { src: '/images/hero-night.jpg', alt: 'Dubai at night' },
+];
+
+const STATS = [
+  { value: '400+', label: 'Buildings covered' },
+  { value: '20+', label: 'Specialist instructors' },
+  { value: 'Secondary', label: 'Market focus' },
 ];
 
 export function Hero() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % HERO_IMAGES.length);
-    }, 5000);
+    const id = setInterval(() => setIndex((i) => (i + 1) % HERO_IMAGES.length), 5000);
     return () => clearInterval(id);
   }, []);
 
@@ -32,41 +35,40 @@ export function Hero() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="display-xl text-balance"
         >
-          <span className="block">Earn up to 100%.</span>
-          <span className="block">Paid within 24h.</span>
+          <span className="block">Know every building.</span>
+          <span className="block">Close every deal.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 sm:mt-6 subhead text-balance max-w-2xl mx-auto px-2"
+          className="mt-5 sm:mt-6 subhead text-balance max-w-xl mx-auto px-2"
         >
-          Dubai’s broker platform. Keep more of your commission, get paid faster, and stay completely anonymous.
+          The learning platform for Dubai’s secondary market. Built by specialists, for specialists.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-7 flex items-center justify-center gap-5 sm:gap-7 flex-wrap"
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-7 flex items-center justify-center gap-6 flex-wrap"
         >
           <a
             href="#apply"
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
             className="applelink-lg"
           >
-            Get started
+            Get early access
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
-          <a href="#plans" className="applelink-lg">
-            See plans
+          <a href="#how" className="applelink-lg">
+            How it works
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </motion.div>
       </div>
 
-      {/* Full-bleed rotating Dubai imagery */}
       <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[2.4/1] overflow-hidden bg-mist">
         <AnimatePresence mode="sync">
           <motion.div
@@ -89,13 +91,12 @@ export function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Pagination dots */}
         <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
           {HERO_IMAGES.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
-              aria-label={`Show image ${i + 1}`}
+              aria-label={`Image ${i + 1}`}
               className={
                 'h-1.5 rounded-full transition-all duration-500 ' +
                 (i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/70')
@@ -105,24 +106,19 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Stat strip */}
-      <div className="container-wide py-14 sm:py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline">
-          {[
-            { value: 'Up to 100%', label: 'Commission to you' },
-            { value: '24h', label: 'Payout when buyer signs' },
-            { value: 'Anonymous', label: 'Always private' },
-          ].map((stat, i) => (
+      <div className="container-wide py-12 sm:py-14 md:py-20">
+        <div className="grid grid-cols-3 divide-x divide-hairline">
+          {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="py-8 md:py-0 md:px-6 lg:px-8 text-center md:text-left first:pt-0 last:pb-0"
+              className="px-4 sm:px-8 text-center"
             >
               <div className="display-md text-ink">{stat.value}</div>
-              <div className="mt-2 text-base text-graphite" style={{ letterSpacing: '-0.01em' }}>
+              <div className="mt-1.5 text-sm text-graphite" style={{ letterSpacing: '-0.01em' }}>
                 {stat.label}
               </div>
             </motion.div>

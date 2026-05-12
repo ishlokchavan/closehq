@@ -5,30 +5,26 @@ import { Reveal } from '@/components/ui/reveal';
 
 const VALUES = [
   {
-    figure: 'Up to 100%.',
-    title: 'Commission to you.',
-    body: 'Industry-leading splits, all the way to a true 100% on Atelier. No hidden cuts, no surprises at month-end.',
+    title: 'Area knowledge.',
+    body: "Deep dives into Dubai's most active residential areas — from Marina to Creek Harbour.",
   },
   {
-    figure: '24 hours.',
-    title: 'Paid when buyer signs.',
-    body: 'The moment the buyer commits, your commission lands. Same-day settlement, up to 90/10 advance.',
+    title: 'Building profiles.',
+    body: 'Unit types, floor plans, price history, and view premiums for every major secondary tower.',
   },
   {
-    figure: 'Anonymous.',
-    title: 'Always private.',
-    body: 'Your name, your buyers, and your pipeline are never visible to anyone outside the desk. Ever.',
+    title: 'Community intelligence.',
+    body: 'The demand drivers and buying patterns that turn viewings into signed contracts.',
   },
   {
-    figure: 'AED 0.',
-    title: 'Free to start.',
-    body: 'Test the platform on the Starter tier with zero monthly cost. Upgrade only when you’re closing.',
+    title: 'Cluster mastery.',
+    body: 'Spot micro-market moves within communities before clients — or competitors — do.',
   },
 ];
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 const item = {
   hidden: { opacity: 0, y: 16 },
@@ -37,38 +33,26 @@ const item = {
 
 export function Value() {
   return (
-    <section id="commission" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
+    <section id="learn" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
       <div className="container-wide">
-        <div className="max-w-3xl mb-14 md:mb-20">
-          <Reveal>
-            <h2 className="display-lg text-balance">
-              Economics built around the broker.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="subhead mt-6 max-w-2xl">
-              Traditional brokerages were built when agents needed offices, licenses, and phone books. We stripped the overhead and passed the savings back to you.
-            </p>
-          </Reveal>
-        </div>
+        <Reveal>
+          <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
+            Everything you need to become the specialist.
+          </h2>
+        </Reveal>
 
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          {VALUES.map((value) => (
-            <motion.div
-              key={value.title}
-              variants={item}
-              className="card-mist p-8 sm:p-10 md:p-12"
-            >
-              <div className="display-md text-ink mb-5">{value.figure}</div>
-              <h3 className="display-sm mb-3">{value.title}</h3>
-              <p className="text-[17px] text-graphite-dark leading-[1.5] max-w-md" style={{ letterSpacing: '-0.012em' }}>
-                {value.body}
+          {VALUES.map((v) => (
+            <motion.div key={v.title} variants={item} className="card-mist p-8 sm:p-10">
+              <h3 className="display-sm mb-3">{v.title}</h3>
+              <p className="text-[17px] text-graphite-dark leading-[1.5]" style={{ letterSpacing: '-0.012em' }}>
+                {v.body}
               </p>
             </motion.div>
           ))}

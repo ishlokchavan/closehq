@@ -1,89 +1,47 @@
 'use client';
 
 import { Logo } from '@/components/ui/logo';
-import { siteConfig } from '@/lib/site-config';
 
-const SECTIONS = [
-  {
-    title: 'Platform',
-    links: [
-      { href: '#plans', label: 'Plans' },
-      { href: '#how', label: 'How it works' },
-      { href: '#training', label: 'Training' },
-      { href: '#perks', label: 'Perks' },
-      { href: '#vs', label: 'Why iClose' },
-      { href: '#apply', label: 'Get started' },
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      { href: '#commission', label: 'Commission' },
-      { href: '#training', label: 'iClose Academy' },
-      { href: '#perks', label: 'Concierge' },
-      { href: '/privacy', label: 'Privacy policy' },
-      { href: '/terms', label: 'Terms of service' },
-    ],
-  },
+const LINKS = [
+  { href: '#how', label: 'How it works' },
+  { href: '#learn', label: 'What you learn' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#apply', label: 'Get early access' },
+  { href: '/privacy', label: 'Privacy policy' },
+  { href: '/terms', label: 'Terms of service' },
 ];
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="bg-mist border-t border-hairline">
-      <div className="container-wide pt-12 sm:pt-14 md:pt-20 pb-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
-          <div className="col-span-2">
+      <div className="container-wide pt-12 pb-8">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
+          <div className="max-w-xs">
             <Logo variant="dark" />
-            <p
-              className="mt-5 text-[13px] text-graphite max-w-sm leading-[1.5]"
-              style={{ letterSpacing: '-0.008em' }}
-            >
-              {siteConfig.description}
+            <p className="mt-4 text-[13px] text-graphite leading-[1.6]" style={{ letterSpacing: '-0.008em' }}>
+              The learning platform for Dubai’s secondary real estate market.
             </p>
           </div>
 
-          {SECTIONS.map((section) => (
-            <div key={section.title}>
-              <h3
-                className="text-[13px] font-semibold text-ink tracking-tight mb-4"
-                style={{ letterSpacing: '-0.01em' }}
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
+            {LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[13px] text-graphite hover:text-ink transition-colors"
+                style={{ letterSpacing: '-0.008em' }}
               >
-                {section.title}
-              </h3>
-              <ul className="space-y-2.5">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <a
-                      href={link.href}
-                      className="text-[12px] text-graphite hover:text-ink hover:underline underline-offset-2 transition-colors"
-                      style={{ letterSpacing: '-0.008em' }}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="hairline mt-14 mb-6" />
-
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-[12px] text-graphite tracking-tight">
-          <div>
-            © {year} {siteConfig.name}. All rights reserved. Dubai, UAE.
-          </div>
-          <div className="flex gap-5">
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="hover:text-ink hover:underline underline-offset-2 transition-colors"
-            >
-              {siteConfig.email}
-            </a>
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
+
+        <div className="hairline mt-10 mb-5" />
+
+        <p className="text-[12px] text-graphite tracking-tight">
+          © {new Date().getFullYear()} iClose. Dubai, UAE.
+        </p>
       </div>
     </footer>
   );
