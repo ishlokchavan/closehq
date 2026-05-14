@@ -9,7 +9,7 @@ const TESTIMONIALS = [
     initials: 'T.M.',
     role: 'Secondary Market Agent',
     quote:
-      'I spent four years in off-plan and knew nothing about the secondary market. Six months with iClose and I can walk into any conversation about JVC, Dubai Hills, or Business Bay and hold my own. That is what the content here does.',
+      'I spent four years in new developments and knew nothing about the secondary market. Six months with iClose and I can walk into any conversation about JVC, Dubai Hills, or Business Bay and hold my own. That is what the content here does.',
   },
   {
     initials: 'F.A.',

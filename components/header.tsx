@@ -1,18 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 
-const NAV = [
-  { href: '/specialists', label: 'For Specialists' },
-  { href: '#apply', label: 'For Members' },
-];
-
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isSpecialists = pathname === '/specialists';
+
+  const navLinks = isSpecialists
+    ? [{ href: '/', label: 'For Members' }]
+    : [{ href: '/specialists', label: 'For Specialists' }];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-paper/80 backdrop-blur-2xl">
@@ -21,7 +23,7 @@ export function Header() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-2">
-          {NAV.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -31,7 +33,7 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <a href="#apply" className="ml-2">
+          <a href="/#apply" className="ml-2">
             <Button variant="primary" size="sm">Join as a Member</Button>
           </a>
         </div>
@@ -56,7 +58,7 @@ export function Header() {
             className="md:hidden bg-paper border-t border-hairline shadow-elevated"
           >
             <div className="container-wide py-2 flex flex-col">
-              {NAV.map((link) => (
+              {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -68,7 +70,7 @@ export function Header() {
                 </a>
               ))}
               <div className="py-4">
-                <a href="#apply" onClick={() => setOpen(false)}>
+                <a href="/#apply" onClick={() => setOpen(false)}>
                   <Button variant="primary" size="md" className="w-full">Join as a Member</Button>
                 </a>
               </div>

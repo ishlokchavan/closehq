@@ -1,7 +1,6 @@
 import { Header } from '@/components/header';
 import { Hero } from '@/components/sections/hero';
 import { ForWho } from '@/components/sections/for-who';
-import { Value } from '@/components/sections/value';
 import { How } from '@/components/sections/how';
 import { Transformation } from '@/components/sections/transformation';
 import { Plans } from '@/components/sections/plans';
@@ -17,7 +16,6 @@ export default function HomePage() {
       <main className="overflow-x-clip">
         <Hero />
         <ForWho />
-        <Value />
         <How />
         <Transformation />
         <Plans />

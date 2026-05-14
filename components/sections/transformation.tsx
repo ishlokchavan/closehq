@@ -6,7 +6,7 @@ import { Reveal } from '@/components/ui/reveal';
 
 const BEFORE = [
   'Agents entering the secondary market without the knowledge to compete',
-  'Professionals watching clients take property advice from strangers online',
+  'Professionals watching clients take asset advice from strangers online',
   'Specialists with real inventory and no trusted channel to move it',
   'Market knowledge locked in individual heads, never shared',
 ];

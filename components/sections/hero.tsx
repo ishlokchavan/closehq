@@ -1,38 +1,67 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
-const STATS = [
-  { value: '400+', label: 'Properties profiled' },
-  { value: '20+', label: 'Dubai Specialists' },
-  { value: '18+', label: 'Communities covered' },
+const PILLS = [
+  // Left column
+  { label: 'Lawyer', x: '2%', y: '18%', opacity: 0.55, dur: 5.0, delay: 0.0 },
+  { label: 'Financial Adviser', x: '1%', y: '36%', opacity: 0.40, dur: 6.5, delay: 0.8 },
+  { label: 'Family Office', x: '3%', y: '54%', opacity: 0.45, dur: 4.5, delay: 0.4 },
+  { label: 'POA', x: '4%', y: '74%', opacity: 0.35, dur: 7.0, delay: 1.2 },
+  // Right column
+  { label: 'Investor', x: '77%', y: '16%', opacity: 0.45, dur: 5.5, delay: 0.3 },
+  { label: 'Accountant', x: '79%', y: '34%', opacity: 0.50, dur: 4.0, delay: 0.7 },
+  { label: 'Asset Manager', x: '75%', y: '54%', opacity: 0.40, dur: 6.0, delay: 0.2 },
+  { label: 'Broker', x: '78%', y: '72%', opacity: 0.45, dur: 5.0, delay: 1.0 },
+  // Top band
+  { label: 'Mortgage Broker', x: '16%', y: '7%', opacity: 0.38, dur: 6.0, delay: 0.5 },
+  { label: 'Real Estate Agent', x: '60%', y: '8%', opacity: 0.35, dur: 5.5, delay: 0.9 },
+  { label: 'Corporate Treasurer', x: '38%', y: '5%', opacity: 0.28, dur: 7.5, delay: 1.3 },
+  // Bottom band
+  { label: 'Wealth Manager', x: '15%', y: '88%', opacity: 0.35, dur: 7.0, delay: 0.6 },
+  { label: 'Fund Manager', x: '40%', y: '92%', opacity: 0.28, dur: 5.0, delay: 1.4 },
+  { label: 'Private Banker', x: '61%', y: '88%', opacity: 0.38, dur: 6.5, delay: 0.3 },
+  { label: 'Tax Adviser', x: '2%', y: '90%', opacity: 0.30, dur: 4.5, delay: 1.1 },
+  { label: 'Insurance Adviser', x: '80%', y: '88%', opacity: 0.28, dur: 6.0, delay: 0.8 },
 ];
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden">
+    <section className="relative min-h-screen flex flex-col overflow-hidden bg-neutral-950">
 
-      <motion.div
-        initial={{ scale: 1.06 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-0"
-      >
-        <Image
-          src="/images/hero-night.jpg"
-          alt="Dubai at night"
-          fill
-          priority
-          quality={90}
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
-      </motion.div>
+      {/* Subtle center glow */}
+      <div className="absolute inset-0 bg-radial-[ellipse_at_50%_50%] from-white/[0.03] to-transparent pointer-events-none" />
 
-      <div className="relative flex-1 flex flex-col items-center justify-center container-wide text-center pt-28 pb-12">
+      {/* Floating profession pills */}
+      <div className="absolute inset-0 pointer-events-none hidden sm:block">
+        {PILLS.map((pill) => (
+          <motion.div
+            key={pill.label}
+            className="absolute"
+            style={{ left: pill.x, top: pill.y }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: pill.opacity, y: 0 }}
+            transition={{ duration: 0.8, delay: pill.delay + 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.div
+              animate={{ y: [0, -(6 + pill.dur % 4), 0] }}
+              transition={{ duration: pill.dur, repeat: Infinity, ease: 'easeInOut', delay: pill.delay }}
+            >
+              <span
+                className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-white/20 bg-white/[0.04] backdrop-blur-sm text-white text-[12px] tracking-tight whitespace-nowrap"
+                style={{ letterSpacing: '-0.008em' }}
+              >
+                {pill.label}
+              </span>
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Hero content */}
+      <div className="relative flex-1 flex flex-col items-center justify-center container-wide text-center pt-28 pb-20 px-4">
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -55,7 +84,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="block"
           >
-            The Dubai real estate
+            The real estate community
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 28 }}
@@ -63,7 +92,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="block"
           >
-            community for professionals.
+            for professionals.
           </motion.span>
         </h1>
 
@@ -71,10 +100,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 text-white/80 text-[18px] sm:text-[20px] leading-[1.45] text-balance max-w-xl mx-auto px-2"
+          className="mt-6 text-white/70 text-[18px] sm:text-[20px] leading-[1.5] text-balance max-w-xl mx-auto"
           style={{ letterSpacing: '-0.015em' }}
         >
-          Whether you are an agent building expertise in the secondary market, a professional whose clients need the right property, or a Specialist with inventory to move — iClose is where it happens.
+          The Dubai secondary market runs on the right expertise, the right relationships, and access to the right assets. iClose is where all three come together.
         </motion.p>
 
         <motion.div
@@ -94,7 +123,7 @@ export function Hero() {
           </a>
           <a
             href="/specialists"
-            className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors text-[15px]"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors text-[15px]"
             style={{ letterSpacing: '-0.01em' }}
           >
             Become a Specialist
@@ -102,24 +131,6 @@ export function Hero() {
           </a>
         </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.7 }}
-        className="relative border-t border-white/10 bg-black/35 backdrop-blur-md"
-      >
-        <div className="container-wide grid grid-cols-3 divide-x divide-white/10 py-7 sm:py-9">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="text-center px-4 sm:px-8">
-              <div className="display-md text-white">{stat.value}</div>
-              <div className="mt-1.5 text-[13px] text-white/50" style={{ letterSpacing: '-0.01em' }}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
 
     </section>
   );

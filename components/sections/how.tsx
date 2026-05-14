@@ -21,7 +21,7 @@ const STEPS = [
     number: '3',
     icon: Handshake,
     title: 'Connect to close.',
-    body: "When a Member has a requirement — or when a client of a professional needs a specific property — the Specialist who knows that domain best is matched directly. The right knowledge meets the right buyer, every time.",
+    body: "When a Member has a requirement — or when a client of a professional needs a specific asset — the Specialist who knows that domain best is matched directly. The right knowledge meets the right buyer, every time.",
   },
 ];
 

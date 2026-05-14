@@ -25,7 +25,7 @@ const PLANS: Plan[] = [
     features: [
       'Full community access',
       'iClose Academy — foundation content',
-      'Post and receive property requirements',
+      'Post and receive asset requirements',
       'Email support',
     ],
     isStar: false,
