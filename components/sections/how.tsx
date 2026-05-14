@@ -9,19 +9,19 @@ const STEPS = [
     number: '1',
     icon: UserPlus,
     title: 'Join as a Member or apply as a Specialist.',
-    body: 'Members — whether agents, lawyers, accountants, or advisers — sign up and get immediate access to the education platform. Specialists apply separately and are vetted before joining. Every role has a clear place.',
+    body: 'Members — whether agents, lawyers, accountants, etc. sign up and get immediate access to our community. Specialists apply separately and are vetted before joining. Every role has a clear place.',
   },
+  // {
+  //   number: '2',
+  //   icon: BookOpenCheck,
+  //   title: 'Learn the market or share what you know.',
+  //   body: 'Agents and professionals access area playbooks, building deep-dives, and community intelligence created by active Specialists. Specialists publish their expertise to establish their authority and attract the right inquiries.',
+  // },
   {
     number: '2',
-    icon: BookOpenCheck,
-    title: 'Learn the market or share what you know.',
-    body: 'Agents and professionals access area playbooks, building deep-dives, and community intelligence created by active Specialists. Specialists publish their expertise to establish their authority and attract the right inquiries.',
-  },
-  {
-    number: '3',
     icon: Handshake,
     title: 'Connect to close.',
-    body: "When a Member has a requirement — or when a client of a professional needs a specific asset — the Specialist who knows that domain best is matched directly. The right knowledge meets the right buyer, every time.",
+    body: "When a Member has a requirement or when a client of a professional needs an asset, the Specialist who knows that domain best is matched directly. The right knowledge meets the right buyer, every time. While you can earn commissions upto 100% ",
   },
 ];
 
@@ -35,7 +35,7 @@ export function How() {
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {STEPS.map((step, i) => {
             const Icon = step.icon;
             return (

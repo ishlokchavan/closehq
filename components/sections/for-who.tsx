@@ -8,22 +8,22 @@ const AUDIENCES = [
   {
     icon: Briefcase,
     tag: 'For Professionals',
-    headline: 'Your clients need the right asset. We have the right people.',
-    body: "As a lawyer, accountant, financial adviser, or family office, your clients trust you with their investments. When they need a Dubai asset, you need someone you can trust in return. iClose connects you to vetted Specialists who know the market and have the inventory — so you can serve your clients without leaving your lane.",
+    headline: 'Your Clients Deserve the Best Experts.',
+    body: "As a lawyer, accountant, financial advisor, family office, etc. your clients trust you with their investments. When they need an asset, you need an expert who can assist you. iClose connects you to vetted Specialists who know the market and have the inventory, so you can serve your clients without leaving your lane.",
     cta: { label: 'Join as a Member', href: '#apply' },
   },
   {
     icon: Award,
     tag: 'For Specialists',
-    headline: 'Your expertise builds your authority — without a marketing budget.',
-    body: "If you know a community or building better than anyone, iClose gives you the platform to prove it at no cost. Publish your knowledge, establish your authority within a professional network that has serious buyers, and when a Member inquiry falls within your domain, you are the first and only call to close it. Your expertise does the marketing.",
+    headline: 'Your Knowledge. Our Reach.',
+    body: "If you know a community or a building better than anyone, iClose puts you in front of a network of serious buyers. Share your knowledge, and we handle the rest. We publish it, we amplify it, and we position you as the go-to authority in your domain. When a Member inquiry falls within your expertise, you are the first and only call.",
     cta: { label: 'Become a Specialist', href: '/specialists' },
   },
   {
     icon: GraduationCap,
     tag: 'For Agents',
-    headline: 'Build secondary market expertise with knowledge from the inside.',
-    body: "Most agents want to move into the secondary market but lack the tools to do it with confidence. iClose gives you structured content from Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and community intelligence — so you go in prepared, not guessing.",
+    headline: "The Inside Knowledge You've Been Missing.",
+    body: "Most agents want to learn about the secondary market, but lack the tools to do so. iClose gives you structured content from Specialists who are actively working the areas you want to master, so you go in prepared, not guessing.",
     cta: { label: 'Join as a Member', href: '#apply' },
   },
 ];

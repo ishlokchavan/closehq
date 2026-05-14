@@ -12,7 +12,7 @@ const BEFORE = [
 ];
 
 const AFTER = [
-  'Agents who understand the secondary market well enough to lead any conversation in it',
+  'Agents who understand the secondary market well enough to sky-rocket their sales',
   'Professionals with a vetted Specialist network for every client requirement',
   'Specialists with a ready community of professionals who have active, serious buyers',
   'A platform where expertise is distributed, recognised, and put to work',
@@ -24,7 +24,8 @@ export function Transformation() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What being part of the right community actually changes.
+            What being part of iClose
+            actually changes.
           </h2>
         </Reveal>
 
@@ -36,7 +37,7 @@ export function Transformation() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="card-surface p-8 sm:p-10"
           >
-            <p className="text-sm font-medium text-graphite tracking-tight mb-6">Without iClose</p>
+            <p className="display-sm font-bold text-graphite tracking-tight mb-6">Without iClose</p>
             <ul className="space-y-4">
               {BEFORE.map((text) => (
                 <li key={text} className="flex items-start gap-3 text-[17px] text-graphite-dark" style={{ letterSpacing: '-0.012em' }}>
@@ -54,7 +55,7 @@ export function Transformation() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="card-surface ring-1 ring-ink p-8 sm:p-10"
           >
-            <p className="text-sm font-medium text-ink tracking-tight mb-6">With iClose</p>
+            <p className="display-sm font-bold text-ink tracking-tight mb-6">With iClose</p>
             <ul className="space-y-4">
               {AFTER.map((text) => (
                 <li key={text} className="flex items-start gap-3 text-[17px] text-ink" style={{ letterSpacing: '-0.012em' }}>
