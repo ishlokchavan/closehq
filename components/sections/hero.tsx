@@ -15,7 +15,6 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden">
 
-      {/* Full-bleed background with cinematic scale-in */}
       <motion.div
         initial={{ scale: 1.06 }}
         animate={{ scale: 1 }}
@@ -30,14 +29,11 @@ export function Hero() {
           quality={90}
           className="object-cover object-center"
         />
-        {/* Stronger overlay for legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/85" />
       </motion.div>
 
-      {/* Content */}
       <div className="relative flex-1 flex flex-col items-center justify-center container-wide text-center pt-28 pb-12">
 
-        {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -48,11 +44,10 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm text-[12px] text-white/80"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Early access open · Dubai’s secondary real estate market
+            Founding cohort open · Dubai secondary market
           </span>
         </motion.div>
 
-        {/* Headline — line-by-line stagger */}
         <h1 className="display-xl text-white text-balance">
           <motion.span
             initial={{ opacity: 0, y: 28 }}
@@ -60,7 +55,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="block"
           >
-            Know Dubai.
+            Close deals.
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 28 }}
@@ -68,11 +63,10 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="block"
           >
-            Be the one they call.
+            Keep your split.
           </motion.span>
         </h1>
 
-        {/* Subhead */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -80,11 +74,9 @@ export function Hero() {
           className="mt-6 text-white/80 text-[18px] sm:text-[20px] leading-[1.45] text-balance max-w-lg mx-auto px-2"
           style={{ letterSpacing: '-0.015em' }}
         >
-          Most people exploring this market are still trusting whoever sounds most confident.
-          iClose is how you become that person instead.
+          iClose is Dubai's independent brokerage platform — anonymous identity, deal desk support, and up to 100% commission for agents who are done splitting 50/50.
         </motion.p>
 
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,7 +89,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-ink text-[15px] font-medium hover:bg-white/90 transition-colors"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Get early access
+            Join the founding cohort
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
           <a
@@ -111,7 +103,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Stats bar — glass, anchored to bottom */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

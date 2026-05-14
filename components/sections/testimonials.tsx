@@ -7,18 +7,18 @@ import { Reveal } from '@/components/ui/reveal';
 const TESTIMONIALS = [
   {
     initials: 'S.A.',
-    role: 'Dubai Investor',
-    quote: 'I used to form opinions about Dubai based on whoever I had spoken to last. Now I have my own read — and people in my network ask for it.',
+    role: 'Independent broker, Dubai',
+    quote: 'I was doing AED 8M a month and keeping half of it. Now I keep 80% and no one on the buyer side knows who I work under. That is not a small thing.',
   },
   {
     initials: 'K.R.',
-    role: 'Finance Professional',
-    quote: "I thought I understood this market. The first module showed me how much I'd been trusting other people's knowledge as if it were my own.",
+    role: 'Agent, secondary market',
+    quote: "The deal desk is what sold me. I had a complex transaction — two buyers, a motivated seller, a tight timeline. The support I got would have cost me a partnership at any other firm.",
   },
   {
     initials: 'M.T.',
-    role: 'Property Consultant',
-    quote: 'Someone asked me about a specific development in a meeting. I did not hesitate. I just knew. That was the moment everything shifted.',
+    role: 'Broker, 6 years in Dubai',
+    quote: 'I spent three years building a client book at a brokerage I then had to leave behind. On iClose, those relationships are mine. Full stop.',
   },
 ];
 
@@ -35,7 +35,6 @@ export function Testimonials() {
   return (
     <section className="relative bg-neutral-950 py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
 
-      {/* Subtle background texture */}
       <div className="absolute inset-0">
         <Image
           src="/images/hero-burj.jpg"
@@ -49,7 +48,7 @@ export function Testimonials() {
       <div className="relative container-wide">
         <Reveal>
           <h2 className="display-lg text-white text-balance max-w-xl mb-14 md:mb-16">
-            From people who made the shift.
+            Agents who made the switch.
           </h2>
         </Reveal>
 
@@ -69,7 +68,7 @@ export function Testimonials() {
               <blockquote
                 className="display-sm text-white leading-[1.3] text-balance flex-1"
               >
-                “{t.quote}”
+                "{t.quote}"
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/10">

@@ -2,29 +2,29 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin, Building2, Users, TrendingUp } from 'lucide-react';
+import { EyeOff, Headphones, BookOpen, TrendingUp } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const VALUES = [
   {
-    icon: MapPin,
-    title: 'Area knowledge.',
-    body: "Every major Dubai community mapped to what actually drives it — demand patterns, price bands, the dynamics that move people to act. Understanding, not just information.",
+    icon: EyeOff,
+    title: 'Anonymous, always.',
+    body: 'Your name never enters the deal. iClose operates the transaction — you keep the client relationship and collect your commission. No exposure. No conflict.',
   },
   {
-    icon: Building2,
-    title: 'Development intelligence.',
-    body: 'Per-development depth: unit types, floor premiums, view differentials, price history. The difference between knowing a development exists and truly knowing everything about it.',
+    icon: Headphones,
+    title: 'Deal desk on every transaction.',
+    body: "Submit a lead and get structured support from people who know Dubai's secondary market inside out. You focus on sourcing. We help you close.",
   },
   {
-    icon: Users,
-    title: 'Community intelligence.',
-    body: "Dubai's communities each move to their own logic. The demand drivers, seasonal patterns, and buyer profiles that separate a well-timed move from a lucky one.",
+    icon: BookOpen,
+    title: 'iClose Academy.',
+    body: 'Area intelligence, development deep-dives, and community playbooks built by specialists active in the market right now. Not theory — the knowledge that actually moves deals.',
   },
   {
     icon: TrendingUp,
-    title: 'Cluster mastery.',
-    body: "Inside Dubai's major communities live micro-markets most outsiders never see. The ones who understand them early become the ones others turn to for their read.",
+    title: 'Up to 100% commission.',
+    body: 'Start at 60/40 for free. Upgrade your plan and keep more of every deal — all the way to 100%. The platform earns when you earn. That alignment is the point.',
   },
 ];
 
@@ -42,11 +42,10 @@ export function Value() {
     <section id="learn" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
       <div className="container-wide">
 
-        {/* Headline left + image right */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-16 md:mb-20">
           <Reveal>
             <h2 className="display-lg text-balance">
-              What the most trusted voices on Dubai real estate actually know.
+              Everything a top-tier brokerage offers. None of the politics.
             </h2>
           </Reveal>
           <motion.div
@@ -68,7 +67,6 @@ export function Value() {
           </motion.div>
         </div>
 
-        {/* Value cards */}
         <motion.div
           variants={container}
           initial="hidden"

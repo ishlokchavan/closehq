@@ -1,27 +1,27 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Compass, BookOpen, Users } from 'lucide-react';
+import { UserCheck, PhoneCall, Banknote } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const STEPS = [
   {
     number: '1',
-    icon: Compass,
-    title: 'Choose your depth.',
-    body: 'Pick the areas, communities, and property types you want to truly understand. Most platforms give you breadth. iClose gives you depth.',
+    icon: UserCheck,
+    title: 'Join and pick your tier.',
+    body: 'Sign up free as a Plus member. Access the deal desk, work anonymously, and keep 60% of every deal from day one. Upgrade any time to increase your split.',
   },
   {
     number: '2',
-    icon: BookOpen,
-    title: 'Learn from the inside.',
-    body: 'Every module is built by people active in this market right now — not analysts or educators. People whose knowledge has been tested by real decisions.',
+    icon: PhoneCall,
+    title: 'Submit leads. Work the desk.',
+    body: 'Bring your deals to the iClose deal desk. Our specialists support you through structuring, negotiation, and close — without ever revealing who you are.',
   },
   {
     number: '3',
-    icon: Users,
-    title: 'Become the person people call.',
-    body: 'The moment your depth surpasses what anyone in your network can offer. That is what iClose builds toward.',
+    icon: Banknote,
+    title: 'Collect when the buyer signs.',
+    body: 'Commission is structured at signing. No chasing, no delays, no office politics. You sourced it — you get paid for it.',
   },
 ];
 
@@ -31,7 +31,7 @@ export function How() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            From curious to credible.
+            Simple by design.
           </h2>
         </Reveal>
 

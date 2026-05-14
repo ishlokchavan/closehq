@@ -5,70 +5,73 @@ import { Check, ChevronRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 interface Plan {
-  name: string;
+  key: string;
+  label: string;
+  tagline: string;
   price: string;
   cadence?: string;
-  split: string;
-  advance: string;
-  highlights: string[];
-  emphasis: string;
-  featured?: boolean;
+  splitPct: number;
+  features: string[];
+  isStar: boolean;
 }
 
 const PLANS: Plan[] = [
   {
-    name: 'Plus',
+    key: 'plus',
+    label: 'Plus',
+    tagline: 'Start with zero commitment. Prove the platform works for you.',
     price: 'Free',
-    split: '60 / 40',
-    advance: '50 / 50 paid when buyer signs',
-    emphasis: 'Try iClose with zero commitment.',
-    highlights: [
+    splitPct: 60,
+    features: [
       'Stay completely anonymous',
       'Access to the deal desk',
       'Email support',
     ],
+    isStar: false,
   },
   {
-    name: 'Pro',
+    key: 'pro',
+    label: 'Pro',
+    tagline: 'Built for agents who close every month and want to keep more of it.',
     price: 'AED 1,200',
     cadence: '/ year',
-    split: '80 / 20',
-    advance: '70 / 30 paid when buyer signs',
-    emphasis: 'For active brokers closing every month.',
-    highlights: [
+    splitPct: 80,
+    features: [
       'Everything in Plus',
       'iClose Academy training',
       'Priority deal desk',
     ],
+    isStar: false,
   },
   {
-    name: 'Pro Max',
+    key: 'pro_max',
+    label: 'Pro Max',
+    tagline: 'Independent brokers scaling solo — without the overhead.',
     price: 'AED 40,000',
     cadence: '/ year',
-    split: '90 / 10',
-    advance: '70 / 30 paid when buyer signs',
-    emphasis: 'For independent brokers ready to scale solo.',
-    featured: true,
-    highlights: [
+    splitPct: 90,
+    features: [
       'Labour & visa included',
       'Listings included',
       'Dedicated relationship manager',
       'iClose Academy + area playbooks',
     ],
+    isStar: true,
   },
   {
-    name: 'Ultra',
+    key: 'ultra',
+    label: 'Ultra',
+    tagline: 'Full-service back office. You run deals. We run everything else.',
     price: 'AED 100,000',
     cadence: '/ year',
-    split: '100 %',
-    advance: '90 / 10 paid when buyer signs',
-    emphasis: 'Done for you. Run your practice, not the back office.',
-    highlights: [
+    splitPct: 100,
+    features: [
       'Everything done for you',
       'Dedicated account manager',
       'Finance, admin, and invoicing',
       'Priority RM + concierge',
     ],
+    isStar: false,
   },
 ];
 
@@ -79,12 +82,12 @@ export function Plans() {
         <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Pick the way you want to work.
+              Your production. Your earnings.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-6 mx-auto max-w-2xl">
-              Four tiers. Same anonymity. The more you put in, the more you keep — up to 100%.
+              Four tiers. Every one anonymous. The more you invest in the platform, the more commission you keep — up to 100%.
             </p>
           </Reveal>
         </div>
@@ -92,7 +95,7 @@ export function Plans() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 pt-3">
           {PLANS.map((plan, i) => (
             <motion.div
-              key={plan.name}
+              key={plan.key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
@@ -102,19 +105,19 @@ export function Plans() {
                 ease: [0.22, 1, 0.36, 1],
               }}
               className={
-                plan.featured
+                plan.isStar
                   ? 'card-surface ring-2 ring-ink p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col relative'
                   : 'card-surface p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col'
               }
             >
-              {plan.featured && (
+              {plan.isStar && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-ink text-white text-[12px] font-medium tracking-tight whitespace-nowrap">
                   Most popular
                 </span>
               )}
 
               <p className="text-sm font-medium text-graphite tracking-tight">
-                {plan.name}
+                {plan.label}
               </p>
 
               <div className="mt-3 flex items-baseline gap-1.5 flex-wrap">
@@ -133,7 +136,7 @@ export function Plans() {
                 className="mt-4 text-[15px] text-graphite-dark leading-[1.45] min-h-[3em]"
                 style={{ letterSpacing: '-0.012em' }}
               >
-                {plan.emphasis}
+                {plan.tagline}
               </p>
 
               <div className="hairline my-6" />
@@ -142,28 +145,22 @@ export function Plans() {
                 <div className="flex items-baseline justify-between">
                   <span className="text-sm text-graphite tracking-tight">Commission split</span>
                   <span className="text-[17px] font-medium text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
-                    {plan.split}
+                    {plan.splitPct} / {100 - plan.splitPct}
                   </span>
                 </div>
-                {/* <div className="flex items-baseline justify-between">
-                  <span className="text-sm text-graphite tracking-tight">Paid on signing</span>
-                  <span className="text-[15px] text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
-                    {plan.advance}
-                  </span>
-                </div> */}
               </div>
 
               <div className="hairline my-6" />
 
               <ul className="space-y-2.5 mb-8">
-                {plan.highlights.map((h) => (
+                {plan.features.map((f) => (
                   <li
-                    key={h}
+                    key={f}
                     className="flex items-start gap-2.5 text-[15px] text-ink"
                     style={{ letterSpacing: '-0.012em' }}
                   >
                     <Check className="h-4 w-4 mt-0.5 text-ink flex-shrink-0" strokeWidth={2.5} />
-                    <span>{h}</span>
+                    <span>{f}</span>
                   </li>
                 ))}
                 <li
@@ -176,7 +173,7 @@ export function Plans() {
               </ul>
 
               <a href="#apply" className="applelink mt-auto">
-                Get {plan.name}
+                Get started
                 <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
               </a>
             </motion.div>
@@ -184,7 +181,7 @@ export function Plans() {
         </div>
 
         <p className="mt-10 text-center text-sm text-graphite tracking-tight">
-          All plans include 5% lifetime referral bonus on agents you bring in.
+          All plans include a 5% lifetime referral bonus on every agent you bring in.
         </p>
       </div>
     </section>

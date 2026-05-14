@@ -8,23 +8,27 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: "A learning platform for people who want to understand Dubai real estate deeply — not just know about it. The kind of depth that makes you the most informed person in your network when Dubai property comes up.",
+    a: "iClose is Dubai's independent brokerage platform. Agents work under the iClose structure — anonymously — and keep 60–100% of their commission depending on their plan. The deal desk handles the operational side. You handle the deals.",
   },
   {
     q: 'Who is it for?',
-    a: "Internationally minded professionals who keep encountering Dubai real estate and want to understand it properly. Investors who want conviction before they move. And anyone tired of relying on other people’s knowledge in a market they’re serious about.",
+    a: "Independent agents and brokers active in Dubai's secondary real estate market who are done giving away 40–50% of every deal to a traditional brokerage. If you're producing and want to keep more of what you close, iClose is built for you.",
   },
   {
-    q: 'When does it launch?',
-    a: "We’re taking founding member spots now. They come with the lowest price iClose will ever offer and first access when we go live.",
+    q: 'What does "anonymous" mean in practice?',
+    a: "Your clients know you as their agent — they don't know which brokerage structure you operate under. iClose handles the legal and operational layer. Your name, your relationships, your reputation stay entirely yours.",
   },
   {
-    q: 'What does the content look like?',
-    a: 'Deep-dives into Dubai’s communities, development-level intelligence, area analysis, and monthly sessions with specialists actively working this market. Less theory. More the kind of knowledge you’d only get from being on the ground.',
+    q: 'How does the commission split work?',
+    a: 'It depends on your plan. Plus gives you 60%, Pro gives you 80%, Pro Max gives you 90%, and Ultra gives you 100%. Everyone starts as a Plus member for free. You upgrade when the numbers make sense for your volume.',
   },
   {
-    q: 'Do I need a real estate license?',
-    a: "No. iClose is for anyone who wants to understand Dubai real estate with real depth — whether you’re investing, advising, or simply want to move in this market as someone who’s done the work.",
+    q: 'When do I get paid?',
+    a: "Commission is structured at the point the buyer signs. No chasing, no month-end delays, no approval queues. The deal closes — you get paid.",
+  },
+  {
+    q: 'What is iClose Academy?',
+    a: 'iClose Academy is our market intelligence layer — area playbooks, development deep-dives, and community analysis built by specialists who are active in Dubai right now. It comes with Pro and above, and gives you the kind of deal-level knowledge that most agents spend years accumulating.',
   },
 ];
 
@@ -36,7 +40,7 @@ export function FAQ() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            Questions worth asking.
+            Straight answers.
           </h2>
         </Reveal>
 

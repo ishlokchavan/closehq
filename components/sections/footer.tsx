@@ -4,9 +4,10 @@ import { Logo } from '@/components/ui/logo';
 
 const LINKS = [
   { href: '#how', label: 'How it works' },
-  { href: '#learn', label: 'What you learn' },
+  { href: '#learn', label: 'Why iClose' },
+  { href: '#plans', label: 'Plans' },
   { href: '#faq', label: 'FAQ' },
-  { href: '#apply', label: 'Get early access' },
+  { href: '#apply', label: 'Join founding cohort' },
   { href: '/privacy', label: 'Privacy policy' },
   { href: '/terms', label: 'Terms of service' },
 ];

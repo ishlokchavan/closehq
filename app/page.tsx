@@ -3,6 +3,7 @@ import { Hero } from '@/components/sections/hero';
 import { Value } from '@/components/sections/value';
 import { How } from '@/components/sections/how';
 import { Transformation } from '@/components/sections/transformation';
+import { Plans } from '@/components/sections/plans';
 import { Testimonials } from '@/components/sections/testimonials';
 import { FinalCTA } from '@/components/sections/final-cta';
 import { FAQ } from '@/components/sections/faq';
@@ -17,6 +18,7 @@ export default function HomePage() {
         <Value />
         <How />
         <Transformation />
+        <Plans />
         <Testimonials />
         <FinalCTA />
         <FAQ />
