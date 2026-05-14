@@ -40,7 +40,7 @@ export function LeadForm() {
         throw new Error(body?.error || 'Something went wrong');
       }
 
-      trackEvent('lead_submit', { source: 'early_access' });
+      trackEvent('closer_signup', { source: 'early_access' });
       setSuccess(true);
       reset();
     } catch (err) {
@@ -62,12 +62,12 @@ export function LeadForm() {
           <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-mist mb-5">
             <Check className="h-6 w-6 text-ink" strokeWidth={2} />
           </div>
-          <h3 className="display-sm">You're on the list.</h3>
+          <h3 className="display-sm">You&apos;re in.</h3>
           <p
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            We'll be in touch when early access opens.
+            Check your inbox — we&apos;ve sent confirmation. We&apos;ll be in touch before launch.
           </p>
         </motion.div>
       ) : (
@@ -111,7 +111,7 @@ export function LeadForm() {
               {isSubmitting ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
               ) : (
-                <>Get early access <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
+                <>Join as a Closer <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
               )}
             </Button>
           </div>

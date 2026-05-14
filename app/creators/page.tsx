@@ -5,25 +5,25 @@ import { SpecialistForm } from '@/components/specialist-form';
 import { Reveal } from '@/components/ui/reveal';
 
 export const metadata = {
-  title: 'Become a Specialist — iClose',
+  title: 'Become a Creator — iClose',
   description:
-    'Apply to join iClose as a Dubai property specialist. Share deep area knowledge, development intelligence, and community expertise with professionals who are ready to learn.',
+    'Apply to join iClose as a Creator. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
 };
 
 const TESTIMONIALS = [
   {
     initials: 'A.R.',
     name: 'Ahmad R.',
-    role: 'Downtown Dubai Specialist',
+    role: 'Downtown Dubai Creator',
     quote:
-      'Teaching what I know forces me to know it better. I went from being the expert in my office to being the person my entire network calls. iClose gave me the platform to make that happen.',
+      'Turning what I know into structured content made me sharper. My expertise went from something I carried in my head to something that reaches active brokers every week.',
   },
   {
     initials: 'S.K.',
     name: 'Sarah K.',
-    role: 'Palm Jumeirah Specialist',
+    role: 'Palm Jumeirah Creator',
     quote:
-      "I used to share my knowledge informally — over coffee, over the phone. Now it reaches professionals across three countries. That shift in reach changed everything for how I work.",
+      "I used to share my knowledge over the phone, one person at a time. Now it's powering deal desk decisions across the platform. That kind of leverage changes how you think about what you know.",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function CreatorsPage() {
       <Header />
       <main>
 
-        {/* ── Hero + Form ───────────────────────────────────────────────── */}
+        {/* ── Hero + Form ─────────────────────────────────────────────── */}
         <section className="relative bg-neutral-950 overflow-hidden">
           <div className="absolute inset-0">
             <Image
@@ -53,16 +53,14 @@ export default function CreatorsPage() {
               {/* Left — headline + image */}
               <div>
                 <Reveal>
-                  <span
-                    className="inline-block text-[11px] font-medium tracking-[0.12em] uppercase text-white/40 mb-6"
-                  >
-                    Become a specialist
+                  <span className="inline-block text-[11px] font-medium tracking-[0.12em] uppercase text-white/40 mb-6">
+                    Become a Creator
                   </span>
                 </Reveal>
 
                 <Reveal delay={0.05}>
                   <h1 className="display-lg text-white text-balance leading-[1.1]">
-                    Join our roster of Dubai property specialists.
+                    Your Dubai knowledge powers the deal desk.
                   </h1>
                 </Reveal>
 
@@ -71,8 +69,7 @@ export default function CreatorsPage() {
                     className="mt-5 text-[17px] sm:text-[18px] text-white/55 leading-[1.55]"
                     style={{ letterSpacing: '-0.012em' }}
                   >
-                    Apply today to become part of an exclusive community of specialists shaping how
-                    the world understands Dubai’s secondary real estate market.
+                    iClose Creators build the market intelligence that active brokers rely on to close — area playbooks, development deep-dives, and community analysis from people who are still in the market, not watching from the sidelines.
                   </p>
                 </Reveal>
 
@@ -102,19 +99,51 @@ export default function CreatorsPage() {
           </div>
         </section>
 
-        {/* ── Testimonials ───────────────────────────────────────────────── */}
+        {/* ── What Creators do ──────────────────────────────────────────── */}
+        <section className="bg-mist py-16 sm:py-20 md:py-24">
+          <div className="container-wide">
+            <Reveal>
+              <h2 className="display-lg text-balance max-w-xl mb-12">
+                What it means to be a Creator on iClose.
+              </h2>
+            </Reveal>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: 'Build the intelligence layer.',
+                  body: 'Your area knowledge, development expertise, and community insight becomes structured content — the kind that changes how a broker walks into a deal.',
+                },
+                {
+                  title: 'Power the deal desk.',
+                  body: "When a Closer submits a deal, they're drawing on Creator knowledge. Your expertise is active in every transaction it touches — not sitting in a course no one finishes.",
+                },
+                {
+                  title: 'Get recognised for what you actually know.',
+                  body: 'iClose Creators are vetted. That mark means something on a platform where everyone is anonymous — you are the exception.',
+                },
+              ].map((card) => (
+                <div key={card.title} className="card-surface p-8 sm:p-10">
+                  <h3 className="display-sm mb-3">{card.title}</h3>
+                  <p className="text-[17px] text-graphite-dark leading-[1.5]" style={{ letterSpacing: '-0.012em' }}>
+                    {card.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Testimonials ─────────────────────────────────────────────── */}
         <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
           <div className="container-wide">
             <Reveal>
-              <p
-                className="text-[11px] font-medium tracking-[0.12em] uppercase text-graphite mb-5"
-              >
-                Voices from the field
+              <p className="text-[11px] font-medium tracking-[0.12em] uppercase text-graphite mb-5">
+                From the field
               </p>
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-                Why Dubai’s best choose to teach with iClose.
+                Creators who turned expertise into leverage.
               </h2>
             </Reveal>
 
@@ -128,7 +157,7 @@ export default function CreatorsPage() {
                     className="display-sm text-ink leading-[1.35] text-balance flex-1"
                     style={{ letterSpacing: '-0.012em' }}
                   >
-                    “{t.quote}”
+                    "{t.quote}"
                   </blockquote>
                   <figcaption className="mt-8 flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">

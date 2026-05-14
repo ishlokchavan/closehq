@@ -7,7 +7,7 @@ const LINKS = [
   { href: '#learn', label: 'Why iClose' },
   { href: '#plans', label: 'Plans' },
   { href: '#faq', label: 'FAQ' },
-  { href: '#apply', label: 'Join founding cohort' },
+  { href: '#apply', label: 'Join as a Closer' },
   { href: '/privacy', label: 'Privacy policy' },
   { href: '/terms', label: 'Terms of service' },
 ];

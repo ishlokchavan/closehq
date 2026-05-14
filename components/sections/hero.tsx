@@ -89,7 +89,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-ink text-[15px] font-medium hover:bg-white/90 transition-colors"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Join the founding cohort
+            Join as a Closer
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
           <a

@@ -32,7 +32,7 @@ export function Header() {
             </a>
           ))}
           <a href="#apply" className="ml-2">
-            <Button variant="primary" size="sm">Get early access</Button>
+            <Button variant="primary" size="sm">Join as a Closer</Button>
           </a>
         </div>
 
@@ -69,7 +69,7 @@ export function Header() {
               ))}
               <div className="py-4">
                 <a href="#apply" onClick={() => setOpen(false)}>
-                  <Button variant="primary" size="md" className="w-full">Get early access</Button>
+                  <Button variant="primary" size="md" className="w-full">Join as a Closer</Button>
                 </a>
               </div>
             </div>
