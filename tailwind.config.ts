@@ -8,6 +8,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Sellit-inspired accent
+        'gold-accent': '#e8b84b',
+
         // Apple.com-inspired neutrals
         ink: {
           DEFAULT: '#1d1d1f',
