@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 export const leadSchema = z.object({
-  name: z.string().min(2, 'Enter your full name').max(80),
+  firstName: z.string().min(1, 'Enter your first name').max(50),
+  lastName: z.string().min(1, 'Enter your last name').max(50),
   phone: z
     .string()
     .min(7, 'Enter a valid phone number')

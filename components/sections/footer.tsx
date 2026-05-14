@@ -25,17 +25,37 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-x-8 gap-y-3">
-            {LINKS.map((link) => (
+          <div className="flex flex-col sm:flex-row gap-10">
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              {LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-[13px] text-graphite hover:text-ink transition-colors"
+                  style={{ letterSpacing: '-0.008em' }}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-2 shrink-0">
+              <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-graphite-light mb-1">Contact</p>
               <a
-                key={link.href}
-                href={link.href}
+                href="mailto:hello@iclose.ae"
                 className="text-[13px] text-graphite hover:text-ink transition-colors"
                 style={{ letterSpacing: '-0.008em' }}
               >
-                {link.label}
+                hello@iclose.ae
               </a>
-            ))}
+              <a
+                href="tel:+800425673"
+                className="text-[13px] text-graphite hover:text-ink transition-colors"
+                style={{ letterSpacing: '-0.008em' }}
+              >
+                (800) 425-673
+              </a>
+            </div>
           </div>
         </div>
 

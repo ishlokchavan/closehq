@@ -21,10 +21,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    const { name, phone, email } = parsed.data;
+    const { firstName, lastName, phone, email } = parsed.data;
+    const name = `${firstName} ${lastName}`.trim();
     const userAgent = request.headers.get('user-agent') || undefined;
     const referer = request.headers.get('referer') || undefined;
-    const firstName = name.split(' ')[0];
 
     // Save to Supabase
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -37,14 +37,14 @@ const FAQS = [
 ];
 
 export function FAQ() {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section id="faq" className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            Common questions.
+            FAQ
           </h2>
         </Reveal>
 

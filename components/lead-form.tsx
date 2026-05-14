@@ -20,7 +20,7 @@ export function LeadForm() {
     reset,
   } = useForm<LeadFormValues>({
     resolver: zodResolver(leadSchema),
-    defaultValues: { website: '' },
+    defaultValues: { website: '', firstName: '', lastName: '', phone: '', email: '' },
   });
 
   const [success, setSuccess] = useState(false);
@@ -88,9 +88,14 @@ export function LeadForm() {
             aria-hidden
           />
 
-          <Field label="Full name" error={errors.name?.message}>
-            <input {...register('name')} type="text" autoComplete="name" placeholder="Your full name" className={inputClasses} />
-          </Field>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="First name" error={errors.firstName?.message}>
+              <input {...register('firstName')} type="text" autoComplete="given-name" placeholder="First name" className={inputClasses} />
+            </Field>
+            <Field label="Last name" error={errors.lastName?.message}>
+              <input {...register('lastName')} type="text" autoComplete="family-name" placeholder="Last name" className={inputClasses} />
+            </Field>
+          </div>
 
           <Field label="Phone" error={errors.phone?.message}>
             <input {...register('phone')} type="tel" autoComplete="tel" placeholder="+971 50 123 4567" className={inputClasses} />
