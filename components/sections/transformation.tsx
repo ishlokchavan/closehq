@@ -5,26 +5,26 @@ import { X, Check } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const BEFORE = [
-  'Giving 40–50% of every deal to a brokerage that barely knows your name',
-  'Clients tied to the firm, not to you — your book disappears if you leave',
-  'Zero anonymity — your name, your license, your risk',
-  'Months of chasing your own commission after every close',
+  'Agents entering the secondary market without the knowledge to compete',
+  'Professionals watching clients take property advice from strangers online',
+  'Specialists with real inventory and no trusted channel to move it',
+  'Market knowledge locked in individual heads, never shared',
 ];
 
 const AFTER = [
-  'Keep 60–100% of every deal depending on your tier — from day one',
-  'Anonymous identity: your clients know you, not who you work under',
-  'Deal desk support on every transaction — without sacrificing your split',
-  'Commission structured at signing. Paid when the buyer signs.',
+  'Agents who understand the secondary market well enough to lead any conversation in it',
+  'Professionals with a vetted Specialist network for every client requirement',
+  'Specialists with a ready community of professionals who have active, serious buyers',
+  'A platform where expertise is distributed, recognised, and put to work',
 ];
 
 export function Transformation() {
   return (
-    <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
+    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What the right platform actually changes.
+            What being part of the right community actually changes.
           </h2>
         </Reveal>
 
@@ -34,9 +34,9 @@ export function Transformation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="card-mist p-8 sm:p-10"
+            className="card-surface p-8 sm:p-10"
           >
-            <p className="text-sm font-medium text-graphite tracking-tight mb-6">Traditional brokerage</p>
+            <p className="text-sm font-medium text-graphite tracking-tight mb-6">Without iClose</p>
             <ul className="space-y-4">
               {BEFORE.map((text) => (
                 <li key={text} className="flex items-start gap-3 text-[17px] text-graphite-dark" style={{ letterSpacing: '-0.012em' }}>
@@ -54,7 +54,7 @@ export function Transformation() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="card-surface ring-1 ring-ink p-8 sm:p-10"
           >
-            <p className="text-sm font-medium text-ink tracking-tight mb-6">iClose</p>
+            <p className="text-sm font-medium text-ink tracking-tight mb-6">With iClose</p>
             <ul className="space-y-4">
               {AFTER.map((text) => (
                 <li key={text} className="flex items-start gap-3 text-[17px] text-ink" style={{ letterSpacing: '-0.012em' }}>

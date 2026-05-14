@@ -6,19 +6,22 @@ import { Reveal } from '@/components/ui/reveal';
 
 const TESTIMONIALS = [
   {
-    initials: 'S.A.',
-    role: 'Independent broker, Dubai',
-    quote: 'I was doing AED 8M a month and keeping half of it. Now I keep 80% and no one on the buyer side knows who I work under. That is not a small thing.',
+    initials: 'T.M.',
+    role: 'Secondary Market Agent',
+    quote:
+      'I spent four years in off-plan and knew nothing about the secondary market. Six months with iClose and I can walk into any conversation about JVC, Dubai Hills, or Business Bay and hold my own. That is what the content here does.',
+  },
+  {
+    initials: 'F.A.',
+    role: 'Private Client Adviser',
+    quote:
+      "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement to the community. Within 24 hours a Specialist came back with three matching units. That is a network you cannot build overnight.",
   },
   {
     initials: 'K.R.',
-    role: 'Agent, secondary market',
-    quote: "The deal desk is what sold me. I had a complex transaction — two buyers, a motivated seller, a tight timeline. The support I got would have cost me a partnership at any other firm.",
-  },
-  {
-    initials: 'M.T.',
-    role: 'Broker, 6 years in Dubai',
-    quote: 'I spent three years building a client book at a brokerage I then had to leave behind. On iClose, those relationships are mine. Full stop.',
+    role: 'Downtown Dubai Specialist',
+    quote:
+      'I used to rely on brokers I barely knew to move my units. Now I have a community of professionals who know exactly what I specialise in. When they have a buyer for Downtown, they call me first.',
   },
 ];
 
@@ -48,7 +51,7 @@ export function Testimonials() {
       <div className="relative container-wide">
         <Reveal>
           <h2 className="display-lg text-white text-balance max-w-xl mb-14 md:mb-16">
-            Agents who made the switch.
+            Three roles. One community. All winning.
           </h2>
         </Reveal>
 
@@ -65,10 +68,8 @@ export function Testimonials() {
               variants={item}
               className="rounded-apple border border-white/10 bg-white/5 backdrop-blur-sm p-8 sm:p-10 flex flex-col"
             >
-              <blockquote
-                className="display-sm text-white leading-[1.3] text-balance flex-1"
-              >
-                "{t.quote}"
+              <blockquote className="display-sm text-white leading-[1.3] text-balance flex-1">
+                &ldquo;{t.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/10">

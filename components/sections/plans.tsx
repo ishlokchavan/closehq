@@ -19,12 +19,13 @@ const PLANS: Plan[] = [
   {
     key: 'plus',
     label: 'Plus',
-    tagline: 'Start with zero commitment. Prove the platform works for you.',
+    tagline: 'Join the community, access the education platform, and start building expertise from day one.',
     price: 'Free',
     splitPct: 60,
     features: [
-      'Stay completely anonymous',
-      'Access to the deal desk',
+      'Full community access',
+      'iClose Academy — foundation content',
+      'Post and receive property requirements',
       'Email support',
     ],
     isStar: false,
@@ -32,21 +33,22 @@ const PLANS: Plan[] = [
   {
     key: 'pro',
     label: 'Pro',
-    tagline: 'Built for agents who close every month and want to keep more of it.',
+    tagline: 'For Members who are actively transacting and want deeper access to Specialist content and priority matching.',
     price: 'AED 1,200',
     cadence: '/ year',
     splitPct: 80,
     features: [
       'Everything in Plus',
-      'iClose Academy training',
-      'Priority deal desk',
+      'Full iClose Academy — all areas and buildings',
+      'Priority Specialist matching on inquiries',
+      'Priority deal desk support',
     ],
     isStar: false,
   },
   {
     key: 'pro_max',
     label: 'Pro Max',
-    tagline: 'Independent brokers scaling solo — without the overhead.',
+    tagline: 'Built for independent professionals operating at scale who need the full platform behind them.',
     price: 'AED 40,000',
     cadence: '/ year',
     splitPct: 90,
@@ -54,14 +56,14 @@ const PLANS: Plan[] = [
       'Labour & visa included',
       'Listings included',
       'Dedicated relationship manager',
-      'iClose Academy + area playbooks',
+      'Full Academy + area playbooks',
     ],
     isStar: true,
   },
   {
     key: 'ultra',
     label: 'Ultra',
-    tagline: 'Full-service back office. You run deals. We run everything else.',
+    tagline: 'The complete back office. Run your practice at the highest level while we handle everything else.',
     price: 'AED 100,000',
     cadence: '/ year',
     splitPct: 100,
@@ -77,17 +79,17 @@ const PLANS: Plan[] = [
 
 export function Plans() {
   return (
-    <section id="plans" className="bg-mist py-16 sm:py-20 md:py-24 lg:py-32">
+    <section id="plans" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
-        <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
+        <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Your production. Your earnings.
+              Choose the level of access that fits where you are.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="subhead mt-6 mx-auto max-w-2xl">
-              Four tiers. Every one anonymous. The more you invest in the platform, the more commission you keep — up to 100%.
+            <p className="subhead mt-5 max-w-2xl">
+              Every tier starts with community access and the education platform. As you go deeper, you get more — better Specialist matching, dedicated support, and an increasing share of any transaction you close.
             </p>
           </Reveal>
         </div>
@@ -99,11 +101,7 @@ export function Plans() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{
-                duration: 0.7,
-                delay: i * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className={
                 plan.isStar
                   ? 'card-surface ring-2 ring-ink p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col relative'
@@ -116,9 +114,7 @@ export function Plans() {
                 </span>
               )}
 
-              <p className="text-sm font-medium text-graphite tracking-tight">
-                {plan.label}
-              </p>
+              <p className="text-sm font-medium text-graphite tracking-tight">{plan.label}</p>
 
               <div className="mt-3 flex items-baseline gap-1.5 flex-wrap">
                 <span
@@ -141,18 +137,7 @@ export function Plans() {
 
               <div className="hairline my-6" />
 
-              <div className="space-y-1">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-sm text-graphite tracking-tight">Commission split</span>
-                  <span className="text-[17px] font-medium text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
-                    {plan.splitPct} / {100 - plan.splitPct}
-                  </span>
-                </div>
-              </div>
-
-              <div className="hairline my-6" />
-
-              <ul className="space-y-2.5 mb-8">
+              <ul className="space-y-2.5 mb-8 flex-1">
                 {plan.features.map((f) => (
                   <li
                     key={f}
@@ -163,14 +148,16 @@ export function Plans() {
                     <span>{f}</span>
                   </li>
                 ))}
-                <li
-                  className="flex items-start gap-2.5 text-[15px] text-ink"
-                  style={{ letterSpacing: '-0.012em' }}
-                >
-                  <Check className="h-4 w-4 mt-0.5 text-ink flex-shrink-0" strokeWidth={2.5} />
-                  <span>Anonymous, always</span>
-                </li>
               </ul>
+
+              <div className="hairline mb-6" />
+
+              <div className="flex items-baseline justify-between mb-6">
+                <span className="text-sm text-graphite tracking-tight">Transaction split</span>
+                <span className="text-[17px] font-medium text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
+                  {plan.splitPct} / {100 - plan.splitPct}
+                </span>
+              </div>
 
               <a href="#apply" className="applelink mt-auto">
                 Get started
@@ -180,8 +167,8 @@ export function Plans() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-graphite tracking-tight">
-          All plans include a 5% lifetime referral bonus on every agent you bring in.
+        <p className="mt-10 text-[14px] text-graphite tracking-tight">
+          Transaction splits apply when a deal closes through the platform. Community access and education are available on every plan regardless of transaction activity.
         </p>
       </div>
     </section>

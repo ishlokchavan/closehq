@@ -1,5 +1,6 @@
 import { Header } from '@/components/header';
 import { Hero } from '@/components/sections/hero';
+import { ForWho } from '@/components/sections/for-who';
 import { Value } from '@/components/sections/value';
 import { How } from '@/components/sections/how';
 import { Transformation } from '@/components/sections/transformation';
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Header />
       <main className="overflow-x-clip">
         <Hero />
+        <ForWho />
         <Value />
         <How />
         <Transformation />

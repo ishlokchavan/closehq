@@ -8,27 +8,31 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: "iClose is Dubai's independent brokerage platform. Agents work under the iClose structure — anonymously — and keep 60–100% of their commission depending on their plan. The deal desk handles the operational side. You handle the deals.",
+    a: 'iClose is a Dubai real estate community and education platform built around three types of professionals: agents who want to build expertise in the secondary market, professionals (lawyers, accountants, advisers, family offices) whose clients have property requirements, and Specialists who have area or building expertise and inventory to match. The platform connects all three in a way that benefits everyone.',
   },
   {
-    q: 'Who is it for?',
-    a: "Independent agents and brokers active in Dubai's secondary real estate market who are done giving away 40–50% of every deal to a traditional brokerage. If you're producing and want to keep more of what you close, iClose is built for you.",
+    q: 'Who can join as a Member?',
+    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisers, POAs, investors, family offices, and private equity. If you have clients with property requirements, or if you're building expertise in the secondary market, iClose is built for you.",
   },
   {
-    q: 'What does "anonymous" mean in practice?',
-    a: "Your clients know you as their agent — they don't know which brokerage structure you operate under. iClose handles the legal and operational layer. Your name, your relationships, your reputation stay entirely yours.",
+    q: "I'm an agent. How does iClose help me specifically?",
+    a: "iClose Academy gives you structured content from Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and community intelligence. It's the fastest path from off-plan to credible secondary market professional, built on real knowledge from people in the field.",
   },
   {
-    q: 'How does the commission split work?',
-    a: 'It depends on your plan. Plus gives you 60%, Pro gives you 80%, Pro Max gives you 90%, and Ultra gives you 100%. Everyone starts as a Plus member for free. You upgrade when the numbers make sense for your volume.',
+    q: "I'm a lawyer / accountant / adviser. How does this help my clients?",
+    a: "When your client has a specific property requirement, you can post it directly to the iClose community. The Specialist who knows that area or building best responds personally. You stay in control of the client relationship — we provide the expertise and the matched inventory behind it.",
   },
   {
-    q: 'When do I get paid?',
-    a: "Commission is structured at the point the buyer signs. No chasing, no month-end delays, no approval queues. The deal closes — you get paid.",
+    q: 'What is a Specialist and how is it different from a Member?',
+    a: "A Specialist is a vetted community or building expert who knows a specific area of Dubai's secondary market with real depth — transaction history, current inventory, pricing nuance. Specialists apply separately and are reviewed before joining. They publish their knowledge for Members, and when a Member inquiry falls within their domain, they are the focal point to close it.",
   },
   {
-    q: 'What is iClose Academy?',
-    a: 'iClose Academy is our market intelligence layer — area playbooks, development deep-dives, and community analysis built by specialists who are active in Dubai right now. It comes with Pro and above, and gives you the kind of deal-level knowledge that most agents spend years accumulating.',
+    q: "Why would a Specialist join iClose?",
+    a: "iClose gives Specialists access to a growing pool of professionals who have active buyers — agents, lawyers, accountants, family offices. When you share your knowledge here, you build authority with the exact people who will refer serious inquiries your way. When a Member needs a unit in your domain, you are the first and only call.",
+  },
+  {
+    q: 'What does the transaction split mean?',
+    a: "When a deal closes through the platform, the split is the share you keep versus what goes to iClose. Plus Members keep 60%. It improves at Pro (80%), Pro Max (90%), and Ultra (100%). This is an added benefit of membership — the community and education platform are available regardless of transaction activity.",
   },
 ];
 
@@ -36,11 +40,11 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
+    <section id="faq" className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            Straight answers.
+            Common questions.
           </h2>
         </Reveal>
 

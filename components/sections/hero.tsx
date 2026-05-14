@@ -7,7 +7,7 @@ import { trackEvent } from '@/lib/analytics';
 
 const STATS = [
   { value: '400+', label: 'Properties profiled' },
-  { value: '20+', label: 'Dubai specialists' },
+  { value: '20+', label: 'Dubai Specialists' },
   { value: '18+', label: 'Communities covered' },
 ];
 
@@ -44,7 +44,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm text-[12px] text-white/80"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Founding cohort open · Dubai secondary market
+            Now accepting founding members · Dubai secondary market
           </span>
         </motion.div>
 
@@ -55,7 +55,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="block"
           >
-            Close deals.
+            The Dubai real estate
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 28 }}
@@ -63,7 +63,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="block"
           >
-            Keep your split.
+            community for professionals.
           </motion.span>
         </h1>
 
@@ -71,10 +71,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 text-white/80 text-[18px] sm:text-[20px] leading-[1.45] text-balance max-w-lg mx-auto px-2"
+          className="mt-6 text-white/80 text-[18px] sm:text-[20px] leading-[1.45] text-balance max-w-xl mx-auto px-2"
           style={{ letterSpacing: '-0.015em' }}
         >
-          iClose is Dubai's independent brokerage platform — anonymous identity, deal desk support, and up to 100% commission for agents who are done splitting 50/50.
+          Whether you are an agent building expertise in the secondary market, a professional whose clients need the right property, or a Specialist with inventory to move — iClose is where it happens.
         </motion.p>
 
         <motion.div
@@ -84,20 +84,20 @@ export function Hero() {
           className="mt-9 flex items-center justify-center gap-5 flex-wrap"
         >
           <a
-            href="#apply"
+            href="#who"
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-ink text-[15px] font-medium hover:bg-white/90 transition-colors"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Join as a Member
+            Find your place here
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
           <a
-            href="#how"
+            href="/specialists"
             className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors text-[15px]"
             style={{ letterSpacing: '-0.01em' }}
           >
-            How it works
+            Become a Specialist
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </motion.div>
