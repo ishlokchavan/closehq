@@ -2,117 +2,78 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { trackEvent } from '@/lib/analytics';
 
 export function S2Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-black">
-      {/* Background image — very dark */}
-      <div className="absolute inset-0">
+    <section className="bg-white">
+      {/* Above-fold intro strip */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+          {/* Left spacer on desktop */}
+          <div className="hidden md:block md:w-1/2" />
+
+          {/* Right: intro text + CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="md:w-1/2 max-w-sm"
+          >
+            <p className="text-[13px] text-sellit-muted leading-relaxed mb-5" style={{ letterSpacing: '-0.005em' }}>
+              Learn from the specialists behind Dubai's secondary market, and transform your business with proven deal-desk support, commission structures, and area intelligence for any level agent.
+            </p>
+            <div className="flex items-center gap-3 flex-wrap">
+              <a
+                href="#apply"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-lime text-[#1A1A1A] text-sm font-semibold hover:bg-lime-dark transition-all"
+                style={{ letterSpacing: '-0.01em' }}
+              >
+                Explore Membership →
+              </a>
+              <a
+                href="#plans"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#C5C0BA] text-[#1A1A1A] text-sm font-medium hover:border-[#1A1A1A] transition-all"
+                style={{ letterSpacing: '-0.01em' }}
+              >
+                Explore Plans →
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Hero image with text overlay */}
+      <div className="relative w-full overflow-hidden" style={{ height: 'clamp(320px, 55vw, 680px)' }}>
         <Image
           src="/images/hero-night.jpg"
-          alt="Dubai skyline"
+          alt="Dubai real estate"
           fill
           priority
-          quality={85}
-          className="object-cover object-center scale-105"
-          style={{ filter: 'brightness(0.18) saturate(0.6)' }}
+          quality={90}
+          className="object-cover object-center"
         />
-        {/* Radial glow centre */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_60%,rgba(232,184,75,0.06),transparent)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black" />
-      </div>
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 flex flex-col items-center text-center">
-        {/* Badge */}
+        {/* Headline overlay */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-accent/40 bg-gold-accent/10 text-gold-accent text-sm font-semibold tracking-wide uppercase"
-            style={{ letterSpacing: '0.06em', fontSize: '11px' }}
-          >
-            ✦ Dubai's #1 Independent Brokerage Platform
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="text-white font-black leading-none text-balance"
-          style={{
-            fontSize: 'clamp(3.5rem, 10vw, 8.5rem)',
-            letterSpacing: '-0.04em',
-            lineHeight: 0.92,
-          }}
-        >
-          Close More.
-          <br />
-          <span className="text-gold-accent">Keep More.</span>
-        </motion.h1>
-
-        {/* Subhead */}
-        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 text-white/60 max-w-2xl text-balance leading-relaxed"
-          style={{ fontSize: 'clamp(1.1rem, 2vw, 1.375rem)', letterSpacing: '-0.015em' }}
+          transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-14"
         >
-          iClose is Dubai's independent brokerage platform. Work anonymously, access deal desk support, and keep up to 100% of every commission you earn.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 flex items-center justify-center gap-4 flex-wrap"
-        >
-          <a
-            href="#apply"
-            onClick={() => trackEvent('cta_click', { source: 'hero_primary_s2' })}
-            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-white text-black font-bold text-base hover:bg-white/90 active:scale-95 transition-all"
-            style={{ letterSpacing: '-0.015em' }}
+          <h1
+            className="text-white font-display font-extrabold leading-none text-balance max-w-4xl"
+            style={{
+              fontSize: 'clamp(2.2rem, 6.5vw, 5.5rem)',
+              letterSpacing: '-0.035em',
+              lineHeight: 0.95,
+            }}
           >
-            Start for Free
-            <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-          </a>
-          <a
-            href="#how"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/25 text-white font-medium text-base hover:border-white/50 hover:bg-white/5 transition-all"
-            style={{ letterSpacing: '-0.015em' }}
-          >
-            See how it works
-          </a>
-        </motion.div>
-
-        {/* Micro trust indicators */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-12 flex items-center justify-center gap-6 flex-wrap"
-        >
-          {[
-            '✓ No card required',
-            '✓ Anonymous, always',
-            '✓ 60%+ commission from day one',
-          ].map((item) => (
-            <span key={item} className="text-white/35 text-sm font-medium" style={{ letterSpacing: '-0.01em' }}>
-              {item}
-            </span>
-          ))}
+            Real estate training for Dubai's most relentless agents
+          </h1>
         </motion.div>
       </div>
-
-      {/* Bottom gradient into next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
     </section>
   );
 }

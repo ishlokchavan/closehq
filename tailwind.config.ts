@@ -8,10 +8,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Sellit-inspired accent
-        'gold-accent': '#e8b84b',
+        // Sellit.com-inspired design system
+        cream: '#F5F0E5',        // main page background (warm cream)
+        lime: {
+          DEFAULT: '#B5F452',    // primary CTA button (neon lime-green)
+          dark: '#8BC43A',       // lime hover state
+          text: '#2A5F00',       // dark green for label text on cream
+        },
+        navy: {
+          DEFAULT: '#0D1B3E',    // dark section background
+          light: '#162447',      // slightly lighter navy
+        },
+        sellit: {
+          muted: '#6B6B6B',      // body / muted text
+          border: '#E2DDDC',     // subtle card borders on cream
+        },
 
-        // Apple.com-inspired neutrals
+        // Legacy Apple-inspired neutrals (kept for other pages)
+        'gold-accent': '#e8b84b',
+        ink: {
+          DEFAULT: '#1d1d1f',
         ink: {
           DEFAULT: '#1d1d1f',
           900: '#1d1d1f',
@@ -51,6 +67,7 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'SF Pro Text', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Georgia', 'ui-serif', 'serif'],
         mono: ['var(--font-mono)', 'SF Mono', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {

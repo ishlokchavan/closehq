@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Inter, Inter_Tight, JetBrains_Mono, DM_Serif_Display } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
 import './globals.css';
@@ -7,7 +7,15 @@ import './globals.css';
 const fontDisplay = Inter_Tight({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['200', '300', '400', '500', '600'],
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+const fontSerif = DM_Serif_Display({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  weight: ['400'],
+  style: ['normal', 'italic'],
   display: 'swap',
 });
 
@@ -124,7 +132,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
+      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable} ${fontSerif.variable}`}
     >
       <body className="font-sans bg-paper text-ink antialiased">
         {children}
