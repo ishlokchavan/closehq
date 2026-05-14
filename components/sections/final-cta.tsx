@@ -30,7 +30,7 @@ export function FinalCTA() {
               className="text-white/70 mt-5 text-[18px] sm:text-[20px] leading-[1.4] max-w-sm mx-auto"
               style={{ letterSpacing: '-0.015em' }}
             >
-              We're opening iClose to a select group before public launch. The agents who join now lock in founding terms — and get first access to the deal desk when we go live.
+              We're opening iClose to a select group before public launch. Partners who join now lock in founding terms — and get first access to the deal desk when we go live.
             </p>
           </Reveal>
         </div>
@@ -45,7 +45,7 @@ export function FinalCTA() {
           <div className="bg-white rounded-apple p-6 sm:p-8 md:p-10 shadow-elevated">
             <LeadForm />
             <p className="mt-5 text-center text-[13px] text-graphite tracking-tight">
-              No spam. You're joining as a Plus member — free, no card required.
+              No spam. You join as a Partner on the Plus plan — free, no card required.
             </p>
           </div>
         </motion.div>

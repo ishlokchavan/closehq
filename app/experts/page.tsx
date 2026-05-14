@@ -5,29 +5,29 @@ import { SpecialistForm } from '@/components/specialist-form';
 import { Reveal } from '@/components/ui/reveal';
 
 export const metadata = {
-  title: 'Become a Creator — iClose',
+  title: 'Become an Expert — iClose',
   description:
-    'Apply to join iClose as a Creator. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
+    'Apply to join iClose as an Expert. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
 };
 
 const TESTIMONIALS = [
   {
     initials: 'A.R.',
     name: 'Ahmad R.',
-    role: 'Downtown Dubai Creator',
+    role: 'Downtown Dubai Expert',
     quote:
       'Turning what I know into structured content made me sharper. My expertise went from something I carried in my head to something that reaches active brokers every week.',
   },
   {
     initials: 'S.K.',
     name: 'Sarah K.',
-    role: 'Palm Jumeirah Creator',
+    role: 'Palm Jumeirah Expert',
     quote:
       "I used to share my knowledge over the phone, one person at a time. Now it's powering deal desk decisions across the platform. That kind of leverage changes how you think about what you know.",
   },
 ];
 
-export default function CreatorsPage() {
+export default function ExpertsPage() {
   return (
     <>
       <Header />
@@ -54,7 +54,7 @@ export default function CreatorsPage() {
               <div>
                 <Reveal>
                   <span className="inline-block text-[11px] font-medium tracking-[0.12em] uppercase text-white/40 mb-6">
-                    Become a Creator
+                    Become an Expert
                   </span>
                 </Reveal>
 
@@ -69,7 +69,7 @@ export default function CreatorsPage() {
                     className="mt-5 text-[17px] sm:text-[18px] text-white/55 leading-[1.55]"
                     style={{ letterSpacing: '-0.012em' }}
                   >
-                    iClose Creators build the market intelligence that active brokers rely on to close — area playbooks, development deep-dives, and community analysis from people who are still in the market, not watching from the sidelines.
+                    iClose Experts build the market intelligence that active Partners rely on to close — area playbooks, development deep-dives, and community analysis from people who are still in the market, not watching from the sidelines.
                   </p>
                 </Reveal>
 
@@ -99,27 +99,27 @@ export default function CreatorsPage() {
           </div>
         </section>
 
-        {/* ── What Creators do ──────────────────────────────────────────── */}
+        {/* ── What Experts do ──────────────────────────────────────────── */}
         <section className="bg-mist py-16 sm:py-20 md:py-24">
           <div className="container-wide">
             <Reveal>
               <h2 className="display-lg text-balance max-w-xl mb-12">
-                What it means to be a Creator on iClose.
+                What it means to be an Expert on iClose.
               </h2>
             </Reveal>
             <div className="grid md:grid-cols-3 gap-4">
               {[
                 {
                   title: 'Build the intelligence layer.',
-                  body: 'Your area knowledge, development expertise, and community insight becomes structured content — the kind that changes how a broker walks into a deal.',
+                  body: 'Your area knowledge, development expertise, and community insight becomes structured content — the kind that changes how a Partner walks into a deal.',
                 },
                 {
                   title: 'Power the deal desk.',
-                  body: "When a Closer submits a deal, they're drawing on Creator knowledge. Your expertise is active in every transaction it touches — not sitting in a course no one finishes.",
+                  body: "When a Partner submits a deal, they're drawing on Expert knowledge. Your expertise is active in every transaction it touches — not sitting in a course no one finishes.",
                 },
                 {
                   title: 'Get recognised for what you actually know.',
-                  body: 'iClose Creators are vetted. That mark means something on a platform where everyone is anonymous — you are the exception.',
+                  body: 'iClose Experts are vetted. That mark means something on a platform where everyone is anonymous — you are the exception.',
                 },
               ].map((card) => (
                 <div key={card.title} className="card-surface p-8 sm:p-10">
@@ -143,7 +143,7 @@ export default function CreatorsPage() {
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-                Creators who turned expertise into leverage.
+                Experts who turned expertise into leverage.
               </h2>
             </Reveal>
 
@@ -157,7 +157,7 @@ export default function CreatorsPage() {
                     className="display-sm text-ink leading-[1.35] text-balance flex-1"
                     style={{ letterSpacing: '-0.012em' }}
                   >
-                    "{t.quote}"
+                    &ldquo;{t.quote}&rdquo;
                   </blockquote>
                   <figcaption className="mt-8 flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">

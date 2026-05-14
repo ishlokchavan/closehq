@@ -40,7 +40,7 @@ export function LeadForm() {
         throw new Error(body?.error || 'Something went wrong');
       }
 
-      trackEvent('closer_signup', { source: 'early_access' });
+      trackEvent('partner_signup', { source: 'early_access' });
       setSuccess(true);
       reset();
     } catch (err) {
@@ -111,7 +111,7 @@ export function LeadForm() {
               {isSubmitting ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
               ) : (
-                <>Join as a Closer <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
+                <>Join as a Partner <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
               )}
             </Button>
           </div>

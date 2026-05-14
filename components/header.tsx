@@ -7,8 +7,8 @@ import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 
 const NAV = [
-  { href: '/creators', label: 'For Creators' },
-  { href: '#apply', label: 'For Closers' },
+  { href: '/experts', label: 'For Experts' },
+  { href: '#apply', label: 'For Partners' },
 ];
 
 export function Header() {
@@ -32,7 +32,7 @@ export function Header() {
             </a>
           ))}
           <a href="#apply" className="ml-2">
-            <Button variant="primary" size="sm">Join as a Closer</Button>
+            <Button variant="primary" size="sm">Join as a Partner</Button>
           </a>
         </div>
 
@@ -69,7 +69,7 @@ export function Header() {
               ))}
               <div className="py-4">
                 <a href="#apply" onClick={() => setOpen(false)}>
-                  <Button variant="primary" size="md" className="w-full">Join as a Closer</Button>
+                  <Button variant="primary" size="md" className="w-full">Join as a Partner</Button>
                 </a>
               </div>
             </div>
