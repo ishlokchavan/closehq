@@ -42,7 +42,7 @@ export async function POST(request: Request) {
           referer,
         });
       } catch (err) {
-        console.error('[partner] DB insert failed:', err);
+        console.error('[member] DB insert failed:', err);
       }
     }
 
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       const from = process.env.RESEND_FROM_EMAIL || 'iClose <onboarding@resend.dev>';
       const notifyEmail = process.env.RESEND_NOTIFY_EMAIL || 'start@iclose.ae';
 
-      // Confirmation to the Closer
+      // Confirmation to the Member
       try {
         await resend.emails.send({
           from,
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 520px; margin: 0 auto; color: #1d1d1f;">
               <p style="font-size: 24px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.02em;">You're in, ${firstName}.</p>
               <p style="font-size: 17px; color: #6e6e73; line-height: 1.55; margin-bottom: 20px; letter-spacing: -0.01em;">
-                You've joined the iClose founding cohort as a <strong style="color: #1d1d1f;">Partner</strong> — on the Plus plan, anonymous from day one, with access to the deal desk when we go live.
+                You've joined the iClose founding cohort as a <strong style="color: #1d1d1f;">Member</strong> — on the Plus plan, anonymous from day one, with access to the deal desk when we go live.
               </p>
               <p style="font-size: 17px; color: #6e6e73; line-height: 1.55; margin-bottom: 20px; letter-spacing: -0.01em;">
                 Founding members get first access and locked-in terms before the public launch. We'll be in touch.
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
           `,
         });
       } catch (err) {
-        console.error('[partner] confirmation email failed:', err);
+        console.error('[member] confirmation email failed:', err);
       }
 
       // Notification to admin
@@ -86,10 +86,10 @@ export async function POST(request: Request) {
         await resend.emails.send({
           from,
           to: notifyEmail,
-          subject: `New Partner: ${name}`,
+          subject: `New Member: ${name}`,
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 520px; color: #1d1d1f;">
-              <p style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">New Partner signup</p>
+              <p style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">New Member signup</p>
               <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
                 <tr><td style="padding: 8px 0; color: #6e6e73; width: 80px; vertical-align: top;">Name</td><td style="padding: 8px 0;">${name}</td></tr>
                 <tr><td style="padding: 8px 0; color: #6e6e73; vertical-align: top;">Email</td><td style="padding: 8px 0;">${email}</td></tr>
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
           `,
         });
       } catch (err) {
-        console.error('[partner] admin notification failed:', err);
+        console.error('[member] admin notification failed:', err);
       }
     }
 
@@ -112,10 +112,10 @@ export async function POST(request: Request) {
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone, email, plan_key: 'plus', type: 'partner', submittedAt: new Date().toISOString() }),
+          body: JSON.stringify({ name, phone, email, plan_key: 'plus', type: 'member', submittedAt: new Date().toISOString() }),
         });
       } catch (err) {
-        console.error('[partner] webhook failed:', err);
+        console.error('[member] webhook failed:', err);
       }
     }
 

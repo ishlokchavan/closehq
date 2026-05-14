@@ -42,7 +42,7 @@ export async function POST(request: Request) {
           referer,
         });
       } catch (err) {
-        console.error('[expert] DB insert failed:', err);
+        console.error('[specialist] DB insert failed:', err);
       }
     }
 
@@ -53,20 +53,20 @@ export async function POST(request: Request) {
       const from = process.env.RESEND_FROM_EMAIL || 'iClose <onboarding@resend.dev>';
       const notifyEmail = process.env.RESEND_NOTIFY_EMAIL || 'start@iclose.ae';
 
-      // Confirmation to the Creator
+      // Confirmation to the Specialist
       try {
         await resend.emails.send({
           from,
           to: email,
-          subject: 'Your iClose Expert application',
+          subject: 'Your iClose Specialist application',
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 520px; margin: 0 auto; color: #1d1d1f;">
               <p style="font-size: 24px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.02em;">Application received, ${firstName}.</p>
               <p style="font-size: 17px; color: #6e6e73; line-height: 1.55; margin-bottom: 20px; letter-spacing: -0.01em;">
-                We review every <strong style="color: #1d1d1f;">Expert</strong> application personally. We're looking for people with genuine, tested knowledge of the Dubai market — not theory.
+                We review every <strong style="color: #1d1d1f;">Specialist</strong> application personally. We're looking for people with genuine, tested knowledge of the Dubai market — not theory.
               </p>
               <p style="font-size: 17px; color: #6e6e73; line-height: 1.55; margin-bottom: 20px; letter-spacing: -0.01em;">
-                Experts on iClose build the market intelligence that powers the deal desk — area playbooks, development deep-dives, and community analysis used by active Partners every day.
+                Specialists on iClose build the market intelligence that powers the deal desk — area playbooks, development deep-dives, and community analysis used by active Members every day.
               </p>
               <p style="font-size: 17px; color: #6e6e73; line-height: 1.55; margin-bottom: 28px; letter-spacing: -0.01em;">
                 If your profile is the right fit, we'll be in touch within a few days to talk through the next step.
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
           `,
         });
       } catch (err) {
-        console.error('[expert] confirmation email failed:', err);
+        console.error('[specialist] confirmation email failed:', err);
       }
 
       // Notification to admin
@@ -86,10 +86,10 @@ export async function POST(request: Request) {
         await resend.emails.send({
           from,
           to: notifyEmail,
-          subject: `New Expert application: ${firstName} ${lastName}`,
+          subject: `New Specialist application: ${firstName} ${lastName}`,
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 520px; color: #1d1d1f;">
-              <p style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">New Expert application</p>
+              <p style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">New Specialist application</p>
               <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
                 <tr><td style="padding: 8px 0; color: #6e6e73; width: 80px; vertical-align: top;">Name</td><td style="padding: 8px 0;">${firstName} ${lastName}</td></tr>
                 <tr><td style="padding: 8px 0; color: #6e6e73; vertical-align: top;">Email</td><td style="padding: 8px 0;">${email}</td></tr>
@@ -102,7 +102,7 @@ export async function POST(request: Request) {
           `,
         });
       } catch (err) {
-        console.error('[expert] admin notification failed:', err);
+        console.error('[specialist] admin notification failed:', err);
       }
     }
 
@@ -114,19 +114,19 @@ export async function POST(request: Request) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            type: 'expert_application',
+            type: 'specialist_application',
             firstName, lastName, email, phone, message,
             submittedAt: new Date().toISOString(),
           }),
         });
       } catch (err) {
-        console.error('[expert] webhook failed:', err);
+        console.error('[specialist] webhook failed:', err);
       }
     }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error('Expert API error:', err);
+    console.error('Specialist API error:', err);
     return NextResponse.json(
       { error: 'Server error. Please try again.' },
       { status: 500 },

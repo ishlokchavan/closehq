@@ -43,7 +43,7 @@ export function SpecialistForm() {
         throw new Error(body?.error || 'Something went wrong');
       }
 
-      trackEvent('expert_apply', {});
+      trackEvent('specialist_apply', {});
       setSuccess(true);
       reset();
     } catch (err) {
@@ -70,7 +70,7 @@ export function SpecialistForm() {
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            We review every Expert application personally. We&apos;ll be in touch.
+            We review every Specialist application personally. We&apos;ll be in touch.
           </p>
         </motion.div>
       ) : (
@@ -83,7 +83,7 @@ export function SpecialistForm() {
           noValidate
         >
           <p className="text-[13px] font-medium text-graphite tracking-tight mb-1" style={{ letterSpacing: '-0.008em' }}>
-            Apply to become an Expert
+            Apply to become a Specialist
           </p>
 
           <input
@@ -140,7 +140,7 @@ export function SpecialistForm() {
             <textarea
               {...register('message')}
               rows={4}
-              placeholder="Tell us which areas, developments, or communities you know deeply — and what you'd build for Partners."
+              placeholder="Tell us which areas, developments, or communities you know deeply — and what you'd build for Members."
               className={textareaClasses}
             />
           </Field>
@@ -156,7 +156,7 @@ export function SpecialistForm() {
               {isSubmitting ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
               ) : (
-                <>Apply as an Expert <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
+                <>Apply as a Specialist <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
               )}
             </Button>
           </div>

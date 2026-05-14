@@ -5,9 +5,9 @@ import { SpecialistForm } from '@/components/specialist-form';
 import { Reveal } from '@/components/ui/reveal';
 
 export const metadata = {
-  title: 'Become an Expert — iClose',
+  title: 'Become a Specialist — iClose',
   description:
-    'Apply to join iClose as an Expert. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
+    'Apply to join iClose as a Specialist. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
 };
 
 const TESTIMONIALS = [
@@ -54,7 +54,7 @@ export default function ExpertsPage() {
               <div>
                 <Reveal>
                   <span className="inline-block text-[11px] font-medium tracking-[0.12em] uppercase text-white/40 mb-6">
-                    Become an Expert
+                    Become a Specialist
                   </span>
                 </Reveal>
 
@@ -69,7 +69,7 @@ export default function ExpertsPage() {
                     className="mt-5 text-[17px] sm:text-[18px] text-white/55 leading-[1.55]"
                     style={{ letterSpacing: '-0.012em' }}
                   >
-                    iClose Experts build the market intelligence that active Partners rely on to close — area playbooks, development deep-dives, and community analysis from people who are still in the market, not watching from the sidelines.
+                    iClose Specialists build the market intelligence that active Members rely on to close — area playbooks, development deep-dives, and community analysis from people who are still in the market, not watching from the sidelines.
                   </p>
                 </Reveal>
 
@@ -104,22 +104,22 @@ export default function ExpertsPage() {
           <div className="container-wide">
             <Reveal>
               <h2 className="display-lg text-balance max-w-xl mb-12">
-                What it means to be an Expert on iClose.
+                What it means to be a Specialist on iClose.
               </h2>
             </Reveal>
             <div className="grid md:grid-cols-3 gap-4">
               {[
                 {
                   title: 'Build the intelligence layer.',
-                  body: 'Your area knowledge, development expertise, and community insight becomes structured content — the kind that changes how a Partner walks into a deal.',
+                  body: 'Your area knowledge, development expertise, and community insight becomes structured content — the kind that changes how a Member walks into a deal.',
                 },
                 {
                   title: 'Power the deal desk.',
-                  body: "When a Partner submits a deal, they're drawing on Expert knowledge. Your expertise is active in every transaction it touches — not sitting in a course no one finishes.",
+                  body: "When a Member submits a deal, they're drawing on Expert knowledge. Your expertise is active in every transaction it touches — not sitting in a course no one finishes.",
                 },
                 {
                   title: 'Get recognised for what you actually know.',
-                  body: 'iClose Experts are vetted. That mark means something on a platform where everyone is anonymous — you are the exception.',
+                  body: 'iClose Specialists are vetted. That mark means something on a platform where everyone is anonymous — you are the exception.',
                 },
               ].map((card) => (
                 <div key={card.title} className="card-surface p-8 sm:p-10">
