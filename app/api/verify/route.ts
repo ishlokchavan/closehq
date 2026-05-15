@@ -2,14 +2,16 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendEmail } from '@/lib/mailer';
 
-const EMAIL_FOOTER = `
+const emailFooter = () => {
+  const contact = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@iclose.ae';
+  return `
   <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
   <p style="font-size:11px;color:#a1a1a6;line-height:1.6;">
     iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a><br/>
     You received this because you submitted a form at iclose.ae.
-    To unsubscribe or request data removal, email <a href="mailto:hello@iclose.ae" style="color:#0071e3;">hello@iclose.ae</a>.
+    To unsubscribe or request data removal, email <a href="mailto:${contact}" style="color:#0071e3;">${contact}</a>.
   </p>
-`;
+`};
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -105,7 +107,7 @@ export async function GET(request: Request) {
               Questions? Reply to this email and we'll get back to you.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            ${EMAIL_FOOTER}
+            ${emailFooter()}
           </div>
         `,
       });
@@ -144,7 +146,7 @@ export async function GET(request: Request) {
               Your Specialist application is confirmed and under review. We review every application personally and will be in touch within a few days.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            ${EMAIL_FOOTER}
+            ${emailFooter()}
           </div>
         `,
       });

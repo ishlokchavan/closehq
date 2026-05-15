@@ -6,6 +6,7 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://iclose.ae',
   ogImage: '/og-image.jpg',
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@iclose.ae',
+  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || '',
   address: {
     locality: 'Dubai',
     country: 'AE',

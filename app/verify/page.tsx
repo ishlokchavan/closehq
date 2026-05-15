@@ -29,7 +29,7 @@ export default async function VerifyPage({ searchParams }: Props) {
       icon: XCircle,
       iconColor: 'text-orange-400',
       title: 'Link expired.',
-      body: 'This verification link has expired (links are valid for 30 days). Please resubmit the form or contact hello@iclose.ae.',
+      body: `This verification link has expired (links are valid for 30 days). Please resubmit the form or contact ${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@iclose.ae'}.`,
     },
     invalid: {
       icon: XCircle,

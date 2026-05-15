@@ -1,6 +1,7 @@
 'use client';
 
 import { Logo } from '@/components/ui/logo';
+import { siteConfig } from '@/lib/site-config';
 
 const openCookieSettings = () =>
   window.dispatchEvent(new Event('iclose:open-cookie-settings'));
@@ -32,8 +33,8 @@ const NAV_COLUMNS = [
   {
     heading: 'Contact',
     links: [
-      { href: 'mailto:hello@iclose.ae', label: 'hello@iclose.ae' },
-      { href: 'tel:+800425673', label: '(800) 425-673' },
+      { href: `mailto:${siteConfig.email}`, label: siteConfig.email },
+      ...(siteConfig.phone ? [{ href: `tel:+${siteConfig.phone.replace(/\D/g, '')}`, label: siteConfig.phone }] : []),
     ],
   },
 ];

@@ -4,14 +4,16 @@ import { randomUUID } from 'crypto';
 import { leadSchema } from '@/lib/validations';
 import { sendEmail } from '@/lib/mailer';
 
-const EMAIL_FOOTER = `
+const emailFooter = () => {
+  const contact = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@iclose.ae';
+  return `
   <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
   <p style="font-size:11px;color:#a1a1a6;line-height:1.6;">
     iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a><br/>
     You received this because you submitted a form at iclose.ae.
-    To unsubscribe or request data removal, email <a href="mailto:hello@iclose.ae" style="color:#0071e3;">hello@iclose.ae</a>.
+    To unsubscribe or request data removal, email <a href="mailto:${contact}" style="color:#0071e3;">${contact}</a>.
   </p>
-`;
+`};
 
 const maskEmail = (e: string) => {
   const [local, domain] = e.split('@');
@@ -91,7 +93,7 @@ export async function POST(request: Request) {
               Founding members get first access and locked-in terms before public launch.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            ${EMAIL_FOOTER}
+            ${emailFooter()}
           </div>
         `,
       });

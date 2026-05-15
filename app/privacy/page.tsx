@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const LEGAL = {
   brand: 'iClose',
-  email: 'hello@iclose.ae',
+  email: siteConfig.email,
   lastUpdated: 'May 15, 2026',
 };
 
