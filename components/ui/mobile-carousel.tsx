@@ -8,9 +8,10 @@ interface MobileCarouselProps {
   items: ReactNode[];
   className?: string;
   ariaLabel?: string;
+  dark?: boolean;
 }
 
-export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselProps) {
+export function MobileCarousel({ items, className, ariaLabel, dark = false }: MobileCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
@@ -61,7 +62,9 @@ export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselPr
               aria-label={`Go to slide ${i + 1}`}
               className={cn(
                 'h-1.5 rounded-full transition-all duration-300',
-                i === active ? 'w-6 bg-ink' : 'w-1.5 bg-ink/20 hover:bg-ink/40',
+                dark
+                  ? i === active ? 'w-6 bg-white' : 'w-1.5 bg-white/25 hover:bg-white/40'
+                  : i === active ? 'w-6 bg-ink'   : 'w-1.5 bg-ink/20 hover:bg-ink/40',
               )}
             />
           ))}
@@ -73,7 +76,12 @@ export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselPr
             onClick={() => scrollTo(Math.max(0, active - 1))}
             disabled={active === 0}
             aria-label="Previous"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline bg-paper text-ink transition-colors hover:bg-mist disabled:opacity-30"
+            className={cn(
+              'flex h-9 w-9 items-center justify-center rounded-full border transition-colors disabled:opacity-30',
+              dark
+                ? 'border-white/20 bg-white/10 text-white hover:bg-white/20'
+                : 'border-hairline bg-paper text-ink hover:bg-mist',
+            )}
           >
             <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
           </button>
@@ -81,7 +89,12 @@ export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselPr
             onClick={() => scrollTo(Math.min(items.length - 1, active + 1))}
             disabled={active === items.length - 1}
             aria-label="Next"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline bg-paper text-ink transition-colors hover:bg-mist disabled:opacity-30"
+            className={cn(
+              'flex h-9 w-9 items-center justify-center rounded-full border transition-colors disabled:opacity-30',
+              dark
+                ? 'border-white/20 bg-white/10 text-white hover:bg-white/20'
+                : 'border-hairline bg-paper text-ink hover:bg-mist',
+            )}
           >
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </button>

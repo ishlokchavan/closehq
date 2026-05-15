@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/reveal';
+import { MobileCarousel } from '@/components/ui/mobile-carousel';
 
 const TESTIMONIALS = [
   {
@@ -25,16 +26,30 @@ const TESTIMONIALS = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
+function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
+  return (
+    <figure className="rounded-apple border border-white/10 bg-white/5 backdrop-blur-sm p-8 sm:p-10 flex flex-col h-full">
+      <blockquote className="display-sm text-white leading-[1.3] text-balance flex-1">
+        &ldquo;{t.quote}&rdquo;
+      </blockquote>
+      <figcaption className="mt-8 flex items-center gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/10">
+          <span className="text-[12px] font-medium text-white/60">{t.initials}</span>
+        </div>
+        <span className="text-sm text-white/40 tracking-tight">{t.role}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
 export function Testimonials() {
+  const cards = TESTIMONIALS.map((t) => <TestimonialCard key={t.initials} t={t} />);
+
   return (
     <section className="relative bg-neutral-950 py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
 
@@ -55,29 +70,26 @@ export function Testimonials() {
           </h2>
         </Reveal>
 
+        {/* Mobile carousel */}
+        <MobileCarousel
+          items={cards}
+          className="md:hidden"
+          ariaLabel="Testimonials"
+          dark
+        />
+
+        {/* Desktop grid */}
         <motion.div
-          variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          transition={{ staggerChildren: 0.08 }}
+          className="hidden md:grid grid-cols-3 gap-4"
         >
           {TESTIMONIALS.map((t) => (
-            <motion.figure
-              key={t.initials}
-              variants={item}
-              className="rounded-apple border border-white/10 bg-white/5 backdrop-blur-sm p-8 sm:p-10 flex flex-col"
-            >
-              <blockquote className="display-sm text-white leading-[1.3] text-balance flex-1">
-                &ldquo;{t.quote}&rdquo;
-              </blockquote>
-              <figcaption className="mt-8 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/10">
-                  <span className="text-[12px] font-medium text-white/60">{t.initials}</span>
-                </div>
-                <span className="text-sm text-white/40 tracking-tight">{t.role}</span>
-              </figcaption>
-            </motion.figure>
+            <motion.div key={t.initials} variants={item}>
+              <TestimonialCard t={t} />
+            </motion.div>
           ))}
         </motion.div>
       </div>
