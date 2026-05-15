@@ -3,86 +3,93 @@
 import { Logo } from '@/components/ui/logo';
 import { siteConfig } from '@/lib/site-config';
 
-const SECTIONS = [
+const openCookieSettings = () =>
+  window.dispatchEvent(new Event('iclose:open-cookie-settings'));
+
+const NAV_COLUMNS = [
   {
-    title: 'Platform',
+    heading: 'Platform',
     links: [
-      { href: '#plans', label: 'Plans' },
       { href: '#how', label: 'How it works' },
-      { href: '#training', label: 'Training' },
-      { href: '#perks', label: 'Perks' },
-      { href: '#vs', label: 'Why iClose' },
-      { href: '#apply', label: 'Get started' },
+      { href: '#apply', label: 'Who it\'s for' },
+      { href: '#plans', label: 'Plans' },
+      { href: '#faq', label: 'FAQ' },
     ],
   },
   {
-    title: 'Resources',
+    heading: 'Join',
     links: [
-      { href: '#commission', label: 'Commission' },
-      { href: '#training', label: 'iClose Academy' },
-      { href: '#perks', label: 'Concierge' },
+      { href: '#apply', label: 'Join as a Member' },
+      { href: '/specialists', label: 'Apply as a Specialist' },
+    ],
+  },
+  {
+    heading: 'Legal',
+    links: [
       { href: '/privacy', label: 'Privacy policy' },
       { href: '/terms', label: 'Terms of service' },
+    ],
+  },
+  {
+    heading: 'Contact',
+    links: [
+      { href: `mailto:${siteConfig.email}`, label: siteConfig.email },
+      ...(siteConfig.phone ? [{ href: `tel:+${siteConfig.phone.replace(/\D/g, '')}`, label: siteConfig.phone }] : []),
     ],
   },
 ];
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="bg-mist border-t border-hairline">
-      <div className="container-wide pt-12 sm:pt-14 md:pt-20 pb-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
-          <div className="col-span-2">
+      <div className="container-wide pt-14 pb-8">
+
+        <div className="grid grid-cols-2 md:grid-cols-[1fr_auto] gap-10 md:gap-16">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1 max-w-xs">
             <Logo variant="dark" />
-            <p
-              className="mt-5 text-[13px] text-graphite max-w-sm leading-[1.5]"
-              style={{ letterSpacing: '-0.008em' }}
-            >
-              {siteConfig.description}
+            <p className="mt-4 text-[13px] text-graphite leading-[1.6]" style={{ letterSpacing: '-0.008em' }}>
+              The community and education platform for Dubai&apos;s secondary real estate market.
             </p>
           </div>
 
-          {SECTIONS.map((section) => (
-            <div key={section.title}>
-              <h3
-                className="text-[13px] font-semibold text-ink tracking-tight mb-4"
-                style={{ letterSpacing: '-0.01em' }}
-              >
-                {section.title}
-              </h3>
-              <ul className="space-y-2.5">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <a
-                      href={link.href}
-                      className="text-[12px] text-graphite hover:text-ink hover:underline underline-offset-2 transition-colors"
-                      style={{ letterSpacing: '-0.008em' }}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Nav columns */}
+          <div className="col-span-2 md:col-span-1 grid grid-cols-2 sm:grid-cols-4 gap-8">
+            {NAV_COLUMNS.map((col) => (
+              <div key={col.heading}>
+                <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-graphite-light mb-3">
+                  {col.heading}
+                </p>
+                <ul className="space-y-2.5">
+                  {col.links.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className="text-[13px] text-graphite hover:text-ink transition-colors"
+                        style={{ letterSpacing: '-0.008em' }}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="hairline mt-14 mb-6" />
+        <div className="hairline mt-12 mb-5" />
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-[12px] text-graphite tracking-tight">
-          <div>
-            © {year} {siteConfig.name}. All rights reserved. Dubai, UAE.
-          </div>
-          <div className="flex gap-5">
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="hover:text-ink hover:underline underline-offset-2 transition-colors"
-            >
-              {siteConfig.email}
-            </a>
-          </div>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <p className="text-[12px] text-graphite tracking-tight">
+            © {new Date().getFullYear()} iClose. Dubai, UAE.
+          </p>
+          <button
+            onClick={openCookieSettings}
+            className="text-[12px] text-graphite-light hover:text-graphite transition-colors tracking-tight"
+          >
+            Cookie settings
+          </button>
         </div>
       </div>
     </footer>

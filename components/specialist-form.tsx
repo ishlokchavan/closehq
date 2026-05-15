@@ -5,31 +5,34 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { leadSchema, type LeadFormValues } from '@/lib/validations';
+import { specialistSchema, type SpecialistFormValues } from '@/lib/validations';
 import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
 
 const inputClasses =
   'w-full h-12 px-4 bg-paper border border-hairline rounded-xl text-ink text-[17px] placeholder:text-graphite-light focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all';
 
-export function LeadForm() {
+const textareaClasses =
+  'w-full px-4 py-3 bg-paper border border-hairline rounded-xl text-ink text-[17px] placeholder:text-graphite-light focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all resize-none leading-[1.5]';
+
+export function SpecialistForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<LeadFormValues>({
-    resolver: zodResolver(leadSchema),
-    defaultValues: { website: '', firstName: '', lastName: '', phone: '', email: '', consentPrivacy: false, consentMarketing: false },
+  } = useForm<SpecialistFormValues>({
+    resolver: zodResolver(specialistSchema),
+    defaultValues: { website: '', consentPrivacy: false },
   });
 
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const onSubmit = async (data: LeadFormValues) => {
+  const onSubmit = async (data: SpecialistFormValues) => {
     setServerError(null);
     try {
-      const res = await fetch('/api/lead', {
+      const res = await fetch('/api/specialist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -40,7 +43,7 @@ export function LeadForm() {
         throw new Error(body?.error || 'Something went wrong');
       }
 
-      trackEvent('member_signup', { source: 'early_access' });
+      trackEvent('specialist_apply', {});
       setSuccess(true);
       reset();
     } catch (err) {
@@ -57,17 +60,17 @@ export function LeadForm() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center py-8"
+          className="text-center py-10"
         >
           <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-mist mb-5">
             <Check className="h-6 w-6 text-ink" strokeWidth={2} />
           </div>
-          <h3 className="display-sm">You&apos;re in.</h3>
+          <h3 className="display-sm">Application received.</h3>
           <p
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            Check your inbox — we&apos;ve sent confirmation. We&apos;ll be in touch before launch.
+            We review every Specialist application personally. We&apos;ll be in touch.
           </p>
         </motion.div>
       ) : (
@@ -79,6 +82,10 @@ export function LeadForm() {
           className="space-y-4"
           noValidate
         >
+          {/* <p className="text-[13px] font-medium text-graphite tracking-tight mb-1" style={{ letterSpacing: '-0.008em' }}>
+            Apply to become a Specialist
+          </p> */}
+
           <input
             type="text"
             tabIndex={-1}
@@ -90,22 +97,57 @@ export function LeadForm() {
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="First name" error={errors.firstName?.message}>
-              <input {...register('firstName')} type="text" autoComplete="given-name" placeholder="First name" className={inputClasses} />
+              <input
+                {...register('firstName')}
+                type="text"
+                autoComplete="given-name"
+                placeholder="First"
+                className={inputClasses}
+              />
             </Field>
             <Field label="Last name" error={errors.lastName?.message}>
-              <input {...register('lastName')} type="text" autoComplete="family-name" placeholder="Last name" className={inputClasses} />
+              <input
+                {...register('lastName')}
+                type="text"
+                autoComplete="family-name"
+                placeholder="Last"
+                className={inputClasses}
+              />
             </Field>
           </div>
 
           <Field label="Phone" error={errors.phone?.message}>
-            <input {...register('phone')} type="tel" autoComplete="tel" placeholder="+971 50 123 4567" className={inputClasses} />
+            <input
+              {...register('phone')}
+              type="tel"
+              autoComplete="tel"
+              placeholder="+971 50 123 4567"
+              className={inputClasses}
+            />
           </Field>
 
           <Field label="Email" error={errors.email?.message}>
-            <input {...register('email')} type="email" autoComplete="email" placeholder="you@example.com" className={inputClasses} />
+            <input
+              {...register('email')}
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              className={inputClasses}
+            />
           </Field>
 
-          <div className="space-y-3 pt-1">
+
+
+          <Field label="Your expertise" error={errors.message?.message}>
+            <textarea
+              {...register('message')}
+              rows={4}
+              placeholder="Tell us which areas, developments, or communities you know deeply — and what you'd build for Members."
+              className={textareaClasses}
+            />
+          </Field>
+
+          <div className="space-y-1 pt-1">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -123,17 +165,6 @@ export function LeadForm() {
             {errors.consentPrivacy && (
               <p className="text-[13px] text-red-600 pl-7">{errors.consentPrivacy.message}</p>
             )}
-
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                {...register('consentMarketing')}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-hairline accent-ink cursor-pointer"
-              />
-              <span className="text-[13px] text-graphite leading-[1.5]">
-                I&apos;d like to receive updates, deal alerts, and news from iClose (optional)
-              </span>
-            </label>
           </div>
 
           {serverError && (
@@ -147,7 +178,7 @@ export function LeadForm() {
               {isSubmitting ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
               ) : (
-                <>Join as a Member <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
+                <>Apply as a Specialist <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
               )}
             </Button>
           </div>
@@ -169,7 +200,10 @@ function Field({
   return (
     <div>
       <div className="flex items-baseline justify-between mb-1.5">
-        <label className="text-sm font-medium text-graphite-dark tracking-tight" style={{ letterSpacing: '-0.01em' }}>
+        <label
+          className="text-sm font-medium text-graphite-dark tracking-tight"
+          style={{ letterSpacing: '-0.01em' }}
+        >
           {label}
         </label>
         {error && <span className="text-[13px] text-red-600">{error}</span>}

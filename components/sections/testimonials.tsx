@@ -2,104 +2,87 @@
 
 import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/reveal';
+import { MobileCarousel } from '@/components/ui/mobile-carousel';
 
 const TESTIMONIALS = [
   {
-    initials: 'A.M.',
-    location: 'Off-Plan Specialist',
-    quote: 'Switched six months ago. Earnings nearly doubled. Keeping the full commission is game-changing.',
+    initials: 'T.M.',
+    role: 'Secondary Market Agent',
+    quote:
+      'I spent four years in new developments and knew nothing about the secondary market. Six months with iClose and I can walk into any conversation about JVC, Dubai Hills, or Business Bay and hold my own. That is what the content here does.',
   },
   {
     initials: 'F.A.',
-    location: 'Independent Broker',
-    quote: 'No desk fees. Paid the moment the buyer signs. This is what brokers in Dubai have been waiting for.',
+    role: 'Private Client Advisor',
+    quote:
+      "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement to the community. Within 24 hours a Specialist came back with three matching units. That is a network you cannot build overnight.",
   },
   {
-    initials: 'M.H.',
-    location: 'Senior Agent',
-    quote: 'Smooth platform, reliable payouts, excellent support. Worth the switch.',
+    initials: 'K.R.',
+    role: 'Downtown Dubai Specialist',
+    quote:
+      'I used to rely on brokers I barely knew to move my units. Now I have a community of professionals who know exactly what I specialise in. When they have a buyer for Downtown, they call me first.',
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
-};
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-export function Testimonials() {
+function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
   return (
-    <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
-      <div className="container-wide">
-        <div className="max-w-3xl mb-14 md:mb-20">
-          <Reveal>
-            <h2 className="display-lg text-balance">
-              What brokers say.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="subhead mt-6 max-w-2xl">
-              500+ brokers already earning more. A few of them, in their own words.
-            </p>
-          </Reveal>
+    <figure className="rounded-apple border border-hairline bg-white p-8 sm:p-10 flex flex-col h-full">
+      <blockquote className="text-[16px] sm:text-[17px] text-ink leading-[1.5] text-balance flex-1" style={{ letterSpacing: '-0.012em' }}>
+        &ldquo;{t.quote}&rdquo;
+      </blockquote>
+      <figcaption className="mt-8 flex items-center gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">
+          <span className="text-[12px] font-medium text-graphite">{t.initials}</span>
         </div>
-
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
-        >
-          {TESTIMONIALS.map((t) => (
-            <motion.figure
-              key={t.initials}
-              variants={item}
-              className="card-mist p-8 sm:p-10 md:p-12 flex flex-col"
-            >
-              <blockquote
-                className="display-sm text-ink leading-[1.25] text-balance"
-              >
-                “{t.quote}”
-              </blockquote>
-              <figcaption className="mt-auto pt-10 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-paper border border-hairline">
-                  <span className="text-[13px] font-medium text-ink">
-                    {t.initials}
-                  </span>
-                </div>
-                <span className="text-sm font-medium text-graphite-dark tracking-tight">
-                  {t.location}
-                </span>
-              </figcaption>
-            </motion.figure>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="mt-16 md:mt-20 grid grid-cols-3 gap-6 text-center max-w-2xl mx-auto"
-        >
-          <Stat value="500+" label="Brokers earning" />
-          <Stat value="4.9★" label="Platform rating" />
-          <Stat value="+150%" label="Avg earnings lift" />
-        </motion.div>
-      </div>
-    </section>
+        <span className="text-sm text-graphite tracking-tight">{t.role}</span>
+      </figcaption>
+    </figure>
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+export function Testimonials() {
+  const cards = TESTIMONIALS.map((t) => <TestimonialCard key={t.initials} t={t} />);
+
   return (
-    <div>
-      <div className="display-md text-ink">{value}</div>
-      <div className="mt-1 text-sm text-graphite tracking-tight">{label}</div>
-    </div>
+    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
+
+      <div className="container-wide">
+        <Reveal>
+          {/* <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-ink text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}> */}
+          <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
+            {/* Three roles. One community. All winning. */}
+            What our members say.
+          </h2>
+        </Reveal>
+
+        {/* Mobile carousel */}
+        <MobileCarousel
+          items={cards}
+          className="md:hidden"
+          ariaLabel="Testimonials"
+        />
+
+        {/* Desktop grid */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ staggerChildren: 0.08 }}
+          className="hidden md:grid grid-cols-3 gap-4"
+        >
+          {TESTIMONIALS.map((t) => (
+            <motion.div key={t.initials} variants={item}>
+              <TestimonialCard t={t} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 }

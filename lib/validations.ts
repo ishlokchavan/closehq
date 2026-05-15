@@ -1,37 +1,37 @@
 import { z } from 'zod';
 
 export const leadSchema = z.object({
-  name: z
-    .string()
-    .min(2, 'Please enter your full name')
-    .max(80, 'Name is too long'),
+  firstName: z.string().min(1, 'Enter your first name').max(50),
+  lastName: z.string().min(1, 'Enter your last name').max(50),
   phone: z
     .string()
     .min(7, 'Enter a valid phone number')
-    .max(20, 'Phone number is too long')
+    .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
-  email: z
-    .string()
-    .email('Enter a valid email')
-    .max(120, 'Email is too long')
-    .optional()
-    .or(z.literal('')),
-  isAgent: z.enum(['yes', 'no'], {
-    required_error: 'Please choose one',
+  email: z.string().email('Enter a valid email').max(120),
+  consentPrivacy: z.boolean().refine((v) => v === true, {
+    message: 'You must agree to continue',
   }),
-  dealSize: z.enum(['0-1', '1-3', '3-5', '5-10', '10+'], {
-    required_error: 'Please choose your deal size',
-  }),
-  // Honeypot — must remain empty
+  consentMarketing: z.boolean().optional().default(false),
   website: z.string().max(0).optional(),
 });
 
 export type LeadFormValues = z.infer<typeof leadSchema>;
 
-export const dealSizeOptions = [
-  { value: '0-1', label: '0–1 deals / month (just starting)' },
-  { value: '1-3', label: '1–3 deals / month' },
-  { value: '3-5', label: '3–5 deals / month' },
-  { value: '5-10', label: '5–10 deals / month' },
-  { value: '10+', label: '10+ deals / month' },
-] as const;
+export const specialistSchema = z.object({
+  firstName: z.string().min(1, 'Enter your first name').max(50),
+  lastName: z.string().min(1, 'Enter your last name').max(50),
+  email: z.string().email('Enter a valid email').max(120),
+  phone: z
+    .string()
+    .min(7, 'Enter a valid phone number')
+    .max(20)
+    .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
+  message: z.string().min(10, 'Tell us a bit about your expertise').max(1000),
+  consentPrivacy: z.boolean().refine((v) => v === true, {
+    message: 'You must agree to continue',
+  }),
+  website: z.string().max(0).optional(),
+});
+
+export type SpecialistFormValues = z.infer<typeof specialistSchema>;
