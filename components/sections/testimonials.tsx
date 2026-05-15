@@ -34,7 +34,7 @@ const item = {
 function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
   return (
     <figure className="rounded-apple border border-white/10 bg-white/5 backdrop-blur-sm p-8 sm:p-10 flex flex-col h-full">
-      <blockquote className="display-sm text-white leading-[1.3] text-balance flex-1">
+      <blockquote className="text-[16px] sm:text-[17px] text-white leading-[1.5] text-balance flex-1" style={{ letterSpacing: '-0.012em' }}>
         &ldquo;{t.quote}&rdquo;
       </blockquote>
       <figcaption className="mt-8 flex items-center gap-3">
@@ -65,7 +65,7 @@ export function Testimonials() {
 
       <div className="relative container-wide">
         <Reveal>
-          <h2 className="display-lg text-white text-balance max-w-xl mb-14 md:mb-16">
+          <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-white text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}>
             Three roles. One community. All winning.
           </h2>
         </Reveal>
