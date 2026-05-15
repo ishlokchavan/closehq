@@ -30,8 +30,14 @@ const NAV_COLUMNS = [
   {
     heading: 'Contact',
     links: [
-      { href: 'mailto:hello@iclose.ae', label: 'hello@iclose.ae' },
-      { href: 'tel:+800425673', label: '(800) 425-673' },
+      {
+        href: `mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'hello@iclose.ae'}`,
+        label: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'hello@iclose.ae',
+      },
+      {
+        href: `tel:${(process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '(800) 425-673').replace(/\D/g, '')}`,
+        label: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '(800) 425-673',
+      },
     ],
   },
 ];
