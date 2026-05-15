@@ -20,6 +20,12 @@ export async function GET(request: Request) {
   }
   const db = createClient(supabaseUrl, supabaseKey);
 
+  // Admin client for creating auth users (service role bypasses RLS)
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const adminDb = serviceKey ? createClient(supabaseUrl, serviceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  }) : null;
+
   if (type === 'member') {
     const { data, error } = await db
       .from('leads')
@@ -38,6 +44,22 @@ export async function GET(request: Request) {
       .from('leads')
       .update({ is_verified: true, verified_at: new Date().toISOString() })
       .eq('verification_token', token);
+
+    // Provision a Supabase Auth user — triggers handle_new_user() → profiles insert
+    if (adminDb) {
+      try {
+        const { error: authError } = await adminDb.auth.admin.createUser({
+          email: data.email,
+          email_confirm: true,
+          user_metadata: { full_name: data.first_name },
+        });
+        if (authError && !authError.message.includes('already been registered')) {
+          console.error('[member] auth user creation failed:', authError.message);
+        }
+      } catch (err) {
+        console.error('[member] auth user creation failed:', err);
+      }
+    }
 
     // Send welcome email confirming verification
     try {
