@@ -28,3 +28,19 @@ export const specialistSchema = z.object({
 });
 
 export type SpecialistFormValues = z.infer<typeof specialistSchema>;
+
+export const internSchema = z.object({
+  firstName: z.string().min(1, 'Enter your first name').max(50),
+  lastName: z.string().min(1, 'Enter your last name').max(50),
+  email: z.string().email('Enter a valid email').max(120),
+  phone: z
+    .string()
+    .min(7, 'Enter a valid phone number')
+    .max(20)
+    .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
+  instagram: z.string().max(50).optional(),
+  message: z.string().max(1000).optional(),
+  website: z.string().max(0).optional(),
+});
+
+export type InternFormValues = z.infer<typeof internSchema>;
