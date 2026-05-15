@@ -28,24 +28,27 @@ export async function POST(request: Request) {
     // Generate token server-side — no need to read it back from DB
     const verificationToken = randomUUID();
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    const db = createClient(supabaseUrl, supabaseKey);
-
     try {
-      const { error } = await db
-        .from('educators')
-        .insert({
-          name: `${firstName} ${lastName}`.trim(),
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          phone,
-          expertise: message,
-          status: 'pending',
-          verification_token: verificationToken,
-        });
-      if (error) console.error('[specialist] DB insert failed:', error.message);
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      if (!supabaseUrl || !supabaseKey) {
+        console.error('[specialist] Missing Supabase env vars');
+      } else {
+        const db = createClient(supabaseUrl, supabaseKey);
+        const { error } = await db
+          .from('educators')
+          .insert({
+            name: `${firstName} ${lastName}`.trim(),
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            phone,
+            expertise: message,
+            status: 'pending',
+            verification_token: verificationToken,
+          });
+        if (error) console.error('[specialist] DB insert failed:', error.message);
+      }
     } catch (err) {
       console.error('[specialist] DB insert failed:', err);
     }

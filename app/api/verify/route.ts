@@ -13,8 +13,11 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/verify?status=invalid`);
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!supabaseUrl || !supabaseKey) {
+    return NextResponse.redirect(`${origin}/verify?status=invalid`);
+  }
   const db = createClient(supabaseUrl, supabaseKey);
 
   if (type === 'member') {
