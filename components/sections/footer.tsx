@@ -21,6 +21,7 @@ const NAV_COLUMNS = [
     links: [
       { href: '#apply', label: 'Join as a Member' },
       { href: '/specialists', label: 'Apply as a Specialist' },
+      { href: '/careers', label: 'Careers' },
     ],
   },
   {
