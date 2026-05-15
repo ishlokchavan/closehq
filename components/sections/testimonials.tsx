@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/reveal';
 import { MobileCarousel } from '@/components/ui/mobile-carousel';
@@ -33,15 +32,15 @@ const item = {
 
 function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
   return (
-    <figure className="rounded-apple border border-white/10 bg-white/5 backdrop-blur-sm p-8 sm:p-10 flex flex-col h-full">
-      <blockquote className="text-[16px] sm:text-[17px] text-white leading-[1.5] text-balance flex-1" style={{ letterSpacing: '-0.012em' }}>
+    <figure className="rounded-apple border border-hairline bg-white p-8 sm:p-10 flex flex-col h-full">
+      <blockquote className="text-[16px] sm:text-[17px] text-ink leading-[1.5] text-balance flex-1" style={{ letterSpacing: '-0.012em' }}>
         &ldquo;{t.quote}&rdquo;
       </blockquote>
       <figcaption className="mt-8 flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 border border-white/10">
-          <span className="text-[12px] font-medium text-white/60">{t.initials}</span>
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">
+          <span className="text-[12px] font-medium text-graphite">{t.initials}</span>
         </div>
-        <span className="text-sm text-white/40 tracking-tight">{t.role}</span>
+        <span className="text-sm text-graphite tracking-tight">{t.role}</span>
       </figcaption>
     </figure>
   );
@@ -51,21 +50,11 @@ export function Testimonials() {
   const cards = TESTIMONIALS.map((t) => <TestimonialCard key={t.initials} t={t} />);
 
   return (
-    <section className="relative bg-neutral-950 py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
+    <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
 
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero-burj.jpg"
-          alt=""
-          fill
-          className="object-cover object-center opacity-10"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/70 to-neutral-950" />
-      </div>
-
-      <div className="relative container-wide">
+      <div className="container-wide">
         <Reveal>
-          <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-white text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}>
+          <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-ink text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}>
             Three roles. One community. All winning.
           </h2>
         </Reveal>
@@ -75,7 +64,6 @@ export function Testimonials() {
           items={cards}
           className="md:hidden"
           ariaLabel="Testimonials"
-          dark
         />
 
         {/* Desktop grid */}
