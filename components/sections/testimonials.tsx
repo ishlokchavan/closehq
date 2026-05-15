@@ -54,8 +54,10 @@ export function Testimonials() {
 
       <div className="container-wide">
         <Reveal>
-          <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-ink text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}>
-            Three roles. One community. All winning.
+          {/* <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-ink text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}> */}
+          <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
+            {/* Three roles. One community. All winning. */}
+            What our members say.
           </h2>
         </Reveal>
 

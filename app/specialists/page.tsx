@@ -60,7 +60,7 @@ export default function ExpertsPage() {
 
                 <Reveal delay={0.05}>
                   <h1 className="display-lg text-white text-balance leading-[1.1]">
-                    Your Dubai knowledge powers the deal desk.
+                    Join our roster of specialists.
                   </h1>
                 </Reveal>
 
