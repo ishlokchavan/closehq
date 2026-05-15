@@ -129,7 +129,7 @@ export default function RootLayout({
     >
       <body className="font-sans bg-paper text-ink antialiased">
         {children}
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
 
         {/* Structured Data */}
         <Script
