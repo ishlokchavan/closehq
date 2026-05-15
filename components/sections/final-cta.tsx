@@ -1,23 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { LeadForm } from '@/components/lead-form';
 
 export function FinalCTA() {
   return (
-    <section id="apply" className="relative overflow-hidden" style={{ minHeight: 'calc(100vh - 48px)' }}>
-
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero-palm.jpg"
-          alt="Palm Jumeirah"
-          fill
-          quality={85}
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
-      </div>
+    <section id="apply" className="relative overflow-hidden bg-neutral-950" style={{ minHeight: 'calc(100vh - 48px)' }}>
 
       <div
         className="relative container-wide flex flex-col items-center lg:flex-row lg:items-center gap-4 lg:gap-20 pt-10 pb-12 lg:py-0"
