@@ -7,7 +7,7 @@ const EMAIL_FOOTER = `
   <p style="font-size:11px;color:#a1a1a6;line-height:1.6;">
     iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a><br/>
     You received this because you submitted a form at iclose.ae.
-    To unsubscribe or request data removal, email <a href="mailto:privacy@iclose.ae" style="color:#0071e3;">privacy@iclose.ae</a>.
+    To unsubscribe or request data removal, email <a href="mailto:hello@iclose.ae" style="color:#0071e3;">hello@iclose.ae</a>.
   </p>
 `;
 
