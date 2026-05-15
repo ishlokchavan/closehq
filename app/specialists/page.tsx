@@ -34,11 +34,11 @@ const PERKS = [
     label: 'Direct buyer access',
     body: 'Connect with a growing pool of agents, lawyers, accountants, family offices, etc. who have active, serious buyers.',
   },
-  // {
-  //   icon: TrendingUp,
-  //   label: 'Up to 100% commission',
-  //   body: 'Every deal closed through the platform keeps you in the driver\'s seat. Specialists retain the majority — or all — of their transaction revenue.',
-  // },
+  {
+    icon: TrendingUp,
+    label: 'Up to 100% commission',
+    body: "Every deal closed through the platform keeps you in the driver's seat. Specialists retain the majority — or all — of their transaction revenue.",
+  },
   {
     icon: Megaphone,
     label: 'Platform amplification',
