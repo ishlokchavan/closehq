@@ -2,6 +2,7 @@ import { Header } from '@/components/header';
 import { Hero } from '@/components/sections/hero';
 import { ForWho } from '@/components/sections/for-who';
 import { How } from '@/components/sections/how';
+import { DealCTA } from '@/components/sections/deal-cta';
 import { Transformation } from '@/components/sections/transformation';
 import { Plans } from '@/components/sections/plans';
 import { Testimonials } from '@/components/sections/testimonials';
@@ -17,6 +18,7 @@ export default function HomePage() {
         <Hero />
         <ForWho />
         <How />
+        <DealCTA />
         <Transformation />
         <Plans />
         <Testimonials />
