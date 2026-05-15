@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MobileCarouselProps {
@@ -9,10 +10,6 @@ interface MobileCarouselProps {
   ariaLabel?: string;
 }
 
-/**
- * Mobile-only horizontal scroll carousel with snap + dot pagination.
- * Renders as the children list on md+ (parent supplies grid styling there).
- */
 export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -20,14 +17,12 @@ export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselPr
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-
     const onScroll = () => {
       const slideWidth = track.clientWidth;
       if (slideWidth === 0) return;
       const idx = Math.round(track.scrollLeft / slideWidth);
       setActive(Math.max(0, Math.min(items.length - 1, idx)));
     };
-
     track.addEventListener('scroll', onScroll, { passive: true });
     return () => track.removeEventListener('scroll', onScroll);
   }, [items.length]);
@@ -56,18 +51,41 @@ export function MobileCarousel({ items, className, ariaLabel }: MobileCarouselPr
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {items.map((_, i) => (
+      <div className="mt-6 flex items-center justify-between">
+        {/* Dot indicators */}
+        <div className="flex items-center gap-2">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={cn(
+                'h-1.5 rounded-full transition-all duration-300',
+                i === active ? 'w-6 bg-ink' : 'w-1.5 bg-ink/20 hover:bg-ink/40',
+              )}
+            />
+          ))}
+        </div>
+
+        {/* Arrow buttons */}
+        <div className="flex gap-2">
           <button
-            key={i}
-            onClick={() => scrollTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={cn(
-              'h-1.5 rounded-full transition-all duration-300',
-              i === active ? 'w-6 bg-ink' : 'w-1.5 bg-hairline hover:bg-graphite-light',
-            )}
-          />
-        ))}
+            onClick={() => scrollTo(Math.max(0, active - 1))}
+            disabled={active === 0}
+            aria-label="Previous"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline bg-paper text-ink transition-colors hover:bg-mist disabled:opacity-30"
+          >
+            <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+          <button
+            onClick={() => scrollTo(Math.min(items.length - 1, active + 1))}
+            disabled={active === items.length - 1}
+            aria-label="Next"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-hairline bg-paper text-ink transition-colors hover:bg-mist disabled:opacity-30"
+          >
+            <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+        </div>
       </div>
     </div>
   );
