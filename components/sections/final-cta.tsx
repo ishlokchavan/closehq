@@ -1,55 +1,49 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Reveal } from '@/components/ui/reveal';
 import { LeadForm } from '@/components/lead-form';
 
 export function FinalCTA() {
   return (
-    <section id="apply" className="relative overflow-hidden">
+    <section id="apply" className="relative overflow-hidden bg-paper border-t border-hairline" style={{ minHeight: 'calc(100vh - 48px)' }}>
 
-      {/* Palm Jumeirah background */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero-palm.jpg"
-          alt="Palm Jumeirah"
-          fill
-          quality={85}
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/55 to-black/80" />
-      </div>
+      <div
+        className="relative container-wide flex flex-col items-center lg:flex-row lg:items-center gap-4 lg:gap-20 pt-10 pb-12 lg:py-0"
+        style={{ minHeight: 'calc(100vh - 48px)' }}
+      >
 
-      <div className="relative container-wide py-20 sm:py-24 md:py-32 lg:py-36">
-        <div className="max-w-lg mx-auto text-center mb-12">
-          <Reveal>
-            <h2 className="display-lg text-white text-balance">This is where it starts.</h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p
-              className="text-white/70 mt-5 text-[18px] sm:text-[20px] leading-[1.4] max-w-sm mx-auto"
-              style={{ letterSpacing: '-0.015em' }}
-            >
-              We’re opening a small founding cohort before launch. The people joining now are the ones who decided they’d rather lead the conversation than follow it.
-            </p>
-          </Reveal>
-        </div>
-
+        {/* Left: heading */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="max-w-md mx-auto"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:flex-1 text-center lg:text-left"
         >
-          <div className="bg-white rounded-apple p-6 sm:p-8 md:p-10 shadow-elevated">
+          <h2
+            className="text-ink font-display font-semibold text-balance leading-[1.05]"
+            style={{ fontSize: 'clamp(1.6rem, 7vw, 5.5rem)', letterSpacing: '-0.03em' }}
+          >
+            Join the<br />community.
+          </h2>
+          <p className="mt-2 text-graphite text-[13px] sm:text-[17px] leading-[1.5] max-w-xs mx-auto lg:mx-0" style={{ letterSpacing: '-0.012em' }}>
+            Free to join. No card required. Apply as a Specialist separately.
+          </p>
+        </motion.div>
+
+        {/* Right: form */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full lg:w-[420px] shrink-0"
+        >
+          <div className="bg-white rounded-apple border border-hairline p-5 sm:p-8 shadow-elevated">
             <LeadForm />
-            <p className="mt-5 text-center text-[13px] text-graphite tracking-tight">
-              No spam. Unsubscribe any time.
-            </p>
           </div>
         </motion.div>
+
       </div>
     </section>
   );

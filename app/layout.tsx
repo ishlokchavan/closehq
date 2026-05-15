@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
+import { ScrollToTop } from '@/components/scroll-to-top';
 import './globals.css';
 
 const fontDisplay = Inter_Tight({
@@ -128,6 +129,7 @@ export default function RootLayout({
     >
       <body className="font-sans bg-paper text-ink antialiased">
         {children}
+        {/* <ScrollToTop /> */}
 
         {/* Structured Data */}
         <Script

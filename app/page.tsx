@@ -1,8 +1,10 @@
 import { Header } from '@/components/header';
 import { Hero } from '@/components/sections/hero';
-import { Value } from '@/components/sections/value';
+import { ForWho } from '@/components/sections/for-who';
 import { How } from '@/components/sections/how';
+import { DealCTA } from '@/components/sections/deal-cta';
 import { Transformation } from '@/components/sections/transformation';
+import { Plans } from '@/components/sections/plans';
 import { Testimonials } from '@/components/sections/testimonials';
 import { FinalCTA } from '@/components/sections/final-cta';
 import { FAQ } from '@/components/sections/faq';
@@ -14,9 +16,11 @@ export default function HomePage() {
       <Header />
       <main className="overflow-x-clip">
         <Hero />
-        <Value />
+        <ForWho />
         <How />
+        <DealCTA />
         <Transformation />
+        <Plans />
         <Testimonials />
         <FinalCTA />
         <FAQ />

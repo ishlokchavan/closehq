@@ -70,7 +70,7 @@ export function SpecialistForm() {
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            We review every application personally. We\'ll be in touch.
+            We review every Specialist application personally. We&apos;ll be in touch.
           </p>
         </motion.div>
       ) : (
@@ -82,6 +82,10 @@ export function SpecialistForm() {
           className="space-y-4"
           noValidate
         >
+          {/* <p className="text-[13px] font-medium text-graphite tracking-tight mb-1" style={{ letterSpacing: '-0.008em' }}>
+            Apply to become a Specialist
+          </p> */}
+
           <input
             type="text"
             tabIndex={-1}
@@ -112,17 +116,7 @@ export function SpecialistForm() {
             </Field>
           </div>
 
-          <Field label="Email address" error={errors.email?.message}>
-            <input
-              {...register('email')}
-              type="email"
-              autoComplete="email"
-              placeholder="you@example.com"
-              className={inputClasses}
-            />
-          </Field>
-
-          <Field label="Phone number" error={errors.phone?.message}>
+          <Field label="Phone" error={errors.phone?.message}>
             <input
               {...register('phone')}
               type="tel"
@@ -132,11 +126,23 @@ export function SpecialistForm() {
             />
           </Field>
 
-          <Field label="Message" error={errors.message?.message}>
+          <Field label="Email" error={errors.email?.message}>
+            <input
+              {...register('email')}
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              className={inputClasses}
+            />
+          </Field>
+
+
+
+          <Field label="Your expertise" error={errors.message?.message}>
             <textarea
               {...register('message')}
               rows={4}
-              placeholder="Tell us about your Dubai expertise — areas, property types, and what you\'d teach."
+              placeholder="Tell us which areas, developments, or communities you know deeply — and what you'd build for Members."
               className={textareaClasses}
             />
           </Field>
@@ -152,7 +158,7 @@ export function SpecialistForm() {
               {isSubmitting ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
               ) : (
-                <>Submit application <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
+                <>Apply as a Specialist <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
               )}
             </Button>
           </div>

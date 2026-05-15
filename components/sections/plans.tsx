@@ -3,188 +3,187 @@
 import { motion } from 'framer-motion';
 import { Check, ChevronRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
+import { MobileCarousel } from '@/components/ui/mobile-carousel';
 
 interface Plan {
-  name: string;
+  key: string;
+  label: string;
+  tagline: string;
   price: string;
   cadence?: string;
-  split: string;
-  advance: string;
-  highlights: string[];
-  emphasis: string;
-  featured?: boolean;
+  splitPct: number;
+  features: string[];
+  isStar: boolean;
 }
 
 const PLANS: Plan[] = [
   {
-    name: 'Plus',
+    key: 'plus',
+    label: 'Plus',
+    tagline: 'Join the community, access the education platform, and start building expertise from day one.',
     price: 'Free',
-    split: '60 / 40',
-    advance: '50 / 50 paid when buyer signs',
-    emphasis: 'Try iClose with zero commitment.',
-    highlights: [
-      'Stay completely anonymous',
-      'Access to the deal desk',
+    splitPct: 60,
+    features: [
+      'Full community access',
+      'iClose Academy — foundation content',
+      'Post and receive asset requirements',
       'Email support',
     ],
+    isStar: false,
   },
   {
-    name: 'Pro',
+    key: 'pro',
+    label: 'Pro',
+    tagline: 'For Members who are actively transacting and want deeper access to Specialist content and priority matching.',
     price: 'AED 1,200',
     cadence: '/ year',
-    split: '80 / 20',
-    advance: '70 / 30 paid when buyer signs',
-    emphasis: 'For active brokers closing every month.',
-    highlights: [
+    splitPct: 80,
+    features: [
       'Everything in Plus',
-      'iClose Academy training',
-      'Priority deal desk',
+      'Full iClose Academy — all areas and buildings',
+      'Priority Specialist matching on inquiries',
+      'Priority deal desk support',
     ],
+    isStar: false,
   },
   {
-    name: 'Pro Max',
+    key: 'pro_max',
+    label: 'Pro Max',
+    tagline: 'Built for independent professionals operating at scale who need the full platform behind them.',
     price: 'AED 40,000',
     cadence: '/ year',
-    split: '90 / 10',
-    advance: '70 / 30 paid when buyer signs',
-    emphasis: 'For independent brokers ready to scale solo.',
-    featured: true,
-    highlights: [
+    splitPct: 90,
+    features: [
       'Labour & visa included',
       'Listings included',
       'Dedicated relationship manager',
-      'iClose Academy + area playbooks',
+      'Full Academy + area playbooks',
     ],
+    isStar: true,
   },
   {
-    name: 'Ultra',
+    key: 'ultra',
+    label: 'Ultra',
+    tagline: 'The complete back office. Run your practice at the highest level while we handle everything else.',
     price: 'AED 100,000',
     cadence: '/ year',
-    split: '100 %',
-    advance: '90 / 10 paid when buyer signs',
-    emphasis: 'Done for you. Run your practice, not the back office.',
-    highlights: [
+    splitPct: 100,
+    features: [
       'Everything done for you',
       'Dedicated account manager',
       'Finance, admin, and invoicing',
-      'Priority RM + concierge',
+      'Priority access to exclusive off-market deals',
     ],
+    isStar: false,
   },
 ];
 
-export function Plans() {
+function PlanCard({ plan }: { plan: Plan }) {
   return (
-    <section id="plans" className="bg-mist py-16 sm:py-20 md:py-24 lg:py-32">
+    <div
+      className={
+        plan.isStar
+          ? 'card-surface ring-2 ring-ink p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col h-full'
+          : 'card-surface p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col h-full'
+      }
+    >
+      <div className="h-6 mb-3 flex items-center">
+        {plan.isStar && (
+          <span className="px-3 py-1 rounded-full bg-ink text-white text-[12px] font-medium tracking-tight whitespace-nowrap">
+            Most popular
+          </span>
+        )}
+      </div>
+
+      <p className="text-sm font-medium text-graphite tracking-tight">{plan.label}</p>
+
+      <div className="mt-3 flex items-baseline gap-1.5 flex-wrap">
+        <span
+          className="font-display font-semibold text-ink"
+          style={{ fontSize: 'clamp(1.625rem, 2.4vw, 2.25rem)', letterSpacing: '-0.025em', lineHeight: 1 }}
+        >
+          {plan.price}
+        </span>
+        {plan.cadence && (
+          <span className="text-sm text-graphite tracking-tight">{plan.cadence}</span>
+        )}
+      </div>
+
+      <p className="mt-4 text-[15px] text-graphite-dark leading-[1.45] min-h-[3em]" style={{ letterSpacing: '-0.012em' }}>
+        {plan.tagline}
+      </p>
+
+      <div className="hairline my-6" />
+
+      <ul className="space-y-2.5 mb-8 flex-1">
+        {plan.features.map((f) => (
+          <li key={f} className="flex items-start gap-2.5 text-[15px] text-ink" style={{ letterSpacing: '-0.012em' }}>
+            <Check className="h-4 w-4 mt-0.5 text-ink flex-shrink-0" strokeWidth={2.5} />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="hairline mb-6" />
+
+      <div className="flex items-baseline justify-between mb-6">
+        <span className="text-sm text-graphite tracking-tight">Transaction split</span>
+        <span className="text-[17px] font-medium text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
+          {plan.splitPct} / {100 - plan.splitPct}
+        </span>
+      </div>
+
+      <a href="#apply" className="applelink mt-auto">
+        Get started
+        <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+      </a>
+    </div>
+  );
+}
+
+export function Plans() {
+  const cards = PLANS.map((plan) => <PlanCard key={plan.key} plan={plan} />);
+
+  return (
+    <section id="plans" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container-wide">
-        <div className="max-w-3xl mb-14 md:mb-20 text-center mx-auto">
+        <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Pick the way you want to work.
+              Choose the level of access that fits where you are.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="subhead mt-6 mx-auto max-w-2xl">
-              Four tiers. Same anonymity. The more you put in, the more you keep — up to 100%.
+            <p className="subhead mt-5 max-w-2xl">
+              Every tier starts with community access and the education platform. As you go deeper, you get more — better Specialist matching, dedicated support, and an increasing share of any transaction you close.
             </p>
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 pt-3">
+        {/* Mobile carousel */}
+        <MobileCarousel
+          items={cards}
+          className="md:hidden"
+          ariaLabel="Membership plans"
+        />
+
+        {/* Desktop grid */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 pt-3">
           {PLANS.map((plan, i) => (
             <motion.div
-              key={plan.name}
+              key={plan.key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{
-                duration: 0.7,
-                delay: i * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className={
-                plan.featured
-                  ? 'card-surface ring-2 ring-ink p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col relative'
-                  : 'card-surface p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col'
-              }
+              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              {plan.featured && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-ink text-white text-[12px] font-medium tracking-tight whitespace-nowrap">
-                  Most popular
-                </span>
-              )}
-
-              <p className="text-sm font-medium text-graphite tracking-tight">
-                {plan.name}
-              </p>
-
-              <div className="mt-3 flex items-baseline gap-1.5 flex-wrap">
-                <span
-                  className="font-display font-semibold text-ink"
-                  style={{ fontSize: 'clamp(1.625rem, 2.4vw, 2.25rem)', letterSpacing: '-0.025em', lineHeight: 1 }}
-                >
-                  {plan.price}
-                </span>
-                {plan.cadence && (
-                  <span className="text-sm text-graphite tracking-tight">{plan.cadence}</span>
-                )}
-              </div>
-
-              <p
-                className="mt-4 text-[15px] text-graphite-dark leading-[1.45] min-h-[3em]"
-                style={{ letterSpacing: '-0.012em' }}
-              >
-                {plan.emphasis}
-              </p>
-
-              <div className="hairline my-6" />
-
-              <div className="space-y-1">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-sm text-graphite tracking-tight">Commission split</span>
-                  <span className="text-[17px] font-medium text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
-                    {plan.split}
-                  </span>
-                </div>
-                {/* <div className="flex items-baseline justify-between">
-                  <span className="text-sm text-graphite tracking-tight">Paid on signing</span>
-                  <span className="text-[15px] text-ink tabular-nums" style={{ letterSpacing: '-0.012em' }}>
-                    {plan.advance}
-                  </span>
-                </div> */}
-              </div>
-
-              <div className="hairline my-6" />
-
-              <ul className="space-y-2.5 mb-8">
-                {plan.highlights.map((h) => (
-                  <li
-                    key={h}
-                    className="flex items-start gap-2.5 text-[15px] text-ink"
-                    style={{ letterSpacing: '-0.012em' }}
-                  >
-                    <Check className="h-4 w-4 mt-0.5 text-ink flex-shrink-0" strokeWidth={2.5} />
-                    <span>{h}</span>
-                  </li>
-                ))}
-                <li
-                  className="flex items-start gap-2.5 text-[15px] text-ink"
-                  style={{ letterSpacing: '-0.012em' }}
-                >
-                  <Check className="h-4 w-4 mt-0.5 text-ink flex-shrink-0" strokeWidth={2.5} />
-                  <span>Anonymous, always</span>
-                </li>
-              </ul>
-
-              <a href="#apply" className="applelink mt-auto">
-                Get {plan.name}
-                <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
-              </a>
+              <PlanCard plan={plan} />
             </motion.div>
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-graphite tracking-tight">
-          All plans include 5% lifetime referral bonus on agents you bring in.
+        <p className="mt-10 text-[14px] text-graphite tracking-tight">
+          Transaction splits apply when a deal closes through the platform. Community access and education are available on every plan regardless of transaction activity.
         </p>
       </div>
     </section>

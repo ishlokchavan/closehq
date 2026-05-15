@@ -2,29 +2,29 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin, Building2, Users, TrendingUp } from 'lucide-react';
+import { BookOpen, Users, Building2, ShieldCheck } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const VALUES = [
   {
-    icon: MapPin,
-    title: 'Area knowledge.',
-    body: "Every major Dubai community mapped to what actually drives it — demand patterns, price bands, the dynamics that move people to act. Understanding, not just information.",
+    icon: BookOpen,
+    title: 'Education from practitioners.',
+    body: 'Every piece of content on iClose is created by Specialists who are actively working in the areas they cover. Not theory, not analysis — knowledge that has been tested by real transactions.',
   },
   {
     icon: Building2,
-    title: 'Development intelligence.',
-    body: 'Per-development depth: unit types, floor premiums, view differentials, price history. The difference between knowing a development exists and truly knowing everything about it.',
+    title: 'Inventory with context.',
+    body: "When a Specialist lists a unit, it comes with the depth of someone who knows that building from the ground floor up. Members don't just get a property — they get the full picture behind it.",
   },
   {
     icon: Users,
-    title: 'Community intelligence.',
-    body: "Dubai's communities each move to their own logic. The demand drivers, seasonal patterns, and buyer profiles that separate a well-timed move from a lucky one.",
+    title: 'A trusted professional network.',
+    body: 'iClose Members include agents, lawyers, accountants, financial advisors, family offices, and private equity. When a Specialist shares their inventory here, it reaches the professionals who have serious buyers — not browsers.',
   },
   {
-    icon: TrendingUp,
-    title: 'Cluster mastery.',
-    body: "Inside Dubai's major communities live micro-markets most outsiders never see. The ones who understand them early become the ones others turn to for their read.",
+    icon: ShieldCheck,
+    title: 'Discretion built in.',
+    body: 'Every interaction within iClose is handled with the privacy that professional relationships require. Members and Specialists connect within the platform — quietly, directly, and without unnecessary exposure.',
   },
 ];
 
@@ -39,14 +39,13 @@ const item = {
 
 export function Value() {
   return (
-    <section id="learn" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
+    <section id="learn" className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden">
       <div className="container-wide">
 
-        {/* Headline left + image right */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-16 md:mb-20">
           <Reveal>
             <h2 className="display-lg text-balance">
-              What the most trusted voices on Dubai real estate actually know.
+              Knowledge, inventory, and the people to make it move.
             </h2>
           </Reveal>
           <motion.div
@@ -68,7 +67,6 @@ export function Value() {
           </motion.div>
         </div>
 
-        {/* Value cards */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -79,8 +77,8 @@ export function Value() {
           {VALUES.map((v) => {
             const Icon = v.icon;
             return (
-              <motion.div key={v.title} variants={item} className="card-mist p-8 sm:p-10">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper border border-hairline mb-6">
+              <motion.div key={v.title} variants={item} className="card-surface p-8 sm:p-10">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-mist border border-hairline mb-6">
                   <Icon className="h-5 w-5 text-ink" strokeWidth={1.5} />
                 </div>
                 <h3 className="display-sm mb-3">{v.title}</h3>
