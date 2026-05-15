@@ -72,7 +72,7 @@ const PLANS: Plan[] = [
       'Everything done for you',
       'Dedicated account manager',
       'Finance, admin, and invoicing',
-      'Priority RM + concierge',
+      'Priority access to exclusive off-market deals',
     ],
     isStar: false,
   },
