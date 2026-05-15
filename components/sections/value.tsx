@@ -19,7 +19,7 @@ const VALUES = [
   {
     icon: Users,
     title: 'A trusted professional network.',
-    body: 'iClose Members include agents, lawyers, accountants, financial advisers, family offices, and private equity. When a Specialist shares their inventory here, it reaches the professionals who have serious buyers — not browsers.',
+    body: 'iClose Members include agents, lawyers, accountants, financial advisors, family offices, and private equity. When a Specialist shares their inventory here, it reaches the professionals who have serious buyers — not browsers.',
   },
   {
     icon: ShieldCheck,

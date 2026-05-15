@@ -63,20 +63,6 @@ export function Hero() {
       {/* Hero content */}
       <div className="relative flex-1 flex flex-col items-center justify-center container-wide text-center pt-28 pb-20 px-4">
 
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-7 flex justify-center"
-        >
-          <span
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm text-[12px] text-white/80"
-            style={{ letterSpacing: '-0.01em' }}
-          >
-            Now accepting founding members · Dubai secondary market
-          </span>
-        </motion.div>
-
         <h1 className="display-xl text-white text-balance">
           <motion.span
             initial={{ opacity: 0, y: 28 }}

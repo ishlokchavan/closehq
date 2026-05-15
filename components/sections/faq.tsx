@@ -8,11 +8,11 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: 'iClose is a Dubai real estate community and education platform built around three types of professionals: agents who want to build expertise in the secondary market, professionals (lawyers, accountants, advisers, family offices) whose clients have property requirements, and Specialists who have area or building expertise and inventory to match. The platform connects all three in a way that benefits everyone.',
+    a: 'iClose is a Dubai real estate community and education platform built around three types of professionals: agents who want to build expertise in the secondary market, professionals (lawyers, accountants, advisors, family offices) whose clients have property requirements, and Specialists who have area or building expertise and inventory to match. The platform connects all three in a way that benefits everyone.',
   },
   {
     q: 'Who can join as a Member?',
-    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisers, POAs, investors, and family offices. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
+    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, and family offices. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
   },
   {
     q: "I'm an agent. How does iClose help me specifically?",
