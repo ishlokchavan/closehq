@@ -5,22 +5,22 @@ import { ChevronRight } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 const PILLS = [
-  { label: 'Real Estate Agent',    x: '8%',  y: '6%'  },
-  { label: 'Investor',             x: '52%', y: '2%'  },
-  { label: 'Mortgage Broker',      x: '2%',  y: '22%' },
-  { label: 'Accountant',           x: '44%', y: '18%' },
-  { label: 'Lawyer',               x: '16%', y: '38%' },
-  { label: 'Asset Manager',        x: '55%', y: '35%' },
-  { label: 'Financial Adviser',    x: '4%',  y: '54%' },
-  { label: 'Fund Manager',         x: '46%', y: '52%' },
-  { label: 'Wealth Manager',       x: '14%', y: '68%' },
-  { label: 'Private Banker',       x: '52%', y: '66%' },
-  { label: 'Family Office',        x: '2%',  y: '82%' },
-  { label: 'Broker',               x: '38%', y: '80%' },
-  { label: 'Tax Adviser',          x: '64%', y: '84%' },
-  { label: 'POA',                  x: '72%', y: '48%' },
-  { label: 'Insurance Adviser',    x: '66%', y: '16%' },
-  { label: 'Corporate Treasurer',  x: '28%', y: '92%' },
+  { label: 'Real Estate Agent', x: '8%', y: '6%' },
+  { label: 'Investor', x: '52%', y: '2%' },
+  { label: 'Mortgage Broker', x: '2%', y: '22%' },
+  { label: 'Accountant', x: '44%', y: '18%' },
+  { label: 'Lawyer', x: '16%', y: '38%' },
+  { label: 'Asset Manager', x: '55%', y: '35%' },
+  { label: 'Financial Adviser', x: '4%', y: '54%' },
+  { label: 'Fund Manager', x: '46%', y: '52%' },
+  { label: 'Wealth Manager', x: '14%', y: '68%' },
+  { label: 'Private Banker', x: '52%', y: '66%' },
+  { label: 'Family Office', x: '2%', y: '82%' },
+  { label: 'Broker', x: '38%', y: '80%' },
+  { label: 'Tax Adviser', x: '64%', y: '84%' },
+  { label: 'POA', x: '72%', y: '48%' },
+  { label: 'Insurance Adviser', x: '66%', y: '16%' },
+  { label: 'Corporate Treasurer', x: '28%', y: '92%' },
 ];
 
 /* First two rows shown on mobile as a compact wrap */
@@ -91,9 +91,7 @@ export function Hero() {
             className="mt-6 text-graphite-dark leading-[1.5] text-balance max-w-lg"
             style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', letterSpacing: '-0.015em' }}
           >
-            The Dubai secondary market runs on the right expertise, the right
-            relationships, and access to the right assets. iClose is where all
-            three come together.
+            Whether you're an agent building expertise in the secondary market, a professional whose clients need the right asset, or a specialist with inventory to move and knowledge to share, iClose is where it all happens!
           </motion.p>
 
           <motion.div
