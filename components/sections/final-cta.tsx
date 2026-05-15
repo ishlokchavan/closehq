@@ -5,7 +5,7 @@ import { LeadForm } from '@/components/lead-form';
 
 export function FinalCTA() {
   return (
-    <section id="apply" className="relative overflow-hidden bg-neutral-950" style={{ minHeight: 'calc(100vh - 48px)' }}>
+    <section id="apply" className="relative overflow-hidden bg-neutral-950 border-t border-white/10" style={{ minHeight: 'calc(100vh - 48px)' }}>
 
       <div
         className="relative container-wide flex flex-col items-center lg:flex-row lg:items-center gap-4 lg:gap-20 pt-10 pb-12 lg:py-0"
