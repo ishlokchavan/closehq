@@ -83,15 +83,17 @@ function PlanCard({ plan }: { plan: Plan }) {
     <div
       className={
         plan.isStar
-          ? 'card-surface ring-2 ring-ink p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col relative h-full'
+          ? 'card-surface ring-2 ring-ink p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col h-full'
           : 'card-surface p-6 md:p-8 lg:p-7 xl:p-8 flex flex-col h-full'
       }
     >
-      {plan.isStar && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-ink text-white text-[12px] font-medium tracking-tight whitespace-nowrap">
-          Most popular
-        </span>
-      )}
+      <div className="h-6 mb-3 flex items-center">
+        {plan.isStar && (
+          <span className="px-3 py-1 rounded-full bg-ink text-white text-[12px] font-medium tracking-tight whitespace-nowrap">
+            Most popular
+          </span>
+        )}
+      </div>
 
       <p className="text-sm font-medium text-graphite tracking-tight">{plan.label}</p>
 
