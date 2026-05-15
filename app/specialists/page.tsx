@@ -18,8 +18,8 @@ const WHAT_YOU_DO = [
   },
   {
     icon: Megaphone,
-    title: 'Power the deal desk.',
-    body: "When a Member submits a requirement, they draw on Specialist knowledge. Your expertise stays active in every transaction it touches — not sitting in a course no one finishes.",
+    title: 'Stay active in every transaction.',
+    body: "When a Member has a buyer requirement, the Specialist who knows that area best is matched directly. Your expertise doesn't sit idle — it closes deals.",
   },
   {
     icon: BadgeCheck,
@@ -82,7 +82,7 @@ const TESTIMONIALS = [
     name: 'Sarah K.',
     role: 'Palm Jumeirah Expert',
     quote:
-      "I used to share my knowledge over the phone, one person at a time. Now it's powering deal desk decisions across the platform. That kind of leverage changes how you think about what you know.",
+      "I used to share my knowledge over the phone, one person at a time. Now it reaches serious buyers across the platform every week. That kind of leverage changes how you think about what you know.",
   },
 ];
 
@@ -93,8 +93,8 @@ export default function SpecialistsPage() {
       <main id="top">
 
         {/* ── Hero + Form ─────────────────────────────────────────────── */}
-        <section className="bg-paper border-b border-hairline min-h-screen flex items-center">
-          <div className="container-wide w-full flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20 pt-24 pb-16 lg:py-0" style={{ minHeight: 'calc(100vh - 48px)' }}>
+        <section className="bg-paper border-b border-hairline min-h-screen flex items-center pt-12">
+          <div className="container-wide w-full flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20 py-12 lg:py-0">
 
             {/* Left */}
             <div className="lg:flex-1 flex flex-col justify-center">
@@ -108,7 +108,7 @@ export default function SpecialistsPage() {
                   className="font-display font-semibold text-ink text-balance"
                   style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', lineHeight: 1.06, letterSpacing: '-0.03em' }}
                 >
-                  Your Dubai knowledge powers the deal desk.
+                  Turn what you know into a revenue stream.
                 </h1>
               </Reveal>
               <Reveal delay={0.1}>
