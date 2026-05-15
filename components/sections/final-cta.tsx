@@ -20,7 +20,7 @@ export function FinalCTA() {
       </div>
 
       <div
-        className="relative container-wide flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-20 pt-10 pb-12 lg:py-0"
+        className="relative container-wide flex flex-col items-center lg:flex-row lg:items-center gap-4 lg:gap-20 pt-10 pb-12 lg:py-0"
         style={{ minHeight: 'calc(100vh - 48px)' }}
       >
 
@@ -30,15 +30,15 @@ export function FinalCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="flex-1"
+          className="lg:flex-1 text-center lg:text-left"
         >
           <h2
             className="text-white font-display font-semibold text-balance leading-[1.05]"
-            style={{ fontSize: 'clamp(2rem, 7vw, 5.5rem)', letterSpacing: '-0.03em' }}
+            style={{ fontSize: 'clamp(1.6rem, 7vw, 5.5rem)', letterSpacing: '-0.03em' }}
           >
             Join the<br />community.
           </h2>
-          <p className="mt-3 text-white/55 text-[14px] sm:text-[17px] leading-[1.55] max-w-xs" style={{ letterSpacing: '-0.012em' }}>
+          <p className="mt-2 text-white/55 text-[13px] sm:text-[17px] leading-[1.5] max-w-xs mx-auto lg:mx-0" style={{ letterSpacing: '-0.012em' }}>
             Free to join. No card required. Apply as a Specialist separately.
           </p>
         </motion.div>
