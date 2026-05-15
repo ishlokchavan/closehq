@@ -151,29 +151,6 @@ export default function CareersPage() {
             </Reveal>
           </div>
         </section>
-
-        {/* Location strip */}
-        <section className="bg-mist border-t border-hairline">
-          <div className="container-x py-8 flex items-center gap-3">
-            <span className="text-[15px] text-graphite" style={{ letterSpacing: '-0.01em' }}>
-              📍 Dubai, UAE
-            </span>
-            <span className="text-hairline">·</span>
-            <a
-              href="https://wa.me/971585193095"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[15px] text-accent hover:underline"
-              style={{ letterSpacing: '-0.01em' }}
-            >
-              +971 58 519 3095
-            </a>
-            <span className="text-hairline hidden sm:inline">·</span>
-            <span className="hidden sm:inline text-[13px] text-graphite-light tracking-wide uppercase">
-              Real Experience. Real Impact. Real Growth.
-            </span>
-          </div>
-        </section>
       </main>
 
       <Footer />
