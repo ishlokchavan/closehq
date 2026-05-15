@@ -13,7 +13,7 @@ const TESTIMONIALS = [
   },
   {
     initials: 'F.A.',
-    role: 'Private Client Adviser',
+    role: 'Private Client Advisor',
     quote:
       "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement to the community. Within 24 hours a Specialist came back with three matching units. That is a network you cannot build overnight.",
   },

@@ -32,13 +32,13 @@ const PERKS = [
   {
     icon: Users,
     label: 'Direct buyer access',
-    body: 'Connect with a growing pool of agents, lawyers, accountants, and family offices who have active, serious buyers.',
+    body: 'Connect with a growing pool of agents, lawyers, accountants, family offices, etc. who have active, serious buyers.',
   },
-  {
-    icon: TrendingUp,
-    label: 'Up to 100% commission',
-    body: 'Every deal closed through the platform keeps you in the driver\'s seat. Specialists retain the majority — or all — of their transaction revenue.',
-  },
+  // {
+  //   icon: TrendingUp,
+  //   label: 'Up to 100% commission',
+  //   body: 'Every deal closed through the platform keeps you in the driver\'s seat. Specialists retain the majority — or all — of their transaction revenue.',
+  // },
   {
     icon: Megaphone,
     label: 'Platform amplification',
@@ -116,7 +116,7 @@ export default function SpecialistsPage() {
                   iClose Specialists build the market intelligence that active Members rely on to close — area playbooks, development deep-dives, and community analysis from people still in the market.
                 </p>
               </Reveal>
-              <Reveal delay={0.15}>
+              {/* <Reveal delay={0.15}>
                 <ul className="mt-8 space-y-3">
                   {[
                     'Vetted and recognised by the platform',
@@ -129,13 +129,13 @@ export default function SpecialistsPage() {
                     </li>
                   ))}
                 </ul>
-              </Reveal>
+              </Reveal> */}
             </div>
 
             {/* Right: form */}
             <Reveal delay={0.1} className="w-full lg:w-[440px] shrink-0">
               <div className="bg-white rounded-apple border border-hairline p-6 sm:p-8 shadow-elevated">
-                <p className="text-[13px] font-medium text-graphite tracking-tight mb-6">Apply as a Specialist</p>
+                {/* <p className="text-[13px] font-medium text-graphite tracking-tight mb-6">Apply as a Specialist</p> */}
                 <SpecialistForm />
               </div>
             </Reveal>

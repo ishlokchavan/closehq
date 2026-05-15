@@ -11,15 +11,15 @@ const PILLS = [
   { label: 'Accountant', x: '44%', y: '18%' },
   { label: 'Lawyer', x: '16%', y: '38%' },
   { label: 'Asset Manager', x: '55%', y: '35%' },
-  { label: 'Financial Adviser', x: '4%', y: '54%' },
+  { label: 'Financial Advisor', x: '4%', y: '54%' },
   { label: 'Fund Manager', x: '46%', y: '52%' },
   { label: 'Wealth Manager', x: '14%', y: '68%' },
   { label: 'Private Banker', x: '52%', y: '66%' },
   { label: 'Family Office', x: '2%', y: '82%' },
   { label: 'Broker', x: '38%', y: '80%' },
-  { label: 'Tax Adviser', x: '64%', y: '84%' },
+  { label: 'Tax Advisor', x: '64%', y: '84%' },
   { label: 'POA', x: '72%', y: '48%' },
-  { label: 'Insurance Adviser', x: '66%', y: '16%' },
+  { label: 'Insurance Advisor', x: '66%', y: '16%' },
   { label: 'Corporate Treasurer', x: '28%', y: '92%' },
 ];
 

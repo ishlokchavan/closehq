@@ -12,15 +12,15 @@ const FAQS = [
   },
   {
     q: 'Who can join as a Member?',
-    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, and family offices. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
+    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, etc. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
   },
   {
     q: "I'm an agent. How does iClose help me specifically?",
     a: "iClose Academy gives you structured content from Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and community intelligence. It's the fastest path to becoming a credible secondary market professional, built on real knowledge from people in the field.",
   },
   {
-    q: "I'm a lawyer / accountant / adviser. How does this help my clients?",
-    a: "When your client has a specific asset requirement, you can post it directly to the iClose community. The Specialist who knows that area or building best responds personally. You stay in control of the client relationship — we provide the expertise and the matched inventory behind it.",
+    q: "I'm a lawyer / accountant / advisor. How does this help my clients?",
+    a: "When your client has a specific asset requirement, you submit an inquiry directly with us, and we will connect you to the Specialist who knows that domain the best.",
   },
   {
     q: 'What is a Specialist and how is it different from a Member?',

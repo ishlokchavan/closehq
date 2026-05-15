@@ -82,9 +82,9 @@ export function SpecialistForm() {
           className="space-y-4"
           noValidate
         >
-          <p className="text-[13px] font-medium text-graphite tracking-tight mb-1" style={{ letterSpacing: '-0.008em' }}>
+          {/* <p className="text-[13px] font-medium text-graphite tracking-tight mb-1" style={{ letterSpacing: '-0.008em' }}>
             Apply to become a Specialist
-          </p>
+          </p> */}
 
           <input
             type="text"
@@ -116,17 +116,7 @@ export function SpecialistForm() {
             </Field>
           </div>
 
-          <Field label="Email address" error={errors.email?.message}>
-            <input
-              {...register('email')}
-              type="email"
-              autoComplete="email"
-              placeholder="you@example.com"
-              className={inputClasses}
-            />
-          </Field>
-
-          <Field label="Phone number" error={errors.phone?.message}>
+          <Field label="Phone" error={errors.phone?.message}>
             <input
               {...register('phone')}
               type="tel"
@@ -136,7 +126,19 @@ export function SpecialistForm() {
             />
           </Field>
 
-          <Field label="Your Dubai expertise" error={errors.message?.message}>
+          <Field label="Email" error={errors.email?.message}>
+            <input
+              {...register('email')}
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              className={inputClasses}
+            />
+          </Field>
+
+
+
+          <Field label="Your expertise" error={errors.message?.message}>
             <textarea
               {...register('message')}
               rows={4}
