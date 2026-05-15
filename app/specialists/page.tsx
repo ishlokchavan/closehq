@@ -35,11 +35,6 @@ const PERKS = [
     body: 'Connect with a growing pool of agents, lawyers, accountants, family offices, etc. who have active, serious buyers.',
   },
   {
-    icon: TrendingUp,
-    label: 'Up to 100% commission',
-    body: "Every deal closed through the platform keeps you in the driver's seat. Specialists retain the majority — or all — of their transaction revenue.",
-  },
-  {
     icon: Megaphone,
     label: 'Platform amplification',
     body: 'iClose publishes and promotes your knowledge. Your expertise reaches Members every week, positioning you as the authority in your domain.',
@@ -206,8 +201,10 @@ export default function SpecialistsPage() {
               <div className="flex-1 grid sm:grid-cols-2 gap-4">
                 {PERKS.map((perk, i) => {
                   const Icon = perk.icon;
+                  const isLast = i === PERKS.length - 1;
+                  const isOdd = PERKS.length % 2 !== 0;
                   return (
-                    <Reveal key={perk.label} delay={i * 0.07}>
+                    <Reveal key={perk.label} delay={i * 0.07} className={isLast && isOdd ? 'sm:col-span-2' : ''}>
                       <div className="card-mist p-6 sm:p-8 h-full flex flex-col">
                         <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white border border-hairline mb-4">
                           <Icon className="h-4 w-4 text-ink" strokeWidth={1.5} />
