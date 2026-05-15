@@ -99,12 +99,12 @@ export function Hero() {
           className="mt-9 flex items-center justify-center gap-5 flex-wrap"
         >
           <a
-            href="#who"
+            href="#apply"
             onClick={() => trackEvent('cta_click', { source: 'hero_primary' })}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-ink text-[15px] font-medium hover:bg-white/90 transition-colors"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Find your place here
+            Join now
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
           <a
@@ -112,7 +112,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors text-[15px]"
             style={{ letterSpacing: '-0.01em' }}
           >
-            Become a Specialist
+            Apply as a Specialist
             <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
           </a>
         </motion.div>

@@ -17,7 +17,7 @@ const AUDIENCES = [
     tag: 'For Specialists',
     headline: 'Your Knowledge. Our Reach.',
     body: "If you know a community or a building better than anyone, iClose puts you in front of a network of serious buyers. Share your knowledge, and we handle the rest. We publish it, we amplify it, and we position you as the go-to authority in your domain. When a Member inquiry falls within your expertise, you are the first and only call.",
-    cta: { label: 'Become a Specialist', href: '/specialists' },
+    cta: { label: 'Apply as a Specialist', href: '/specialists' },
   },
   {
     icon: GraduationCap,

@@ -7,7 +7,7 @@ const NAV_COLUMNS = [
     heading: 'Platform',
     links: [
       { href: '#how', label: 'How it works' },
-      { href: '#who', label: 'Who it\'s for' },
+      { href: '#apply', label: 'Who it\'s for' },
       { href: '#plans', label: 'Plans' },
       { href: '#faq', label: 'FAQ' },
     ],
@@ -16,7 +16,7 @@ const NAV_COLUMNS = [
     heading: 'Join',
     links: [
       { href: '#apply', label: 'Join as a Member' },
-      { href: '/specialists', label: 'Become a Specialist' },
+      { href: '/specialists', label: 'Apply as a Specialist' },
     ],
   },
   {

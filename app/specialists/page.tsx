@@ -5,7 +5,7 @@ import { SpecialistForm } from '@/components/specialist-form';
 import { Reveal } from '@/components/ui/reveal';
 
 export const metadata = {
-  title: 'Become a Specialist — iClose',
+  title: 'Apply as a Specialist — iClose',
   description:
     'Apply to join iClose as a Specialist. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
 };
@@ -54,7 +54,7 @@ export default function ExpertsPage() {
               <div>
                 <Reveal>
                   <span className="inline-block text-[11px] font-medium tracking-[0.12em] uppercase text-white/40 mb-6">
-                    Become a Specialist
+                    Apply as a Specialist
                   </span>
                 </Reveal>
 
