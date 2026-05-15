@@ -20,7 +20,7 @@ export function FinalCTA() {
       </div>
 
       <div
-        className="relative container-wide flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-20 pt-10 pb-12 lg:py-0"
+        className="relative container-wide flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-20 pt-10 pb-12 lg:py-0"
         style={{ minHeight: 'calc(100vh - 48px)' }}
       >
 
