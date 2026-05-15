@@ -48,16 +48,31 @@ export async function GET(request: Request) {
     // Provision a Supabase Auth user — triggers handle_new_user() → profiles insert
     if (adminDb) {
       try {
-        const { error: authError } = await adminDb.auth.admin.createUser({
+        const { data: created, error: authError } = await adminDb.auth.admin.createUser({
           email: data.email,
           email_confirm: true,
           user_metadata: { full_name: data.first_name },
         });
-        if (authError && !authError.message.includes('already been registered')) {
+
+        let userId: string | null = created?.user?.id ?? null;
+
+        if (!userId && authError?.message.includes('already been registered')) {
+          // User pre-exists — find their ID via SECURITY DEFINER function
+          const { data: existingId } = await adminDb.rpc('get_auth_user_id_by_email', { p_email: data.email });
+          userId = existingId ?? null;
+        } else if (authError && !authError.message.includes('already been registered')) {
           console.error('[member] auth user creation failed:', authError.message);
         }
+
+        // Ensure a profile row exists (ignoreDuplicates so we never downgrade an existing role)
+        if (userId) {
+          await adminDb.from('profiles').upsert(
+            { id: userId, full_name: data.first_name, role: 'learner' },
+            { onConflict: 'id', ignoreDuplicates: true },
+          );
+        }
       } catch (err) {
-        console.error('[member] auth user creation failed:', err);
+        console.error('[member] auth provisioning failed:', err);
       }
     }
 
