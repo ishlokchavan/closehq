@@ -48,7 +48,7 @@ export function Hero() {
       <div className="absolute inset-y-0 right-0 w-1/2 pointer-events-none hidden lg:block bg-gradient-to-l from-mist/60 to-transparent" />
 
       <div
-        className="relative container-wide w-full flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-0 pt-28 pb-16 lg:py-0"
+        className="relative container-wide w-full flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-0 pt-28 pb-16 lg:pt-12 lg:pb-0"
         style={{ minHeight: '100vh' }}
       >
 
@@ -142,7 +142,7 @@ export function Hero() {
         </div>
 
         {/* ── Right: absolute-positioned pills (desktop only) ── */}
-        <div className="hidden lg:block lg:w-[48%] relative" style={{ height: '100vh' }}>
+        <div className="hidden lg:block lg:w-[48%] relative" style={{ height: 'calc(100vh - 48px)' }}>
           {PILLS.map((pill, i) => (
             <motion.div
               key={pill.label}
