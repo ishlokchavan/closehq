@@ -4,6 +4,21 @@ import { randomUUID } from 'crypto';
 import { leadSchema } from '@/lib/validations';
 import { sendEmail } from '@/lib/mailer';
 
+const EMAIL_FOOTER = `
+  <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
+  <p style="font-size:11px;color:#a1a1a6;line-height:1.6;">
+    iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a><br/>
+    You received this because you submitted a form at iclose.ae.
+    To unsubscribe or request data removal, email <a href="mailto:privacy@iclose.ae" style="color:#0071e3;">privacy@iclose.ae</a>.
+  </p>
+`;
+
+const maskEmail = (e: string) => {
+  const [local, domain] = e.split('@');
+  return `${local.slice(0, 2)}${'*'.repeat(Math.max(local.length - 2, 3))}@${domain}`;
+};
+const maskPhone = (p: string) => `****${p.replace(/\D/g, '').slice(-4)}`;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -20,13 +35,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    const { firstName, lastName, phone, email } = parsed.data;
+    const { firstName, lastName, phone, email, consentMarketing } = parsed.data;
     const name = `${firstName} ${lastName}`.trim();
     const userAgent = request.headers.get('user-agent') || undefined;
     const referer = request.headers.get('referer') || undefined;
     const origin = new URL(request.url).origin;
-
-    // Generate token server-side — no need to read it back from DB
     const verificationToken = randomUUID();
 
     try {
@@ -47,6 +60,8 @@ export async function POST(request: Request) {
           user_agent: userAgent,
           referer,
           verification_token: verificationToken,
+          consent_marketing: consentMarketing ?? false,
+          consented_at: new Date().toISOString(),
         });
         if (error) console.error('[member] DB insert failed:', error.message);
       }
@@ -54,7 +69,7 @@ export async function POST(request: Request) {
       console.error('[member] DB insert failed:', err);
     }
 
-    const notifyEmail = process.env.NOTIFY_EMAIL || 'ishlokchavan@gmail.com';
+    const notifyEmail = process.env.NOTIFY_EMAIL;
     const verifyUrl = `${origin}/api/verify?token=${verificationToken}&type=member`;
 
     // Verification email to member
@@ -76,8 +91,7 @@ export async function POST(request: Request) {
               Founding members get first access and locked-in terms before public launch.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
-            <p style="font-size:12px;color:#a1a1a6;">iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a></p>
+            ${EMAIL_FOOTER}
           </div>
         `,
       });
@@ -85,27 +99,31 @@ export async function POST(request: Request) {
       console.error('[member] verification email failed:', err);
     }
 
-    // Admin notification
-    try {
-      await sendEmail({
-        to: notifyEmail,
-        subject: `New Member signup: ${name}`,
-        html: `
-          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;color:#1d1d1f;">
-            <p style="font-size:18px;font-weight:600;margin-bottom:16px;">New Member signup</p>
-            <table style="width:100%;border-collapse:collapse;font-size:15px;">
-              <tr><td style="padding:8px 0;color:#6e6e73;width:80px;">Name</td><td style="padding:8px 0;">${name}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${email}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${phone}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Plan</td><td style="padding:8px 0;">Plus (default)</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer || 'direct'}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Verified</td><td style="padding:8px 0;">Pending email confirmation</td></tr>
-            </table>
-          </div>
-        `,
-      });
-    } catch (err) {
-      console.error('[member] admin notification failed:', err);
+    // Admin notification — PII masked
+    if (notifyEmail) {
+      try {
+        await sendEmail({
+          to: notifyEmail,
+          subject: `New Member signup: ${name}`,
+          html: `
+            <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;color:#1d1d1f;">
+              <p style="font-size:18px;font-weight:600;margin-bottom:16px;">New Member signup</p>
+              <table style="width:100%;border-collapse:collapse;font-size:15px;">
+                <tr><td style="padding:8px 0;color:#6e6e73;width:120px;">Name</td><td style="padding:8px 0;">${name}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${maskEmail(email)}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${maskPhone(phone)}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Marketing</td><td style="padding:8px 0;">${consentMarketing ? 'Opted in' : 'Not opted in'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Status</td><td style="padding:8px 0;">Pending email confirmation</td></tr>
+              </table>
+            </div>
+          `,
+        });
+      } catch (err) {
+        console.error('[member] admin notification failed:', err);
+      }
+    } else {
+      console.warn('[member] NOTIFY_EMAIL not set — skipping admin notification');
     }
 
     return NextResponse.json({ ok: true });

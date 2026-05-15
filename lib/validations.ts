@@ -9,6 +9,10 @@ export const leadSchema = z.object({
     .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
   email: z.string().email('Enter a valid email').max(120),
+  consentPrivacy: z.boolean().refine((v) => v === true, {
+    message: 'You must agree to continue',
+  }),
+  consentMarketing: z.boolean().optional().default(false),
   website: z.string().max(0).optional(),
 });
 
@@ -24,6 +28,9 @@ export const specialistSchema = z.object({
     .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
   message: z.string().min(10, 'Tell us a bit about your expertise').max(1000),
+  consentPrivacy: z.boolean().refine((v) => v === true, {
+    message: 'You must agree to continue',
+  }),
   website: z.string().max(0).optional(),
 });
 

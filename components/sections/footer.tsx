@@ -2,6 +2,9 @@
 
 import { Logo } from '@/components/ui/logo';
 
+const openCookieSettings = () =>
+  window.dispatchEvent(new Event('iclose:open-cookie-settings'));
+
 const NAV_COLUMNS = [
   {
     heading: 'Platform',
@@ -76,9 +79,17 @@ export function Footer() {
 
         <div className="hairline mt-12 mb-5" />
 
-        <p className="text-[12px] text-graphite tracking-tight">
-          © {new Date().getFullYear()} iClose. Dubai, UAE.
-        </p>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <p className="text-[12px] text-graphite tracking-tight">
+            © {new Date().getFullYear()} iClose. Dubai, UAE.
+          </p>
+          <button
+            onClick={openCookieSettings}
+            className="text-[12px] text-graphite-light hover:text-graphite transition-colors tracking-tight"
+          >
+            Cookie settings
+          </button>
+        </div>
       </div>
     </footer>
   );

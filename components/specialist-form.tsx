@@ -23,7 +23,7 @@ export function SpecialistForm() {
     reset,
   } = useForm<SpecialistFormValues>({
     resolver: zodResolver(specialistSchema),
-    defaultValues: { website: '' },
+    defaultValues: { website: '', consentPrivacy: false },
   });
 
   const [success, setSuccess] = useState(false);
@@ -146,6 +146,26 @@ export function SpecialistForm() {
               className={textareaClasses}
             />
           </Field>
+
+          <div className="space-y-1 pt-1">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                {...register('consentPrivacy')}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-hairline accent-ink cursor-pointer"
+              />
+              <span className="text-[13px] text-graphite-dark leading-[1.5]">
+                I have read and agree to the{' '}
+                <a href="/privacy" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                {' '}and{' '}
+                <a href="/terms" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+                <span className="text-red-500 ml-0.5">*</span>
+              </span>
+            </label>
+            {errors.consentPrivacy && (
+              <p className="text-[13px] text-red-600 pl-7">{errors.consentPrivacy.message}</p>
+            )}
+          </div>
 
           {serverError && (
             <p className="text-[15px] text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">

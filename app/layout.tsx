@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
-import { ScrollToTop } from '@/components/scroll-to-top';
+import { CookieConsent } from '@/components/cookie-consent';
 import './globals.css';
 
 const fontDisplay = Inter_Tight({
@@ -87,11 +87,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-  const rawMetaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
-  const META_PIXEL_ID =
-    rawMetaPixelId && /^\d+$/.test(rawMetaPixelId) ? rawMetaPixelId : undefined;
-
   const orgSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -129,9 +124,8 @@ export default function RootLayout({
     >
       <body className="font-sans bg-paper text-ink antialiased">
         {children}
-        {/* <ScrollToTop /> */}
 
-        {/* Structured Data */}
+        {/* Structured Data — not tracking, always loads */}
         <Script
           id="ld-org"
           type="application/ld+json"
@@ -145,42 +139,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
 
-        {/* Google Analytics 4 */}
-        {GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}', { anonymize_ip: true });
-                window.gtag = gtag;
-              `}
-            </Script>
-          </>
-        )}
-
-        {/* Meta Pixel */}
-        {META_PIXEL_ID && (
-          <Script id="meta-pixel" strategy="afterInteractive">
-            {`
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${META_PIXEL_ID}');
-              fbq('track', 'PageView');
-            `}
-          </Script>
-        )}
+        {/* GA4 + Meta Pixel load only after cookie consent — see CookieConsent component */}
+        <CookieConsent />
       </body>
     </html>
   );

@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendEmail } from '@/lib/mailer';
 
+const EMAIL_FOOTER = `
+  <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
+  <p style="font-size:11px;color:#a1a1a6;line-height:1.6;">
+    iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a><br/>
+    You received this because you submitted a form at iclose.ae.
+    To unsubscribe or request data removal, email <a href="mailto:privacy@iclose.ae" style="color:#0071e3;">privacy@iclose.ae</a>.
+  </p>
+`;
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const token = searchParams.get('token');
@@ -26,10 +35,12 @@ export async function GET(request: Request) {
     auth: { autoRefreshToken: false, persistSession: false },
   }) : null;
 
+  const TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
   if (type === 'member') {
     const { data, error } = await db
       .from('leads')
-      .select('id, first_name, email, is_verified')
+      .select('id, first_name, email, is_verified, created_at')
       .eq('verification_token', token)
       .single();
 
@@ -38,6 +49,9 @@ export async function GET(request: Request) {
     }
     if (data.is_verified) {
       return NextResponse.redirect(`${origin}/verify?status=already`);
+    }
+    if (Date.now() - new Date(data.created_at).getTime() > TOKEN_TTL_MS) {
+      return NextResponse.redirect(`${origin}/verify?status=expired`);
     }
 
     await db
@@ -91,8 +105,7 @@ export async function GET(request: Request) {
               Questions? Reply to this email and we'll get back to you.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
-            <p style="font-size:12px;color:#a1a1a6;">iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a></p>
+            ${EMAIL_FOOTER}
           </div>
         `,
       });
@@ -131,8 +144,7 @@ export async function GET(request: Request) {
               Your Specialist application is confirmed and under review. We review every application personally and will be in touch within a few days.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
-            <p style="font-size:12px;color:#a1a1a6;">iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a></p>
+            ${EMAIL_FOOTER}
           </div>
         `,
       });

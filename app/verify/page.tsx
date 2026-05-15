@@ -25,11 +25,17 @@ export default async function VerifyPage({ searchParams }: Props) {
       title: 'Already verified.',
       body: 'This link has already been used. Your email is confirmed — nothing more to do.',
     },
+    expired: {
+      icon: XCircle,
+      iconColor: 'text-orange-400',
+      title: 'Link expired.',
+      body: 'This verification link has expired (links are valid for 30 days). Please resubmit the form or contact hello@iclose.ae.',
+    },
     invalid: {
       icon: XCircle,
       iconColor: 'text-red-400',
       title: 'Invalid link.',
-      body: 'This verification link is invalid or has expired. If you think this is a mistake, reply to your confirmation email.',
+      body: 'This verification link is invalid. If you think this is a mistake, reply to your confirmation email.',
     },
   }[status ?? 'invalid'] ?? {
     icon: XCircle,

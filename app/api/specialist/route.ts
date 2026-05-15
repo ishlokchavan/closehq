@@ -3,6 +3,21 @@ import { createClient } from '@supabase/supabase-js';
 import { specialistSchema } from '@/lib/validations';
 import { sendEmail } from '@/lib/mailer';
 
+const EMAIL_FOOTER = `
+  <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
+  <p style="font-size:11px;color:#a1a1a6;line-height:1.6;">
+    iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a><br/>
+    You received this because you submitted a form at iclose.ae.
+    To unsubscribe or request data removal, email <a href="mailto:privacy@iclose.ae" style="color:#0071e3;">privacy@iclose.ae</a>.
+  </p>
+`;
+
+const maskEmail = (e: string) => {
+  const [local, domain] = e.split('@');
+  return `${local.slice(0, 2)}${'*'.repeat(Math.max(local.length - 2, 3))}@${domain}`;
+};
+const maskPhone = (p: string) => `****${p.replace(/\D/g, '').slice(-4)}`;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -41,6 +56,7 @@ export async function POST(request: Request) {
             status: 'pending',
             user_agent: userAgent,
             referer,
+            consented_at: new Date().toISOString(),
           });
         if (error) console.error('[specialist] DB insert failed:', error.message);
       }
@@ -48,7 +64,7 @@ export async function POST(request: Request) {
       console.error('[specialist] DB insert failed:', err);
     }
 
-    const notifyEmail = process.env.NOTIFY_EMAIL || 'ishlokchavan@gmail.com';
+    const notifyEmail = process.env.NOTIFY_EMAIL;
 
     // Confirmation email to specialist
     try {
@@ -62,8 +78,7 @@ export async function POST(request: Request) {
               We review every Specialist application personally. Our team will be in touch within a few days.
             </p>
             <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
-            <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
-            <p style="font-size:12px;color:#a1a1a6;">iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a></p>
+            ${EMAIL_FOOTER}
           </div>
         `,
       });
@@ -71,27 +86,31 @@ export async function POST(request: Request) {
       console.error('[specialist] confirmation email failed:', err);
     }
 
-    // Admin notification
-    try {
-      await sendEmail({
-        to: notifyEmail,
-        subject: `New Specialist application: ${firstName} ${lastName}`,
-        html: `
-          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;color:#1d1d1f;">
-            <p style="font-size:18px;font-weight:600;margin-bottom:16px;">New Specialist application</p>
-            <table style="width:100%;border-collapse:collapse;font-size:15px;">
-              <tr><td style="padding:8px 0;color:#6e6e73;width:80px;">Name</td><td style="padding:8px 0;">${firstName} ${lastName}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${email}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${phone}</td></tr>
-              <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer || 'direct'}</td></tr>
-            </table>
-            <p style="font-size:15px;color:#6e6e73;margin-top:20px;margin-bottom:6px;"><strong style="color:#1d1d1f;">Expertise / Message</strong></p>
-            <p style="font-size:15px;color:#1d1d1f;background:#f5f5f7;padding:16px;border-radius:8px;line-height:1.55;">${message}</p>
-          </div>
-        `,
-      });
-    } catch (err) {
-      console.error('[specialist] admin notification failed:', err);
+    // Admin notification — PII masked
+    if (notifyEmail) {
+      try {
+        await sendEmail({
+          to: notifyEmail,
+          subject: `New Specialist application: ${firstName} ${lastName}`,
+          html: `
+            <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;color:#1d1d1f;">
+              <p style="font-size:18px;font-weight:600;margin-bottom:16px;">New Specialist application</p>
+              <table style="width:100%;border-collapse:collapse;font-size:15px;">
+                <tr><td style="padding:8px 0;color:#6e6e73;width:120px;">Name</td><td style="padding:8px 0;">${firstName} ${lastName}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${maskEmail(email)}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${maskPhone(phone)}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
+              </table>
+              <p style="font-size:15px;color:#6e6e73;margin-top:20px;margin-bottom:6px;"><strong style="color:#1d1d1f;">Expertise / Message</strong></p>
+              <p style="font-size:15px;color:#1d1d1f;background:#f5f5f7;padding:16px;border-radius:8px;line-height:1.55;">${message}</p>
+            </div>
+          `,
+        });
+      } catch (err) {
+        console.error('[specialist] admin notification failed:', err);
+      }
+    } else {
+      console.warn('[specialist] NOTIFY_EMAIL not set — skipping admin notification');
     }
 
     return NextResponse.json({ ok: true });
