@@ -32,7 +32,7 @@ const MOBILE_PILLS = [
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-paper flex items-center">
+    <section className="relative overflow-hidden bg-paper flex items-center lg:min-h-screen">
 
       {/* Subtle dot-grid */}
       <div
@@ -48,8 +48,7 @@ export function Hero() {
       <div className="absolute inset-y-0 right-0 w-1/2 pointer-events-none hidden lg:block bg-gradient-to-l from-mist/60 to-transparent" />
 
       <div
-        className="relative container-wide w-full flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-0 pt-28 pb-16 lg:pt-12 lg:pb-0"
-        style={{ minHeight: '100vh' }}
+        className="relative container-wide w-full flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-0 pt-20 pb-16 lg:min-h-[calc(100vh-48px)] lg:pt-0 lg:pb-0"
       >
 
         {/* ── Left: copy ── */}
