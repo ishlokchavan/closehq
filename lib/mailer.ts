@@ -14,6 +14,6 @@ export async function sendEmail(opts: {
   subject: string;
   html: string;
 }) {
-  const from = process.env.BREVO_FROM_EMAIL ?? 'iClose <noreply@iclose.ae>';
+  const from = process.env.BREVO_FROM_EMAIL ?? 'iClose <noreply.iclose@gmail.com>';
   await transporter.sendMail({ from, ...opts });
 }
