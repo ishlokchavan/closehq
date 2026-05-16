@@ -13,7 +13,7 @@ import { supabase, type MembershipPlan } from '@/lib/supabase';
 
 async function getPlans(): Promise<MembershipPlan[]> {
   const { data, error } = await supabase
-    .from('plans')
+    .from('membership_plans')
     .select('*')
     .eq('is_active', true)
     .order('order');
