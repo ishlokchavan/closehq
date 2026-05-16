@@ -16,6 +16,8 @@ export type MembershipPlan = {
   agent_split_pct: number;
   is_star: boolean;
   is_active: boolean;
-  features_json: string[];
+  features_json: string[] | null;
   order: number;
+  created_at: string;
+  updated_at: string;
 };

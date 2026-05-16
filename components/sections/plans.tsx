@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Check, ChevronRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 import { MobileCarousel } from '@/components/ui/mobile-carousel';
+import type { MembershipPlan } from '@/lib/supabase';
 
 interface Plan {
   key: string;
@@ -16,67 +17,20 @@ interface Plan {
   isStar: boolean;
 }
 
-const PLANS: Plan[] = [
-  {
-    key: 'plus',
-    label: 'Plus',
-    tagline: 'Join the community, access the education platform, and start building expertise from day one.',
-    price: 'Free',
-    splitPct: 60,
-    features: [
-      'Full community access',
-      'iClose Academy — foundation content',
-      'Post and receive asset requirements',
-      'Email support',
-    ],
-    isStar: false,
-  },
-  {
-    key: 'pro',
-    label: 'Pro',
-    tagline: 'For Members who are actively transacting and want deeper access to Specialist content and priority matching.',
-    price: 'AED 1,200',
-    cadence: '/ year',
-    splitPct: 80,
-    features: [
-      'Everything in Plus',
-      'Full iClose Academy — all areas and buildings',
-      'Priority Specialist matching on inquiries',
-      'Priority deal desk support',
-    ],
-    isStar: false,
-  },
-  {
-    key: 'pro_max',
-    label: 'Pro Max',
-    tagline: 'Built for independent professionals operating at scale who need the full platform behind them.',
-    price: 'AED 40,000',
-    cadence: '/ year',
-    splitPct: 90,
-    features: [
-      'Labour & visa included',
-      'Listings included',
-      'Dedicated relationship manager',
-      'Full Academy + area playbooks',
-    ],
-    isStar: true,
-  },
-  {
-    key: 'ultra',
-    label: 'Ultra',
-    tagline: 'The complete back office. Run your practice at the highest level while we handle everything else.',
-    price: 'AED 100,000',
-    cadence: '/ year',
-    splitPct: 100,
-    features: [
-      'Everything done for you',
-      'Dedicated account manager',
-      'Finance, admin, and invoicing',
-      'Priority access to exclusive off-market deals',
-    ],
-    isStar: false,
-  },
-];
+function toDisplayPlan(p: MembershipPlan): Plan {
+  const isFree = p.billing_cycle === 'free' || (!p.price_yearly_aed && !p.price_monthly_aed);
+  const priceNum = p.price_yearly_aed ?? p.price_monthly_aed;
+  return {
+    key: p.key,
+    label: p.label,
+    tagline: p.tagline ?? '',
+    price: isFree ? 'Free' : `AED ${Number(priceNum).toLocaleString('en-AE')}`,
+    cadence: isFree ? undefined : p.billing_cycle === 'yearly' ? '/ year' : '/ month',
+    splitPct: p.agent_split_pct,
+    features: p.features_json ?? [],
+    isStar: p.is_star,
+  };
+}
 
 function PlanCard({ plan }: { plan: Plan }) {
   return (
@@ -141,8 +95,9 @@ function PlanCard({ plan }: { plan: Plan }) {
   );
 }
 
-export function Plans() {
-  const cards = PLANS.map((plan) => <PlanCard key={plan.key} plan={plan} />);
+export function Plans({ data }: { data: MembershipPlan[] }) {
+  const plans = data.map(toDisplayPlan);
+  const cards = plans.map((plan) => <PlanCard key={plan.key} plan={plan} />);
 
   return (
     <section id="plans" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
@@ -169,7 +124,7 @@ export function Plans() {
 
         {/* Desktop grid */}
         <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 pt-3">
-          {PLANS.map((plan, i) => (
+          {plans.map((plan, i) => (
             <motion.div
               key={plan.key}
               initial={{ opacity: 0, y: 24 }}

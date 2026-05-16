@@ -9,8 +9,25 @@ import { Testimonials } from '@/components/sections/testimonials';
 import { FinalCTA } from '@/components/sections/final-cta';
 import { FAQ } from '@/components/sections/faq';
 import { Footer } from '@/components/sections/footer';
+import { supabase, type MembershipPlan } from '@/lib/supabase';
 
-export default function HomePage() {
+async function getPlans(): Promise<MembershipPlan[]> {
+  const { data, error } = await supabase
+    .from('plans')
+    .select('*')
+    .eq('is_active', true)
+    .order('order');
+
+  if (error) {
+    console.error('Failed to fetch plans:', error.message);
+    return [];
+  }
+  return data ?? [];
+}
+
+export default async function HomePage() {
+  const plans = await getPlans();
+
   return (
     <>
       <Header />
@@ -20,7 +37,7 @@ export default function HomePage() {
         <How />
         <DealCTA />
         <Transformation />
-        <Plans />
+        <Plans data={plans} />
         <Testimonials />
         <FinalCTA />
         <FAQ />
