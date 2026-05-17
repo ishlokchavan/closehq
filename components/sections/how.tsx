@@ -8,20 +8,20 @@ const STEPS = [
   {
     number: '1',
     icon: UserPlus,
-    title: 'Join as a Member — free, instant access.',
-    body: 'Sign up and get immediate access to the iClose community and the Academy. No desk fees, no monthly commitment, no lock-in. Your profile, your network, your pace.',
+    title: 'Join for free.',
+    body: 'Instant access to the community and Academy. No desk fees, no lock-in. Start learning the same day.',
   },
   {
     number: '2',
     icon: BookOpenCheck,
-    title: 'Learn from people who actually close.',
-    body: 'Access area playbooks and building deep-dives published by vetted Area Specialists. Follow your developer\'s RM for off-plan pipeline updates and launch calendars. Build the knowledge that turns conversations into closings.',
+    title: 'Learn from the people closing it.',
+    body: 'Access area playbooks from vetted experts and developer briefings from RMs. Real knowledge from professionals who are actively in the market — not theory.',
   },
   {
     number: '3',
     icon: Handshake,
-    title: 'Close a deal. Keep up to 100%.',
-    body: 'Post a requirement or get matched directly with the right Specialist. The deal flows through iClose — and your commission split, starting at 60% on Plus and rising to 100% on Ultra, is paid to you when the buyer signs.',
+    title: 'Close a deal. Keep the commission.',
+    body: 'Post a requirement, get matched with the right expert. The deal flows through iClose — and your commission is paid directly to you when the buyer signs.',
   },
 ];
 
@@ -31,7 +31,7 @@ export function How() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-xl mb-3">
-            How it works for members.
+            How it works.
           </h2>
         </Reveal>
         <Reveal delay={0.08}>

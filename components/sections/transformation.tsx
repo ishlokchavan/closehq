@@ -5,19 +5,17 @@ import { X, Check } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const BEFORE = [
-  'Agents entering the secondary market without the knowledge to compete',
-  'Professionals watching clients take asset advice from strangers online',
-  'Area Specialists with real inventory and no trusted channel to move it',
-  'Developer RMs cold-calling brokers with no context or commitment',
-  'Market knowledge locked in individual heads, never shared',
+  'Walking into deals without knowing the building, the area, or the price history',
+  'Missing developer launches because you were not in the right room',
+  'Area knowledge that never gets past your own circle',
+  'Cold-calling brokers who do not know your projects and do not care to learn',
 ];
 
 const AFTER = [
-  'Agents who know the secondary market well enough to close with confidence',
-  'Professionals with a vetted Specialist for every client requirement',
-  'Area Specialists matched directly to members who need exactly what they know',
-  'Developer RMs with a ready pipeline of educated, serious agents',
-  'A platform where expertise is shared, recognised, and put to work',
+  'Area-level knowledge from the people who are actively closing there',
+  'Developer briefings and launch access direct from the RM — before it goes public',
+  'Published content that reaches serious professionals and builds your authority',
+  'A pipeline of educated agents who already know your developer\'s projects',
 ];
 
 export function Transformation() {
@@ -26,8 +24,7 @@ export function Transformation() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What being part of iClose
-            actually changes.
+            What changes when you join.
           </h2>
         </Reveal>
 

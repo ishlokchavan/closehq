@@ -1,31 +1,34 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Briefcase, Award, GraduationCap } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 import { MobileCarousel } from '@/components/ui/mobile-carousel';
 
-const AUDIENCES = [
+const PROFILES = [
   {
-    icon: Briefcase,
-    tag: 'For Members',
-    headline: 'Close deals. Keep more of what you earn.',
-    body: "Whether you're an agent building expertise in the secondary market, a broker with active buyers, or a professional whose clients need the right asset — join as a Member, access the iClose Academy, and close deals with up to 100% commission on your side. Free to start. No desk fees.",
-    cta: { label: 'Join as a Member', href: '#apply' },
+    tag: 'Profile 1 — Learner',
+    headline: 'Education that pays.',
+    body: 'Most professionals enter the secondary market on guesswork. iClose Academy gives you structured knowledge from area experts who are actively closing — building deep-dives, area playbooks, and developer briefings direct from the source. The faster you learn, the sooner you close.',
+    points: [
+      'Area playbooks from experts who live and close there',
+      'Developer briefings from RMs — direct from the source',
+      'Close a deal through iClose. Keep up to 100%.',
+    ],
+    cta: { label: 'Join for free', href: '#apply' },
+    starred: false,
   },
   {
-    icon: Award,
-    tag: 'For Area Specialists',
-    headline: 'Your expertise, put to work at scale.',
-    body: "If you know a specific community or building better than anyone else, iClose puts you in front of a growing network of members with active requirements. Apply, get vetted, publish your area knowledge on the Academy, and become the first call when a member needs exactly what you know.",
-    cta: { label: 'Apply as a Specialist', href: '/specialists' },
-  },
-  {
-    icon: GraduationCap,
-    tag: 'For Developer RMs',
-    headline: 'A ready pool of serious agents. Built for you.',
-    body: "Join iClose as the dedicated Relationship Manager for your developer. Educate members on your projects through the Academy, be the direct contact when they are ready to move off-plan inventory, and build long-term relationships with professionals who close. Your pipeline — inside ours.",
-    cta: { label: 'Apply as a Developer RM', href: '/specialists' },
+    tag: 'Profile 2 — Educator',
+    headline: 'Your expertise has an audience. We built the stage.',
+    body: "Area experts and developer RMs hold some of the most valuable knowledge in Dubai real estate. iClose gives you a platform to structure it, share it, and build the kind of authority that makes your phone ring — without the cold outreach.",
+    points: [
+      'Publish area playbooks, building guides, and developer briefs',
+      'Get matched directly on member inquiries in your domain',
+      'Build a reputation that generates pipeline on autopilot',
+    ],
+    cta: { label: 'Share your expertise', href: '/specialists' },
+    starred: true,
   },
 ];
 
@@ -34,22 +37,24 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-function AudienceCard({ a }: { a: typeof AUDIENCES[number] }) {
-  const Icon = a.icon;
+function ProfileCard({ p }: { p: typeof PROFILES[number] }) {
   return (
-    <div className="card-mist p-8 sm:p-10 flex flex-col h-full">
-      <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper border border-hairline mb-5">
-        <Icon className="h-5 w-5 text-ink" strokeWidth={1.5} />
-      </div>
-      <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-3">
-        {a.tag}
+    <div className={`card-surface p-8 sm:p-10 flex flex-col h-full${p.starred ? ' ring-2 ring-ink' : ''}`}>
+      <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-4">{p.tag}</p>
+      <h3 className="display-sm mb-4 text-balance">{p.headline}</h3>
+      <p className="text-[16px] text-graphite-dark leading-[1.6] mb-8" style={{ letterSpacing: '-0.012em' }}>
+        {p.body}
       </p>
-      <h3 className="display-sm mb-4 text-balance">{a.headline}</h3>
-      <p className="text-[17px] text-graphite-dark leading-[1.55] flex-1" style={{ letterSpacing: '-0.012em' }}>
-        {a.body}
-      </p>
-      <a href={a.cta.href} className="applelink mt-8">
-        {a.cta.label}
+      <ul className="space-y-3 flex-1 mb-8">
+        {p.points.map((pt) => (
+          <li key={pt} className="flex items-start gap-2.5 text-[15px] text-ink" style={{ letterSpacing: '-0.012em' }}>
+            <Check className="h-4 w-4 mt-0.5 text-ink flex-shrink-0" strokeWidth={2.5} />
+            <span>{pt}</span>
+          </li>
+        ))}
+      </ul>
+      <a href={p.cta.href} className="applelink mt-auto">
+        {p.cta.label}
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
@@ -59,7 +64,7 @@ function AudienceCard({ a }: { a: typeof AUDIENCES[number] }) {
 }
 
 export function ForWho() {
-  const cards = AUDIENCES.map((a) => <AudienceCard key={a.tag} a={a} />);
+  const cards = PROFILES.map((p) => <ProfileCard key={p.tag} p={p} />);
 
   return (
     <section id="who" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-32">
@@ -67,34 +72,28 @@ export function ForWho() {
         <div className="max-w-2xl mb-14 md:mb-18">
           <Reveal>
             <h2 className="display-lg text-balance">
-              One platform. Three distinct roles.
+              Two reasons to be here. One platform.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-xl">
-              iClose serves members who close deals, area specialists who share expertise, and developer RMs who connect members to off-plan inventory. Each role makes the platform more valuable for the others.
+              Whether you are here to learn and earn, or to share what you know and build your authority — iClose was built for both.
             </p>
           </Reveal>
         </div>
 
-        {/* Mobile carousel */}
-        <MobileCarousel
-          items={cards}
-          className="md:hidden"
-          ariaLabel="Audience types"
-        />
+        <MobileCarousel items={cards} className="md:hidden" ariaLabel="Who iClose is for" />
 
-        {/* Desktop grid */}
         <motion.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-60px' }}
           transition={{ staggerChildren: 0.1, delayChildren: 0.05 }}
-          className="hidden md:grid grid-cols-3 gap-4"
+          className="hidden md:grid grid-cols-2 gap-5"
         >
-          {AUDIENCES.map((a) => (
-            <motion.div key={a.tag} variants={item}>
-              <AudienceCard a={a} />
+          {PROFILES.map((p) => (
+            <motion.div key={p.tag} variants={item}>
+              <ProfileCard p={p} />
             </motion.div>
           ))}
         </motion.div>

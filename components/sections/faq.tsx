@@ -8,7 +8,7 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: 'iClose is two things in one: a commission platform where members close Dubai real estate deals and keep up to 100%, and an education platform (iClose Academy) where area specialists and developer RMs share real, transaction-tested knowledge. Members learn from people actively working the market, then use that knowledge to close — all in the same community.',
+    a: 'iClose is where Dubai\'s real estate professionals learn from vetted area experts and developer RMs, then close deals and keep up to 100% of the commission. The Academy is the education layer — real, market-tested knowledge from people actively closing. The platform is the deal layer — post a requirement, get matched, close, get paid.',
   },
   {
     q: 'Who can join as a Member?',

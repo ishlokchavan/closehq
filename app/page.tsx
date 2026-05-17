@@ -2,7 +2,6 @@ import { Header } from '@/components/header';
 import { Hero } from '@/components/sections/hero';
 import { ForWho } from '@/components/sections/for-who';
 import { How } from '@/components/sections/how';
-import { DealCTA } from '@/components/sections/deal-cta';
 import { Transformation } from '@/components/sections/transformation';
 import { Plans } from '@/components/sections/plans';
 import { SpecialistPath } from '@/components/sections/specialist-path';
@@ -37,7 +36,6 @@ export default async function HomePage() {
         <ForWho />
         <How />
         <SpecialistPath />
-        <DealCTA />
         <Transformation />
         <Plans data={plans} />
         <Testimonials />
