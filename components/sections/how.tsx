@@ -8,20 +8,20 @@ const STEPS = [
   {
     number: '1',
     icon: UserPlus,
-    title: 'Join as a Member or apply as a Specialist.',
-    body: 'Members — whether agents, lawyers, accountants, etc. sign up and get immediate access to our community. Specialists apply separately and are vetted before joining. Every role has a clear place.',
+    title: 'Join as a Member — free, instant access.',
+    body: 'Sign up and get immediate access to the iClose community and the Academy. No desk fees, no monthly commitment, no lock-in. Your profile, your network, your pace.',
   },
-  // {
-  //   number: '2',
-  //   icon: BookOpenCheck,
-  //   title: 'Learn the market or share what you know.',
-  //   body: 'Agents and professionals access area playbooks, building deep-dives, and community intelligence created by active Specialists. Specialists publish their expertise to establish their authority and attract the right inquiries.',
-  // },
   {
     number: '2',
+    icon: BookOpenCheck,
+    title: 'Learn from people who actually close.',
+    body: 'Access area playbooks and building deep-dives published by vetted Area Specialists. Follow your developer\'s RM for off-plan pipeline updates and launch calendars. Build the knowledge that turns conversations into closings.',
+  },
+  {
+    number: '3',
     icon: Handshake,
-    title: 'Connect to close.',
-    body: "When a Member has a requirement or when a client of a professional needs an asset, the Specialist who knows that domain best is matched directly. The right knowledge meets the right buyer, every time. While you can earn commissions upto 100% ",
+    title: 'Close a deal. Keep up to 100%.',
+    body: 'Post a requirement or get matched directly with the right Specialist. The deal flows through iClose — and your commission split, starting at 60% on Plus and rising to 100% on Ultra, is paid to you when the buyer signs.',
   },
 ];
 
@@ -30,12 +30,17 @@ export function How() {
     <section id="how" className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
       <div className="container-wide">
         <Reveal>
-          <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            How the community works.
+          <h2 className="display-lg text-balance max-w-xl mb-3">
+            How it works for members.
           </h2>
         </Reveal>
+        <Reveal delay={0.08}>
+          <p className="subhead mb-14 md:mb-16 max-w-xl">
+            Three steps from sign-up to your first closed deal.
+          </p>
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {STEPS.map((step, i) => {
             const Icon = step.icon;
             return (

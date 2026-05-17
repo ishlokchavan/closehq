@@ -7,15 +7,17 @@ import { Reveal } from '@/components/ui/reveal';
 const BEFORE = [
   'Agents entering the secondary market without the knowledge to compete',
   'Professionals watching clients take asset advice from strangers online',
-  'Specialists with real inventory and no trusted channel to move it',
+  'Area Specialists with real inventory and no trusted channel to move it',
+  'Developer RMs cold-calling brokers with no context or commitment',
   'Market knowledge locked in individual heads, never shared',
 ];
 
 const AFTER = [
-  'Agents who understand the secondary market well enough to sky-rocket their sales',
-  'Professionals with a vetted Specialist network for every client requirement',
-  'Specialists with a ready community of professionals who have active, serious buyers',
-  'A platform where expertise is distributed, recognised, and put to work',
+  'Agents who know the secondary market well enough to close with confidence',
+  'Professionals with a vetted Specialist for every client requirement',
+  'Area Specialists matched directly to members who need exactly what they know',
+  'Developer RMs with a ready pipeline of educated, serious agents',
+  'A platform where expertise is shared, recognised, and put to work',
 ];
 
 export function Transformation() {

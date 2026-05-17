@@ -8,24 +8,24 @@ import { MobileCarousel } from '@/components/ui/mobile-carousel';
 const AUDIENCES = [
   {
     icon: Briefcase,
-    tag: 'For Professionals',
-    headline: 'Your Clients Deserve the Best Experts.',
-    body: "As a lawyer, accountant, financial advisor, family office, etc. your clients trust you with their investments. When they need an asset, you need an expert who can assist you. iClose connects you to vetted Specialists who know the market and have the inventory, so you can serve your clients without leaving your lane.",
+    tag: 'For Members',
+    headline: 'Close deals. Keep more of what you earn.',
+    body: "Whether you're an agent building expertise in the secondary market, a broker with active buyers, or a professional whose clients need the right asset — join as a Member, access the iClose Academy, and close deals with up to 100% commission on your side. Free to start. No desk fees.",
     cta: { label: 'Join as a Member', href: '#apply' },
   },
   {
     icon: Award,
-    tag: 'For Specialists',
-    headline: 'Your Knowledge. Our Reach.',
-    body: "If you know a community or a building better than anyone, iClose puts you in front of a network of serious buyers. Share your knowledge, and we handle the rest. We publish it, we amplify it, and we position you as the go-to authority in your domain. When a Member inquiry falls within your expertise, you are the first and only call.",
+    tag: 'For Area Specialists',
+    headline: 'Your expertise, put to work at scale.',
+    body: "If you know a specific community or building better than anyone else, iClose puts you in front of a growing network of members with active requirements. Apply, get vetted, publish your area knowledge on the Academy, and become the first call when a member needs exactly what you know.",
     cta: { label: 'Apply as a Specialist', href: '/specialists' },
   },
   {
     icon: GraduationCap,
-    tag: 'For Agents',
-    headline: "The Inside Knowledge You've Been Missing.",
-    body: "Most agents want to learn about the secondary market, but lack the tools to do so. iClose gives you structured content from Specialists who are actively working the areas you want to master, so you go in prepared, not guessing.",
-    cta: { label: 'Join as a Member', href: '#apply' },
+    tag: 'For Developer RMs',
+    headline: 'A ready pool of serious agents. Built for you.',
+    body: "Join iClose as the dedicated Relationship Manager for your developer. Educate members on your projects through the Academy, be the direct contact when they are ready to move off-plan inventory, and build long-term relationships with professionals who close. Your pipeline — inside ours.",
+    cta: { label: 'Apply as a Developer RM', href: '/specialists' },
   },
 ];
 
@@ -67,12 +67,12 @@ export function ForWho() {
         <div className="max-w-2xl mb-14 md:mb-18">
           <Reveal>
             <h2 className="display-lg text-balance">
-              One community. Three clear reasons to be in it.
+              One platform. Three distinct roles.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-xl">
-              iClose is built around three types of professionals. Each one gets something distinct from the platform — and each one makes it stronger for the others.
+              iClose serves members who close deals, area specialists who share expertise, and developer RMs who connect members to off-plan inventory. Each role makes the platform more valuable for the others.
             </p>
           </Reveal>
         </div>

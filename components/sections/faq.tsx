@@ -8,31 +8,35 @@ import { Reveal } from '@/components/ui/reveal';
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: 'iClose is a Dubai real estate community and education platform built around three types of professionals: agents who want to build expertise in the secondary market, professionals (lawyers, accountants, advisors, family offices) whose clients have property requirements, and Specialists who have area or building expertise and inventory to match. The platform connects all three in a way that benefits everyone.',
+    a: 'iClose is two things in one: a commission platform where members close Dubai real estate deals and keep up to 100%, and an education platform (iClose Academy) where area specialists and developer RMs share real, transaction-tested knowledge. Members learn from people actively working the market, then use that knowledge to close — all in the same community.',
   },
   {
     q: 'Who can join as a Member?',
-    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, etc. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
+    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, and more. Membership is free to start. If you have clients with asset requirements, or if you are building expertise in the secondary market, iClose is built for you.",
   },
   {
     q: "I'm an agent. How does iClose help me specifically?",
-    a: "iClose Academy gives you structured content from Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and community intelligence. It's the fastest path to becoming a credible secondary market professional, built on real knowledge from people in the field.",
+    a: "Two ways. First, the iClose Academy gives you structured content from Area Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and developer briefings from RMs. Second, when you're ready to transact, you post a requirement and get matched with the right Specialist to close it. You keep between 60% and 100% of your commission depending on your membership tier.",
   },
   {
     q: "I'm a lawyer / accountant / advisor. How does this help my clients?",
-    a: "When your client has a specific asset requirement, you submit an inquiry directly with us, and we will connect you to the Specialist who knows that domain the best.",
+    a: "Join as a Member, access the Academy to understand the market, and when your client has a specific asset requirement, submit it directly through the platform. We match you to the Area Specialist who knows that domain best. You serve your client confidently, without leaving your lane.",
   },
   {
     q: 'What is a Specialist and how is it different from a Member?',
-    a: "A Specialist is a vetted community or building expert who knows a specific area of Dubai's secondary market with real depth — transaction history, current inventory, pricing nuance. Specialists apply separately and are reviewed before joining. They publish their knowledge for Members, and when a Member inquiry falls within their domain, they are the focal point to close it.",
+    a: "A Specialist is a vetted area or building expert with real depth — transaction history, current inventory, pricing nuance in a specific part of Dubai's market. Specialists apply separately and are reviewed before joining. They publish knowledge on the Academy for Members, and when a Member inquiry falls within their domain, they are the first and only call.",
   },
   {
-    q: 'Why would a Specialist join iClose?',
-    a: "iClose gives Specialists access to a growing pool of professionals who have active buyers — agents, lawyers, accountants, family offices. When you share your knowledge here, you build authority with the exact people who will refer serious inquiries your way. When a Member needs a unit in your domain, you are the first and only call.",
+    q: 'What is a Developer RM on iClose?',
+    a: "A Developer RM is a Relationship Manager who works directly for a property developer — like Emaar, Damac, or Sobha. On iClose, they act as the dedicated developer contact for members: publishing project briefings and launch updates on the Academy, and serving as the direct, human point of contact when members are ready to move off-plan inventory. Members get real access to the developer. The RM gets a pipeline of educated, serious agents.",
+  },
+  {
+    q: 'How do I join as an Area Specialist or Developer RM?',
+    a: "Apply at iclose.ae/specialists. Tell us your area expertise or the developer you represent. The iClose team reviews every application before anyone joins — we verify credentials and domain knowledge. Once approved, you get access to the educator dashboard to publish content on the Academy and start receiving matched inquiries from members.",
   },
   {
     q: 'What does the transaction split mean?',
-    a: "When a deal closes through the platform, the split is the share you keep versus what goes to iClose. Plus Members keep 60%. It improves at Pro (80%), Pro Max (90%), and Ultra (100%). This is an added benefit of membership — the community and education platform are available regardless of transaction activity.",
+    a: "When a deal closes through the platform, the split is the share of commission you keep. Plus members (free) keep 60%. It improves to 80% on Pro, 90% on Pro Max, and 100% on Ultra. Only members close deals and earn commission — Specialists and Developer RMs participate through the education and inquiry platform, not the transaction layer.",
   },
 ];
 

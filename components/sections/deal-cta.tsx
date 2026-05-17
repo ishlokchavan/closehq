@@ -18,8 +18,8 @@ export function DealCTA() {
             className="text-ink font-display font-semibold text-balance leading-[1.15] shrink-0"
             style={{ fontSize: 'clamp(1.35rem, 2.5vw, 1.9rem)', letterSpacing: '-0.022em' }}
           >
-            Close a deal through iClose
-            <br />Keep up to 100%
+            Partner with iClose to close.
+            <br />Keep up to 100%.
           </h2>
 
           <div className="flex flex-col items-start gap-4 max-w-sm">
@@ -27,14 +27,14 @@ export function DealCTA() {
               className="text-graphite text-[15px] leading-[1.55]"
               style={{ letterSpacing: '-0.012em' }}
             >
-              Every membership tier includes a transaction split. Start at 60% on Plus and earn up to 100% on Ultra. The community is free to join — the upside is entirely yours.
+              Post a requirement, get matched with the right Specialist, close the deal. Your commission split starts at 60% on the free Plus plan and reaches 100% on Ultra — paid when the buyer signs.
             </p>
             <a
               href="#plans"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-ink/25 text-ink text-[14px] hover:border-ink/50 hover:bg-mist transition-colors"
               style={{ letterSpacing: '-0.01em' }}
             >
-              See membership plans
+              See commission tiers
               <ChevronRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </a>
           </div>
