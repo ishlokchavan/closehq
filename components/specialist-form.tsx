@@ -15,10 +15,24 @@ const inputClasses =
 const textareaClasses =
   'w-full px-4 py-3 bg-paper border border-hairline rounded-xl text-ink text-[17px] placeholder:text-graphite-light focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all resize-none leading-[1.5]';
 
+const ROLE_LABELS: Record<SpecialistFormValues['specialistType'], string> = {
+  area_expert: 'Area Expert',
+  relationship_manager: 'Relationship Manager',
+};
+
+const PLACEHOLDERS: Record<SpecialistFormValues['specialistType'], string> = {
+  area_expert:
+    'Tell us which areas, developments, or communities you know deeply — and what knowledge you would bring to Members.',
+  relationship_manager:
+    'Tell us which developer you represent, the projects in your portfolio, and how you currently work with agents.',
+};
+
 export function SpecialistForm() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<SpecialistFormValues>({
@@ -28,6 +42,8 @@ export function SpecialistForm() {
 
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  const selectedType = watch('specialistType');
 
   const onSubmit = async (data: SpecialistFormValues) => {
     setServerError(null);
@@ -43,7 +59,7 @@ export function SpecialistForm() {
         throw new Error(body?.error || 'Something went wrong');
       }
 
-      trackEvent('specialist_apply', {});
+      trackEvent('specialist_apply', { type: data.specialistType });
       setSuccess(true);
       reset();
     } catch (err) {
@@ -70,7 +86,7 @@ export function SpecialistForm() {
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            We review every Specialist application personally. We&apos;ll be in touch.
+            We review every application personally. We&apos;ll be in touch.
           </p>
         </motion.div>
       ) : (
@@ -82,10 +98,6 @@ export function SpecialistForm() {
           className="space-y-4"
           noValidate
         >
-          {/* <p className="text-[13px] font-medium text-graphite tracking-tight mb-1" style={{ letterSpacing: '-0.008em' }}>
-            Apply to become a Specialist
-          </p> */}
-
           <input
             type="text"
             tabIndex={-1}
@@ -94,6 +106,35 @@ export function SpecialistForm() {
             className="absolute left-[-9999px] top-[-9999px] h-0 w-0 opacity-0"
             aria-hidden
           />
+
+          {/* Role selector */}
+          <div>
+            <p className="text-sm font-medium text-graphite-dark mb-2" style={{ letterSpacing: '-0.01em' }}>
+              I am applying as
+              <span className="text-red-500 ml-0.5">*</span>
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              {(['area_expert', 'relationship_manager'] as const).map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => setValue('specialistType', type, { shouldValidate: true })}
+                  className={[
+                    'h-11 rounded-xl border text-[14px] font-medium transition-all',
+                    selectedType === type
+                      ? 'bg-ink text-white border-ink'
+                      : 'bg-paper text-graphite border-hairline hover:border-ink/40 hover:text-ink',
+                  ].join(' ')}
+                  style={{ letterSpacing: '-0.01em' }}
+                >
+                  {ROLE_LABELS[type]}
+                </button>
+              ))}
+            </div>
+            {errors.specialistType && (
+              <p className="text-[13px] text-red-600 mt-1">{errors.specialistType.message}</p>
+            )}
+          </div>
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="First name" error={errors.firstName?.message}>
@@ -136,13 +177,14 @@ export function SpecialistForm() {
             />
           </Field>
 
-
-
-          <Field label="Your expertise" error={errors.message?.message}>
+          <Field
+            label={selectedType === 'relationship_manager' ? 'Your developer & projects' : 'Your expertise'}
+            error={errors.message?.message}
+          >
             <textarea
               {...register('message')}
               rows={4}
-              placeholder="Tell us which areas, developments, or communities you know deeply — and what you'd build for Members."
+              placeholder={selectedType ? PLACEHOLDERS[selectedType] : 'Tell us about your background and what you would bring to Members.'}
               className={textareaClasses}
             />
           </Field>
@@ -178,7 +220,10 @@ export function SpecialistForm() {
               {isSubmitting ? (
                 <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
               ) : (
-                <>Apply as a Specialist <ChevronRight className="h-4 w-4" strokeWidth={2.5} /></>
+                <>
+                  {selectedType ? `Apply as ${ROLE_LABELS[selectedType]}` : 'Apply as a Specialist'}
+                  <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+                </>
               )}
             </Button>
           </div>

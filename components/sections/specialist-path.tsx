@@ -89,12 +89,12 @@ export function SpecialistPath() {
         <div className="max-w-2xl mb-14 md:mb-16">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Join as a Specialist or Developer RM.
+              A Specialist on iClose is one of two things.
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="subhead mt-5 max-w-xl">
-              Two distinct roles. One clear process. Both give you access to a growing network of professionals who are actively closing.
+              An Area Expert who owns a community or building — or a Relationship Manager who represents a developer. Both get access to a growing network of professionals who close.
             </p>
           </Reveal>
         </div>
@@ -109,7 +109,7 @@ export function SpecialistPath() {
             className="card-surface p-8 sm:p-10 flex flex-col"
           >
             <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-4">
-              Area Specialists
+              Specialist — Area Expert
             </p>
             <h3 className="display-sm mb-2">
               Share your area expertise. Build your authority.
@@ -133,7 +133,7 @@ export function SpecialistPath() {
             className="card-surface ring-2 ring-ink p-8 sm:p-10 flex flex-col"
           >
             <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-4">
-              Developer RMs
+              Specialist — Relationship Manager
             </p>
             <h3 className="display-sm mb-2">
               Become the dedicated RM for iClose members.

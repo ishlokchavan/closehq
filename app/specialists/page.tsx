@@ -2,47 +2,58 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/sections/footer';
 import { SpecialistForm } from '@/components/specialist-form';
 import { Reveal } from '@/components/ui/reveal';
-import { Check, ChevronRight, MapPin, Users, BadgeCheck, Megaphone, Handshake } from 'lucide-react';
+import { MapPin, Users, BadgeCheck, Megaphone, Building2, Handshake } from 'lucide-react';
 
 export const metadata = {
   title: 'Apply as a Specialist — iClose',
   description:
-    'Apply to join iClose as a Specialist. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
+    'Join iClose as an Area Expert or Developer Relationship Manager. Share deep area knowledge or represent your developer to a network of serious, educated agents.',
 };
 
-const WHAT_YOU_DO = [
+const ROLES = [
   {
-    icon: MapPin,
-    title: 'Own your area.',
-    body: 'Your deep knowledge of a specific community, building, or asset class becomes structured content — the kind that changes how a Member walks into a deal.',
+    tag: 'Area Expert',
+    headline: 'Own a community. Become the only call.',
+    body: 'You know a specific area of Dubai — its buildings, transaction history, and pricing nuances — better than anyone. iClose gives you the platform to prove it, and the members to act on it.',
+    points: [
+      {
+        icon: MapPin,
+        title: 'Turn your knowledge into content.',
+        body: 'Publish area playbooks, building deep-dives, and market guides on the Academy. Your expertise becomes structured content that Members rely on to close.',
+      },
+      {
+        icon: Megaphone,
+        title: 'Get matched on live member inquiries.',
+        body: 'When a Member posts a requirement in your domain, you are the first and only call. No competition, no noise — just the right buyer at the right time.',
+      },
+      {
+        icon: BadgeCheck,
+        title: 'Build authority that compounds.',
+        body: 'Specialists are vetted. That mark positions you as the go-to expert across a platform of agents, brokers, advisors, and family offices who are actively closing.',
+      },
+    ],
   },
   {
-    icon: Megaphone,
-    title: 'Stay active in every transaction.',
-    body: "When a Member has a buyer requirement, the Specialist who knows that area best is matched directly. Your expertise doesn't sit idle — it closes deals.",
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Get recognised for what you know.',
-    body: 'Specialists are vetted. That mark means something on a platform where credibility is earned — you become the first and only call when a Member needs your domain.',
-  },
-];
-
-const PERKS = [
-  {
-    icon: Users,
-    label: 'Direct buyer access',
-    body: 'Connect with a growing pool of agents, lawyers, accountants, family offices, etc. who have active, serious buyers.',
-  },
-  {
-    icon: Megaphone,
-    label: 'Platform amplification',
-    body: 'iClose publishes and promotes your knowledge. Your expertise reaches Members every week, positioning you as the authority in your domain.',
-  },
-  {
-    icon: Handshake,
-    label: 'Matched inquiries, not cold leads',
-    body: 'When a requirement falls within your area, you are the only Specialist notified. No competition, no noise — just the right buyer at the right time.',
+    tag: 'Relationship Manager',
+    headline: 'Be the developer\'s voice on the platform.',
+    body: 'As an RM at a developer — Emaar, Damac, Sobha, or any other — iClose gives you a ready pipeline of serious, educated agents without the cold outreach.',
+    points: [
+      {
+        icon: Building2,
+        title: 'Put your projects in front of the right agents.',
+        body: 'Publish launch briefings, payment plan guides, and project overviews on the Academy. Members arrive informed and ready — every conversation starts closer to a close.',
+      },
+      {
+        icon: Users,
+        title: 'Serve as the dedicated RM for iClose members.',
+        body: 'Be the direct, human contact when members are ready to move off-plan inventory. Build lasting relationships with professionals who close — consistently.',
+      },
+      {
+        icon: Handshake,
+        title: 'A qualified pipeline. Without the chase.',
+        body: 'iClose members are vetted professionals with active buyers. When they reach out, they are serious. No cold leads, no time wasters.',
+      },
+    ],
   },
 ];
 
@@ -50,17 +61,17 @@ const STEPS = [
   {
     num: '01',
     title: 'Apply',
-    body: 'Fill in the form with your area of expertise, active inventory, and professional background. Takes under five minutes.',
+    body: 'Select your role — Area Expert or Relationship Manager — and fill in the form. Takes under five minutes.',
   },
   {
     num: '02',
     title: 'Get vetted',
-    body: "Our team reviews your application. We look for genuine depth — transaction history, area knowledge, and real skin in the game.",
+    body: 'Our team reviews every application personally. We look for genuine depth — whether that is area knowledge or a real developer relationship.',
   },
   {
     num: '03',
     title: 'Go live',
-    body: "Once approved, your profile is published and your domain is activated. When a Member's requirement matches your area, you're the call.",
+    body: 'Once approved, your profile is published and your domain is activated. Start publishing content on the Academy and receiving matched member inquiries.',
   },
 ];
 
@@ -68,16 +79,16 @@ const TESTIMONIALS = [
   {
     initials: 'A.R.',
     name: 'Ahmad R.',
-    role: 'Downtown Dubai Expert',
+    role: 'Area Expert · Downtown Dubai',
     quote:
       'Turning what I know into structured content made me sharper. My expertise went from something I carried in my head to something that reaches active brokers every week.',
   },
   {
-    initials: 'S.K.',
-    name: 'Sarah K.',
-    role: 'Palm Jumeirah Expert',
+    initials: 'N.M.',
+    name: 'Nadia M.',
+    role: 'Relationship Manager · Off-Plan',
     quote:
-      "I used to share my knowledge over the phone, one person at a time. Now it reaches serious buyers across the platform every week. That kind of leverage changes how you think about what you know.",
+      'The agents I work with through iClose already understand our projects before we speak. That changes the entire conversation — every call starts warmer and closes faster.',
   },
 ];
 
@@ -95,7 +106,7 @@ export default function SpecialistsPage() {
             <div className="lg:flex-1 flex flex-col justify-center">
               <Reveal>
                 <span className="inline-flex items-center px-3 py-1 rounded-full border border-hairline bg-mist text-[11px] font-medium tracking-[0.08em] uppercase text-graphite mb-6">
-                  Specialists
+                  Join as a Specialist
                 </span>
               </Reveal>
               <Reveal delay={0.05}>
@@ -103,34 +114,35 @@ export default function SpecialistsPage() {
                   className="font-display font-semibold text-ink text-balance"
                   style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', lineHeight: 1.06, letterSpacing: '-0.03em' }}
                 >
-                  Turn what you know into a revenue stream.
+                  A Specialist on iClose is one of two things.
                 </h1>
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-5 text-graphite-dark leading-[1.55] max-w-lg" style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', letterSpacing: '-0.012em' }}>
-                  iClose Specialists build the market intelligence that active Members rely on to close — area playbooks, development deep-dives, and community analysis from people still in the market.
+                  An <strong className="text-ink font-medium">Area Expert</strong> who owns a community or building — or a <strong className="text-ink font-medium">Relationship Manager</strong> who represents a developer. Both get access to a growing network of professionals who close. Both build long-term pipeline on the platform.
                 </p>
               </Reveal>
-              {/* <Reveal delay={0.15}>
-                <ul className="mt-8 space-y-3">
-                  {[
-                    'Vetted and recognised by the platform',
-                    'Matched directly to buyers in your domain',
-                    'Earn up to 100% on every transaction',
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 text-[15px] text-ink" style={{ letterSpacing: '-0.01em' }}>
-                      <Check className="h-4 w-4 text-ink flex-shrink-0" strokeWidth={2.5} />
-                      {item}
-                    </li>
+              <Reveal delay={0.15}>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  {['Area Expert', 'Relationship Manager'].map((role) => (
+                    <span
+                      key={role}
+                      className="inline-flex items-center px-4 py-2 rounded-full border border-hairline bg-white text-[13px] font-medium text-ink"
+                      style={{ letterSpacing: '-0.01em' }}
+                    >
+                      {role}
+                    </span>
                   ))}
-                </ul>
-              </Reveal> */}
+                </div>
+              </Reveal>
             </div>
 
             {/* Right: form */}
             <Reveal delay={0.1} className="w-full lg:w-[440px] shrink-0">
               <div className="bg-white rounded-apple border border-hairline p-6 sm:p-8 shadow-elevated">
-                {/* <p className="text-[13px] font-medium text-graphite tracking-tight mb-6">Apply as a Specialist</p> */}
+                <p className="text-[13px] font-medium text-graphite tracking-tight mb-5" style={{ letterSpacing: '-0.008em' }}>
+                  Select your role to get started
+                </p>
                 <SpecialistForm />
               </div>
             </Reveal>
@@ -138,7 +150,7 @@ export default function SpecialistsPage() {
           </div>
         </section>
 
-        {/* ── What you do ─────────────────────────────────────────────── */}
+        {/* ── What each role means ─────────────────────────────────────── */}
         <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
           <div className="container-wide">
             <Reveal>
@@ -146,96 +158,68 @@ export default function SpecialistsPage() {
                 className="font-display font-semibold text-ink text-balance mb-14 md:mb-16"
                 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', lineHeight: 1.1, letterSpacing: '-0.025em' }}
               >
-                What it means to be a Specialist on iClose.
+                What each role means on iClose.
               </h2>
             </Reveal>
-            <div className="grid md:grid-cols-3 gap-4">
-              {WHAT_YOU_DO.map((item, i) => {
-                const Icon = item.icon;
-                return (
-                  <Reveal key={item.title} delay={i * 0.08}>
-                    <div className="card-surface p-8 sm:p-10 h-full flex flex-col">
-                      <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-mist border border-hairline mb-6">
-                        <Icon className="h-5 w-5 text-ink" strokeWidth={1.5} />
-                      </div>
-                      <h3
-                        className="font-display font-semibold text-ink mb-3"
-                        style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.4rem)', letterSpacing: '-0.02em', lineHeight: 1.15 }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p className="text-[16px] text-graphite-dark leading-[1.5] flex-1" style={{ letterSpacing: '-0.012em' }}>
-                        {item.body}
-                      </p>
+            <div className="grid md:grid-cols-2 gap-5">
+              {ROLES.map((role, ri) => (
+                <Reveal key={role.tag} delay={ri * 0.08}>
+                  <div className="card-surface p-8 sm:p-10 h-full flex flex-col">
+                    <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-3">
+                      {role.tag}
+                    </p>
+                    <h3
+                      className="font-display font-semibold text-ink mb-3"
+                      style={{ fontSize: 'clamp(1.15rem, 1.6vw, 1.45rem)', letterSpacing: '-0.02em', lineHeight: 1.15 }}
+                    >
+                      {role.headline}
+                    </h3>
+                    <p className="text-[15px] text-graphite-dark leading-[1.5] mb-8" style={{ letterSpacing: '-0.012em' }}>
+                      {role.body}
+                    </p>
+                    <div className="space-y-6 flex-1">
+                      {role.points.map((pt) => {
+                        const Icon = pt.icon;
+                        return (
+                          <div key={pt.title} className="flex gap-4">
+                            <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline shrink-0 mt-0.5">
+                              <Icon className="h-4 w-4 text-ink" strokeWidth={1.5} />
+                            </div>
+                            <div>
+                              <p className="text-[14px] font-medium text-ink mb-1" style={{ letterSpacing: '-0.01em' }}>{pt.title}</p>
+                              <p className="text-[14px] text-graphite-dark leading-[1.5]" style={{ letterSpacing: '-0.01em' }}>{pt.body}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Perks ───────────────────────────────────────────────────── */}
-        <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
-          <div className="container-wide">
-            <div className="flex flex-col lg:flex-row lg:gap-20 gap-12">
-
-              {/* Left: heading */}
-              <div className="lg:w-80 xl:w-96 shrink-0">
-                <Reveal>
-                  <h2
-                    className="font-display font-semibold text-ink text-balance"
-                    style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', lineHeight: 1.1, letterSpacing: '-0.025em' }}
-                  >
-                    What you get out of it.
-                  </h2>
+                  </div>
                 </Reveal>
-                <Reveal delay={0.05}>
-                  <p className="mt-4 text-[16px] text-graphite-dark leading-[1.55]" style={{ letterSpacing: '-0.012em' }}>
-                    iClose gives Specialists the reach, the recognition, and the revenue that comes with being the best in your domain.
-                  </p>
-                </Reveal>
-              </div>
-
-              {/* Right: perk grid */}
-              <div className="flex-1 grid sm:grid-cols-3 gap-4">
-                {PERKS.map((perk, i) => {
-                  const Icon = perk.icon;
-                  return (
-                    <Reveal key={perk.label} delay={i * 0.07}>
-                      <div className="card-mist p-6 sm:p-8 h-full flex flex-col">
-                        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white border border-hairline mb-4">
-                          <Icon className="h-4 w-4 text-ink" strokeWidth={1.5} />
-                        </div>
-                        <p className="text-[13px] font-medium text-graphite tracking-tight mb-2">{perk.label}</p>
-                        <p className="text-[15px] text-graphite-dark leading-[1.5] flex-1" style={{ letterSpacing: '-0.012em' }}>
-                          {perk.body}
-                        </p>
-                      </div>
-                    </Reveal>
-                  );
-                })}
-              </div>
-
+              ))}
             </div>
           </div>
         </section>
 
         {/* ── How to join ─────────────────────────────────────────────── */}
-        <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
+        <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
           <div className="container-wide">
             <Reveal>
               <h2
-                className="font-display font-semibold text-ink text-balance mb-14 md:mb-16"
+                className="font-display font-semibold text-ink text-balance mb-3"
                 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', lineHeight: 1.1, letterSpacing: '-0.025em' }}
               >
                 How it works.
               </h2>
             </Reveal>
+            <Reveal delay={0.05}>
+              <p className="text-[16px] text-graphite-dark mb-14 md:mb-16" style={{ letterSpacing: '-0.012em' }}>
+                The same three steps apply to both roles.
+              </p>
+            </Reveal>
             <div className="grid md:grid-cols-3 gap-4">
               {STEPS.map((step, i) => (
                 <Reveal key={step.num} delay={i * 0.08}>
-                  <div className="card-surface p-8 sm:p-10 h-full flex flex-col">
+                  <div className="card-mist p-8 sm:p-10 h-full flex flex-col">
                     <span
                       className="font-display font-semibold text-graphite-light mb-8 block"
                       style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.03em', lineHeight: 1 }}
@@ -259,20 +243,23 @@ export default function SpecialistsPage() {
         </section>
 
         {/* ── Testimonials ─────────────────────────────────────────────── */}
-        <section className="bg-paper py-16 sm:py-20 md:py-24 lg:py-28">
+        <section className="bg-mist py-16 sm:py-20 md:py-24 lg:py-28">
           <div className="container-wide">
             <Reveal>
               <h2
                 className="font-display font-semibold text-ink text-balance mb-14 md:mb-16"
                 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', lineHeight: 1.1, letterSpacing: '-0.025em' }}
               >
-                Experts who turned expertise into leverage.
+                From the specialists already on the platform.
               </h2>
             </Reveal>
             <div className="grid md:grid-cols-2 gap-4">
               {TESTIMONIALS.map((t, i) => (
                 <Reveal key={t.initials} delay={i * 0.08}>
                   <figure className="card-surface p-8 sm:p-10 flex flex-col h-full">
+                    <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-5">
+                      {t.role}
+                    </p>
                     <blockquote
                       className="text-[17px] text-ink leading-[1.55] text-balance flex-1"
                       style={{ letterSpacing: '-0.012em' }}
@@ -283,10 +270,7 @@ export default function SpecialistsPage() {
                       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-mist border border-hairline">
                         <span className="text-[12px] font-medium text-ink">{t.initials}</span>
                       </div>
-                      <div>
-                        <p className="text-[13px] font-medium text-ink tracking-tight">{t.name}</p>
-                        <p className="text-[12px] text-graphite tracking-tight">{t.role}</p>
-                      </div>
+                      <p className="text-[13px] font-medium text-ink tracking-tight">{t.name}</p>
                     </figcaption>
                   </figure>
                 </Reveal>
@@ -296,19 +280,19 @@ export default function SpecialistsPage() {
         </section>
 
         {/* ── Bottom CTA ───────────────────────────────────────────────── */}
-        <section className="bg-mist border-t border-hairline py-16 sm:py-20 md:py-24">
+        <section className="bg-paper border-t border-hairline py-16 sm:py-20 md:py-24">
           <div className="container-wide flex flex-col items-center text-center">
             <Reveal>
               <h2
                 className="font-display font-semibold text-ink text-balance max-w-2xl"
                 style={{ fontSize: 'clamp(1.8rem, 4vw, 3.5rem)', lineHeight: 1.06, letterSpacing: '-0.028em' }}
               >
-                Ready to put your expertise to work?
+                Area Expert or Relationship Manager — apply in five minutes.
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mt-4 text-[17px] text-graphite-dark leading-[1.5] max-w-lg" style={{ letterSpacing: '-0.012em' }}>
-                Applications take under five minutes. If you have real depth in a Dubai area or building, we want to hear from you.
+                Every application is reviewed personally. If you have real depth — whether in an area or a developer relationship — we want to hear from you.
               </p>
             </Reveal>
             <Reveal delay={0.14}>
@@ -318,7 +302,6 @@ export default function SpecialistsPage() {
                 style={{ letterSpacing: '-0.01em' }}
               >
                 Apply now
-                <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
               </a>
             </Reveal>
           </div>

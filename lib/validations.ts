@@ -19,6 +19,10 @@ export const leadSchema = z.object({
 export type LeadFormValues = z.infer<typeof leadSchema>;
 
 export const specialistSchema = z.object({
+  specialistType: z.enum(['area_expert', 'relationship_manager'], {
+    required_error: 'Please select a role',
+    invalid_type_error: 'Please select a role',
+  }),
   firstName: z.string().min(1, 'Enter your first name').max(50),
   lastName: z.string().min(1, 'Enter your last name').max(50),
   email: z.string().email('Enter a valid email').max(120),
@@ -27,7 +31,7 @@ export const specialistSchema = z.object({
     .min(7, 'Enter a valid phone number')
     .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
-  message: z.string().min(10, 'Tell us a bit about your expertise').max(1000),
+  message: z.string().min(10, 'Tell us a bit about your background').max(1000),
   consentPrivacy: z.boolean().refine((v) => v === true, {
     message: 'You must agree to continue',
   }),
