@@ -19,9 +19,9 @@ const TESTIMONIALS = [
   },
   {
     initials: 'K.R.',
-    role: 'Downtown Dubai Specialist',
+    role: 'Area Specialist · Downtown Dubai',
     quote:
-      'I used to rely on brokers I barely knew to move my units. Now I have a community of professionals who know exactly what I specialise in. When they have a buyer for Downtown, they call me first.',
+      'I published two area playbooks in my first month on the Academy. Members now reach out to me before I ever pick up the phone. My close rate on Downtown units has doubled since I stopped relying on cold outreach.',
   },
 ];
 

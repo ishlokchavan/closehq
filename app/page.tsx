@@ -34,8 +34,8 @@ export default async function HomePage() {
       <main className="overflow-x-clip">
         <Hero />
         <ForWho />
-        <How />
         <SpecialistPath />
+        <How />
         <Transformation />
         <Plans data={plans} />
         <Testimonials />
