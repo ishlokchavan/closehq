@@ -52,7 +52,7 @@ export function Transformation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="card-surface ring-1 ring-ink p-8 sm:p-10"
+            className="card-surface ring-2 ring-ink p-8 sm:p-10"
           >
             <p className="display-sm font-bold text-ink tracking-tight mb-6">With iClose</p>
             <ul className="space-y-4">

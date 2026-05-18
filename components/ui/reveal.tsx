@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion';
 import { type ReactNode } from 'react';
 
 interface RevealProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
@@ -17,14 +17,15 @@ export function Reveal({
   once = true,
   ...props
 }: RevealProps) {
+  const reduceMotion = useReducedMotion();
   return (
     <motion.div
-      initial={{ opacity: 0, y }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once, margin: '-80px' }}
       transition={{
-        duration: 0.8,
-        delay,
+        duration: reduceMotion ? 0 : 0.8,
+        delay: reduceMotion ? 0 : delay,
         ease: [0.22, 1, 0.36, 1],
       }}
       {...props}
