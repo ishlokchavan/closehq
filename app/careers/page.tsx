@@ -44,7 +44,7 @@ export default function CareersPage() {
         {/* Hero */}
         <section className="container-x pt-28 pb-16 md:pt-36 md:pb-20">
           <Reveal>
-            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-[#b5842a] mb-5">
+            <p className="text-[11px] font-medium tracking-tight text-graphite mb-5" style={{ letterSpacing: '-0.01em' }}>
               iclose.ae
             </p>
           </Reveal>
@@ -67,10 +67,10 @@ export default function CareersPage() {
             </div>
           </Reveal>
           <Reveal delay={0.12}>
-            <div className="inline-flex items-start gap-4 bg-[#fdf8ef] border border-[#e8d5a3] rounded-2xl px-5 py-4 max-w-md mb-10">
-              <Users className="h-5 w-5 text-[#b5842a] mt-0.5 shrink-0" />
-              <p className="text-[15px] text-[#7a5c1e] leading-[1.55]" style={{ letterSpacing: '-0.01em' }}>
-                <strong>Only Female Talent</strong> required for On-Camera Content Creation roles.
+            <div className="inline-flex items-start gap-4 bg-mist border border-hairline rounded-2xl px-5 py-4 max-w-md mb-10">
+              <Users className="h-5 w-5 text-graphite mt-0.5 shrink-0" />
+              <p className="text-[15px] text-graphite-dark leading-[1.55]" style={{ letterSpacing: '-0.01em' }}>
+                <strong className="text-ink">Only Female Talent</strong> required for on-camera content creation roles.
               </p>
             </div>
           </Reveal>
@@ -92,7 +92,7 @@ export default function CareersPage() {
           <div className="grid md:grid-cols-2 gap-12 md:gap-16">
             <Reveal>
               <div>
-                <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-graphite-light mb-8">
+                <p className="text-[11px] font-medium tracking-tight text-graphite mb-8" style={{ letterSpacing: '-0.01em' }}>
                   What you&apos;ll do
                 </p>
                 <ul className="space-y-6">
@@ -112,7 +112,7 @@ export default function CareersPage() {
 
             <Reveal delay={0.05}>
               <div>
-                <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-graphite-light mb-8">
+                <p className="text-[11px] font-medium tracking-tight text-graphite mb-8" style={{ letterSpacing: '-0.01em' }}>
                   What&apos;s in it for you
                 </p>
                 <ul className="space-y-6">
@@ -138,7 +138,7 @@ export default function CareersPage() {
         <section className="container-x py-16 md:py-24">
           <div className="max-w-lg mx-auto">
             <Reveal>
-              <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-graphite-light mb-3">
+              <p className="text-[11px] font-medium tracking-tight text-graphite mb-3" style={{ letterSpacing: '-0.01em' }}>
                 Apply now
               </p>
               <h2 className="display-md text-ink mb-2">Join the team.</h2>

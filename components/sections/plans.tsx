@@ -105,12 +105,12 @@ export function Plans({ data }: { data: MembershipPlan[] }) {
         <div className="max-w-3xl mb-14 md:mb-20">
           <Reveal>
             <h2 className="display-lg text-balance">
-              Choose the level of access that fits where you are.
+              Every tier is built to put more commission in your pocket.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-2xl">
-              Every tier starts with community access and the education platform. As you go deeper, you get more — better Specialist matching, dedicated support, and an increasing share of any transaction you close.
+              Start free. As your deal volume grows, move up and keep a larger share of every commission you close.
             </p>
           </Reveal>
         </div>

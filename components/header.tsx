@@ -41,6 +41,8 @@ export function Header() {
         {/* Mobile hamburger */}
         <button
           aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
           onClick={() => setOpen((s) => !s)}
           className="md:hidden flex items-center justify-center h-9 w-9 text-ink rounded-full hover:bg-mist transition-colors"
         >
@@ -51,6 +53,7 @@ export function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-nav"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}

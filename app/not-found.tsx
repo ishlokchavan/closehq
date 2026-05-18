@@ -5,9 +5,9 @@ export default function NotFound() {
   return (
     <main className="min-h-screen bg-ink flex items-center justify-center px-6">
       <div className="text-center max-w-md">
-        <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6">
+        <p className="text-[11px] font-medium tracking-tight text-white/40 mb-6" style={{ letterSpacing: '-0.01em' }}>
           404 · Off-plan unit not found
-        </div>
+        </p>
         <h1 className="display-md text-bone">
           This door doesn&apos;t open.
         </h1>
@@ -17,7 +17,7 @@ export default function NotFound() {
         </p>
         <div className="mt-10">
           <Link href="/">
-            <Button variant="gold" size="lg">
+            <Button variant="secondary" size="lg">
               Back to home
             </Button>
           </Link>

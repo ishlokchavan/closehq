@@ -5,17 +5,17 @@ import { X, Check } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const BEFORE = [
-  'Agents entering the secondary market without the knowledge to compete',
-  'Professionals watching clients take asset advice from strangers online',
-  'Specialists with real inventory and no trusted channel to move it',
-  'Market knowledge locked in individual heads, never shared',
+  'Walking into deals without knowing the building, the area, or the price history',
+  'Missing developer launches because you were not in the right room',
+  'Area knowledge that never gets past your own circle',
+  'Cold-calling brokers who do not know your projects and do not care to learn',
 ];
 
 const AFTER = [
-  'Agents who understand the secondary market well enough to sky-rocket their sales',
-  'Professionals with a vetted Specialist network for every client requirement',
-  'Specialists with a ready community of professionals who have active, serious buyers',
-  'A platform where expertise is distributed, recognised, and put to work',
+  'Area-level knowledge from the people who are actively closing there',
+  'Developer briefings and launch access direct from the RM, before it goes public',
+  'Published content that reaches serious professionals and builds your authority',
+  'A pipeline of educated agents who already know your developer\'s projects',
 ];
 
 export function Transformation() {
@@ -24,8 +24,7 @@ export function Transformation() {
       <div className="container-wide">
         <Reveal>
           <h2 className="display-lg text-balance max-w-2xl mb-14 md:mb-16">
-            What being part of iClose
-            actually changes.
+            What changes when you join.
           </h2>
         </Reveal>
 
@@ -53,7 +52,7 @@ export function Transformation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="card-surface ring-1 ring-ink p-8 sm:p-10"
+            className="card-surface ring-2 ring-ink p-8 sm:p-10"
           >
             <p className="display-sm font-bold text-ink tracking-tight mb-6">With iClose</p>
             <ul className="space-y-4">

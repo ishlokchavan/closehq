@@ -27,7 +27,8 @@ export function FinalCTA() {
             Join the<br />community.
           </h2>
           <p className="mt-2 text-graphite text-[13px] sm:text-[17px] leading-[1.5] max-w-xs mx-auto lg:mx-0" style={{ letterSpacing: '-0.012em' }}>
-            Free to join. No card required. Apply as a Specialist separately.
+            Free to join. No card required.{' '}
+            <a href="/specialists" className="text-ink underline-offset-2 hover:underline" style={{ letterSpacing: '-0.01em' }}>Applying as a Specialist?</a>
           </p>
         </motion.div>
 
@@ -39,7 +40,7 @@ export function FinalCTA() {
           transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="w-full lg:w-[420px] shrink-0"
         >
-          <div className="bg-white rounded-apple border border-hairline p-5 sm:p-8 shadow-elevated">
+          <div className="bg-mist rounded-apple p-5 sm:p-8 shadow-elevated">
             <LeadForm />
           </div>
         </motion.div>

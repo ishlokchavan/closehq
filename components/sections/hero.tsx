@@ -64,7 +64,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="block"
             >
-              The real estate
+              Where real estate
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 28 }}
@@ -72,7 +72,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="block"
             >
-              community for
+              knowledge becomes
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 28 }}
@@ -80,7 +80,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
               className="block text-graphite"
             >
-              professionals.
+              commission.
             </motion.span>
           </h1>
 
@@ -91,7 +91,7 @@ export function Hero() {
             className="mt-6 text-graphite-dark leading-[1.5] text-balance max-w-lg"
             style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', letterSpacing: '-0.015em' }}
           >
-            Whether you're an agent building expertise in the secondary market, a professional whose clients need the right asset, or a specialist with inventory to move and knowledge to share, iClose is where it all happens!
+            iClose is where Dubai&apos;s real estate professionals learn directly from vetted area experts and developer RMs, then close deals and keep up to 100% of the commission.
           </motion.p>
 
           <motion.div
@@ -106,7 +106,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-ink text-white text-[15px] font-medium hover:bg-ink/85 transition-colors"
               style={{ letterSpacing: '-0.01em' }}
             >
-              Join now
+              Join for free
               <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
             </a>
             <a
@@ -114,7 +114,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 text-graphite hover:text-ink transition-colors text-[15px]"
               style={{ letterSpacing: '-0.01em' }}
             >
-              Apply as a Specialist
+              Share your expertise
               <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
             </a>
           </motion.div>

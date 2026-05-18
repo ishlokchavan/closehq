@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { cloneElement, useId, type ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2, Check } from 'lucide-react';
@@ -67,7 +67,7 @@ export function LeadForm() {
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            Check your inbox — we&apos;ve sent confirmation. We&apos;ll be in touch before launch.
+            Check your inbox. We&apos;ve sent confirmation. We&apos;ll be in touch before launch.
           </p>
         </motion.div>
       ) : (
@@ -164,17 +164,23 @@ function Field({
 }: {
   label: string;
   error?: string;
-  children: React.ReactNode;
+  children: ReactElement;
 }) {
+  const id = useId();
+  const errId = error ? `${id}-err` : undefined;
   return (
     <div>
       <div className="flex items-baseline justify-between mb-1.5">
-        <label className="text-sm font-medium text-graphite-dark tracking-tight" style={{ letterSpacing: '-0.01em' }}>
+        <label htmlFor={id} className="text-sm font-medium text-graphite-dark tracking-tight" style={{ letterSpacing: '-0.01em' }}>
           {label}
         </label>
-        {error && <span className="text-[13px] text-red-600">{error}</span>}
+        {error && <span id={errId} role="alert" className="text-[13px] text-red-600">{error}</span>}
       </div>
-      {children}
+      {cloneElement(children as ReactElement<Record<string, unknown>>, {
+        id,
+        'aria-invalid': error ? true : undefined,
+        'aria-describedby': errId,
+      })}
     </div>
   );
 }

@@ -15,13 +15,13 @@ const TESTIMONIALS = [
     initials: 'F.A.',
     role: 'Private Client Advisor',
     quote:
-      "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement to the community. Within 24 hours a Specialist came back with three matching units. That is a network you cannot build overnight.",
+      "One of my clients had a very specific brief: Business Bay, high floor, direct canal view, quick transfer. I posted the requirement to the community. Within 24 hours a Specialist came back with three matching units. That is a network you cannot build overnight.",
   },
   {
     initials: 'K.R.',
-    role: 'Downtown Dubai Specialist',
+    role: 'Area Specialist · Downtown Dubai',
     quote:
-      'I used to rely on brokers I barely knew to move my units. Now I have a community of professionals who know exactly what I specialise in. When they have a buyer for Downtown, they call me first.',
+      'I published two area playbooks in my first month on the Academy. Members now reach out to me before I ever pick up the phone. My close rate on Downtown units has doubled since I stopped relying on cold outreach.',
   },
 ];
 
@@ -54,9 +54,7 @@ export function Testimonials() {
 
       <div className="container-wide">
         <Reveal>
-          {/* <h2 className="text-[28px] sm:text-[32px] font-display font-semibold text-ink text-balance max-w-xl mb-14 md:mb-16" style={{ letterSpacing: '-0.022em', lineHeight: 1.15 }}> */}
           <h2 className="display-lg text-balance max-w-xl mb-14 md:mb-16">
-            {/* Three roles. One community. All winning. */}
             What our members say.
           </h2>
         </Reveal>

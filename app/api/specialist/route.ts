@@ -36,7 +36,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    const { firstName, lastName, email, phone, message } = parsed.data;
+    const { firstName, lastName, email, phone, message, specialistType } = parsed.data;
+    const roleLabel = specialistType === 'relationship_manager' ? 'Relationship Manager' : 'Area Expert';
+    const fullMessage = `Role: ${roleLabel}\n\n${message}`;
     const userAgent = request.headers.get('user-agent') || undefined;
     const referer = request.headers.get('referer') || undefined;
 
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
             last_name: lastName,
             email,
             phone,
-            message,
+            message: fullMessage,
             status: 'pending',
             user_agent: userAgent,
             referer,
@@ -99,11 +101,12 @@ export async function POST(request: Request) {
               <p style="font-size:18px;font-weight:600;margin-bottom:16px;">New Specialist application</p>
               <table style="width:100%;border-collapse:collapse;font-size:15px;">
                 <tr><td style="padding:8px 0;color:#6e6e73;width:120px;">Name</td><td style="padding:8px 0;">${firstName} ${lastName}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Role</td><td style="padding:8px 0;font-weight:600;">${roleLabel}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${maskEmail(email)}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${maskPhone(phone)}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
               </table>
-              <p style="font-size:15px;color:#6e6e73;margin-top:20px;margin-bottom:6px;"><strong style="color:#1d1d1f;">Expertise / Message</strong></p>
+              <p style="font-size:15px;color:#6e6e73;margin-top:20px;margin-bottom:6px;"><strong style="color:#1d1d1f;">Message</strong></p>
               <p style="font-size:15px;color:#1d1d1f;background:#f5f5f7;padding:16px;border-radius:8px;line-height:1.55;">${message}</p>
             </div>
           `,
