@@ -15,13 +15,13 @@ const STEPS = [
     number: '2',
     icon: BookOpenCheck,
     title: 'Learn from the people closing it.',
-    body: 'Access area playbooks from vetted experts and developer briefings from RMs. Real knowledge from professionals who are actively in the market — not theory.',
+    body: 'Access area playbooks from vetted experts and developer briefings from RMs. Real knowledge from professionals who are actively in the market, not theory.',
   },
   {
     number: '3',
     icon: Handshake,
     title: 'Close a deal. Keep the commission.',
-    body: 'Post a requirement, get matched with the right expert. The deal flows through iClose — and your commission is paid directly to you when the buyer signs.',
+    body: 'Post a requirement, get matched with the right expert. The deal flows through iClose, and your commission is paid directly to you when the buyer signs.',
   },
 ];
 

@@ -60,13 +60,18 @@ export function MobileCarousel({ items, className, ariaLabel, dark = false }: Mo
               key={i}
               onClick={() => scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={cn(
-                'h-1.5 rounded-full transition-all duration-300',
-                dark
-                  ? i === active ? 'w-6 bg-white' : 'w-1.5 bg-white/25 hover:bg-white/40'
-                  : i === active ? 'w-6 bg-ink'   : 'w-1.5 bg-ink/20 hover:bg-ink/40',
-              )}
-            />
+              aria-current={i === active ? 'true' : undefined}
+              className="p-2 -m-2 flex items-center justify-center"
+            >
+              <span
+                className={cn(
+                  'block h-1.5 rounded-full transition-all duration-300',
+                  dark
+                    ? i === active ? 'w-6 bg-white' : 'w-1.5 bg-white/25'
+                    : i === active ? 'w-6 bg-ink'   : 'w-1.5 bg-ink/20',
+                )}
+              />
+            </button>
           ))}
         </div>
 

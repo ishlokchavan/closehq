@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { cloneElement, useId, type ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2, Check } from 'lucide-react';
@@ -22,7 +22,7 @@ const ROLE_LABELS: Record<SpecialistFormValues['specialistType'], string> = {
 
 const PLACEHOLDERS: Record<SpecialistFormValues['specialistType'], string> = {
   area_expert:
-    'Tell us which areas, developments, or communities you know deeply — and what knowledge you would bring to Members.',
+    'Tell us which areas, developments, or communities you know deeply, and what knowledge you would bring to Members.',
   relationship_manager:
     'Tell us which developer you represent, the projects in your portfolio, and how you currently work with agents.',
 };
@@ -240,20 +240,27 @@ function Field({
 }: {
   label: string;
   error?: string;
-  children: React.ReactNode;
+  children: ReactElement;
 }) {
+  const id = useId();
+  const errId = error ? `${id}-err` : undefined;
   return (
     <div>
       <div className="flex items-baseline justify-between mb-1.5">
         <label
+          htmlFor={id}
           className="text-sm font-medium text-graphite-dark tracking-tight"
           style={{ letterSpacing: '-0.01em' }}
         >
           {label}
         </label>
-        {error && <span className="text-[13px] text-red-600">{error}</span>}
+        {error && <span id={errId} role="alert" className="text-[13px] text-red-600">{error}</span>}
       </div>
-      {children}
+      {cloneElement(children as ReactElement<Record<string, unknown>>, {
+        id,
+        'aria-invalid': error ? true : undefined,
+        'aria-describedby': errId,
+      })}
     </div>
   );
 }

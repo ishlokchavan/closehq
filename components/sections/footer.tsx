@@ -58,7 +58,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 grid grid-cols-2 sm:grid-cols-4 gap-8">
             {NAV_COLUMNS.map((col) => (
               <div key={col.heading}>
-                <p className="text-[11px] font-medium tracking-[0.08em] uppercase text-graphite-light mb-3">
+                <p className="text-[11px] font-medium tracking-tight text-graphite-light mb-3">
                   {col.heading}
                 </p>
                 <ul className="space-y-2.5">

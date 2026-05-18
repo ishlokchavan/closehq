@@ -13,7 +13,7 @@ const BEFORE = [
 
 const AFTER = [
   'Area-level knowledge from the people who are actively closing there',
-  'Developer briefings and launch access direct from the RM — before it goes public',
+  'Developer briefings and launch access direct from the RM, before it goes public',
   'Published content that reaches serious professionals and builds your authority',
   'A pipeline of educated agents who already know your developer\'s projects',
 ];

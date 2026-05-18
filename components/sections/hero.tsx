@@ -91,7 +91,7 @@ export function Hero() {
             className="mt-6 text-graphite-dark leading-[1.5] text-balance max-w-lg"
             style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', letterSpacing: '-0.015em' }}
           >
-            iClose is where Dubai&apos;s real estate professionals learn directly from vetted area experts and developer RMs — then close deals and keep up to 100% of the commission.
+            iClose is where Dubai&apos;s real estate professionals learn directly from vetted area experts and developer RMs, then close deals and keep up to 100% of the commission.
           </motion.p>
 
           <motion.div

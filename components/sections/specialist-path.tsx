@@ -13,7 +13,7 @@ const SPECIALIST_STEPS = [
   {
     number: '2',
     title: 'Get reviewed and vetted.',
-    body: 'The iClose team reviews your application. We verify your expertise before you join — quality matters more than volume.',
+    body: 'The iClose team reviews your application. We verify your expertise before you join. Quality matters more than volume.',
   },
   {
     number: '3',
@@ -41,7 +41,7 @@ const RM_STEPS = [
   {
     number: '3',
     title: 'Educate members through the Academy.',
-    body: 'Publish launch briefings, project overviews, and payment plan guides. Members come to you informed — shortening the sales cycle for everyone.',
+    body: 'Publish launch briefings, project overviews, and payment plan guides. Members come to you informed, shortening the sales cycle for everyone.',
   },
   {
     number: '4',
@@ -94,7 +94,7 @@ export function SpecialistPath() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="subhead mt-5 max-w-xl">
-              An Area Expert who owns a community or building — or a Relationship Manager who represents a developer. Both get access to a growing network of professionals who close.
+              An Area Expert who owns a community or building, or a Relationship Manager who represents a developer. Both get access to a growing network of professionals who close.
             </p>
           </Reveal>
         </div>
@@ -108,14 +108,14 @@ export function SpecialistPath() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="card-surface p-8 sm:p-10 flex flex-col"
           >
-            <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-4">
-              Specialist — Area Expert
+            <p className="text-[11px] font-medium tracking-tight text-graphite mb-4">
+              Specialist: Area Expert
             </p>
             <h3 className="display-sm mb-2">
               Share your area expertise. Build your authority.
             </h3>
             <p className="text-[15px] text-graphite-dark leading-[1.5] mb-8" style={{ letterSpacing: '-0.012em' }}>
-              You know a community or building better than anyone. iClose gives you the platform to prove it — and a network of professionals who will act on it.
+              You know a community or building better than anyone. iClose gives you the platform to prove it, and a network of professionals who will act on it.
             </p>
             <StepList steps={SPECIALIST_STEPS} />
             <a href="/specialists" className="applelink mt-8">
@@ -132,14 +132,14 @@ export function SpecialistPath() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="card-surface ring-2 ring-ink p-8 sm:p-10 flex flex-col"
           >
-            <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-4">
-              Specialist — Relationship Manager
+            <p className="text-[11px] font-medium tracking-tight text-graphite mb-4">
+              Specialist: Relationship Manager
             </p>
             <h3 className="display-sm mb-2">
               Become the dedicated RM for iClose members.
             </h3>
             <p className="text-[15px] text-graphite-dark leading-[1.5] mb-8" style={{ letterSpacing: '-0.012em' }}>
-              As a Relationship Manager at a developer, iClose gives you a ready pipeline of serious, educated agents — without the cold outreach.
+              As a Relationship Manager at a developer, iClose gives you a ready pipeline of serious, educated agents, without the cold outreach.
             </p>
             <StepList steps={RM_STEPS} />
             <a href="/specialists" className="applelink mt-8">

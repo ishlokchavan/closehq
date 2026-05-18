@@ -110,7 +110,7 @@ export function Plans({ data }: { data: MembershipPlan[] }) {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-2xl">
-              Start free. As your deal volume grows, move up — and keep a larger share of every commission you close.
+              Start free. As your deal volume grows, move up and keep a larger share of every commission you close.
             </p>
           </Reveal>
         </div>

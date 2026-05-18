@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { cloneElement, useId, type ReactElement, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2, Check, Paperclip, X } from 'lucide-react';
@@ -157,10 +157,20 @@ export function InternForm() {
             />
           </Field>
 
-          <Field label="Resume / CV (PDF)" error={resumeError ?? undefined}>
+          <div>
+            <div className="flex items-baseline justify-between mb-1.5">
+              <label htmlFor="intern-resume" className="text-sm font-medium text-graphite-dark tracking-tight" style={{ letterSpacing: '-0.01em' }}>
+                Resume / CV (PDF)
+              </label>
+              {resumeError && <span id="intern-resume-err" role="alert" className="text-[13px] text-red-600">{resumeError}</span>}
+            </div>
             <div
               className="relative flex items-center h-12 px-4 bg-paper border border-hairline rounded-xl cursor-pointer hover:border-accent transition-all"
               onClick={() => fileInputRef.current?.click()}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
+              aria-describedby={resumeError ? 'intern-resume-err' : undefined}
             >
               <Paperclip className="h-4 w-4 text-graphite-light mr-2 shrink-0" />
               <span className={`text-[17px] truncate flex-1 ${resumeFile ? 'text-ink' : 'text-graphite-light'}`}>
@@ -171,6 +181,7 @@ export function InternForm() {
                   type="button"
                   onClick={(e) => { e.stopPropagation(); setResumeFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
                   className="ml-2 shrink-0 text-graphite-light hover:text-ink transition-colors"
+                  aria-label="Remove file"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -178,23 +189,21 @@ export function InternForm() {
             </div>
             <input
               ref={fileInputRef}
+              id="intern-resume"
               type="file"
               accept="application/pdf"
               onChange={handleFileChange}
-              className="hidden"
+              className="sr-only"
             />
-          </Field>
+          </div>
 
           <Field label="Instagram handle (optional)" error={errors.instagram?.message}>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[17px] text-graphite-light select-none">@</span>
-              <input
-                {...register('instagram')}
-                type="text"
-                placeholder="yourhandle"
-                className={`${inputClasses} pl-8`}
-              />
-            </div>
+            <input
+              {...register('instagram')}
+              type="text"
+              placeholder="@yourhandle"
+              className={inputClasses}
+            />
           </Field>
 
           <Field label="Message (optional)" error={errors.message?.message}>
@@ -234,17 +243,23 @@ function Field({
 }: {
   label: string;
   error?: string;
-  children: React.ReactNode;
+  children: ReactElement;
 }) {
+  const id = useId();
+  const errId = error ? `${id}-err` : undefined;
   return (
     <div>
       <div className="flex items-baseline justify-between mb-1.5">
-        <label className="text-sm font-medium text-graphite-dark tracking-tight" style={{ letterSpacing: '-0.01em' }}>
+        <label htmlFor={id} className="text-sm font-medium text-graphite-dark tracking-tight" style={{ letterSpacing: '-0.01em' }}>
           {label}
         </label>
-        {error && <span className="text-[13px] text-red-600">{error}</span>}
+        {error && <span id={errId} role="alert" className="text-[13px] text-red-600">{error}</span>}
       </div>
-      {children}
+      {cloneElement(children as ReactElement<Record<string, unknown>>, {
+        id,
+        'aria-invalid': error ? true : undefined,
+        'aria-describedby': errId,
+      })}
     </div>
   );
 }

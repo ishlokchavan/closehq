@@ -1,22 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const FAQS = [
   {
     q: 'What is iClose?',
-    a: 'iClose is where Dubai\'s real estate professionals learn from vetted area experts and developer RMs, then close deals and keep up to 100% of the commission. The Academy is the education layer — real, market-tested knowledge from people actively closing. The platform is the deal layer — post a requirement, get matched, close, get paid.',
+    a: 'iClose is where Dubai\'s real estate professionals learn from vetted area experts and developer RMs, then close deals and keep up to 100% of the commission. The Academy is the education layer: real, market-tested knowledge from people actively closing. The platform is the deal layer: post a requirement, get matched, close, get paid.',
   },
   {
     q: 'Who can join as a Member?',
-    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, and more. Membership is free to start. If you have clients with asset requirements, or if you are building expertise in the secondary market, iClose is built for you.",
+    a: "Anyone with a professional connection to Dubai real estate: agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, and more. Membership is free to start. If you have clients with asset requirements, or if you are building expertise in the secondary market, iClose is built for you.",
   },
   {
     q: "I'm an agent. How does iClose help me specifically?",
-    a: "Two ways. First, the iClose Academy gives you structured content from Area Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and developer briefings from RMs. Second, when you're ready to transact, you post a requirement and get matched with the right Specialist to close it. You keep between 60% and 100% of your commission depending on your membership tier.",
+    a: "Two ways. First, the iClose Academy gives you structured content from Area Specialists who are actively working the areas you want to enter: area playbooks, building deep-dives, and developer briefings from RMs. Second, when you're ready to transact, you post a requirement and get matched with the right Specialist to close it. You keep between 60% and 100% of your commission depending on your membership tier.",
   },
   {
     q: "I'm a lawyer / accountant / advisor. How does this help my clients?",
@@ -24,19 +24,19 @@ const FAQS = [
   },
   {
     q: 'What is a Specialist and how is it different from a Member?',
-    a: "A Specialist is a vetted area or building expert with real depth — transaction history, current inventory, pricing nuance in a specific part of Dubai's market. Specialists apply separately and are reviewed before joining. They publish knowledge on the Academy for Members, and when a Member inquiry falls within their domain, they are the first and only call.",
+    a: "A Specialist is a vetted area or building expert with real depth: transaction history, current inventory, pricing nuance in a specific part of Dubai's market. Specialists apply separately and are reviewed before joining. They publish knowledge on the Academy for Members, and when a Member inquiry falls within their domain, they are the first and only call.",
   },
   {
     q: 'What is a Developer RM on iClose?',
-    a: "A Developer RM is a Relationship Manager who works directly for a property developer — like Emaar, Damac, or Sobha. On iClose, they act as the dedicated developer contact for members: publishing project briefings and launch updates on the Academy, and serving as the direct, human point of contact when members are ready to move off-plan inventory. Members get real access to the developer. The RM gets a pipeline of educated, serious agents.",
+    a: "A Developer RM is a Relationship Manager who works directly for a property developer (Emaar, Damac, Sobha, and others). On iClose, they act as the dedicated developer contact for members: publishing project briefings and launch updates on the Academy, and serving as the direct, human point of contact when members are ready to move off-plan inventory. Members get real access to the developer. The RM gets a pipeline of educated, serious agents.",
   },
   {
     q: 'How do I join as an Area Specialist or Developer RM?',
-    a: "Apply at iclose.ae/specialists. Tell us your area expertise or the developer you represent. The iClose team reviews every application before anyone joins — we verify credentials and domain knowledge. Once approved, you get access to the educator dashboard to publish content on the Academy and start receiving matched inquiries from members.",
+    a: "Apply at iclose.ae/specialists. Tell us your area expertise or the developer you represent. The iClose team reviews every application before anyone joins. We verify credentials and domain knowledge. Once approved, you get access to the educator dashboard to publish content on the Academy and start receiving matched inquiries from members.",
   },
   {
     q: 'What does the transaction split mean?',
-    a: "When a deal closes through the platform, the split is the share of commission you keep. Plus members (free) keep 60%. It improves to 80% on Pro, 90% on Pro Max, and 100% on Ultra. Only members close deals and earn commission — Specialists and Developer RMs participate through the education and inquiry platform, not the transaction layer.",
+    a: "When a deal closes through the platform, the split is the share of commission you keep. Plus members (free) keep 60%. It improves to 80% on Pro, 90% on Pro Max, and 100% on Ultra. Only members close deals and earn commission. Specialists and Developer RMs participate through the education and inquiry platform, not the transaction layer.",
   },
 ];
 
@@ -51,7 +51,7 @@ export function FAQ() {
           {/* Left: label + heading + subtitle */}
           <div className="lg:w-80 xl:w-96 shrink-0">
             <Reveal>
-              <span className="inline-flex items-center px-3 py-1 rounded-full border border-hairline bg-mist text-[11px] font-medium tracking-[0.08em] uppercase text-graphite mb-6">
+              <span className="inline-flex items-center px-3 py-1 rounded-full border border-hairline bg-mist text-[11px] font-medium tracking-tight text-graphite mb-6">
                 Get Clarity
               </span>
             </Reveal>
@@ -71,10 +71,14 @@ export function FAQ() {
           <div className="flex-1 flex flex-col gap-3">
             {FAQS.map((faq, i) => (
               <div
-                key={i}
+                key={faq.q}
                 className="rounded-2xl border border-hairline bg-white overflow-hidden"
               >
                 <button
+                  id={`faq-btn-${i}`}
+                  type="button"
+                  aria-expanded={open === i}
+                  aria-controls={`faq-panel-${i}`}
                   onClick={() => setOpen(open === i ? null : i)}
                   className="w-full flex items-center justify-between gap-6 px-6 py-5 text-left"
                 >
@@ -93,24 +97,23 @@ export function FAQ() {
                   </motion.div>
                 </button>
 
-                <AnimatePresence initial={false}>
-                  {open === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p
-                        className="px-6 pb-5 text-[16px] text-graphite-dark leading-[1.6]"
-                        style={{ letterSpacing: '-0.012em' }}
-                      >
-                        {faq.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  id={`faq-panel-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${i}`}
+                  aria-hidden={open !== i || undefined}
+                  initial={false}
+                  animate={open === i ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <p
+                    className="px-6 pb-5 text-[16px] text-graphite-dark leading-[1.6]"
+                    style={{ letterSpacing: '-0.012em' }}
+                  >
+                    {faq.a}
+                  </p>
+                </motion.div>
               </div>
             ))}
           </div>

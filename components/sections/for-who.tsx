@@ -7,21 +7,21 @@ import { MobileCarousel } from '@/components/ui/mobile-carousel';
 
 const PROFILES = [
   {
-    tag: 'Profile 1 — Learner',
+    tag: 'Profile 1: Learner',
     headline: 'Education that pays.',
-    body: 'Most professionals enter the secondary market on guesswork. iClose Academy gives you structured knowledge from area experts who are actively closing — building deep-dives, area playbooks, and developer briefings direct from the source. The faster you learn, the sooner you close.',
+    body: 'Most professionals enter the secondary market on guesswork. iClose Academy gives you structured knowledge from area experts who are actively closing: building deep-dives, area playbooks, and developer briefings direct from the source. The faster you learn, the sooner you close.',
     points: [
       'Area playbooks from experts who live and close there',
-      'Developer briefings from RMs — direct from the source',
+      'Developer briefings from RMs, direct from the source',
       'Close a deal through iClose. Keep up to 100%.',
     ],
     cta: { label: 'Join for free', href: '#apply' },
     starred: false,
   },
   {
-    tag: 'Profile 2 — Educator',
+    tag: 'Profile 2: Educator',
     headline: 'Your expertise has an audience. We built the stage.',
-    body: "Area experts and developer RMs hold some of the most valuable knowledge in Dubai real estate. iClose gives you a platform to structure it, share it, and build the kind of authority that makes your phone ring — without the cold outreach.",
+    body: "Area experts and developer RMs hold some of the most valuable knowledge in Dubai real estate. iClose gives you a platform to structure it, share it, and build the kind of authority that makes your phone ring, without the cold outreach.",
     points: [
       'Publish area playbooks, building guides, and developer briefs',
       'Get matched directly on member inquiries in your domain',
@@ -40,7 +40,7 @@ const item = {
 function ProfileCard({ p }: { p: typeof PROFILES[number] }) {
   return (
     <div className={`card-surface p-8 sm:p-10 flex flex-col h-full${p.starred ? ' ring-2 ring-ink' : ''}`}>
-      <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-4">{p.tag}</p>
+      <p className="text-[11px] font-medium tracking-tight text-graphite mb-4">{p.tag}</p>
       <h3 className="display-sm mb-4 text-balance">{p.headline}</h3>
       <p className="text-[16px] text-graphite-dark leading-[1.6] mb-8" style={{ letterSpacing: '-0.012em' }}>
         {p.body}
@@ -77,7 +77,7 @@ export function ForWho() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-xl">
-              Whether you are here to learn and earn, or to share what you know and build your authority — iClose was built for both.
+              Whether you are here to learn and earn, or to share what you know and build your authority: iClose was built for both.
             </p>
           </Reveal>
         </div>

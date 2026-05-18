@@ -5,7 +5,7 @@ import { Reveal } from '@/components/ui/reveal';
 import { MapPin, Users, BadgeCheck, Megaphone, Building2, Handshake } from 'lucide-react';
 
 export const metadata = {
-  title: 'Apply as a Specialist — iClose',
+  title: 'Apply as a Specialist | iClose',
   description:
     'Join iClose as an Area Expert or Developer Relationship Manager. Share deep area knowledge or represent your developer to a network of serious, educated agents.',
 };
@@ -14,7 +14,7 @@ const ROLES = [
   {
     tag: 'Area Expert',
     headline: 'Own a community. Become the only call.',
-    body: 'You know a specific area of Dubai — its buildings, transaction history, and pricing nuances — better than anyone. iClose gives you the platform to prove it, and the members to act on it.',
+    body: 'You know a specific area of Dubai: its buildings, transaction history, and pricing nuances, better than anyone. iClose gives you the platform to prove it, and the members to act on it.',
     points: [
       {
         icon: MapPin,
@@ -24,7 +24,7 @@ const ROLES = [
       {
         icon: Megaphone,
         title: 'Get matched on live member inquiries.',
-        body: 'When a Member posts a requirement in your domain, you are the first and only call. No competition, no noise — just the right buyer at the right time.',
+        body: 'When a Member posts a requirement in your domain, you are the first and only call. No competition, no noise. Just the right buyer at the right time.',
       },
       {
         icon: BadgeCheck,
@@ -36,17 +36,17 @@ const ROLES = [
   {
     tag: 'Relationship Manager',
     headline: 'Be the developer\'s voice on the platform.',
-    body: 'As an RM at a developer — Emaar, Damac, Sobha, or any other — iClose gives you a ready pipeline of serious, educated agents without the cold outreach.',
+    body: 'As an RM at a developer (Emaar, Damac, Sobha, and others), iClose gives you a ready pipeline of serious, educated agents without the cold outreach.',
     points: [
       {
         icon: Building2,
         title: 'Put your projects in front of the right agents.',
-        body: 'Publish launch briefings, payment plan guides, and project overviews on the Academy. Members arrive informed and ready — every conversation starts closer to a close.',
+        body: 'Publish launch briefings, payment plan guides, and project overviews on the Academy. Members arrive informed and ready. Every conversation starts closer to a close.',
       },
       {
         icon: Users,
         title: 'Serve as the dedicated RM for iClose members.',
-        body: 'Be the direct, human contact when members are ready to move off-plan inventory. Build lasting relationships with professionals who close — consistently.',
+        body: 'Be the direct, human contact when members are ready to move off-plan inventory. Build lasting relationships with professionals who close, consistently.',
       },
       {
         icon: Handshake,
@@ -61,12 +61,12 @@ const STEPS = [
   {
     num: '01',
     title: 'Apply',
-    body: 'Select your role — Area Expert or Relationship Manager — and fill in the form. Takes under five minutes.',
+    body: 'Select your role (Area Expert or Relationship Manager) and fill in the form. Takes under five minutes.',
   },
   {
     num: '02',
     title: 'Get vetted',
-    body: 'Our team reviews every application personally. We look for genuine depth — whether that is area knowledge or a real developer relationship.',
+    body: 'Our team reviews every application personally. We look for genuine depth: area knowledge or a real developer relationship.',
   },
   {
     num: '03',
@@ -88,7 +88,7 @@ const TESTIMONIALS = [
     name: 'Nadia M.',
     role: 'Relationship Manager · Off-Plan',
     quote:
-      'The agents I work with through iClose already understand our projects before we speak. That changes the entire conversation — every call starts warmer and closes faster.',
+      'The agents I work with through iClose already understand our projects before we speak. That changes the entire conversation. Every call starts warmer and closes faster.',
   },
 ];
 
@@ -105,7 +105,7 @@ export default function SpecialistsPage() {
             {/* Left */}
             <div className="lg:flex-1 flex flex-col justify-center">
               <Reveal>
-                <span className="inline-flex items-center px-3 py-1 rounded-full border border-hairline bg-mist text-[11px] font-medium tracking-[0.08em] uppercase text-graphite mb-6">
+                <span className="inline-flex items-center px-3 py-1 rounded-full border border-hairline bg-mist text-[11px] font-medium tracking-tight text-graphite mb-6">
                   Join as a Specialist
                 </span>
               </Reveal>
@@ -119,7 +119,7 @@ export default function SpecialistsPage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-5 text-graphite-dark leading-[1.55] max-w-lg" style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', letterSpacing: '-0.012em' }}>
-                  An <strong className="text-ink font-medium">Area Expert</strong> who owns a community or building — or a <strong className="text-ink font-medium">Relationship Manager</strong> who represents a developer. Both get access to a growing network of professionals who close. Both build long-term pipeline on the platform.
+                  An <strong className="text-ink font-medium">Area Expert</strong> who owns a community or building, or a <strong className="text-ink font-medium">Relationship Manager</strong> who represents a developer. Both get access to a growing network of professionals who close. Both build long-term pipeline on the platform.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
@@ -165,7 +165,7 @@ export default function SpecialistsPage() {
               {ROLES.map((role, ri) => (
                 <Reveal key={role.tag} delay={ri * 0.08}>
                   <div className="card-surface p-8 sm:p-10 h-full flex flex-col">
-                    <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-3">
+                    <p className="text-[11px] font-medium tracking-tight text-graphite mb-3">
                       {role.tag}
                     </p>
                     <h3
@@ -257,7 +257,7 @@ export default function SpecialistsPage() {
               {TESTIMONIALS.map((t, i) => (
                 <Reveal key={t.initials} delay={i * 0.08}>
                   <figure className="card-surface p-8 sm:p-10 flex flex-col h-full">
-                    <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-graphite mb-5">
+                    <p className="text-[11px] font-medium tracking-tight text-graphite mb-5">
                       {t.role}
                     </p>
                     <blockquote
@@ -287,12 +287,12 @@ export default function SpecialistsPage() {
                 className="font-display font-semibold text-ink text-balance max-w-2xl"
                 style={{ fontSize: 'clamp(1.8rem, 4vw, 3.5rem)', lineHeight: 1.06, letterSpacing: '-0.028em' }}
               >
-                Area Expert or Relationship Manager — apply in five minutes.
+                Area Expert or Relationship Manager. Apply in five minutes.
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mt-4 text-[17px] text-graphite-dark leading-[1.5] max-w-lg" style={{ letterSpacing: '-0.012em' }}>
-                Every application is reviewed personally. If you have real depth — whether in an area or a developer relationship — we want to hear from you.
+                Every application is reviewed personally. If you have real depth (area knowledge or a developer relationship), we want to hear from you.
               </p>
             </Reveal>
             <Reveal delay={0.14}>
