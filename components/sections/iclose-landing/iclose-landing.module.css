@@ -1249,9 +1249,15 @@
 
 .consentError {
   margin: -10px 0 0 26px;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 500;
   color: #d62b1f;
   letter-spacing: -0.005em;
+}
+
+.required {
+  color: #d62b1f;
+  margin-left: 2px;
 }
 
 .serverError {

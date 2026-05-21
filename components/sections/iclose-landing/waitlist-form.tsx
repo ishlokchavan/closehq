@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import { useForm, Controller, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   leadSchema,
@@ -54,9 +54,12 @@ export function WaitlistForm() {
 
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [showValidationBanner, setShowValidationBanner] = useState(false);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const onSubmit = async (data: LeadFormValues) => {
     setServerError(null);
+    setShowValidationBanner(false);
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
@@ -75,6 +78,22 @@ export function WaitlistForm() {
           ? err.message
           : 'Something went wrong. Please try again.',
       );
+    }
+  };
+
+  const onInvalid = (errs: FieldErrors<LeadFormValues>) => {
+    setShowValidationBanner(true);
+    const firstKey = Object.keys(errs)[0];
+    if (!firstKey || !formRef.current) return;
+    const el = formRef.current.querySelector<HTMLElement>(
+      `[name="${firstKey}"]`,
+    );
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const focusable = el as HTMLInputElement;
+      if (typeof focusable.focus === 'function') {
+        setTimeout(() => focusable.focus({ preventScroll: true }), 250);
+      }
     }
   };
 
@@ -98,7 +117,8 @@ export function WaitlistForm() {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit, onInvalid)}
       className={styles.wlFormFull}
       noValidate
     >
@@ -110,6 +130,12 @@ export function WaitlistForm() {
         className={styles.honeypot}
         aria-hidden
       />
+
+      {showValidationBanner && Object.keys(errors).length > 0 && (
+        <p className={styles.serverError} role="alert">
+          Please fix the highlighted fields below before submitting.
+        </p>
+      )}
 
       <div className={styles.formRow}>
         <div className={styles.field}>
@@ -276,7 +302,7 @@ export function WaitlistForm() {
           <a href="/terms" target="_blank" rel="noopener noreferrer">
             Terms of Service
           </a>
-          .
+          .<span className={styles.required}>*</span>
         </span>
       </label>
       {errors.consentPrivacy && (

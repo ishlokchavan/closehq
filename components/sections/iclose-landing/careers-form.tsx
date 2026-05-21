@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { internSchema, type InternFormValues } from '@/lib/validations';
 import styles from './iclose-landing.module.css';
@@ -21,7 +21,25 @@ export function CareersForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeError, setResumeError] = useState<string | null>(null);
+  const [showValidationBanner, setShowValidationBanner] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const onInvalid = (errs: FieldErrors<InternFormValues>) => {
+    setShowValidationBanner(true);
+    const firstKey = Object.keys(errs)[0];
+    if (!firstKey || !formRef.current) return;
+    const el = formRef.current.querySelector<HTMLElement>(
+      `[name="${firstKey}"]`,
+    );
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const focusable = el as HTMLInputElement;
+      if (typeof focusable.focus === 'function') {
+        setTimeout(() => focusable.focus({ preventScroll: true }), 250);
+      }
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
@@ -43,6 +61,7 @@ export function CareersForm() {
   const onSubmit = async (data: InternFormValues) => {
     setServerError(null);
     setResumeError(null);
+    setShowValidationBanner(false);
 
     const fd = new FormData();
     fd.append('firstName', data.firstName);
@@ -93,7 +112,8 @@ export function CareersForm() {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit, onInvalid)}
       className={styles.wlFormFull}
       noValidate
       encType="multipart/form-data"
@@ -106,6 +126,12 @@ export function CareersForm() {
         className={styles.honeypot}
         aria-hidden
       />
+
+      {showValidationBanner && Object.keys(errors).length > 0 && (
+        <p className={styles.serverError} role="alert">
+          Please fix the highlighted fields below before submitting.
+        </p>
+      )}
 
       <div className={styles.formRow}>
         <div className={styles.field}>
