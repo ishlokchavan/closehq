@@ -1,14 +1,8 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
-import Link from 'next/link';
-import { siteConfig } from '@/lib/site-config';
 import styles from './iclose-landing.module.css';
-
-const telHref = (phone: string) => `tel:+${phone.replace(/\D/g, '')}`;
-
-const openCookieSettings = () =>
-  window.dispatchEvent(new Event('iclose:open-cookie-settings'));
+import { ICloseFooter } from './iclose-footer';
 
 type RevealProps = {
   as?: keyof JSX.IntrinsicElements;
@@ -671,85 +665,7 @@ export function ICloseLanding() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className={styles.footer}>
-        <div className={styles.footerTop}>
-          <div className={styles.footerBrand}>
-            <a href="/" className={styles.fLogo}>
-              i<span>Close</span>
-            </a>
-            <p className={styles.footerTagline}>
-              A proptech education platform for UAE real estate. Learn from the
-              top 0.1% of agents and keep more of every deal.
-            </p>
-          </div>
-
-          <div className={styles.footerCol}>
-            <p className={styles.footerHeading}>Platform</p>
-            <ul className={styles.fLinks}>
-              <li>
-                <a href="#workflow">How it works</a>
-              </li>
-              <li>
-                <a href="#waitlist">Early access</a>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.footerCol}>
-            <p className={styles.footerHeading}>Legal</p>
-            <ul className={styles.fLinks}>
-              <li>
-                <Link href="/privacy">Privacy policy</Link>
-              </li>
-              <li>
-                <Link href="/terms">Terms of service</Link>
-              </li>
-              <li>
-                <button type="button" onClick={openCookieSettings}>
-                  Cookie settings
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.footerCol}>
-            <p className={styles.footerHeading}>Contact</p>
-            <ul className={styles.fLinks}>
-              {siteConfig.email && (
-                <li>
-                  <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-                </li>
-              )}
-              {siteConfig.phone && (
-                <li>
-                  <a href={telHref(siteConfig.phone)}>{siteConfig.phone}</a>
-                </li>
-              )}
-              <li>
-                <span style={{ color: 'var(--text-light)', fontSize: 13 }}>
-                  Dubai, UAE
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={styles.footerDivider} />
-
-        <div className={styles.footerBottom}>
-          <p className={styles.fCopy}>
-            © {new Date().getFullYear()} iClose. Dubai, UAE.
-          </p>
-          <div className={styles.footerMeta}>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <button type="button" onClick={openCookieSettings}>
-              Cookie settings
-            </button>
-          </div>
-        </div>
-      </footer>
+      <ICloseFooter />
     </div>
   );
 }
