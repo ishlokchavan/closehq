@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Logo } from '@/components/ui/logo';
 import { siteConfig } from '@/lib/site-config';
 import styles from './iclose-landing.module.css';
 
@@ -14,9 +15,7 @@ export function ICloseFooter() {
     <footer className={styles.footer}>
       <div className={styles.footerTop}>
         <div className={styles.footerBrand}>
-          <Link href="/" className={styles.fLogo}>
-            i<span>Close</span>
-          </Link>
+          <Logo />
           <p className={styles.footerTagline}>
             A proptech education platform for UAE real estate. Learn from the
             top 0.1% of agents and keep more of every deal.

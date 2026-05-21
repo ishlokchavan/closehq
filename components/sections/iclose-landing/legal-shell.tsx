@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
+import { Logo } from '@/components/ui/logo';
 import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
 
@@ -23,9 +24,7 @@ export function LegalShell({
   return (
     <div className={styles.root}>
       <nav className={styles.legalNav}>
-        <Link href="/" className={styles.logo}>
-          i<span>Close</span>
-        </Link>
+        <Logo />
         <Link href="/" className={styles.legalBackLink}>
           ← Back to home
         </Link>

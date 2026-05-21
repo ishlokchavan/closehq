@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
+import { Logo } from '@/components/ui/logo';
 import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
 
@@ -62,9 +63,7 @@ export function ICloseLanding() {
     <div ref={rootRef} className={styles.root}>
       {/* NAV */}
       <nav className={styles.nav}>
-        <a href="/" className={styles.logo}>
-          i<span>Close</span>
-        </a>
+        <Logo />
         <ul className={styles.navLinks}>
           <li>
             <a href="#workflow">How it works</a>
