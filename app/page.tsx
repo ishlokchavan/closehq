@@ -1,48 +1,12 @@
-import { Header } from '@/components/header';
-import { Hero } from '@/components/sections/hero';
-import { ForWho } from '@/components/sections/for-who';
-import { How } from '@/components/sections/how';
-import { DealCTA } from '@/components/sections/deal-cta';
-import { Transformation } from '@/components/sections/transformation';
-import { Plans } from '@/components/sections/plans';
-import { Testimonials } from '@/components/sections/testimonials';
-import { FinalCTA } from '@/components/sections/final-cta';
-import { FAQ } from '@/components/sections/faq';
-import { Footer } from '@/components/sections/footer';
-import { supabase, type MembershipPlan } from '@/lib/supabase';
+import type { Metadata } from 'next';
+import { ICloseLanding } from '@/components/sections/iclose-landing/iclose-landing';
 
-async function getPlans(): Promise<MembershipPlan[]> {
-  const { data, error } = await supabase
-    .from('membership_plans')
-    .select('*')
-    .eq('is_active', true)
-    .order('order');
+export const metadata: Metadata = {
+  title: 'iClose — Learn from the best. Close more deals.',
+  description:
+    'A proptech education platform for UAE real estate. Learn from the top 0.1% of UAE agents and keep up to 100% of your commission.',
+};
 
-  if (error) {
-    console.error('Failed to fetch plans:', error.message);
-    return [];
-  }
-  return data ?? [];
-}
-
-export default async function HomePage() {
-  const plans = await getPlans();
-
-  return (
-    <>
-      <Header />
-      <main className="overflow-x-clip">
-        <Hero />
-        <ForWho />
-        <How />
-        <DealCTA />
-        <Transformation />
-        <Plans data={plans} />
-        <Testimonials />
-        <FinalCTA />
-        <FAQ />
-      </main>
-      <Footer />
-    </>
-  );
+export default function HomePage() {
+  return <ICloseLanding />;
 }
