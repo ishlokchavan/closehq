@@ -92,7 +92,7 @@ export function ICloseLanding() {
           </p>
           <div className={styles.heroCtas}>
             <a href="#waitlist" className={styles.btnBlue}>
-              Get early access
+              Join the waitlist
             </a>
             <a href="#workflow" className={styles.btnLink}>
               See how it works
@@ -634,7 +634,7 @@ export function ICloseLanding() {
           </div>
           <Reveal className={styles.manifestoCta} delay={4}>
             <a href="#waitlist" className={styles.btnBlueBright}>
-              Get early access
+              Join the waitlist
             </a>
           </Reveal>
         </div>
