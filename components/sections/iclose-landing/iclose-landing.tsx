@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import { Logo } from '@/components/ui/logo';
 import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
+import { WaitlistForm } from './waitlist-form';
 
 type RevealProps = {
   as?: keyof JSX.IntrinsicElements;
@@ -651,15 +652,15 @@ export function ICloseLanding() {
             className={styles.sectionSub}
             delay={2}
           >
-            iClose opens soon. Get on the waitlist for early access. We&apos;ll
-            reach out to walk you through how it works for someone like you.
+            iClose opens soon. Tell us a bit about you and we&apos;ll reach out
+            to walk you through how it works for someone like you.
           </Reveal>
-          <Reveal className={styles.wlForm} delay={3}>
-            <input type="email" placeholder="Your email address" />
-            <button type="button">Get early access</button>
+          <Reveal delay={3}>
+            <WaitlistForm />
           </Reveal>
           <Reveal as="p" className={styles.wlNote} delay={4}>
-            No spam. Just an update when we&apos;re ready for you.
+            No spam. We&apos;ll email you to confirm and then only when
+            there&apos;s real news.
           </Reveal>
         </div>
       </section>

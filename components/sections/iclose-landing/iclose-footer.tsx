@@ -31,6 +31,9 @@ export function ICloseFooter() {
             <li>
               <Link href="/#waitlist">Early access</Link>
             </li>
+            <li>
+              <Link href="/careers">Careers</Link>
+            </li>
           </ul>
         </div>
 

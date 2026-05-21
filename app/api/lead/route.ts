@@ -37,7 +37,41 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    const { firstName, lastName, phone, email, consentMarketing } = parsed.data;
+    const {
+      firstName,
+      lastName,
+      phone,
+      email,
+      consentMarketing,
+      jobTitle,
+      focus,
+      dealTypes,
+      message,
+    } = parsed.data;
+    const focusLabels: Record<string, string> = {
+      offplan: 'Offplan',
+      secondary: 'Secondary',
+      both: 'Both',
+    };
+    const dealTypeLabels: Record<string, string> = {
+      apartments: 'Apartments',
+      villas: 'Villas',
+      townhouses: 'Townhouses',
+      commercial: 'Commercial',
+      other: 'Other',
+    };
+    const focusLabel = focus ? focusLabels[focus] : '—';
+    const dealTypesLabel =
+      dealTypes && dealTypes.length
+        ? dealTypes.map((d) => dealTypeLabels[d] ?? d).join(', ')
+        : '—';
+    const escapeHtml = (s: string) =>
+      s
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     const name = `${firstName} ${lastName}`.trim();
     const userAgent = request.headers.get('user-agent') || undefined;
     const referer = request.headers.get('referer') || undefined;
@@ -114,6 +148,10 @@ export async function POST(request: Request) {
                 <tr><td style="padding:8px 0;color:#6e6e73;width:120px;">Name</td><td style="padding:8px 0;">${name}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${maskEmail(email)}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${maskPhone(phone)}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Job title</td><td style="padding:8px 0;">${jobTitle ? escapeHtml(jobTitle) : '—'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Focus</td><td style="padding:8px 0;">${focusLabel}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Deal types</td><td style="padding:8px 0;">${dealTypesLabel}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;vertical-align:top;">Notes</td><td style="padding:8px 0;white-space:pre-wrap;">${message ? escapeHtml(message) : '—'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Marketing</td><td style="padding:8px 0;">${consentMarketing ? 'Opted in' : 'Not opted in'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Status</td><td style="padding:8px 0;">Pending email confirmation</td></tr>

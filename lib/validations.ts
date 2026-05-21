@@ -1,5 +1,14 @@
 import { z } from 'zod';
 
+export const leadFocusValues = ['offplan', 'secondary', 'both'] as const;
+export const leadDealTypeValues = [
+  'apartments',
+  'villas',
+  'townhouses',
+  'commercial',
+  'other',
+] as const;
+
 export const leadSchema = z.object({
   firstName: z.string().min(1, 'Enter your first name').max(50),
   lastName: z.string().min(1, 'Enter your last name').max(50),
@@ -9,6 +18,18 @@ export const leadSchema = z.object({
     .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
   email: z.string().email('Enter a valid email').max(120),
+  jobTitle: z
+    .string()
+    .max(100, 'Keep it under 100 characters')
+    .optional()
+    .or(z.literal('')),
+  focus: z.enum(leadFocusValues).optional(),
+  dealTypes: z.array(z.enum(leadDealTypeValues)).max(5).optional(),
+  message: z
+    .string()
+    .max(1000, 'Keep it under 1000 characters')
+    .optional()
+    .or(z.literal('')),
   consentPrivacy: z.boolean().refine((v) => v === true, {
     message: 'You must agree to continue',
   }),
