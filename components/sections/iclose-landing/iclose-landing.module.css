@@ -1073,22 +1073,25 @@
 /* FOOTER */
 .footer {
   background: var(--bg-alt);
-  padding: 32px 22px;
+  padding: 56px 22px 28px;
   border-top: 1px solid var(--border);
 }
 
-.footerInner {
+.footerTop {
   max-width: 1100px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.footerBrand {
+  max-width: 280px;
 }
 
 .fLogo {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   text-decoration: none;
@@ -1100,24 +1103,72 @@
   color: var(--text-muted);
 }
 
+.footerTagline {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+}
+
+.footerCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerHeading {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+}
+
 .fLinks {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.fLinks a {
+.fLinks a,
+.fLinks button {
   font-size: 13px;
   color: var(--text-muted);
   text-decoration: none;
   transition: color 0.2s;
   letter-spacing: -0.005em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
 }
 
-.fLinks a:hover {
+.fLinks a:hover,
+.fLinks button:hover {
   color: var(--text);
+}
+
+.footerDivider {
+  max-width: 1100px;
+  margin: 40px auto 20px;
+  height: 1px;
+  background: var(--border-soft);
+}
+
+.footerBottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
 }
 
 .fCopy {
@@ -1125,6 +1176,31 @@
   color: var(--text-light);
   letter-spacing: -0.005em;
   margin: 0;
+}
+
+.footerMeta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footerMeta a,
+.footerMeta button {
+  font-size: 12px;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: -0.005em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.footerMeta a:hover,
+.footerMeta button:hover {
+  color: var(--text);
 }
 
 /* SCROLL REVEAL */
@@ -1221,9 +1297,18 @@
   .wlForm button {
     width: 100%;
   }
-  .footerInner {
+  .footerTop {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 24px;
+  }
+  .footerBrand {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+  .footerBottom {
+    justify-content: flex-start;
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
   }
   .pillar {
     min-height: auto;
