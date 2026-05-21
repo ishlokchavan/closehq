@@ -82,6 +82,7 @@ export function WaitlistForm() {
   };
 
   const onInvalid = (errs: FieldErrors<LeadFormValues>) => {
+    console.warn('[waitlist] validation failed:', errs);
     setShowValidationBanner(true);
     const firstKey = Object.keys(errs)[0];
     if (!firstKey || !formRef.current) return;
@@ -96,6 +97,13 @@ export function WaitlistForm() {
       }
     }
   };
+
+  const errorList = Object.entries(errors)
+    .map(([key, err]) => ({
+      key,
+      message: (err as { message?: string })?.message,
+    }))
+    .filter((e) => e.message);
 
   if (success) {
     return (
@@ -126,15 +134,27 @@ export function WaitlistForm() {
         type="text"
         tabIndex={-1}
         autoComplete="off"
+        data-lpignore="true"
+        data-1p-ignore="true"
+        data-form-type="other"
         {...register('website')}
         className={styles.honeypot}
         aria-hidden
       />
 
-      {showValidationBanner && Object.keys(errors).length > 0 && (
-        <p className={styles.serverError} role="alert">
-          Please fix the highlighted fields below before submitting.
-        </p>
+      {showValidationBanner && errorList.length > 0 && (
+        <div className={styles.serverError} role="alert">
+          <p style={{ margin: 0, fontWeight: 600 }}>
+            Please fix the following before submitting:
+          </p>
+          <ul style={{ margin: '6px 0 0', paddingLeft: 18 }}>
+            {errorList.map((e) => (
+              <li key={e.key}>
+                <strong>{e.key}</strong>: {e.message}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       <div className={styles.formRow}>

@@ -122,6 +122,9 @@ export function CareersForm() {
         type="text"
         tabIndex={-1}
         autoComplete="off"
+        data-lpignore="true"
+        data-1p-ignore="true"
+        data-form-type="other"
         {...register('website')}
         className={styles.honeypot}
         aria-hidden

@@ -34,7 +34,7 @@ export const leadSchema = z.object({
     message: 'You must agree to continue',
   }),
   consentMarketing: z.boolean().optional().default(false),
-  website: z.string().max(0).optional(),
+  website: z.string().optional(),
 });
 
 export type LeadFormValues = z.infer<typeof leadSchema>;
@@ -52,7 +52,7 @@ export const specialistSchema = z.object({
   consentPrivacy: z.boolean().refine((v) => v === true, {
     message: 'You must agree to continue',
   }),
-  website: z.string().max(0).optional(),
+  website: z.string().optional(),
 });
 
 export type SpecialistFormValues = z.infer<typeof specialistSchema>;
@@ -68,7 +68,7 @@ export const internSchema = z.object({
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
   instagram: z.string().max(50).optional(),
   message: z.string().max(1000).optional(),
-  website: z.string().max(0).optional(),
+  website: z.string().optional(),
 });
 
 export type InternFormValues = z.infer<typeof internSchema>;
