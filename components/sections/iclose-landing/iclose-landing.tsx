@@ -109,6 +109,64 @@ export function ICloseLanding() {
 
       {/* HERO */}
       <section className={styles.hero}>
+        {/* Falling dollar bills */}
+        <div className={styles.heroBills} aria-hidden="true">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <div key={i} className={styles.bill}>
+              <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg">
+                <rect width="80" height="36" rx="3" fill="#7ba672" />
+                <rect
+                  x="2"
+                  y="2"
+                  width="76"
+                  height="32"
+                  rx="2"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="0.5"
+                />
+                <circle
+                  cx="40"
+                  cy="18"
+                  r="9"
+                  fill="rgba(255,255,255,0.14)"
+                  stroke="rgba(255,255,255,0.35)"
+                  strokeWidth="0.6"
+                />
+                <text
+                  x="40"
+                  y="22.5"
+                  textAnchor="middle"
+                  fontSize="12"
+                  fontWeight="700"
+                  fill="rgba(255,255,255,0.85)"
+                  fontFamily="Georgia, serif"
+                >
+                  $
+                </text>
+                <text
+                  x="8"
+                  y="10"
+                  fontSize="4.5"
+                  fontWeight="700"
+                  fill="rgba(255,255,255,0.55)"
+                >
+                  100
+                </text>
+                <text
+                  x="62"
+                  y="32"
+                  fontSize="4.5"
+                  fontWeight="700"
+                  fill="rgba(255,255,255,0.55)"
+                >
+                  100
+                </text>
+              </svg>
+            </div>
+          ))}
+        </div>
+
         <div className={styles.heroInner}>
           <h1>
             Learn From The Best,

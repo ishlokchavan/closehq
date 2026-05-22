@@ -161,7 +161,144 @@
 
 .heroInner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+/* FALLING BILLS */
+.heroBills {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bill {
+  position: absolute;
+  top: -60px;
+  width: 80px;
+  height: 36px;
+  will-change: transform, opacity;
+  animation: billFall linear infinite;
+  filter: drop-shadow(0 4px 8px rgba(20, 40, 20, 0.12));
+}
+
+.bill svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@keyframes billFall {
+  0% {
+    transform: translate3d(0, -80px, 0) rotate(var(--rot-start, 0deg));
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--bill-opacity, 0.7);
+  }
+  90% {
+    opacity: var(--bill-opacity, 0.7);
+  }
+  100% {
+    transform: translate3d(var(--drift, 20px), 110vh, 0) rotate(var(--rot-end, 360deg));
+    opacity: 0;
+  }
+}
+
+.bill:nth-child(1) {
+  left: 6%;
+  animation-duration: 13s;
+  animation-delay: -1s;
+  --rot-start: 8deg;
+  --rot-end: 380deg;
+  --drift: 30px;
+  --bill-opacity: 0.55;
+}
+.bill:nth-child(2) {
+  left: 18%;
+  animation-duration: 16s;
+  animation-delay: -7s;
+  --rot-start: -18deg;
+  --rot-end: -350deg;
+  --drift: -25px;
+  --bill-opacity: 0.65;
+}
+.bill:nth-child(3) {
+  left: 30%;
+  animation-duration: 12s;
+  animation-delay: -4s;
+  --rot-start: 24deg;
+  --rot-end: 420deg;
+  --drift: 18px;
+  --bill-opacity: 0.5;
+}
+.bill:nth-child(4) {
+  left: 44%;
+  animation-duration: 18s;
+  animation-delay: -12s;
+  --rot-start: -8deg;
+  --rot-end: -360deg;
+  --drift: -32px;
+  --bill-opacity: 0.6;
+}
+.bill:nth-child(5) {
+  left: 56%;
+  animation-duration: 14s;
+  animation-delay: -2s;
+  --rot-start: 16deg;
+  --rot-end: 360deg;
+  --drift: 22px;
+  --bill-opacity: 0.55;
+}
+.bill:nth-child(6) {
+  left: 68%;
+  animation-duration: 15s;
+  animation-delay: -9s;
+  --rot-start: -22deg;
+  --rot-end: -380deg;
+  --drift: -18px;
+  --bill-opacity: 0.65;
+}
+.bill:nth-child(7) {
+  left: 80%;
+  animation-duration: 17s;
+  animation-delay: -5s;
+  --rot-start: 10deg;
+  --rot-end: 350deg;
+  --drift: 28px;
+  --bill-opacity: 0.5;
+}
+.bill:nth-child(8) {
+  left: 92%;
+  animation-duration: 13s;
+  animation-delay: -11s;
+  --rot-start: -14deg;
+  --rot-end: -370deg;
+  --drift: -22px;
+  --bill-opacity: 0.6;
+}
+.bill:nth-child(9) {
+  left: 38%;
+  animation-duration: 19s;
+  animation-delay: -15s;
+  --rot-start: 4deg;
+  --rot-end: 380deg;
+  --drift: 24px;
+  --bill-opacity: 0.45;
+}
+
+@media (max-width: 720px) {
+  .bill {
+    width: 56px;
+    height: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroBills {
+    display: none;
+  }
 }
 
 .hero h1 {
