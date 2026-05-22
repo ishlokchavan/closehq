@@ -92,7 +92,7 @@ export function ICloseLanding() {
         <div className={styles.heroBgVideoWrap} aria-hidden="true">
           <video
             className={styles.heroBgVideo}
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260522_144913_c75e1089-fa7c-454a-a6db-194a0854ad81.mp4"
+            src="/videos/hero-gong-bg.mp4"
             autoPlay
             muted
             playsInline
