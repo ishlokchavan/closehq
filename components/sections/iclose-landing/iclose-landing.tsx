@@ -149,7 +149,6 @@ export function ICloseLanding() {
                       fill
                       sizes="(max-width: 720px) 240px, 280px"
                       className={styles.previewCardImg}
-                      priority
                     />
                     <div className={styles.previewCardGradient} />
                     <div className={styles.previewCardTag}>{card.tag}</div>
