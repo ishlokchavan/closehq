@@ -1,10 +1,40 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
+import Image from 'next/image';
 import { Logo } from '@/components/ui/logo';
 import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
 import { WaitlistForm } from './waitlist-form';
+
+const heroPreviewCards = [
+  {
+    src: '/images/property-downtown.jpg',
+    name: 'Downtown',
+    cluster: 'Burj Khalifa District',
+    tag: 'Active',
+  },
+  {
+    src: '/images/property-beachfront.jpg',
+    name: 'Palm Jumeirah',
+    cluster: 'Frond G · Signature Villas',
+    tag: 'Hot',
+  },
+  {
+    src: '/images/property-luxury.jpg',
+    name: 'Dubai Marina',
+    cluster: 'Marina Walk · West Tower',
+    tag: 'Active',
+  },
+];
+
+const personaAvatars = [
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces&q=80',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces&q=80',
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=faces&q=80',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=faces&q=80',
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=faces&q=80',
+];
 
 type RevealProps = {
   as?: keyof JSX.IntrinsicElements;
@@ -97,6 +127,42 @@ export function ICloseLanding() {
             <a href="#workflow" className={styles.btnLink}>
               See how it works
             </a>
+          </div>
+
+          <div className={styles.heroPreview} aria-hidden="true">
+            <div className={styles.heroPreviewGlow} />
+            <div className={styles.heroWindow}>
+              <div className={styles.heroWindowBar}>
+                <span className={styles.dot} />
+                <span className={styles.dot} />
+                <span className={styles.dot} />
+                <div className={styles.heroWindowTitle}>
+                  iClose · Communities
+                </div>
+              </div>
+              <div className={styles.heroWindowBody}>
+                {heroPreviewCards.map((card) => (
+                  <div key={card.name} className={styles.previewCard}>
+                    <Image
+                      src={card.src}
+                      alt=""
+                      fill
+                      sizes="(max-width: 720px) 240px, 280px"
+                      className={styles.previewCardImg}
+                      priority
+                    />
+                    <div className={styles.previewCardGradient} />
+                    <div className={styles.previewCardTag}>{card.tag}</div>
+                    <div className={styles.previewCardMeta}>
+                      <div className={styles.previewCardName}>{card.name}</div>
+                      <div className={styles.previewCardCluster}>
+                        {card.cluster}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -310,7 +376,18 @@ export function ICloseLanding() {
           </Reveal>
           <div className={styles.personasGrid}>
             <Reveal className={styles.persona} delay={1}>
-              <div className={styles.personaMeta}>Brokers · 1–5 yrs</div>
+              <div className={styles.personaHead}>
+                <div className={styles.personaAvatar}>
+                  <Image
+                    src={personaAvatars[0]}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className={styles.personaAvatarImg}
+                  />
+                </div>
+                <div className={styles.personaMeta}>Brokers · 1–5 yrs</div>
+              </div>
               <div className={styles.personaQuote}>
                 I&apos;m tired of being a generalist competing with everyone.
               </div>
@@ -323,7 +400,18 @@ export function ICloseLanding() {
             </Reveal>
 
             <Reveal className={styles.persona} delay={2}>
-              <div className={styles.personaMeta}>Active broker</div>
+              <div className={styles.personaHead}>
+                <div className={styles.personaAvatar}>
+                  <Image
+                    src={personaAvatars[1]}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className={styles.personaAvatarImg}
+                  />
+                </div>
+                <div className={styles.personaMeta}>Active broker</div>
+              </div>
               <div className={styles.personaQuote}>
                 I&apos;m doing the work but someone else is converting it.
               </div>
@@ -338,7 +426,18 @@ export function ICloseLanding() {
             </Reveal>
 
             <Reveal className={styles.persona} delay={3}>
-              <div className={styles.personaMeta}>Lawyer · Advisor · CA</div>
+              <div className={styles.personaHead}>
+                <div className={styles.personaAvatar}>
+                  <Image
+                    src={personaAvatars[2]}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className={styles.personaAvatarImg}
+                  />
+                </div>
+                <div className={styles.personaMeta}>Lawyer · Advisor · CA</div>
+              </div>
               <div className={styles.personaQuote}>
                 I can&apos;t risk my reputation on a random broker.
               </div>
@@ -351,7 +450,18 @@ export function ICloseLanding() {
             </Reveal>
 
             <Reveal className={styles.persona} delay={4}>
-              <div className={styles.personaMeta}>Networker · Executive</div>
+              <div className={styles.personaHead}>
+                <div className={styles.personaAvatar}>
+                  <Image
+                    src={personaAvatars[3]}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className={styles.personaAvatarImg}
+                  />
+                </div>
+                <div className={styles.personaMeta}>Networker · Executive</div>
+              </div>
               <div className={styles.personaQuote}>
                 I should be earning from conversations I&apos;m already having.
               </div>
@@ -366,7 +476,18 @@ export function ICloseLanding() {
             </Reveal>
 
             <Reveal className={styles.persona} delay={5}>
-              <div className={styles.personaMeta}>Performance broker</div>
+              <div className={styles.personaHead}>
+                <div className={styles.personaAvatar}>
+                  <Image
+                    src={personaAvatars[4]}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className={styles.personaAvatarImg}
+                  />
+                </div>
+                <div className={styles.personaMeta}>Performance broker</div>
+              </div>
               <div className={styles.personaQuote}>
                 I deserve to earn what I actually generate.
               </div>
@@ -609,6 +730,17 @@ export function ICloseLanding() {
 
       {/* MANIFESTO */}
       <section className={styles.manifesto}>
+        <div className={styles.manifestoBackdrop} aria-hidden="true">
+          <Image
+            src="/images/hero-night.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className={styles.manifestoImg}
+          />
+          <div className={styles.manifestoOverlay} />
+          <div className={styles.manifestoGrain} />
+        </div>
         <div className={styles.manifestoInner}>
           <Reveal
             className={`${styles.sectionEyebrow} ${styles.sectionEyebrowDark}`}
