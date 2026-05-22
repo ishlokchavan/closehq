@@ -29,11 +29,11 @@ const heroPreviewCards = [
 ];
 
 const personaAvatars = [
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces&q=80',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces&q=80',
-  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=faces&q=80',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=faces&q=80',
-  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=faces&q=80',
+  { initials: 'RH', hue: 212 },
+  { initials: 'SK', hue: 264 },
+  { initials: 'AM', hue: 24 },
+  { initials: 'NJ', hue: 142 },
+  { initials: 'TV', hue: 336 },
 ];
 
 type RevealProps = {
@@ -376,14 +376,16 @@ export function ICloseLanding() {
           <div className={styles.personasGrid}>
             <Reveal className={styles.persona} delay={1}>
               <div className={styles.personaHead}>
-                <div className={styles.personaAvatar}>
-                  <Image
-                    src={personaAvatars[0]}
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className={styles.personaAvatarImg}
-                  />
+                <div
+                  className={styles.personaAvatar}
+                  style={
+                    {
+                      '--avatar-hue': personaAvatars[0].hue,
+                    } as React.CSSProperties
+                  }
+                  aria-hidden="true"
+                >
+                  {personaAvatars[0].initials}
                 </div>
                 <div className={styles.personaMeta}>Brokers · 1–5 yrs</div>
               </div>
@@ -400,14 +402,16 @@ export function ICloseLanding() {
 
             <Reveal className={styles.persona} delay={2}>
               <div className={styles.personaHead}>
-                <div className={styles.personaAvatar}>
-                  <Image
-                    src={personaAvatars[1]}
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className={styles.personaAvatarImg}
-                  />
+                <div
+                  className={styles.personaAvatar}
+                  style={
+                    {
+                      '--avatar-hue': personaAvatars[1].hue,
+                    } as React.CSSProperties
+                  }
+                  aria-hidden="true"
+                >
+                  {personaAvatars[1].initials}
                 </div>
                 <div className={styles.personaMeta}>Active broker</div>
               </div>
@@ -426,14 +430,16 @@ export function ICloseLanding() {
 
             <Reveal className={styles.persona} delay={3}>
               <div className={styles.personaHead}>
-                <div className={styles.personaAvatar}>
-                  <Image
-                    src={personaAvatars[2]}
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className={styles.personaAvatarImg}
-                  />
+                <div
+                  className={styles.personaAvatar}
+                  style={
+                    {
+                      '--avatar-hue': personaAvatars[2].hue,
+                    } as React.CSSProperties
+                  }
+                  aria-hidden="true"
+                >
+                  {personaAvatars[2].initials}
                 </div>
                 <div className={styles.personaMeta}>Lawyer · Advisor · CA</div>
               </div>
@@ -450,14 +456,16 @@ export function ICloseLanding() {
 
             <Reveal className={styles.persona} delay={4}>
               <div className={styles.personaHead}>
-                <div className={styles.personaAvatar}>
-                  <Image
-                    src={personaAvatars[3]}
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className={styles.personaAvatarImg}
-                  />
+                <div
+                  className={styles.personaAvatar}
+                  style={
+                    {
+                      '--avatar-hue': personaAvatars[3].hue,
+                    } as React.CSSProperties
+                  }
+                  aria-hidden="true"
+                >
+                  {personaAvatars[3].initials}
                 </div>
                 <div className={styles.personaMeta}>Networker · Executive</div>
               </div>
@@ -476,14 +484,16 @@ export function ICloseLanding() {
 
             <Reveal className={styles.persona} delay={5}>
               <div className={styles.personaHead}>
-                <div className={styles.personaAvatar}>
-                  <Image
-                    src={personaAvatars[4]}
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className={styles.personaAvatarImg}
-                  />
+                <div
+                  className={styles.personaAvatar}
+                  style={
+                    {
+                      '--avatar-hue': personaAvatars[4].hue,
+                    } as React.CSSProperties
+                  }
+                  aria-hidden="true"
+                >
+                  {personaAvatars[4].initials}
                 </div>
                 <div className={styles.personaMeta}>Performance broker</div>
               </div>
