@@ -88,62 +88,17 @@ export function ICloseLanding() {
 
       {/* HERO */}
       <section className={styles.hero}>
-        {/* Falling dollar bills */}
-        <div className={styles.heroBills} aria-hidden="true">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className={styles.bill}>
-              <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg">
-                <rect width="80" height="36" rx="3" fill="#7ba672" />
-                <rect
-                  x="2"
-                  y="2"
-                  width="76"
-                  height="32"
-                  rx="2"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.3)"
-                  strokeWidth="0.5"
-                />
-                <circle
-                  cx="40"
-                  cy="18"
-                  r="9"
-                  fill="rgba(255,255,255,0.14)"
-                  stroke="rgba(255,255,255,0.35)"
-                  strokeWidth="0.6"
-                />
-                <text
-                  x="40"
-                  y="22.5"
-                  textAnchor="middle"
-                  fontSize="12"
-                  fontWeight="700"
-                  fill="rgba(255,255,255,0.85)"
-                  fontFamily="Georgia, serif"
-                >
-                  $
-                </text>
-                <text
-                  x="8"
-                  y="10"
-                  fontSize="4.5"
-                  fontWeight="700"
-                  fill="rgba(255,255,255,0.55)"
-                >
-                  100
-                </text>
-                <text
-                  x="62"
-                  y="32"
-                  fontSize="4.5"
-                  fontWeight="700"
-                  fill="rgba(255,255,255,0.55)"
-                >
-                  100
-                </text>
-              </svg>
-            </div>
-          ))}
+        {/* Background video — gong + hand strike */}
+        <div className={styles.heroBgVideoWrap} aria-hidden="true">
+          <video
+            className={styles.heroBgVideo}
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260522_144913_c75e1089-fa7c-454a-a6db-194a0854ad81.mp4"
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+          />
+          <div className={styles.heroBgVideoOverlay} />
         </div>
 
         <div className={styles.heroInner}>
@@ -164,18 +119,6 @@ export function ICloseLanding() {
             <a href="#workflow" className={styles.btnLink}>
               See how it works
             </a>
-          </div>
-
-          <div className={styles.heroVideoWrap} aria-hidden="true">
-            <video
-              className={styles.heroVideo}
-              src="/videos/sales-gong.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-            />
           </div>
         </div>
       </section>

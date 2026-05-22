@@ -164,8 +164,48 @@
   z-index: 2;
 }
 
-/* FALLING BILLS */
+/* HERO BACKGROUND VIDEO */
+.heroBgVideoWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heroBgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  animation: heroBgFadeIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+@keyframes heroBgFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.heroBgVideoOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.86) 0%,
+      rgba(255, 255, 255, 0.72) 35%,
+      rgba(255, 255, 255, 0.55) 65%,
+      rgba(255, 255, 255, 0.78) 100%
+    );
+}
+
+/* LEGACY BILLS — kept hidden in case of any references */
 .heroBills {
+  display: none;
   position: absolute;
   inset: 0;
   pointer-events: none;
