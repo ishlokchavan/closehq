@@ -7,27 +7,6 @@ import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
 import { WaitlistForm } from './waitlist-form';
 
-const heroPreviewCards = [
-  {
-    src: '/images/property-downtown.jpg',
-    name: 'Downtown',
-    cluster: 'Burj Khalifa District',
-    tag: 'Active',
-  },
-  {
-    src: '/images/property-beachfront.jpg',
-    name: 'Palm Jumeirah',
-    cluster: 'Frond G · Signature Villas',
-    tag: 'Hot',
-  },
-  {
-    src: '/images/property-luxury.jpg',
-    name: 'Dubai Marina',
-    cluster: 'Marina Walk · West Tower',
-    tag: 'Active',
-  },
-];
-
 const personaAvatars = [
   { initials: 'RH', hue: 212 },
   { initials: 'SK', hue: 264 },
@@ -187,39 +166,16 @@ export function ICloseLanding() {
             </a>
           </div>
 
-          <div className={styles.heroPreview} aria-hidden="true">
-            <div className={styles.heroPreviewGlow} />
-            <div className={styles.heroWindow}>
-              <div className={styles.heroWindowBar}>
-                <span className={styles.dot} />
-                <span className={styles.dot} />
-                <span className={styles.dot} />
-                <div className={styles.heroWindowTitle}>
-                  iClose · Communities
-                </div>
-              </div>
-              <div className={styles.heroWindowBody}>
-                {heroPreviewCards.map((card) => (
-                  <div key={card.name} className={styles.previewCard}>
-                    <Image
-                      src={card.src}
-                      alt=""
-                      fill
-                      sizes="(max-width: 720px) 240px, 280px"
-                      className={styles.previewCardImg}
-                    />
-                    <div className={styles.previewCardGradient} />
-                    <div className={styles.previewCardTag}>{card.tag}</div>
-                    <div className={styles.previewCardMeta}>
-                      <div className={styles.previewCardName}>{card.name}</div>
-                      <div className={styles.previewCardCluster}>
-                        {card.cluster}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className={styles.heroVideoWrap} aria-hidden="true">
+            <video
+              className={styles.heroVideo}
+              src="/videos/sales-gong.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            />
           </div>
         </div>
       </section>
