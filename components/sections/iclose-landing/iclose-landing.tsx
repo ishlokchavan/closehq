@@ -1111,19 +1111,8 @@ export function ICloseLanding() {
       {/* WHAT IS IT */}
       <WhatIsIt />
 
-      {/* PATTERN INTERRUPT — bold stat strip before workflow */}
-      <StatStripBig
-        eyebrow="What this market pays"
-        big="AED 90,000"
-        bigSub="per close"
-        caption="Average closer take on a single UAE off-plan deal. No commission split. No ceiling."
-      />
-
       {/* HOW IT WORKS */}
       <HowItWorks />
-
-      {/* PATTERN INTERRUPT — live closing marquee */}
-      <ClosingMarquee />
 
       {/* TESTIMONIALS */}
       <TestimonialsCarousel />
