@@ -3151,16 +3151,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
-  padding-right: 4px;
-}
-.faqList::-webkit-scrollbar {
-  width: 4px;
-}
-.faqList::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 2px;
+  /* No max-height / inner scroll — the FAQ section is a normal-flow
+     block now (snap-scroll removed in v3.0). Capping height here was
+     clipping the open answer once the viewport shrank (e.g. browser
+     zoom > 100%, short laptops). The page scrolls; the list flows. */
 }
 .faqItem {
   background: #fff;
