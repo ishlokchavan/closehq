@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
@@ -46,57 +47,58 @@ function WhoIsThisFor() {
         </Reveal>
 
         <div className={styles.whoGrid}>
-          <Reveal className={styles.whoCard} delay={1}>
-            <div className={styles.whoHero}>
-              <Image
-                src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
-                alt="A broker in a modern Dubai office"
-                fill
-                sizes="(max-width: 820px) 100vw, 520px"
-                className={styles.whoHeroImg}
-                priority={false}
-              />
-              <div className={styles.whoHeroOverlay} />
-              <div className={styles.whoHeroTag}>For Brokers</div>
-            </div>
-            <h3>Close more deals, keep more of each one.</h3>
-            <p>
-              Learn any UAE community top-to-bottom from the people actually
-              closing there. Use the platform&apos;s tools and network to close
-              under your own name — and keep up to 100% of the commission.
-            </p>
-            <ul className={styles.whoBullets}>
-              <li>Expert-led community playbooks &amp; deal breakdowns</li>
-              <li>Up to 100% commission on every deal you close</li>
-            </ul>
+          <Reveal className={styles.whoCardWrap} delay={1}>
+            <Link href="/for-brokers" className={styles.whoCard}>
+              <div className={styles.whoHero}>
+                <Image
+                  src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
+                  alt="A broker in a modern Dubai office"
+                  fill
+                  sizes="(max-width: 820px) 100vw, 520px"
+                  className={styles.whoHeroImg}
+                  priority={false}
+                />
+                <div className={styles.whoHeroOverlay} />
+                <div className={styles.whoHeroTag}>For Brokers</div>
+              </div>
+              <h3>Close more deals, keep more of each one.</h3>
+              <p>
+                Learn any UAE community top-to-bottom from the people actually
+                closing there. Keep up to 100% of every commission you earn.
+              </p>
+              <span className={styles.whoCta}>
+                Learn more <span aria-hidden="true">→</span>
+              </span>
+            </Link>
           </Reveal>
 
-          <Reveal className={styles.whoCard} delay={2}>
-            <div className={styles.whoHero}>
-              <Image
-                src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
-                alt="A private-client advisor reviewing documents with a client"
-                fill
-                sizes="(max-width: 820px) 100vw, 520px"
-                className={styles.whoHeroImg}
-                priority={false}
-              />
-              <div className={styles.whoHeroOverlay} />
-              <div className={`${styles.whoHeroTag} ${styles.whoHeroTagAlt}`}>
-                For Collaborators
+          <Reveal className={styles.whoCardWrap} delay={2}>
+            <Link href="/for-collaborators" className={styles.whoCard}>
+              <div className={styles.whoHero}>
+                <Image
+                  src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
+                  alt="A private-client advisor reviewing documents with a client"
+                  fill
+                  sizes="(max-width: 820px) 100vw, 520px"
+                  className={styles.whoHeroImg}
+                  priority={false}
+                />
+                <div className={styles.whoHeroOverlay} />
+                <div className={`${styles.whoHeroTag} ${styles.whoHeroTagAlt}`}>
+                  For Collaborators
+                </div>
               </div>
-            </div>
-            <h3>Bring the client. We bring the expert.</h3>
-            <p>
-              Lawyers, advisors, executives, and networkers — anyone with a
-              client to refer. Submit an inquiry, we match you with the right
-              UAE specialist, and you earn up to 80% of the commission when it
-              closes.
-            </p>
-            <ul className={styles.whoBullets}>
-              <li>One inquiry, matched to a vetted specialist</li>
-              <li>Up to 80% commission when the deal closes</li>
-            </ul>
+              <h3>Bring the client. We bring the expert.</h3>
+              <p>
+                Lawyers, advisors, executives, networkers — anyone with a client
+                to refer. Earn up to 80% of the commission when it closes.
+              </p>
+              <span
+                className={`${styles.whoCta} ${styles.whoCtaAlt}`}
+              >
+                Learn more <span aria-hidden="true">→</span>
+              </span>
+            </Link>
           </Reveal>
         </div>
       </div>
@@ -118,63 +120,191 @@ function WhatIsIt() {
         </Reveal>
 
         <div className={styles.whatGrid}>
-          {/* Card 1: Dashboard */}
-          <Reveal className={styles.whatCard} delay={1}>
+          {/* Card 1: Dashboard overview */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardA}`} delay={1}>
             <h3 className={styles.whatTitle}>One clear overview</h3>
             <p className={styles.whatSub}>
-              Every saved property, viewing, offer, and closing — visible at a
-              glance.
+              Every offer, viewing, and closing — visible at a glance.
             </p>
-            <div className={styles.whatVideo}>
-              <video
-                src="/videos/whatisit-dashboard.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                aria-label="Dashboard demo"
-              />
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockDashboard}>
+                <div className={styles.mockTabs}>
+                  <span>Saved</span>
+                  <span>Viewings</span>
+                  <span className={styles.mockTabActive}>Your offers</span>
+                  <span>Closed</span>
+                </div>
+                <div className={`${styles.mockRow} ${styles.mockRowAnimA}`}>
+                  <span className={styles.mockCheck} />
+                  <span className={styles.mockPrice}>AED 1,440,000</span>
+                  <span className={styles.mockStatus}>Offer sent</span>
+                </div>
+                <div className={`${styles.mockRow} ${styles.mockRowAnimB}`}>
+                  <span className={styles.mockCheck} />
+                  <span className={styles.mockPrice}>AED 1,430,000</span>
+                  <span className={styles.mockStatus}>Counter received</span>
+                </div>
+                <div className={`${styles.mockRow} ${styles.mockRowAnimC}`}>
+                  <span className={styles.mockCheck} />
+                  <span className={styles.mockPrice}>AED 1,410,000</span>
+                  <span className={styles.mockStatus}>Closed ✓</span>
+                </div>
+              </div>
             </div>
           </Reveal>
 
-          {/* Card 2: Collaboration */}
-          <Reveal className={styles.whatCard} delay={2}>
+          {/* Card 2: Specialist match */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardB}`} delay={2}>
             <h3 className={styles.whatTitle}>Match with the right specialist</h3>
             <p className={styles.whatSub}>
-              Post an inquiry. We connect you to the vetted UAE expert who
-              knows that asset best.
+              Post an inquiry. We match you to the vetted UAE expert.
             </p>
-            <div className={styles.whatVideo}>
-              <video
-                src="/videos/whatisit-collaboration.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                aria-label="Collaboration demo"
-              />
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockMatch}>
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchA}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                </div>
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchB}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                  <span className={styles.mockBadgeBlue}>Matched</span>
+                </div>
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchC}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                </div>
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchD}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                </div>
+              </div>
             </div>
           </Reveal>
 
-          {/* Card 3: Chat */}
-          <Reveal className={styles.whatCard} delay={3}>
+          {/* Card 3: Conversations */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardC}`} delay={3}>
             <h3 className={styles.whatTitle}>Every conversation in one place</h3>
             <p className={styles.whatSub}>
-              Briefs, viewings, offers and follow-ups — one thread per deal,
-              never lost in WhatsApp.
+              Briefs, viewings, offers — one thread per deal.
             </p>
-            <div className={styles.whatVideo}>
-              <video
-                src="/videos/whatisit-chat.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                aria-label="Chat demo"
-              />
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockChat}>
+                <div className={`${styles.mockChatRow} ${styles.mockChatA}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockChatBubble}>Client brief →</span>
+                </div>
+                <div
+                  className={`${styles.mockChatRow} ${styles.mockChatRowRight} ${styles.mockChatB}`}
+                >
+                  <span className={styles.mockChatBubble}>3 units ready ✓</span>
+                  <span
+                    className={`${styles.mockAvatar} ${styles.mockAvatarAlt}`}
+                  />
+                </div>
+                <div className={`${styles.mockChatRow} ${styles.mockChatC}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockChatBubble}>Booking viewing</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 4: Make an offer */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardD}`} delay={4}>
+            <h3 className={styles.whatTitle}>Make an offer, faster than ever</h3>
+            <p className={styles.whatSub}>
+              Submit, counter, and close — without the back-and-forth.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockOffer}>
+                <div className={styles.mockOfferTitle}>Offer submitted</div>
+                <div className={styles.mockOfferAmount}>AED 1,425,000</div>
+                <div className={styles.mockOfferMeta}>
+                  <span>Buyer</span>
+                  <span>Seller</span>
+                  <span>Notary</span>
+                </div>
+                <div className={styles.mockOfferBar}>
+                  <div className={`${styles.mockOfferFill} ${styles.mockOfferAnim}`} />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 5: Community explorer */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardE}`} delay={5}>
+            <h3 className={styles.whatTitle}>Learn any UAE community</h3>
+            <p className={styles.whatSub}>
+              Deep-dive playbooks for the towers and clusters you work.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockExplore}>
+                <div className={styles.mockExploreSearch}>
+                  <span className={styles.mockExploreIcon} aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="11" cy="11" r="6" />
+                      <path d="M16 16l4 4" />
+                    </svg>
+                  </span>
+                  <span className={styles.mockExploreQuery}>
+                    <span className={styles.mockExploreTyped}>
+                      Dubai Marina
+                    </span>
+                    <span className={styles.mockExploreCaret} />
+                  </span>
+                </div>
+                <div className={styles.mockExploreList}>
+                  <div className={styles.mockExploreItem}>
+                    <span className={styles.mockExploreDot} />
+                    <span>Marina Heights · 1502</span>
+                  </div>
+                  <div className={styles.mockExploreItem}>
+                    <span className={styles.mockExploreDot} />
+                    <span>Princess Tower</span>
+                  </div>
+                  <div className={styles.mockExploreItem}>
+                    <span className={styles.mockExploreDot} />
+                    <span>Cayan Tower</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 6: Close the deal */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardF}`} delay={6}>
+            <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
+            <p className={styles.whatSub}>
+              All parties aligned, paperwork tracked, commission landed.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockClose}>
+                <div className={styles.mockCloseHeader}>
+                  <span className={styles.mockCloseAddr}>
+                    Marina Heights · 1502
+                  </span>
+                  <span className={styles.mockCloseCity}>Dubai Marina</span>
+                </div>
+                <div className={styles.mockCloseGrid}>
+                  <div>
+                    <div className={styles.mockCloseLabel}>Offer price</div>
+                    <div className={styles.mockCloseValue}>AED 1,425,000</div>
+                  </div>
+                  <div>
+                    <div className={styles.mockCloseLabel}>Key transfer</div>
+                    <div className={styles.mockCloseValue}>14 Mar</div>
+                  </div>
+                  <div>
+                    <div className={styles.mockCloseLabel}>Notary</div>
+                    <div
+                      className={`${styles.mockCloseValue} ${styles.mockCloseConfirmed}`}
+                    >
+                      Confirmed ✓
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </Reveal>
         </div>
