@@ -357,3 +357,124 @@
 .btnBlueLg:hover {
   background: var(--blue-hover);
 }
+
+/* ============================================================
+   Persona page — mobile-first responsive refinement
+   ============================================================ */
+
+.root {
+  overflow-x: hidden;
+}
+
+/* Nav */
+@media (max-width: 600px) {
+  .nav {
+    padding: 0 16px;
+    height: 52px;
+  }
+  .navCta {
+    padding: 6px 11px;
+    font-size: 12px;
+  }
+  .backLink {
+    font-size: 13px;
+    gap: 8px;
+  }
+}
+
+/* Hero */
+@media (max-width: 980px) {
+  .hero {
+    padding: 64px 22px 64px;
+  }
+}
+@media (max-width: 600px) {
+  .hero {
+    padding: 48px 18px 56px;
+  }
+  .heroCopy {
+    gap: 18px;
+  }
+  .heroCopy h1 {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+  .heroCopy p {
+    font-size: 16px;
+  }
+  .heroCtas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .btnBlue {
+    width: 100%;
+    text-align: center;
+    padding: 13px 22px;
+  }
+  .btnLink {
+    justify-content: center;
+  }
+  .heroMedia {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Section spacing on phone */
+@media (max-width: 600px) {
+  .pillars {
+    padding: 64px 18px;
+  }
+  .outcomes {
+    padding: 56px 18px;
+  }
+  .quote {
+    padding: 72px 18px;
+  }
+  .cta {
+    padding: 72px 18px 96px;
+  }
+  .sectionHeading {
+    margin-bottom: 32px;
+    font-size: clamp(26px, 7.4vw, 38px);
+  }
+  .pillar {
+    padding: 26px 22px;
+  }
+  .pillar h3 {
+    font-size: 18px;
+  }
+  .pillar p {
+    font-size: 14px;
+  }
+  .outcomeStat {
+    font-size: clamp(36px, 11vw, 48px);
+  }
+  .outcome {
+    padding: 18px 8px;
+  }
+  .quoteBody {
+    font-size: clamp(20px, 5.8vw, 26px);
+  }
+  .ctaHeading {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  .ctaSub {
+    font-size: 15px;
+  }
+  .btnBlueLg {
+    width: 100%;
+    text-align: center;
+    padding: 14px 22px;
+  }
+}
+
+/* Pillar grid: 3 → 1 at 820 (the file already collapses; this
+   adds an intermediate 2-col stop for narrow tablets) */
+@media (max-width: 980px) and (min-width: 681px) {
+  .pillarGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .outcomeGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
