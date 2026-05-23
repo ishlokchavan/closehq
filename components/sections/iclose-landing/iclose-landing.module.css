@@ -5532,3 +5532,89 @@ a.whoCard p,
   }
 }
 
+
+/* ============================================================
+   v3.8 — Mobile workflow: nested TikTok-reel snap container
+   (scope mandatory snap to just this section so users can scroll
+   in/out freely without being trapped)
+   ============================================================ */
+
+@media (max-width: 820px) {
+  /* The outer section becomes a fixed 100vh window. The user's page
+     scroll lands here, then a nested scroller takes over the swipe
+     inside. */
+  .workflowSection {
+    height: 100vh;
+    height: 100dvh;
+    padding: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden;
+    /* Reset prior v3.7 leftovers */
+  }
+
+  /* Inner scroller: this is what scroll-snaps. */
+  .wfMobile {
+    display: block !important;
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Hide native scrollbar in WebKit + Firefox */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* overscroll-behavior: auto (default) → chain to page at edges
+       so the user can swipe past step 3 (or back before step 1)
+       and the page resumes scrolling normally. */
+  }
+  .wfMobile::-webkit-scrollbar { display: none; }
+
+  /* The section heading is hidden on mobile — each step's own
+     headline does the work. Drops one screen of vertical content
+     so the user lands inside the reel immediately. */
+  .wfMobileHeading {
+    display: none !important;
+  }
+
+  /* Each step is one full slide. */
+  .wfMobileStep {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px 22px 40px !important;
+    gap: 22px;
+    border-top: none !important;
+  }
+
+  /* Visual gets a nice cap so it never blows past the slide. */
+  .wfMobileVisual {
+    aspect-ratio: 4 / 3;
+    max-height: 46vh;
+    max-height: 46dvh;
+  }
+  .wfMobileVisual .wfVisualPanel {
+    padding: 22px;
+  }
+}
+
+/* Respect reduced-motion: drop the snap so the page can be scrolled
+   linearly for users who've opted out of motion. */
+@media (prefers-reduced-motion: reduce) and (max-width: 820px) {
+  .workflowSection {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .wfMobile {
+    height: auto !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+  }
+}

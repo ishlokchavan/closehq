@@ -857,6 +857,7 @@ const WF_STEPS: WfStep[] = [
 
 function HowItWorks() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
 
@@ -972,21 +973,23 @@ function HowItWorks() {
         </div>
       </div>
 
-      {/* Mobile layout: every step renders fully, each animates in on
-          its own scroll-trigger (title from left, image from bottom).
-          Hidden on desktop via CSS — the pinned layout above takes over. */}
-      <div className={styles.wfMobile}>
-        <Reveal as="h2" className={styles.wfMobileHeading}>
-          How it works in practice.
-        </Reveal>
-
+      {/* Mobile layout: a nested 100vh scroll container with mandatory
+          snap on the three steps. TikTok-style reel: one swipe inside
+          advances one step. When the inner scroller hits its top/bottom
+          edge the swipe chains to the page so the user can scroll out
+          to neighbouring sections — no trapping. Hidden on desktop. */}
+      <div ref={mobileScrollerRef} className={styles.wfMobile}>
         {WF_STEPS.map((s) => (
           <div key={s.num} className={styles.wfMobileStep}>
             <motion.div
               className={styles.wfMobileTitleBlock}
               initial={{ opacity: 0, x: -48 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
+              viewport={{
+                root: mobileScrollerRef,
+                once: false,
+                amount: 0.4,
+              }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className={styles.wfMobileNum}>{s.num}</div>
@@ -997,7 +1000,11 @@ function HowItWorks() {
               className={styles.wfMobileBody}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
+              viewport={{
+                root: mobileScrollerRef,
+                once: false,
+                amount: 0.4,
+              }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               {s.body}
@@ -1007,7 +1014,11 @@ function HowItWorks() {
               className={styles.wfMobileVisual}
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
+              viewport={{
+                root: mobileScrollerRef,
+                once: false,
+                amount: 0.4,
+              }}
               transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
               {s.visual}
