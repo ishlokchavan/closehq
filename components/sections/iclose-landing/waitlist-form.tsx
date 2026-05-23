@@ -76,12 +76,12 @@ const STEPS: StepDef[] = [
   },
 ];
 
-/* Configurable destinations. Set NEXT_PUBLIC_CALENDLY_URL and
-   NEXT_PUBLIC_CONTACT_PHONE in env to point these at the real account
-   + number. Both have safe placeholders for now. */
+/* Configurable destinations. NEXT_PUBLIC_* vars override at deploy
+   time; the defaults are the real iClose Calendly handle and a
+   +971 placeholder number. */
 const CALENDLY_URL =
   process.env.NEXT_PUBLIC_CALENDLY_URL ||
-  'https://calendly.com/iclose-uae/intro-call';
+  'https://calendly.com/hello-iclose/30min';
 const CALL_PHONE = siteConfig.phone || '+971501234567';
 
 export function WaitlistForm() {
@@ -108,6 +108,10 @@ export function WaitlistForm() {
   const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  /* Remember the user's name + email from the form so we can prefill
+     the Calendly embed once it opens in the success state. */
+  const [submitted, setSubmitted] = useState<{ name: string; email: string } | null>(null);
+  const [showCalendly, setShowCalendly] = useState(false);
   const formRef = useRef<HTMLFormElement | null>(null);
   const stepRef = useRef<HTMLDivElement | null>(null);
 
@@ -121,6 +125,21 @@ export function WaitlistForm() {
       setTimeout(() => (el as HTMLInputElement).focus({ preventScroll: true }), 80);
     }
   }, [step]);
+
+  /* Modal lifecycle: Esc to close, lock body scroll while open. */
+  useEffect(() => {
+    if (!showCalendly) return;
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === 'Escape') setShowCalendly(false);
+    };
+    document.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [showCalendly]);
 
   const total = STEPS.length;
   const current = STEPS[step];
@@ -174,6 +193,7 @@ export function WaitlistForm() {
         const body = await res.json().catch(() => ({}));
         throw new Error(body?.error || 'Something went wrong');
       }
+      setSubmitted({ name: trimmed, email: data.email });
       setSuccess(true);
       reset();
     } catch (err) {
@@ -203,38 +223,89 @@ export function WaitlistForm() {
   };
 
   if (success) {
+    const calendlyEmbedUrl = (() => {
+      const url = new URL(CALENDLY_URL);
+      url.searchParams.set('hide_gdpr_banner', '1');
+      url.searchParams.set('embed_domain', 'iclose.ae');
+      url.searchParams.set('embed_type', 'Inline');
+      if (submitted?.name) url.searchParams.set('name', submitted.name);
+      if (submitted?.email) url.searchParams.set('email', submitted.email);
+      return url.toString();
+    })();
+
     return (
-      <div className={styles.tfShell}>
-        <div className={styles.tfProgress}>
-          <div className={styles.tfProgressBar} style={{ width: '100%' }} />
-        </div>
-        <div className={styles.wlSuccess}>
-          <div className={styles.successBadge} aria-hidden="true">
-            ✓
+      <>
+        <div className={styles.tfShell}>
+          <div className={styles.tfProgress}>
+            <div className={styles.tfProgressBar} style={{ width: '100%' }} />
           </div>
-          <h3 className={styles.successTitle}>You&apos;re on the list.</h3>
-          <p className={styles.successBody}>
-            We&apos;ll be in touch shortly. Or skip the wait — pick how
-            you&apos;d like to talk.
-          </p>
-          <div className={styles.wlSuccessCtas}>
-            <a
-              href={`tel:${CALL_PHONE.replace(/\s+/g, '')}`}
-              className={styles.btnBluePrimary}
-            >
-              <span aria-hidden="true">📞</span> Call us now
-            </a>
-            <a
-              href={CALENDLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.btnGhost}
-            >
-              <span aria-hidden="true">🗓️</span> Schedule a callback later
-            </a>
+          <div className={styles.wlSuccess}>
+            <div className={styles.successBadge} aria-hidden="true">
+              ✓
+            </div>
+            <h3 className={styles.successTitle}>You&apos;re on the list.</h3>
+            <p className={styles.successBody}>
+              We&apos;ll be in touch shortly. Or skip the wait — pick how
+              you&apos;d like to talk.
+            </p>
+            <div className={styles.wlSuccessCtas}>
+              <a
+                href={`tel:${CALL_PHONE.replace(/\s+/g, '')}`}
+                className={styles.btnBluePrimary}
+              >
+                <span aria-hidden="true">📞</span> Call us now
+              </a>
+              <button
+                type="button"
+                className={styles.btnGhost}
+                onClick={() => setShowCalendly(true)}
+              >
+                <span aria-hidden="true">🗓️</span> Schedule a callback later
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+
+        <AnimatePresence>
+          {showCalendly && (
+            <motion.div
+              className={styles.calendlyOverlay}
+              onClick={() => setShowCalendly(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Schedule a callback"
+            >
+              <motion.div
+                className={styles.calendlyModal}
+                onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, scale: 0.96, y: 16 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, y: 16 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <button
+                  type="button"
+                  className={styles.calendlyClose}
+                  onClick={() => setShowCalendly(false)}
+                  aria-label="Close scheduling"
+                >
+                  ×
+                </button>
+                <iframe
+                  src={calendlyEmbedUrl}
+                  title="Schedule a callback with iClose"
+                  className={styles.calendlyFrame}
+                  allow="camera; microphone; fullscreen"
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </>
     );
   }
 
