@@ -801,7 +801,7 @@ function WfStep3Visual() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
         >
-          Commission paid
+          Commission kept
         </motion.div>
         <motion.div
           className={styles.wfPanelPayoutAmount}
@@ -809,7 +809,7 @@ function WfStep3Visual() {
           animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
           transition={{ duration: 0.7, delay: 0.25 }}
         >
-          AED 90,000
+          Up to 100%
         </motion.div>
         <motion.div
           className={styles.wfPanelPayoutMeta}
