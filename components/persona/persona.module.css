@@ -1197,3 +1197,23 @@
     font-size: 22px !important;
   }
 }
+
+/* ============================================================
+   v2.3 — Persona-page embedded waitlist section
+   ============================================================ */
+.personaWaitlist {
+  padding: 96px 22px 120px;
+  text-align: center;
+  background: var(--bg);
+}
+.personaWaitlistInner {
+  max-width: 580px;
+  margin: 24px auto 0;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .personaWaitlist {
+    padding: 72px 18px 96px;
+  }
+}

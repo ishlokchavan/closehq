@@ -9,7 +9,7 @@ import {
   PersonaQuote,
   PersonaFaq,
   PersonaIntro,
-  PersonaCta,
+  PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 
 export const metadata: Metadata = {
@@ -221,15 +221,15 @@ export default function ForBuyersPage() {
         ]}
       />
 
-      <PersonaCta
+      <PersonaWaitlist
         heading={<>Your next property starts with the right intel.</>}
         body={
           <>
-            Join thousands of buyers using iClose to research, decide, and buy
-            smarter in the UAE market. No credit card. No commitment.
+            Tell us a bit about you, and we&apos;ll line up the cashback or
+            flat-fee structure for your next purchase. No credit card, no
+            commitment.
           </>
         }
-        cta={{ label: "Get started, it's free", href: '/#waitlist' }}
       />
     </PersonaChrome>
   );

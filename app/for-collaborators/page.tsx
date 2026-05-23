@@ -6,7 +6,7 @@ import {
   PersonaMath,
   PersonaAudience,
   PersonaQuote,
-  PersonaCta,
+  PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 
 export const metadata: Metadata = {
@@ -115,7 +115,7 @@ export default function ForCollaboratorsPage() {
         role="Corporate law firm · Dubai DIFC"
       />
 
-      <PersonaCta
+      <PersonaWaitlist
         heading={<>Apply to become a referral partner.</>}
         body={
           <>
@@ -123,7 +123,6 @@ export default function ForCollaboratorsPage() {
             a premium programme, not a mass affiliate link. No spam, ever.
           </>
         }
-        cta={{ label: 'Apply for access', href: '/#waitlist' }}
       />
     </PersonaChrome>
   );

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
+import { WaitlistForm } from '@/components/sections/iclose-landing/waitlist-form';
 import styles from './persona.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -525,6 +526,44 @@ export function PersonaCta({
 }
 
 /* ------- FAQ ------- */
+/* ------- Inline waitlist (embeds the homepage Typeform on a
+   persona page so users can sign up without going back home) ------- */
+export function PersonaWaitlist({
+  heading,
+  body,
+}: {
+  heading: ReactNode;
+  body?: ReactNode;
+}) {
+  return (
+    <section className={styles.personaWaitlist} id="waitlist">
+      <motion.h2 className={styles.ctaHeading} {...animRise}>
+        {heading}
+      </motion.h2>
+      {body && (
+        <motion.p
+          className={styles.ctaSub}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.5, delay: 0.1, ease }}
+        >
+          {body}
+        </motion.p>
+      )}
+      <motion.div
+        className={styles.personaWaitlistInner}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={inView}
+        transition={{ duration: 0.6, delay: 0.2, ease }}
+      >
+        <WaitlistForm />
+      </motion.div>
+    </section>
+  );
+}
+
 export function PersonaFaq({
   heading,
   items,

@@ -7,7 +7,7 @@ import {
   PersonaMath,
   PersonaCompare,
   PersonaAudience,
-  PersonaCta,
+  PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 
 export const metadata: Metadata = {
@@ -215,16 +215,14 @@ export default function ForBrokersPage() {
         ]}
       />
 
-      <PersonaCta
+      <PersonaWaitlist
         heading={<>The market won&apos;t wait.</>}
         body={
           <>
             Join iClose, get access to the full platform, and start building
-            the career that pays what you&apos;re worth. Applications reviewed
-            within 48 hours.
+            the career that pays what you&apos;re worth.
           </>
         }
-        cta={{ label: 'Apply to join iClose', href: '/#waitlist' }}
       />
     </PersonaChrome>
   );
