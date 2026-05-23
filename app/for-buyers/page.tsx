@@ -24,8 +24,8 @@ export default function ForBuyersPage() {
       <PersonaHero
         variant="buyer"
         tagLabel="For Buyers"
-        heroImage="/images/hero-luxury.jpg"
-        heroAlt="A premium UAE residence interior. Your potential home"
+        heroImage="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
+        heroAlt="A private-client advisor walking a buyer through a UAE purchase"
         headline={
           <>
             Up to 5% cashback on off-plan.
@@ -141,7 +141,23 @@ export default function ForBuyersPage() {
             { label: 'iClose flat fee', value: '0.4% only' },
           ],
           takeLabel: 'You pay',
-          takeValue: 'AED 8,000',
+          takeValue: (
+            <>
+              AED 8,000{' '}
+              <s
+                style={{
+                  fontSize: '0.55em',
+                  color: 'var(--text-light)',
+                  fontWeight: 400,
+                  letterSpacing: 0,
+                  marginLeft: '0.4em',
+                  verticalAlign: 'middle',
+                }}
+              >
+                AED 40,000
+              </s>
+            </>
+          ),
         }}
         right={{
           title: 'Off-plan unit',

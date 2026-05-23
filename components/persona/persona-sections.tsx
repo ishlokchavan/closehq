@@ -273,8 +273,8 @@ export function PersonaCompare({
   eyebrow?: string;
   heading: ReactNode;
   body?: ReactNode;
-  left: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: string };
-  right: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: string };
+  left: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: ReactNode };
+  right: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: ReactNode };
   footnote?: string;
   badge?: string;
 }) {
