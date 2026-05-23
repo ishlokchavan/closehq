@@ -40,7 +40,7 @@ function Reveal({ as: Tag = 'div', delay, className, children }: RevealProps) {
 
 function WhoIsThisFor() {
   return (
-    <section className={`${styles.snapSection} ${styles.whoSection}`}>
+    <section className={`${styles.whoSection}`}>
       <div className={styles.wrapWide}>
         <Reveal as="h2" className={styles.sectionHeadingSolo}>
           Who is this for?
@@ -110,10 +110,7 @@ function WhoIsThisFor() {
 
 function WhatIsIt() {
   return (
-    <section
-      className={`${styles.snapSection} ${styles.whatSection}`}
-      id="workflow"
-    >
+    <section className={styles.whatSection}>
       <div className={styles.wrapWide}>
         <Reveal as="h2" className={styles.sectionHeadingSolo}>
           What is it?
@@ -313,94 +310,191 @@ function WhatIsIt() {
   );
 }
 
-/* ---------------- HOW IT WORKS IN PRACTICE ---------------- */
+/* ---------------- HOW IT WORKS IN PRACTICE (pinned scroll) ---------------- */
+
+type WfStep = {
+  num: string;
+  title: string;
+  body: string;
+  visual: ReactNode;
+};
+
+const WF_STEPS: WfStep[] = [
+  {
+    num: '01',
+    title: 'Learn the market.',
+    body: 'Master any UAE community through expert-led sessions, playbooks, and live deal breakdowns. From launch specs to payment-plan nuances — every developer, every cluster, every tower.',
+    visual: (
+      <div className={styles.wfVisualPanel}>
+        <div className={styles.wfPanelLibrary}>
+          <div className={styles.wfPanelLibTile}>
+            <span className={styles.wfPanelLibBar} style={{ width: '60%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '80%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '45%' }} />
+            <span className={styles.wfPanelLibTag}>Dubai Marina</span>
+          </div>
+          <div className={styles.wfPanelLibTile}>
+            <span className={styles.wfPanelLibBar} style={{ width: '72%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '54%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '68%' }} />
+            <span className={styles.wfPanelLibTag}>Downtown</span>
+          </div>
+          <div className={styles.wfPanelLibTile}>
+            <span className={styles.wfPanelLibBar} style={{ width: '50%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '74%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '40%' }} />
+            <span className={styles.wfPanelLibTag}>Palm</span>
+          </div>
+          <div className={styles.wfPanelLibTile}>
+            <span className={styles.wfPanelLibBar} style={{ width: '65%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '80%' }} />
+            <span className={styles.wfPanelLibBar} style={{ width: '38%' }} />
+            <span className={styles.wfPanelLibTag}>JVC</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    num: '02',
+    title: 'Pick your route.',
+    body: 'Close it yourself under your own name and keep up to 100% of the commission — or refer the client, let an iClose specialist close alongside you, and earn up to 80%.',
+    visual: (
+      <div className={styles.wfVisualPanel}>
+        <div className={styles.wfPanelFork}>
+          <div className={styles.wfPanelForkCard}>
+            <div className={styles.wfPanelForkTag}>Closer route</div>
+            <div className={styles.wfPanelForkBig}>100%</div>
+            <div className={styles.wfPanelForkSub}>commission, kept</div>
+          </div>
+          <div className={styles.wfPanelForkOr} aria-hidden="true">
+            or
+          </div>
+          <div
+            className={`${styles.wfPanelForkCard} ${styles.wfPanelForkCardAlt}`}
+          >
+            <div className={styles.wfPanelForkTag}>Referral route</div>
+            <div className={styles.wfPanelForkBig}>80%</div>
+            <div className={styles.wfPanelForkSub}>commission, hands-off</div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    num: '03',
+    title: 'Get paid.',
+    body: 'Commission lands directly in your account — tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
+    visual: (
+      <div className={styles.wfVisualPanel}>
+        <div className={styles.wfPanelPayout}>
+          <div className={styles.wfPanelPayoutHead}>Commission paid</div>
+          <div className={styles.wfPanelPayoutAmount}>AED 72,000</div>
+          <div className={styles.wfPanelPayoutMeta}>
+            <span>Marina Heights · 1502</span>
+            <span className={styles.wfPanelPayoutOk}>Transfer complete ✓</span>
+          </div>
+          <div className={styles.wfPanelPayoutBar}>
+            <div className={styles.wfPanelPayoutFill} />
+          </div>
+        </div>
+      </div>
+    ),
+  },
+];
 
 function HowItWorks() {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const scrollable = el.offsetHeight - vh;
+      if (scrollable <= 0) {
+        setActive(0);
+        return;
+      }
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / scrollable));
+      setProgress(p);
+      // Three equal stops. Clamp so the last 8% biases to step 3.
+      const step = p >= 0.92 ? 2 : p >= 0.42 ? 1 : 0;
+      setActive(step);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   return (
     <section
-      className={`${styles.snapSection} ${styles.workflowSection}`}
+      ref={sectionRef}
+      className={styles.workflowSection}
       id="workflow"
     >
-      <div className={styles.wrapWide}>
-        <Reveal as="h2" className={styles.sectionHeadingSolo}>
-          How it works in practice.
-        </Reveal>
-
-        <div className={styles.workflow}>
-          <Reveal className={styles.wfCard}>
-            <div className={styles.wfStepIcon}>
-              <svg viewBox="0 0 24 24">
-                <path d="M4 5a2 2 0 0 1 2-2h14v18H6a2 2 0 0 1-2-2z" />
-                <path d="M4 17a2 2 0 0 1 2-2h14" />
-              </svg>
-            </div>
-            <div className={styles.wfStepNum}>Step 1</div>
-            <h3>Learn the market.</h3>
-            <p>
-              Master any UAE community through expert-led sessions, playbooks,
-              and deal breakdowns.
-            </p>
+      <div className={styles.wfPin}>
+        <div className={styles.wfPinInner}>
+          <Reveal as="h2" className={styles.wfPinHeading}>
+            How it works in practice.
           </Reveal>
 
-          <Reveal className={styles.wfArrow} delay={1}>
-            <span aria-hidden="true" />
-          </Reveal>
-
-          <Reveal className={styles.wfForkGroup} delay={2}>
-            <div className={styles.wfForkLabel}>Step 2 · Pick your route</div>
-            <div className={styles.wfForkRow}>
-              <div className={styles.wfForkCard}>
-                <div className={styles.wfPathTag}>Closer route</div>
-                <h4>Close it yourself.</h4>
-                <p>
-                  Use the platform&apos;s network, listings, and tools to close
-                  the deal under your own name.
-                </p>
-                <div className={styles.wfMini}>
-                  <span className={styles.label}>Your split</span>
-                  <span className={styles.val}>Up to 100%</span>
-                </div>
-              </div>
-
-              <div className={styles.wfOr} aria-hidden="true">
-                OR
-              </div>
-
-              <div className={styles.wfForkCard}>
+          <div className={styles.wfStage}>
+            <div className={styles.wfStageCopy}>
+              {WF_STEPS.map((s, i) => (
                 <div
-                  className={`${styles.wfPathTag} ${styles.wfPathTagAlt}`}
+                  key={s.num}
+                  className={`${styles.wfStageStep} ${
+                    i === active ? styles.wfStageStepActive : ''
+                  }`}
+                  aria-current={i === active}
                 >
-                  Referral route
+                  <div className={styles.wfStageNum}>{s.num}</div>
+                  <h3 className={styles.wfStageTitle}>{s.title}</h3>
+                  <p className={styles.wfStageBody}>{s.body}</p>
                 </div>
-                <h4>Bring the client.</h4>
-                <p>
-                  Got someone but not a license? Submit an inquiry. We match
-                  you with the right specialist who closes alongside you.
-                </p>
-                <div className={`${styles.wfMini} ${styles.wfMiniAlt}`}>
-                  <span className={styles.label}>You earn</span>
-                  <span className={styles.val}>Up to 80%</span>
+              ))}
+            </div>
+
+            <div className={styles.wfStageVisual}>
+              {WF_STEPS.map((s, i) => (
+                <div
+                  key={s.num}
+                  className={`${styles.wfStageVisualPanel} ${
+                    i === active ? styles.wfStageVisualPanelActive : ''
+                  }`}
+                  aria-hidden={i !== active}
+                >
+                  {s.visual}
                 </div>
-              </div>
+              ))}
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal className={styles.wfArrow} delay={3}>
-            <span aria-hidden="true" />
-          </Reveal>
-
-          <Reveal className={styles.wfCard} delay={4}>
-            <div className={styles.wfStepIcon}>
-              <svg viewBox="0 0 24 24">
-                <path d="M3 12l6 6L21 6" />
-              </svg>
+          <div className={styles.wfProgress} aria-hidden="true">
+            <div
+              className={styles.wfProgressBar}
+              style={{ transform: `scaleX(${progress})` }}
+            />
+            <div className={styles.wfDots}>
+              {WF_STEPS.map((s, i) => (
+                <span
+                  key={s.num}
+                  className={`${styles.wfDot} ${
+                    i <= active ? styles.wfDotActive : ''
+                  }`}
+                />
+              ))}
             </div>
-            <div className={styles.wfStepNum}>Step 3</div>
-            <h3>Get paid.</h3>
-            <p>
-              Commission lands directly. Transparent from day one. No surprises.
-            </p>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -482,7 +576,7 @@ function TestimonialsCarousel() {
   };
 
   return (
-    <section className={`${styles.snapSection} ${styles.testimonialsSection}`}>
+    <section className={`${styles.testimonialsSection}`}>
       <div className={styles.wrapWide}>
         <Reveal as="h2" className={styles.sectionHeadingSolo}>
           What members say.
@@ -583,7 +677,7 @@ const EXPLAINERS = [
 
 function ExplainedBy() {
   return (
-    <section className={`${styles.snapSection} ${styles.explainedSection}`}>
+    <section className={`${styles.explainedSection}`}>
       <div className={styles.wrap}>
         <Reveal as="h2" className={styles.sectionHeadingSolo}>
           See how it works.
@@ -679,7 +773,7 @@ function FaqAccordion() {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section
-      className={`${styles.snapSection} ${styles.faqSection}`}
+      className={`${styles.faqSection}`}
       id="faq"
     >
       <div className={styles.faqWrap}>
@@ -756,7 +850,7 @@ export function ICloseLanding() {
   }, []);
 
   return (
-    <div ref={rootRef} className={`${styles.root} ${styles.rootSnap}`}>
+    <div ref={rootRef} className={`${styles.root}`}>
       {/* NAV */}
       <nav className={styles.nav}>
         <Logo />
@@ -776,7 +870,7 @@ export function ICloseLanding() {
       </nav>
 
       {/* HERO */}
-      <section className={`${styles.snapSection} ${styles.hero}`}>
+      <section className={`${styles.hero}`}>
         <div className={styles.heroInner}>
           <h1>
             Learn From The Best,
@@ -816,7 +910,7 @@ export function ICloseLanding() {
 
       {/* WAITLIST (Typeform) */}
       <section
-        className={`${styles.snapSection} ${styles.waitlist}`}
+        className={`${styles.waitlist}`}
         id="waitlist"
       >
         <div className={styles.wlInner}>
@@ -833,7 +927,7 @@ export function ICloseLanding() {
       <FaqAccordion />
 
       {/* FOOTER */}
-      <div className={`${styles.snapSection} ${styles.snapSectionAuto}`}>
+      <div className={styles.footerWrap}>
         <ICloseFooter />
       </div>
     </div>
