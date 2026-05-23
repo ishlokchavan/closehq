@@ -221,7 +221,7 @@ function WhatIsIt() {
           </Reveal>
 
           {/* Card 5: Close the deal with confidence */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardLg}`} delay={5}>
+          <Reveal className={styles.whatCard} delay={5}>
             <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockClose}>
