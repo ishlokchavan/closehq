@@ -5618,3 +5618,21 @@ a.whoCard p,
     scroll-snap-type: none !important;
   }
 }
+
+/* ============================================================
+   v3.9 — Mobile workflow: drop the center alignment, start
+   content right under the nav so the slide doesn't feel
+   bottom-loaded.
+   ============================================================ */
+@media (max-width: 820px) {
+  .wfMobileStep {
+    justify-content: flex-start !important;
+    /* 56px sticky nav + 24px breathing room */
+    padding: 80px 22px 28px !important;
+    gap: 16px;
+  }
+  .wfMobileVisual {
+    max-height: 40vh;
+    max-height: 40dvh;
+  }
+}
