@@ -641,7 +641,7 @@ function WfStep2Visual() {
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={styles.wfPanelForkTag}>Referral route</div>
+          <div className={styles.wfPanelForkTag}>Collaborator route</div>
           <motion.div
             className={styles.wfPanelForkBig}
             initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
@@ -715,7 +715,7 @@ const WF_STEPS: WfStep[] = [
   {
     num: '02',
     title: 'Pick your route.',
-    body: 'Close it yourself under your own name and keep up to 100% of the commission — or refer the client, let an iClose specialist close alongside you, and earn up to 80%.',
+    body: 'Close it yourself under your own name and keep up to 100% of the commission — or collaborate: bring the client, let an iClose specialist close alongside you, and earn up to 80%.',
     visual: <WfStep2Visual />,
   },
   {
