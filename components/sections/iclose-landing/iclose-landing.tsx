@@ -649,41 +649,52 @@ function HowItWorks() {
 
           <div className={styles.wfStage}>
             <div className={styles.wfStageCopy}>
+              {/* Step number + title — slide in from the left.
+                  Synced with the visual on the right (same duration/easing). */}
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={`copy-${active}`}
-                  className={`${styles.wfStageStep} ${styles.wfStageStepActive}`}
-                  initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -16, filter: 'blur(4px)' }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  aria-current
+                  key={`title-${active}`}
+                  className={styles.wfStageTitleBlock}
+                  initial={{ opacity: 0, x: -64 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -32 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <motion.div
-                    className={styles.wfStageNum}
-                    initial={{ opacity: 0, letterSpacing: '0.3em' }}
-                    animate={{ opacity: 1, letterSpacing: '0.14em' }}
-                    transition={{ duration: 0.5, delay: 0.05 }}
-                  >
+                  <div className={styles.wfStageNum}>
                     {WF_STEPS[active].num}
-                  </motion.div>
+                  </div>
                   <h3 className={styles.wfStageTitle}>
                     {WF_STEPS[active].title}
                   </h3>
-                  <p className={styles.wfStageBody}>{WF_STEPS[active].body}</p>
                 </motion.div>
+              </AnimatePresence>
+
+              {/* Description — stays put. Just swaps content with a soft
+                  cross-fade so the layout doesn't twitch. */}
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`body-${active}`}
+                  className={styles.wfStageBody}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {WF_STEPS[active].body}
+                </motion.p>
               </AnimatePresence>
             </div>
 
             <div className={styles.wfStageVisual}>
+              {/* Image — rises from bottom to top. Synced with the title. */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`visual-${active}`}
                   className={`${styles.wfStageVisualPanel} ${styles.wfStageVisualPanelActive}`}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 80 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -32 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {WF_STEPS[active].visual}
                 </motion.div>

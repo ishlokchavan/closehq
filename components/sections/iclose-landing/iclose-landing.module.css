@@ -5250,3 +5250,48 @@ a.whoCard p,
     font-size: 16px !important;
   }
 }
+
+/* ============================================================
+   v3.3 — split title-slides-left / image-rises-from-bottom
+   ============================================================ */
+
+/* The copy column is now a vertical flex stack — no more grid-area
+   overlap that was kept for the previous cross-fade pattern. */
+.wfStageCopy {
+  display: flex !important;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+/* Title block holds eyebrow + headline, animated as one unit */
+.wfStageTitleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  will-change: transform, opacity;
+}
+/* Description stays in the same spot across slide changes —
+   AnimatePresence handles content swap with a soft cross-fade. */
+.wfStageBody {
+  margin: 0;
+  will-change: opacity;
+}
+
+/* Visual column already has a fixed aspect-ratio container —
+   the inner panel is what rises. Force the panel to fill the
+   container so the rise animation doesn't expose empty space. */
+.wfStageVisualPanel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 820px) {
+  .wfStageCopy {
+    gap: 14px;
+  }
+}
