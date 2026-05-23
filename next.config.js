@@ -22,6 +22,13 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.pexels.com',
       },
+      // Generated persona photography for the "Who is this for?" cards.
+      // Vercel + local dev both reach this CDN; only the sandbox build
+      // container does not, which is why these aren't vendored to /public.
+      {
+        protocol: 'https',
+        hostname: 'd8j0ntlcm91z4.cloudfront.net',
+      },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     qualities: [70, 75, 80, 85, 90],

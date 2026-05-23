@@ -49,8 +49,8 @@ function WhoIsThisFor() {
           <Reveal className={styles.whoCard} delay={1}>
             <div className={styles.whoHero}>
               <Image
-                src="/images/gallery-urban-hub.jpg"
-                alt="UAE skyline — a broker's market"
+                src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
+                alt="A broker in a modern Dubai office"
                 fill
                 sizes="(max-width: 820px) 100vw, 520px"
                 className={styles.whoHeroImg}
@@ -74,8 +74,8 @@ function WhoIsThisFor() {
           <Reveal className={styles.whoCard} delay={2}>
             <div className={styles.whoHero}>
               <Image
-                src="/images/gallery-community.jpg"
-                alt="Residential community — the collaborator's network"
+                src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
+                alt="A private-client advisor reviewing documents with a client"
                 fill
                 sizes="(max-width: 820px) 100vw, 520px"
                 className={styles.whoHeroImg}
@@ -118,134 +118,63 @@ function WhatIsIt() {
         </Reveal>
 
         <div className={styles.whatGrid}>
-          {/* Card 1: Dashboard overview */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardLg}`} delay={1}>
+          {/* Card 1: Dashboard */}
+          <Reveal className={styles.whatCard} delay={1}>
             <h3 className={styles.whatTitle}>One clear overview</h3>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockDashboard}>
-                <div className={styles.mockTabs}>
-                  <span>Saved</span>
-                  <span>Viewings</span>
-                  <span className={styles.mockTabActive}>Your offers</span>
-                  <span>Closed</span>
-                </div>
-                <div className={styles.mockRow}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,440,000</span>
-                  <span className={styles.mockStatus}>Offer sent</span>
-                </div>
-                <div className={styles.mockRow}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,430,000</span>
-                  <span className={styles.mockStatus}>Counter received</span>
-                </div>
-                <div className={styles.mockRow}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,410,000</span>
-                  <span className={styles.mockStatus}>Closed</span>
-                </div>
-              </div>
+            <p className={styles.whatSub}>
+              Every saved property, viewing, offer, and closing — visible at a
+              glance.
+            </p>
+            <div className={styles.whatVideo}>
+              <video
+                src="/videos/whatisit-dashboard.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                aria-label="Dashboard demo"
+              />
             </div>
           </Reveal>
 
-          {/* Card 2: Match with specialists */}
+          {/* Card 2: Collaboration */}
           <Reveal className={styles.whatCard} delay={2}>
             <h3 className={styles.whatTitle}>Match with the right specialist</h3>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockMatch}>
-                <div className={styles.mockMatchRow}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                </div>
-                <div className={styles.mockMatchRow}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                </div>
-                <div
-                  className={`${styles.mockMatchRow} ${styles.mockMatchRowActive}`}
-                >
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                  <span className={styles.mockBadgeBlue}>Matched</span>
-                </div>
-                <div className={styles.mockMatchRow}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                </div>
-              </div>
+            <p className={styles.whatSub}>
+              Post an inquiry. We connect you to the vetted UAE expert who
+              knows that asset best.
+            </p>
+            <div className={styles.whatVideo}>
+              <video
+                src="/videos/whatisit-collaboration.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                aria-label="Collaboration demo"
+              />
             </div>
           </Reveal>
 
-          {/* Card 3: Keep every conversation in one place */}
+          {/* Card 3: Chat */}
           <Reveal className={styles.whatCard} delay={3}>
             <h3 className={styles.whatTitle}>Every conversation in one place</h3>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockChat}>
-                <div className={styles.mockChatRow}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockChatBubble}>Client brief →</span>
-                </div>
-                <div
-                  className={`${styles.mockChatRow} ${styles.mockChatRowRight}`}
-                >
-                  <span className={styles.mockChatBubble}>3 units ready ✓</span>
-                  <span
-                    className={`${styles.mockAvatar} ${styles.mockAvatarAlt}`}
-                  />
-                </div>
-                <div className={styles.mockChatRow}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockChatBubble}>Booking viewing</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 4: Make an offer, faster than ever */}
-          <Reveal className={styles.whatCard} delay={4}>
-            <h3 className={styles.whatTitle}>Make an offer, faster than ever</h3>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockOffer}>
-                <div className={styles.mockOfferTitle}>Offer submitted</div>
-                <div className={styles.mockOfferAmount}>AED 1,425,000</div>
-                <div className={styles.mockOfferMeta}>
-                  <span>Buyer</span>
-                  <span>Seller</span>
-                  <span>Notary</span>
-                </div>
-                <div className={styles.mockOfferBar}>
-                  <div className={styles.mockOfferFill} />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 5: Close the deal with confidence */}
-          <Reveal className={styles.whatCard} delay={5}>
-            <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockClose}>
-                <div className={styles.mockCloseHeader}>
-                  <span className={styles.mockCloseAddr}>
-                    Marina Heights · 1502
-                  </span>
-                  <span className={styles.mockCloseCity}>Dubai Marina</span>
-                </div>
-                <div className={styles.mockCloseGrid}>
-                  <div>
-                    <div className={styles.mockCloseLabel}>Offer price</div>
-                    <div className={styles.mockCloseValue}>AED 1,425,000</div>
-                  </div>
-                  <div>
-                    <div className={styles.mockCloseLabel}>Key transfer</div>
-                    <div className={styles.mockCloseValue}>14 Mar</div>
-                  </div>
-                  <div>
-                    <div className={styles.mockCloseLabel}>Notary</div>
-                    <div className={styles.mockCloseValue}>Confirmed</div>
-                  </div>
-                </div>
-              </div>
+            <p className={styles.whatSub}>
+              Briefs, viewings, offers and follow-ups — one thread per deal,
+              never lost in WhatsApp.
+            </p>
+            <div className={styles.whatVideo}>
+              <video
+                src="/videos/whatisit-chat.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                aria-label="Chat demo"
+              />
             </div>
           </Reveal>
         </div>
@@ -290,45 +219,42 @@ const TESTIMONIALS = [
 ];
 
 function TestimonialsCarousel() {
-  const VISIBLE = 2;
-  const len = TESTIMONIALS.length;
-  const lastPos = Math.max(0, len - VISIBLE); // 5 testimonials, 2 visible → 4 stops
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
-  const directionRef = useRef<1 | -1>(1);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const len = TESTIMONIALS.length;
 
+  // Update the active dot based on the actual scroll position.
+  // Computed from each child's offsetLeft to handle any gap/padding combo.
   useEffect(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setActive((i) => {
-        let dir = directionRef.current;
-        let next = i + dir;
-        if (next > lastPos) {
-          dir = -1;
-          next = i - 1;
-        } else if (next < 0) {
-          dir = 1;
-          next = i + 1;
+    const el = scrollerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const cards = Array.from(
+        el.querySelectorAll<HTMLElement>('[data-tcard]'),
+      );
+      const left = el.scrollLeft;
+      let nearest = 0;
+      let dist = Infinity;
+      cards.forEach((c, i) => {
+        const d = Math.abs(c.offsetLeft - left);
+        if (d < dist) {
+          dist = d;
+          nearest = i;
         }
-        directionRef.current = dir;
-        return next;
       });
-    }, 7000);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      setActive(nearest);
     };
-  }, [active, lastPos]);
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const clamp = (n: number) => Math.max(0, Math.min(lastPos, n));
-  const go = (i: number) => {
-    directionRef.current = i >= active ? 1 : -1;
-    setActive(clamp(i));
-  };
-
-  // 2 cards visible with a 20px gap → step = card width + gap
-  // card width = (100% - 20px) / 2
-  const trackStyle = {
-    transform: `translateX(calc(-1 * ${active} * (((100% - 20px) / 2) + 20px)))`,
+  const scrollToCard = (i: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const target = el.querySelectorAll<HTMLElement>('[data-tcard]')[i];
+    if (target) {
+      el.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -343,44 +269,48 @@ function TestimonialsCarousel() {
           aria-roledescription="carousel"
           aria-label="Member testimonials"
         >
-          <div className={styles.testimonialWindow}>
-            <div className={styles.testimonialTrack} style={trackStyle}>
-              {TESTIMONIALS.map((t) => (
-                <article key={t.initials} className={styles.testimonialCard3}>
-                  <blockquote className={styles.testimonialQuote}>
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <figcaption className={styles.testimonialMeta}>
-                    <span className={styles.testimonialAvatar}>
-                      {t.initials}
-                    </span>
-                    <span className={styles.testimonialRole}>{t.role}</span>
-                  </figcaption>
-                </article>
-              ))}
-            </div>
+          <div
+            ref={scrollerRef}
+            className={styles.testimonialScroller}
+            tabIndex={0}
+          >
+            {TESTIMONIALS.map((t) => (
+              <article
+                key={t.initials}
+                data-tcard
+                className={styles.testimonialCard3}
+              >
+                <blockquote className={styles.testimonialQuote}>
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className={styles.testimonialMeta}>
+                  <span className={styles.testimonialAvatar}>{t.initials}</span>
+                  <span className={styles.testimonialRole}>{t.role}</span>
+                </figcaption>
+              </article>
+            ))}
           </div>
 
           <div className={styles.testimonialControls}>
             <button
               type="button"
               className={styles.testimonialArrow}
-              onClick={() => go(active - 1)}
+              onClick={() => scrollToCard(Math.max(0, active - 1))}
               disabled={active === 0}
               aria-label="Previous testimonial"
             >
               ‹
             </button>
             <div className={styles.testimonialDots}>
-              {Array.from({ length: lastPos + 1 }).map((_, i) => (
+              {TESTIMONIALS.map((t, i) => (
                 <button
-                  key={i}
+                  key={t.initials + i}
                   type="button"
                   className={`${styles.testimonialDot} ${
                     i === active ? styles.testimonialDotActive : ''
                   }`}
-                  onClick={() => go(i)}
-                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => scrollToCard(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
                   aria-current={i === active}
                 />
               ))}
@@ -388,8 +318,8 @@ function TestimonialsCarousel() {
             <button
               type="button"
               className={styles.testimonialArrow}
-              onClick={() => go(active + 1)}
-              disabled={active === lastPos}
+              onClick={() => scrollToCard(Math.min(len - 1, active + 1))}
+              disabled={active === len - 1}
               aria-label="Next testimonial"
             >
               ›
