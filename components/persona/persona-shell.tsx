@@ -43,7 +43,7 @@ export function PersonaShell({
           <Logo />
         </Link>
         <Link href="/#waitlist" className={styles.navCta}>
-          Join waitlist
+          Get started
         </Link>
       </nav>
 

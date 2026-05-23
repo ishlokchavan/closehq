@@ -46,7 +46,7 @@ export function PersonaChrome({ children }: { children: ReactNode }) {
           <Logo />
         </Link>
         <Link href="/#waitlist" className={styles.navCta}>
-          Join waitlist
+          Get started
         </Link>
       </nav>
       {children}

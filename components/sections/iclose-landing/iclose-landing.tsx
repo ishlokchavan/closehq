@@ -1062,7 +1062,7 @@ export function ICloseLanding() {
           </li>
           <li>
             <a href="#waitlist" className={styles.navCta}>
-              Join waitlist
+              Get started
             </a>
           </li>
         </ul>
