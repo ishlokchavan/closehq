@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
-import { siteConfig } from '@/lib/site-config';
-import { formatPhone, telHref } from '@/lib/utils';
 import styles from './iclose-landing.module.css';
 
 const openCookieSettings = () =>
@@ -63,28 +61,8 @@ export function ICloseFooter() {
           </ul>
         </div>
 
-        <div className={styles.footerCol}>
-          <p className={styles.footerHeading}>Contact</p>
-          <ul className={styles.fLinks}>
-            {siteConfig.email && (
-              <li>
-                <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-              </li>
-            )}
-            {siteConfig.phone && (
-              <li>
-                <a href={telHref(siteConfig.phone)}>
-                  {formatPhone(siteConfig.phone)}
-                </a>
-              </li>
-            )}
-            <li>
-              <span style={{ color: 'var(--text-light)', fontSize: 13 }}>
-                Dubai, UAE
-              </span>
-            </li>
-          </ul>
-        </div>
+        {/* Contact column hidden for now — phone/email/location not
+            ready to be public. Re-enable once the team confirms. */}
       </div>
 
       <div className={styles.footerDivider} />

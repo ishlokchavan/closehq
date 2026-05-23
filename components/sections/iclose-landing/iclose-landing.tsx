@@ -153,11 +153,15 @@ function WhoIsThisFor() {
                   For Buyers
                 </div>
               </div>
-              <h3>Source the unit yourself. Earn back up to 80% of the commission.</h3>
+              <h3>
+                Get up to 16% cashback on off-plan, or pay only 0.4%
+                commission on ready units.
+              </h3>
               <p>
-                We source the unit seller-side and handle conveyancing. Or, on
-                off-plan, negotiate with the developer and secure the unit for
-                you. You earn back up to 80% of the agent commission.
+                Source the unit yourself, we handle the rest. On off-plan we
+                negotiate with the developer and rebate up to 16% of the deal
+                value back to you. On ready secondary units we charge a flat
+                0.4% commission instead of the standard 2%.
               </p>
               <span
                 className={`${styles.whoCta} ${styles.whoCtaAlt}`}
@@ -750,7 +754,7 @@ function WfStep2Visual() {
           >
             100%
           </motion.div>
-          <div className={styles.wfPanelForkSub}>commission, kept</div>
+          <div className={styles.wfPanelForkSub}>of hard-earned commission</div>
         </motion.div>
 
         <motion.div
@@ -769,7 +773,7 @@ function WfStep2Visual() {
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={styles.wfPanelForkTag}>Collaborator route</div>
+          <div className={styles.wfPanelForkTag}>Buyer route</div>
           <motion.div
             className={styles.wfPanelForkBig}
             initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
@@ -778,7 +782,7 @@ function WfStep2Visual() {
           >
             80%
           </motion.div>
-          <div className={styles.wfPanelForkSub}>commission, hands-off</div>
+          <div className={styles.wfPanelForkSub}>of cashback on every deal</div>
         </motion.div>
       </div>
     </motion.div>
@@ -843,7 +847,7 @@ const WF_STEPS: WfStep[] = [
   {
     num: '02',
     title: 'Pick your route.',
-    body: 'Close it yourself under your own name and keep up to 100% of the commission. Or collaborate: bring the client, let an iClose specialist close alongside you, and earn up to 80%.',
+    body: 'Closing the deal? Keep up to 100% of the commission you earn. Buying the property yourself? Get up to 80% of that same commission back as cashback. Same platform, two ways to win.',
     visual: <WfStep2Visual />,
   },
   {

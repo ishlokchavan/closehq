@@ -4,7 +4,7 @@ import {
   PersonaHero,
   PersonaFeatures,
   PersonaSteps,
-  PersonaMath,
+  PersonaCompare,
   PersonaFacts,
   PersonaQuote,
   PersonaFaq,
@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: 'For Buyers · iClose',
   description:
-    'Buy smarter. Pay less. Own more. iClose gives buyers deep UAE market intelligence and up to 2% commission savings on every purchase.',
+    'iClose gives UAE buyers up to 16% cashback on off-plan deals or a flat 0.4% commission on ready secondary units, instead of the standard 2%.',
 };
 
 export default function ForBuyersPage() {
@@ -28,24 +28,25 @@ export default function ForBuyersPage() {
         heroAlt="A premium UAE residence interior. Your potential home"
         headline={
           <>
-            Buy smarter.
+            Up to 16% cashback on off-plan.
             <br />
-            <span>Earn back up to 80%.</span>
+            <span>0.4% on ready units.</span>
           </>
         }
         sub={
           <>
-            UAE real estate is one of the world&apos;s best investments. If
-            you know what you&apos;re doing. iClose gives you the deep market
-            intelligence to buy with confidence, and earns you back up to 80%
-            of the agent commission on every deal.
+            UAE real estate is one of the world&apos;s best investments. iClose
+            gives you the deep market intelligence to buy with confidence and
+            rebates most of the agent commission back to you. Up to 16%
+            cashback on off-plan, or a flat 0.4% commission on ready secondary
+            units instead of the standard 2%.
           </>
         }
         primaryCta={{ label: 'Get started free', href: '/#waitlist' }}
         chips={[
-          'Deep insights on every project before you commit',
-          'Earn back up to 80% of the agent commission',
-          'Zero guesswork. Data-backed decisions',
+          'Up to 16% cashback on off-plan deals',
+          'Flat 0.4% commission on ready secondary units',
+          'Deep market intel before you commit',
         ]}
       />
 
@@ -121,23 +122,37 @@ export default function ForBuyersPage() {
         ]}
       />
 
-      <PersonaMath
-        eyebrow="The savings"
-        heading={<>Earn back up to 80% of the commission.</>}
+      <PersonaCompare
+        eyebrow="The math"
+        heading={<>Off-plan vs ready, both pay you back.</>}
         body={
           <>
-            Because you&apos;re coming in educated and deal-ready, we pass
-            most of the commission back to you. Money most buyers never knew
-            they could earn back.
+            On a typical AED 2M deal, here&apos;s the difference between
+            buying off-plan through iClose and buying a ready secondary unit
+            through iClose.
           </>
         }
-        rows={[
-          { label: 'Property value', value: 'AED 2,000,000' },
-          { label: 'Standard agent commission (2%)', value: 'AED 40,000' },
-          { label: 'Your savings (up to 80%)', value: 'Up to AED 32,000', hi: true },
-          { label: 'Listings accessible', value: 'Full UAE market' },
-        ]}
-        footnote="Your savings are confirmed upfront. No surprises at signing."
+        left={{
+          title: 'Ready secondary unit',
+          rows: [
+            { label: 'Deal value', value: 'AED 2,000,000' },
+            { label: 'Standard commission', value: '2% (AED 40,000)' },
+            { label: 'iClose flat fee', value: '0.4% only' },
+          ],
+          takeLabel: 'You pay',
+          takeValue: 'AED 8,000',
+        }}
+        right={{
+          title: 'Off-plan unit',
+          rows: [
+            { label: 'Deal value', value: 'AED 2,000,000' },
+            { label: 'Developer incentive', value: 'Up to 20%' },
+            { label: 'iClose rebate share', value: '80%' },
+          ],
+          takeLabel: 'You get back',
+          takeValue: 'Up to AED 320,000',
+        }}
+        footnote="Exact savings confirmed upfront. No surprises at signing."
       />
 
       <PersonaSteps
