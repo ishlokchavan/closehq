@@ -5,6 +5,7 @@ import {
   PersonaIntro,
   PersonaSteps,
   PersonaMath,
+  PersonaCompare,
   PersonaAudience,
   PersonaCta,
 } from '@/components/persona/persona-sections';
@@ -152,13 +153,43 @@ export default function ForBrokersPage() {
         }
         rows={[
           { label: 'Average UAE off-plan deal', value: 'AED 1.8M' },
-          { label: 'Commission on deal', value: '4–6%' },
-          { label: 'Your split at iClose', value: 'Up to 8%', hi: true },
-          { label: 'Your take on one close', value: 'AED 72,000+', hi: true },
+          { label: 'Commission on deal', value: '5%' },
+          { label: 'Your take on one close', value: 'Up to AED 90,000', hi: true },
           { label: 'Top 10% closers earn annually', value: 'AED 1M+', hi: true },
-          { label: 'Ceiling on performance', value: 'None' },
         ]}
         footnote="Splits confirmed per deal type at onboarding. No ceiling on performance."
+      />
+
+      <PersonaCompare
+        eyebrow="The split that matters"
+        heading={<>Traditional brokerage vs iClose.</>}
+        body={
+          <>
+            Same deal, same 5% commission. The difference is how much of it
+            ends up in your pocket.
+          </>
+        }
+        left={{
+          title: 'Traditional brokerage',
+          rows: [
+            { label: 'Deal value', value: 'AED 1.8M' },
+            { label: 'Commission (5%)', value: 'AED 90,000' },
+            { label: 'Split with agency', value: '50 / 50' },
+          ],
+          takeLabel: 'You keep',
+          takeValue: 'AED 45,000',
+        }}
+        right={{
+          title: 'iClose',
+          rows: [
+            { label: 'Deal value', value: 'AED 1.8M' },
+            { label: 'Commission (5%)', value: 'AED 90,000' },
+            { label: 'Your split', value: 'Up to 100%' },
+          ],
+          takeLabel: 'You keep',
+          takeValue: 'AED 90,000',
+        }}
+        footnote="Membership covers the platform. The commission stays yours."
       />
 
       <PersonaAudience

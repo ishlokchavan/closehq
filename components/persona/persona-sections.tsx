@@ -201,6 +201,69 @@ export function PersonaMath({
   );
 }
 
+/* ------- Side-by-side comparison ------- */
+export function PersonaCompare({
+  eyebrow,
+  heading,
+  body,
+  left,
+  right,
+  footnote,
+}: {
+  eyebrow?: string;
+  heading: ReactNode;
+  body?: ReactNode;
+  left: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: string };
+  right: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: string };
+  footnote?: string;
+}) {
+  return (
+    <section className={styles.math}>
+      <div className={styles.mathHeader}>
+        {eyebrow && <div className={styles.introEyebrow}>{eyebrow}</div>}
+        <h2 className={styles.introHeading}>{heading}</h2>
+        {body && <p className={styles.introBody}>{body}</p>}
+      </div>
+      <div className={styles.compareGrid}>
+        <article className={`${styles.compareCard} ${styles.compareCardMuted}`}>
+          <div className={styles.compareTitle}>{left.title}</div>
+          <div className={styles.compareRows}>
+            {left.rows.map((r) => (
+              <div className={styles.compareRow} key={r.label}>
+                <span>{r.label}</span>
+                <span>{r.value}</span>
+              </div>
+            ))}
+          </div>
+          <div className={styles.compareTake}>
+            <span>{left.takeLabel}</span>
+            <span className={styles.compareTakeValue}>{left.takeValue}</span>
+          </div>
+        </article>
+
+        <div className={styles.compareVs} aria-hidden="true">vs</div>
+
+        <article className={`${styles.compareCard} ${styles.compareCardHero}`}>
+          <div className={styles.compareTitle}>{right.title}</div>
+          <div className={styles.compareRows}>
+            {right.rows.map((r) => (
+              <div className={styles.compareRow} key={r.label}>
+                <span>{r.label}</span>
+                <span>{r.value}</span>
+              </div>
+            ))}
+          </div>
+          <div className={`${styles.compareTake} ${styles.compareTakeHi}`}>
+            <span>{right.takeLabel}</span>
+            <span className={styles.compareTakeValue}>{right.takeValue}</span>
+          </div>
+        </article>
+      </div>
+      {footnote && <p className={styles.mathFoot}>{footnote}</p>}
+    </section>
+  );
+}
+
 /* ------- Audience block ------- */
 export function PersonaAudience({
   heading,

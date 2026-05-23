@@ -5030,3 +5030,154 @@ a.whoCard p,
     transition: none !important;
   }
 }
+
+/* ============================================================
+   v3.1 — pattern interrupts (dark stat strip + ticker marquee)
+   ============================================================ */
+
+/* Bold dark stat strip */
+.statStrip {
+  background: var(--bg-dark);
+  color: #f5f5f7;
+  padding: 96px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.statStrip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 113, 227, 0.18) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.statStripInner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.statStripEyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-bright, #2997ff);
+}
+.statStripBig {
+  font-size: clamp(56px, 12vw, 168px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #ffffff 0%, #b3d6ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.statStripBigSub {
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: rgba(255, 255, 255, 0.6);
+  background: none;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+}
+.statStripCaption {
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 580px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 600px) {
+  .statStrip {
+    padding: 72px 18px;
+  }
+}
+
+/* Auto-scrolling marquee */
+.marquee {
+  background: var(--bg);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 22px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+.marquee::before,
+.marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 96px;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+}
+.marquee::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%);
+}
+.marqueeTrack {
+  display: inline-flex;
+  gap: 56px;
+  animation: marqueeScroll 38s linear infinite;
+  will-change: transform;
+}
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+  font-weight: 500;
+}
+.marqueeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.18);
+  flex-shrink: 0;
+  animation: marqueeDotPulse 2.4s ease-in-out infinite;
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marqueeDotPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.18); }
+  50%      { box-shadow: 0 0 0 8px rgba(52, 199, 89, 0.05); }
+}
+.marquee:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+  .marqueeDot {
+    animation: none;
+  }
+}

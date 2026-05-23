@@ -33,15 +33,15 @@ export default function ForCollaboratorsPage() {
         sub={
           <>
             You&apos;ve spent years building trust. iClose lets you turn one
-            warm intro into a real commission — no license, no hustle, no
-            awkward pitch.
+            warm intro into a real share of the commission — no license, no
+            hustle, no awkward pitch.
           </>
         }
         primaryCta={{ label: 'Get access', href: '/#waitlist' }}
         secondaryCta={{ label: 'See the math', href: '#math' }}
         chips={[
-          'Up to 2% referral fee on closed deals',
-          'AED 0 upfront cost',
+          'Up to 80% of the commission on every closed deal',
+          'AED 0 upfront cost — no license needed',
           '100% passive — we handle everything',
         ]}
       />
@@ -60,7 +60,7 @@ export default function ForCollaboratorsPage() {
           },
           {
             title: 'Deal closes. You earn.',
-            body: 'We pay your referral fee directly — tracked, transparent, no chasing. On a AED 3M deal that&apos;s up to AED 60,000 in your pocket.',
+            body: 'We pay your share of the commission directly — tracked, transparent, no chasing. On a AED 3M deal with a 2% commission, that’s up to AED 48,000 in your pocket.',
           },
         ]}
       />
@@ -90,15 +90,22 @@ export default function ForCollaboratorsPage() {
       <div id="math">
         <PersonaMath
           heading={<>One intro can pay more than a month&apos;s work.</>}
+          body={
+            <>
+              On a typical Dubai property deal, the agent commission is 2% of
+              the value. Through iClose, you keep up to 80% of that
+              commission — for one warm introduction.
+            </>
+          }
           rows={[
             { label: 'Property value', value: 'AED 3,000,000' },
-            { label: 'Your referral fee (up to 2%)', value: 'AED 60,000', hi: true },
-            { label: 'Your time spent', value: 'One intro' },
+            { label: 'Total agent commission (2%)', value: 'AED 60,000' },
+            { label: 'Your share (up to 80%)', value: 'AED 48,000', hi: true },
+            { label: 'Your time spent', value: 'One intro message' },
             { label: 'License required', value: 'None' },
-            { label: 'Deals needed for AED 200k / yr', value: '3–4', hi: true },
-            { label: 'Tracking', value: 'Partner dashboard' },
+            { label: 'Closed deals for AED 200k / yr', value: '4–5', hi: true },
           ]}
-          footnote="Referral fees paid on deal close, tracked through your iClose partner dashboard."
+          footnote="Commission share paid on deal close, tracked through your iClose partner dashboard."
         />
       </div>
 
