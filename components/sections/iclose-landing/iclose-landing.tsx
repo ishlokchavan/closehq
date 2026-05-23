@@ -290,9 +290,9 @@ const TESTIMONIALS = [
 ];
 
 function TestimonialsCarousel() {
-  const VISIBLE = 3;
+  const VISIBLE = 2;
   const len = TESTIMONIALS.length;
-  const lastPos = Math.max(0, len - VISIBLE); // = 2 for 5 testimonials
+  const lastPos = Math.max(0, len - VISIBLE); // 5 testimonials, 2 visible → 4 stops
   const [active, setActive] = useState(0);
   const directionRef = useRef<1 | -1>(1);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -325,9 +325,10 @@ function TestimonialsCarousel() {
     setActive(clamp(i));
   };
 
-  // step = card width + gap; in CSS we use calc((100% - 32px)/3 + 16px)
+  // 2 cards visible with a 20px gap → step = card width + gap
+  // card width = (100% - 20px) / 2
   const trackStyle = {
-    transform: `translateX(calc(-1 * ${active} * (((100% - 32px) / 3) + 16px)))`,
+    transform: `translateX(calc(-1 * ${active} * (((100% - 20px) / 2) + 20px)))`,
   };
 
   return (

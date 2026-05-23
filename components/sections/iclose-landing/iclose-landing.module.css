@@ -3603,19 +3603,16 @@
    "See how it works"
    ============================================================ */
 
-/* Tone down the single-line section headings so they stop dwarfing
-   the content underneath. Was using the .root h2 56px default. */
+/* Section headings are unified by .root h2 sizing — only tune spacing
+   here. Drops the prior per-section font-size overrides that made
+   "What is it?" look smaller than "Who is this for?". */
 .sectionHeadingSolo {
-  font-size: clamp(28px, 3.4vw, 44px);
-  line-height: 1.08;
-  letter-spacing: -0.022em;
-  margin: 0 auto 36px;
+  margin: 0 auto 40px;
 }
 
 @media (max-width: 720px) {
   .sectionHeadingSolo {
-    font-size: clamp(26px, 6vw, 34px);
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 }
 
@@ -3625,12 +3622,8 @@
 }
 
 .whatSection {
-  padding-top: 72px;
-  padding-bottom: 48px;
-}
-.whatSection .sectionHeadingSolo {
-  margin-bottom: 24px;
-  font-size: clamp(26px, 3vw, 38px);
+  padding-top: 80px;
+  padding-bottom: 56px;
 }
 .whatCard {
   min-height: 0;
@@ -3661,18 +3654,27 @@
   }
 }
 
-/* TESTIMONIALS — restore the previous card weight */
+/* TESTIMONIALS — 2-up sliding track with bigger cards */
 .testimonialWindow {
-  max-width: 1180px;
-  padding: 6px 4px;
+  max-width: 1100px;
+  padding: 8px 4px;
 }
-.testimonialCard3 {
-  padding: 30px 28px 24px;
-  min-height: 290px;
+.testimonialTrack {
+  gap: 20px;
+}
+.testimonialTrack .testimonialCard3 {
+  flex: 0 0 calc((100% - 20px) / 2);
+  padding: 36px 36px 28px;
+  min-height: 280px;
 }
 .testimonialCard3 .testimonialQuote {
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.5;
+  letter-spacing: -0.014em;
+}
+.testimonialCard3 .testimonialMeta {
+  margin-top: 28px;
+  padding-top: 22px;
 }
 
 /* EXPLAINED ("See how it works.") — separate heading from the cards */
