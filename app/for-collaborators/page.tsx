@@ -10,9 +10,9 @@ import {
 } from '@/components/persona/persona-sections';
 
 export const metadata: Metadata = {
-  title: 'For Referral Partners — iClose',
+  title: 'For Referral Partners · iClose',
   description:
-    'Your network already has deals in it. iClose turns one warm intro into a real commission — no license, no hustle, no awkward pitch.',
+    'Your network already has deals in it. iClose turns one warm intro into a real commission. No license, no hustle, no awkward pitch.',
 };
 
 export default function ForCollaboratorsPage() {
@@ -33,7 +33,7 @@ export default function ForCollaboratorsPage() {
         sub={
           <>
             You&apos;ve spent years building trust. iClose lets you turn one
-            warm intro into a real share of the commission — no license, no
+            warm intro into a real share of the commission. No license, no
             hustle, no awkward pitch.
           </>
         }
@@ -41,8 +41,8 @@ export default function ForCollaboratorsPage() {
         secondaryCta={{ label: 'See the math', href: '#math' }}
         chips={[
           'Up to 80% of the commission on every closed deal',
-          'AED 0 upfront cost — no license needed',
-          '100% passive — we handle everything',
+          'AED 0 upfront cost. No license needed',
+          '100% passive. We handle everything',
         ]}
       />
 
@@ -60,13 +60,13 @@ export default function ForCollaboratorsPage() {
           },
           {
             title: 'Deal closes. You earn.',
-            body: 'We pay your share of the commission directly — tracked, transparent, no chasing. On a AED 3M deal with a 2% commission, that’s up to AED 48,000 in your pocket.',
+            body: 'We pay your share of the commission directly. Tracked, transparent, no chasing. On a AED 3M deal with a 2% commission, that’s up to AED 48,000 in your pocket.',
           },
         ]}
       />
 
       <PersonaAudience
-        heading={<>If people trust you with big decisions — this is for you.</>}
+        heading={<>If people trust you with big decisions. This is for you.</>}
         items={[
           {
             title: 'Lawyers.',
@@ -74,7 +74,7 @@ export default function ForCollaboratorsPage() {
           },
           {
             title: 'Private bankers.',
-            body: "HNW clients diversifying into real estate. The question isn't whether they're buying — it's who they trust to guide it.",
+            body: "HNW clients diversifying into real estate. The question isn't whether they're buying. It's who they trust to guide it.",
           },
           {
             title: 'Business consultants.',
@@ -82,7 +82,7 @@ export default function ForCollaboratorsPage() {
           },
           {
             title: 'Community connectors.',
-            body: 'Investors, expat community leaders, family office advisors — anyone whose word carries weight with serious buyers.',
+            body: 'Investors, expat community leaders, family office advisors. Anyone whose word carries weight with serious buyers.',
           },
         ]}
       />
@@ -94,7 +94,7 @@ export default function ForCollaboratorsPage() {
             <>
               On a typical Dubai property deal, the agent commission is 2% of
               the value. Through iClose, you keep up to 80% of that
-              commission — for one warm introduction.
+              commission. For one warm introduction.
             </>
           }
           rows={[
@@ -110,7 +110,7 @@ export default function ForCollaboratorsPage() {
       </div>
 
       <PersonaQuote
-        quote="I referred two families from my legal practice. Both closed within 6 weeks. iClose handled everything — I just got the transfer notification."
+        quote="I referred two families from my legal practice. Both closed within 6 weeks. iClose handled everything, I just got the transfer notification."
         name="Partner"
         role="Corporate law firm · Dubai DIFC"
       />
@@ -119,7 +119,7 @@ export default function ForCollaboratorsPage() {
         heading={<>Apply to become a referral partner.</>}
         body={
           <>
-            Tell us a bit about your network. We onboard selectively — this is
+            Tell us a bit about your network. We onboard selectively. This is
             a premium programme, not a mass affiliate link. No spam, ever.
           </>
         }

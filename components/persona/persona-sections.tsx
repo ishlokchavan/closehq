@@ -85,7 +85,7 @@ export function PersonaHero({
   return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
-        {/* Copy slides in from LEFT, image from BOTTOM — same pairing
+        {/* Copy slides in from LEFT, image from BOTTOM. Same pairing
             as the landing's HowItWorks slides. */}
         <motion.div
           className={styles.heroCopy}
@@ -465,7 +465,7 @@ export function PersonaQuote({
 }) {
   return (
     <section className={styles.quote}>
-      {/* Quote scale-pops in — a "moment" beat in the page rhythm. */}
+      {/* Quote scale-pops in. A "moment" beat in the page rhythm. */}
       <motion.blockquote className={styles.quoteBody} {...animScale}>
         &ldquo;{quote}&rdquo;
       </motion.blockquote>

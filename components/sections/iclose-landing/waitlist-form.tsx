@@ -16,7 +16,7 @@ import { leadFocusValues, type LeadFormValues } from '@/lib/validations';
 import { siteConfig } from '@/lib/site-config';
 import styles from './iclose-landing.module.css';
 
-/* Simplified shape — collected as-is by the form, then split into the
+/* Simplified shape. Collected as-is by the form, then split into the
    first/last+consent shape the existing /api/lead route expects. */
 const intentValues = ['buyer', 'closer'] as const;
 
@@ -82,7 +82,7 @@ const STEPS: StepDef[] = [
   {
     key: 'email',
     title: 'Where should we reach you?',
-    hint: 'We’ll email you to confirm — nothing else.',
+    hint: 'We’ll email you to confirm. Nothing else.',
     validateKeys: ['email'],
   },
   {
@@ -286,7 +286,7 @@ export function WaitlistForm() {
             </div>
             <h3 className={styles.successTitle}>You&apos;re on the list.</h3>
             <p className={styles.successBody}>
-              We&apos;ll be in touch shortly. Or skip the wait — pick how
+              We&apos;ll be in touch shortly. Or skip the wait. Pick how
               you&apos;d like to talk.
             </p>
             <div className={styles.wlSuccessCtas}>
@@ -423,8 +423,7 @@ export function WaitlistForm() {
                 onChange={(e) => setMarketingOptIn(e.target.checked)}
               />
               <span>
-                Send me product updates and launch news. (Optional —
-                we don&apos;t share your details.)
+                Send me product updates and launch news. (Optional,                 we don&apos;t share your details.)
               </span>
             </label>
           )}

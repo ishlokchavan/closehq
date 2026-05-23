@@ -11,9 +11,9 @@ import {
 } from '@/components/persona/persona-sections';
 
 export const metadata: Metadata = {
-  title: 'For Closers — iClose',
+  title: 'For Closers · iClose',
   description:
-    'The UAE market is worth trillions. iClose gives you everything to become the closer who gets the biggest slice — full project knowledge, elite resources, and the highest commission splits in the country.',
+    'The UAE market is worth trillions. iClose gives you everything to become the closer who gets the biggest slice. Full project knowledge, elite resources, and the highest commission splits in the country.',
 };
 
 export default function ForBrokersPage() {
@@ -33,7 +33,7 @@ export default function ForBrokersPage() {
         }
         sub={
           <>
-            Brokers, lawyers, advisors, executives, networkers — anyone with a
+            Brokers, lawyers, advisors, executives, networkers. Anyone with a
             client to refer or a deal to close. iClose gives you the market
             intelligence, sales tools, and commission structure that the top
             UAE closers run on.
@@ -49,7 +49,7 @@ export default function ForBrokersPage() {
         heading={<>Not another brokerage.</>}
         body={
           <>
-            iClose is a platform for anyone who closes — or knows someone who
+            iClose is a platform for anyone who closes. Or knows someone who
             will. We don&apos;t manage agents. We equip closers and referrers
             with the market intelligence, sales tools, and commission
             structure to win every room they walk into.
@@ -59,7 +59,7 @@ export default function ForBrokersPage() {
           {
             tag: 'Education',
             title: 'Full market education.',
-            body: 'Every developer. Every community. Every project — from launch specs to payment plan nuances.',
+            body: 'Every developer. Every community. Every project. From launch specs to payment plan nuances.',
           },
           {
             tag: 'Resources',
@@ -69,7 +69,7 @@ export default function ForBrokersPage() {
           {
             tag: 'Refer or close',
             title: 'Two paths, one structure.',
-            body: 'Close it yourself and keep up to 100%, or refer the client and earn up to 80% — your call, deal by deal.',
+            body: 'Close it yourself and keep up to 100%, or refer the client and earn up to 80%. Your call, deal by deal.',
           },
           {
             tag: 'Reputation',
@@ -92,7 +92,7 @@ export default function ForBrokersPage() {
           steps={[
             {
               title: 'Learn the market.',
-              body: "Get full access to iClose's project library — developers, communities, specs, and investment angles. Study at your own pace. We cover everything the UAE's top closers know.",
+              body: "Get full access to iClose's project library. Developers, communities, specs, and investment angles. Study at your own pace. We cover everything the UAE's top closers know.",
             },
             {
               title: 'Master the pitch.',
@@ -104,7 +104,7 @@ export default function ForBrokersPage() {
             },
             {
               title: 'Close at elite splits.',
-              body: 'Access deals with the highest commission splits in the country. No cap. Performance determines your earning ceiling — and we set it high.',
+              body: 'Access deals with the highest commission splits in the country. No cap. Performance determines your earning ceiling. And we set it high.',
             },
           ]}
         />
@@ -128,7 +128,7 @@ export default function ForBrokersPage() {
           {
             tag: 'Plans',
             title: 'Floor plans & specs.',
-            body: 'Actual unit layouts, finishing specs, and configurations — for every active project.',
+            body: 'Actual unit layouts, finishing specs, and configurations. For every active project.',
           },
           {
             tag: 'Payment',
@@ -138,7 +138,7 @@ export default function ForBrokersPage() {
           {
             tag: 'Intel',
             title: 'Community + market reports.',
-            body: 'Lifestyle, infrastructure, rental yields, capital appreciation — by area, not just by tower.',
+            body: 'Lifestyle, infrastructure, rental yields, capital appreciation. By area, not just by tower.',
           },
         ]}
       />
@@ -148,7 +148,7 @@ export default function ForBrokersPage() {
         heading={<>What top closers make.</>}
         body={
           <>
-            This isn&apos;t a salaried role. It&apos;s a performance game — and
+            This isn&apos;t a salaried role. It&apos;s a performance game. And
             iClose gives you the best possible odds.
           </>
         }
@@ -202,15 +202,15 @@ export default function ForBrokersPage() {
           },
           {
             title: 'Lawyers, advisors & consultants.',
-            body: 'Your clients are moving money into UAE property. You already have the relationship — earn up to 80% by referring them through iClose.',
+            body: 'Your clients are moving money into UAE property. You already have the relationship. Earn up to 80% by referring them through iClose.',
           },
           {
             title: 'Executives & community connectors.',
-            body: "Your network constantly asks who to call for property. Now you have a real answer — and a real share when they close.",
+            body: "Your network constantly asks who to call for property. Now you have a real answer. And a real share when they close.",
           },
           {
             title: 'Sales pros from other industries.',
-            body: 'You know how to close people — and want to apply that in one of the world&apos;s highest-value markets.',
+            body: 'You know how to close people. And want to apply that in one of the world&apos;s highest-value markets.',
           },
         ]}
       />

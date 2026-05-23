@@ -5,9 +5,9 @@ import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer
 import styles from '@/components/persona/persona.module.css';
 
 export const metadata: Metadata = {
-  title: 'Team — iClose',
+  title: 'Team · iClose',
   description:
-    'Meet the people building iClose — a UAE real estate platform for closers, collaborators, and buyers.',
+    'Meet the people building iClose. A UAE real estate platform for closers, collaborators, and buyers.',
 };
 
 export default function TeamPage() {
@@ -36,7 +36,7 @@ export default function TeamPage() {
           <p style={{ margin: '0 auto', maxWidth: 580 }}>
             We&apos;re a small team of UAE real estate operators, engineers,
             and designers building iClose from Dubai. Full bios and the
-            founder story are coming soon — for now, the fastest way to meet
+            founder story are coming soon. For now, the fastest way to meet
             us is to book a call.
           </p>
           <div className={styles.heroCtas} style={{ justifyContent: 'center', marginTop: 28 }}>

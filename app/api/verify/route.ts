@@ -61,7 +61,7 @@ export async function GET(request: Request) {
       .update({ is_verified: true, verified_at: new Date().toISOString() })
       .eq('verification_token', token);
 
-    // Provision a Supabase Auth user — triggers handle_new_user() → profiles insert
+    // Provision a Supabase Auth user. Triggers handle_new_user() → profiles insert
     if (adminDb) {
       try {
         const { data: created, error: authError } = await adminDb.auth.admin.createUser({
@@ -73,7 +73,7 @@ export async function GET(request: Request) {
         let userId: string | null = created?.user?.id ?? null;
 
         if (!userId && authError?.message.includes('already been registered')) {
-          // User pre-exists — find their ID via SECURITY DEFINER function
+          // User pre-exists. Find their ID via SECURITY DEFINER function
           const { data: existingId } = await adminDb.rpc('get_auth_user_id_by_email', { p_email: data.email });
           userId = existingId ?? null;
         } else if (authError && !authError.message.includes('already been registered')) {
@@ -96,17 +96,17 @@ export async function GET(request: Request) {
     try {
       await sendEmail({
         to: data.email,
-        subject: 'Email confirmed — welcome to iClose',
+        subject: 'Email confirmed. Welcome to iClose',
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;color:#1d1d1f;">
             <p style="font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em;">You're confirmed, ${data.first_name}.</p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:20px;letter-spacing:-0.01em;">
-              Your email is verified. You're on the founding cohort list — we'll send your iClose Academy login credentials before launch.
+              Your email is verified. You're on the founding cohort list. We'll send your iClose Academy login credentials before launch.
             </p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:28px;letter-spacing:-0.01em;">
               Questions? Reply to this email and we'll get back to you.
             </p>
-            <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
+            <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
             ${emailFooter()}
           </div>
         `,
@@ -138,14 +138,14 @@ export async function GET(request: Request) {
     try {
       await sendEmail({
         to: data.email,
-        subject: 'Application confirmed — iClose Specialist',
+        subject: 'Application confirmed. IClose Specialist',
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;color:#1d1d1f;">
             <p style="font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em;">Email confirmed, ${data.first_name}.</p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:20px;letter-spacing:-0.01em;">
               Your Specialist application is confirmed and under review. We review every application personally and will be in touch within a few days.
             </p>
-            <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
+            <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
             ${emailFooter()}
           </div>
         `,

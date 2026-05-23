@@ -13,7 +13,7 @@ import {
 } from '@/components/persona/persona-sections';
 
 export const metadata: Metadata = {
-  title: 'For Buyers — iClose',
+  title: 'For Buyers · iClose',
   description:
     'Buy smarter. Pay less. Own more. iClose gives buyers deep UAE market intelligence and up to 2% commission savings on every purchase.',
 };
@@ -25,7 +25,7 @@ export default function ForBuyersPage() {
         variant="buyer"
         tagLabel="For Buyers"
         heroImage="/images/hero-luxury.jpg"
-        heroAlt="A premium UAE residence interior — your potential home"
+        heroAlt="A premium UAE residence interior. Your potential home"
         headline={
           <>
             Buy smarter.
@@ -35,7 +35,7 @@ export default function ForBuyersPage() {
         }
         sub={
           <>
-            UAE real estate is one of the world&apos;s best investments — if
+            UAE real estate is one of the world&apos;s best investments. If
             you know what you&apos;re doing. iClose gives you the deep market
             intelligence to buy with confidence, and earns you back up to 80%
             of the agent commission on every deal.
@@ -45,7 +45,7 @@ export default function ForBuyersPage() {
         chips={[
           'Deep insights on every project before you commit',
           'Earn back up to 80% of the agent commission',
-          'Zero guesswork — data-backed decisions',
+          'Zero guesswork. Data-backed decisions',
         ]}
       />
 
@@ -89,7 +89,7 @@ export default function ForBuyersPage() {
         body={
           <>
             We built the platform we wish existed when buyers first entered
-            this market — unbiased, comprehensive, and built around your
+            this market. Unbiased, comprehensive, and built around your
             outcome.
           </>
         }
@@ -100,7 +100,7 @@ export default function ForBuyersPage() {
           },
           {
             title: 'Floor plans & specs.',
-            body: "Actual unit layouts, sizes, and finishing specs — not just renders. Know what you're buying before you visit.",
+            body: "Actual unit layouts, sizes, and finishing specs. Not just renders. Know what you're buying before you visit.",
           },
           {
             title: 'Payment plan breakdowns.',
@@ -108,7 +108,7 @@ export default function ForBuyersPage() {
           },
           {
             title: 'Community intelligence.',
-            body: 'Lifestyle, infrastructure, rental yields, and capital appreciation trends — by area, not just by tower.',
+            body: 'Lifestyle, infrastructure, rental yields, and capital appreciation trends. By area, not just by tower.',
           },
           {
             title: 'Market reports.',
@@ -116,7 +116,7 @@ export default function ForBuyersPage() {
           },
           {
             title: 'Verified specialist access.',
-            body: "When you're ready to move, our closers are certified and briefed — no cold handoffs.",
+            body: "When you're ready to move, our closers are certified and briefed. No cold handoffs.",
           },
         ]}
       />
@@ -137,7 +137,7 @@ export default function ForBuyersPage() {
           { label: 'Your savings (up to 80%)', value: 'Up to AED 32,000', hi: true },
           { label: 'Listings accessible', value: 'Full UAE market' },
         ]}
-        footnote="Your savings are confirmed upfront — no surprises at signing."
+        footnote="Your savings are confirmed upfront. No surprises at signing."
       />
 
       <PersonaSteps
@@ -147,7 +147,7 @@ export default function ForBuyersPage() {
         steps={[
           {
             title: 'Access the platform.',
-            body: "Sign up free. Browse the full UAE project library — developments, floor plans, pricing, community breakdowns, and market data. No agent contact required until you want it.",
+            body: "Sign up free. Browse the full UAE project library. Developments, floor plans, pricing, community breakdowns, and market data. No agent contact required until you want it.",
           },
           {
             title: 'Get educated on your shortlist.',
@@ -155,11 +155,11 @@ export default function ForBuyersPage() {
           },
           {
             title: 'Connect with a certified closer.',
-            body: "When you're ready to view or make an offer, we connect you with a specialist who knows your shortlist. You walk in informed — so the conversation is different.",
+            body: "When you're ready to view or make an offer, we connect you with a specialist who knows your shortlist. You walk in informed. So the conversation is different.",
           },
           {
             title: 'Close with savings.',
-            body: "Because you're closing through iClose, you qualify for discounted commission terms. Your saving is confirmed upfront — no surprises at signing.",
+            body: "Because you're closing through iClose, you qualify for discounted commission terms. Your saving is confirmed upfront. No surprises at signing.",
           },
         ]}
       />
@@ -167,15 +167,15 @@ export default function ForBuyersPage() {
       <PersonaFacts
         heading={<>Why this market. Why now.</>}
         items={[
-          { stat: '8–12%', label: 'Average net rental yield — among the highest globally' },
+          { stat: '8–12%', label: 'Average net rental yield. Among the highest globally' },
           { stat: '0%', label: 'Capital gains and income tax on UAE property earnings' },
-          { stat: '170+', label: 'Nationalities actively buying — the most international market on earth' },
+          { stat: '170+', label: 'Nationalities actively buying. The most international market on earth' },
           { stat: 'AED 2M', label: 'Purchase threshold that qualifies you for a UAE Golden Visa' },
         ]}
       />
 
       <PersonaQuote
-        quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks — and saved AED 35,000 on commission."
+        quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks. And saved AED 35,000 on commission."
         name="Buyer"
         role="2BR apartment · Dubai Hills Estate"
       />
@@ -185,7 +185,7 @@ export default function ForBuyersPage() {
         items={[
           {
             q: 'Is iClose free to use as a buyer?',
-            a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our closer service when you're ready to move — and that's when the commission saving kicks in.",
+            a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our closer service when you're ready to move. And that's when the commission saving kicks in.",
           },
           {
             q: 'Do I need to be a UAE resident to buy?',
@@ -193,7 +193,7 @@ export default function ForBuyersPage() {
           },
           {
             q: 'How does the commission saving work?',
-            a: 'When you close a deal through the iClose platform, we share a portion of the commission we earn with you. The exact saving depends on the developer, project type, and deal terms — confirmed transparently before you sign anything.',
+            a: 'When you close a deal through the iClose platform, we share a portion of the commission we earn with you. The exact saving depends on the developer, project type, and deal terms. Confirmed transparently before you sign anything.',
           },
           {
             q: 'What if I already have a project in mind?',
@@ -214,7 +214,7 @@ export default function ForBuyersPage() {
             smarter in the UAE market. No credit card. No commitment.
           </>
         }
-        cta={{ label: 'Get started — it&apos;s free', href: '/#waitlist' }}
+        cta={{ label: "Get started, it's free", href: '/#waitlist' }}
       />
     </PersonaChrome>
   );

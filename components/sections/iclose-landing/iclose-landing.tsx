@@ -35,7 +35,7 @@ const wfBarVar = {
   },
 };
 
-/* Site-wide whileInView presets — kept short and used selectively so
+/* Site-wide whileInView presets. Kept short and used selectively so
    each section has a slightly different entry feel (pattern interrupt
    without being repetitive). */
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -127,7 +127,7 @@ function WhoIsThisFor() {
               </div>
               <h3>Close more deals. Keep more of each one.</h3>
               <p>
-                Brokers and lawyers, advisors, executives, networkers — anyone
+                Brokers and lawyers, advisors, executives, networkers. Anyone
                 with a client to refer or a deal to close. Keep up to 100% of
                 every commission you earn.
               </p>
@@ -155,7 +155,7 @@ function WhoIsThisFor() {
               </div>
               <h3>Source the unit yourself. Earn back up to 80% of the commission.</h3>
               <p>
-                We source the unit seller-side and handle conveyancing — or, on
+                We source the unit seller-side and handle conveyancing. Or, on
                 off-plan, negotiate with the developer and secure the unit for
                 you. You earn back up to 80% of the agent commission.
               </p>
@@ -179,7 +179,7 @@ function WhatIsIt() {
   return (
     <section className={styles.whatSection}>
       <div className={styles.wrapWide}>
-        {/* Heading slides in from the RIGHT — pattern-interrupt vs the
+        {/* Heading slides in from the RIGHT. Pattern-interrupt vs the
             workflow section's left-slide title. */}
         <motion.h2
           className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
@@ -356,7 +356,7 @@ const TESTIMONIALS = [
     initials: 'F.A.',
     role: 'Private Client Advisor',
     quote:
-      "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement. Within 24 hours a specialist came back with three matching units.",
+      "One of my clients had a very specific brief, Business Bay, high floor, direct canal view, quick transfer. I posted the requirement. Within 24 hours a specialist came back with three matching units.",
   },
   {
     initials: 'K.R.',
@@ -420,7 +420,7 @@ function TestimonialsCarousel() {
   return (
     <section className={`${styles.testimonialsSection}`}>
       <div className={styles.wrapWide}>
-        {/* Heading rises from the bottom — different motion to the
+        {/* Heading rises from the bottom. Different motion to the
             who/workflow sections so it reads as its own beat. */}
         <motion.h2
           className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
@@ -526,7 +526,7 @@ function ExplainedBy() {
   return (
     <section className={`${styles.explainedSection}`}>
       <div className={styles.wrap}>
-        {/* Heading slides in from the RIGHT — counterweight to the
+        {/* Heading slides in from the RIGHT. Counterweight to the
             who/workflow left-slides. */}
         <motion.h2
           className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
@@ -837,19 +837,19 @@ const WF_STEPS: WfStep[] = [
   {
     num: '01',
     title: 'Learn the market.',
-    body: 'Master any UAE community through expert-led sessions, playbooks, and live deal breakdowns. From launch specs to payment-plan nuances — every developer, every cluster, every tower.',
+    body: 'Master any UAE community through expert-led sessions, playbooks, and live deal breakdowns. From launch specs to payment-plan nuances. Every developer, every cluster, every tower.',
     visual: <WfStep1Visual />,
   },
   {
     num: '02',
     title: 'Pick your route.',
-    body: 'Close it yourself under your own name and keep up to 100% of the commission — or collaborate: bring the client, let an iClose specialist close alongside you, and earn up to 80%.',
+    body: 'Close it yourself under your own name and keep up to 100% of the commission. Or collaborate: bring the client, let an iClose specialist close alongside you, and earn up to 80%.',
     visual: <WfStep2Visual />,
   },
   {
     num: '03',
     title: 'Get paid.',
-    body: 'Commission lands directly in your account — tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
+    body: 'Commission lands directly in your account. Tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
     visual: <WfStep3Visual />,
     cta: { label: 'Start for free', href: '#waitlist' },
   },
@@ -901,7 +901,7 @@ function HowItWorks() {
 
           <div className={styles.wfStage}>
             <div className={styles.wfStageCopy}>
-              {/* Step number + title — slide in from the left.
+              {/* Step number + title. Slide in from the left.
                   whileInView so the first slide animates the moment the
                   section actually scrolls into view, not on initial mount. */}
               <AnimatePresence mode="wait">
@@ -990,7 +990,7 @@ function HowItWorks() {
           snap on the three steps. TikTok-style reel: one swipe inside
           advances one step. When the inner scroller hits its top/bottom
           edge the swipe chains to the page so the user can scroll out
-          to neighbouring sections — no trapping. Hidden on desktop. */}
+          to neighbouring sections. No trapping. Hidden on desktop. */}
       <div ref={mobileScrollerRef} className={styles.wfMobile}>
         {WF_STEPS.map((s) => (
           <div key={s.num} className={styles.wfMobileStep}>
@@ -1142,7 +1142,7 @@ export function ICloseLanding() {
       {/* TESTIMONIALS */}
       <TestimonialsCarousel />
 
-      {/* EXPLAINED BY — hidden for now; component still defined in file. */}
+      {/* EXPLAINED BY. Hidden for now; component still defined in file. */}
       {/* <ExplainedBy /> */}
 
       {/* WAITLIST */}
@@ -1151,7 +1151,7 @@ export function ICloseLanding() {
         id="waitlist"
       >
         <div className={styles.wlInner}>
-          {/* Heading scale-pops in — a third distinct motion so the
+          {/* Heading scale-pops in. A third distinct motion so the
               waitlist feels like a "now act" moment. */}
           <motion.h2
             className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}

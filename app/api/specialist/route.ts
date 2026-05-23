@@ -72,14 +72,14 @@ export async function POST(request: Request) {
     try {
       await sendEmail({
         to: email,
-        subject: 'Application received — iClose Specialist',
+        subject: 'Application received. IClose Specialist',
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;color:#1d1d1f;">
             <p style="font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em;">Application received, ${firstName}.</p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:20px;letter-spacing:-0.01em;">
               We review every Specialist application personally. Our team will be in touch within a few days.
             </p>
-            <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
+            <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
             ${emailFooter()}
           </div>
         `,
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
       console.error('[specialist] confirmation email failed:', err);
     }
 
-    // Admin notification — PII masked
+    // Admin notification, PII masked
     if (notifyEmail) {
       try {
         await sendEmail({
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
         console.error('[specialist] admin notification failed:', err);
       }
     } else {
-      console.warn('[specialist] NOTIFY_EMAIL not set — skipping admin notification');
+      console.warn('[specialist] NOTIFY_EMAIL not set. Skipping admin notification');
     }
 
     return NextResponse.json({ ok: true });
