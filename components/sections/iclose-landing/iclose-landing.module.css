@@ -5335,3 +5335,139 @@ a.whoCard p,
     min-height: 150px;
   }
 }
+
+/* ============================================================
+   v3.6 — How it works mobile: dedicated stack layout with per-step
+   slide-in-from-left titles + rise-from-bottom visuals
+   ============================================================ */
+
+/* The mobile block is hidden on desktop. Pinned layout drives the
+   desktop story. */
+.wfMobile {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  /* Drop the pinned-scroll behaviour entirely on phones.
+     The section is now natural-flow with a normal stacked layout. */
+  .workflowSection {
+    min-height: 0 !important;
+    padding: 56px 18px 64px !important;
+    overflow: visible;
+  }
+  .wfPin {
+    display: none !important;
+  }
+
+  .wfMobile {
+    display: block;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .wfMobileHeading {
+    font-size: clamp(28px, 7.6vw, 38px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    color: var(--text);
+    text-align: center;
+    margin: 0 0 36px;
+  }
+  .wfMobileStep {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 40px 0 36px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .wfMobileStep:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+  .wfMobileTitleBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .wfMobileNum {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .wfMobileTitle {
+    font-size: clamp(26px, 6.6vw, 34px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    color: var(--text);
+    margin: 0;
+  }
+  .wfMobileBody {
+    font-size: 17px !important;
+    line-height: 1.5 !important;
+    color: var(--text-muted);
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .wfMobileVisual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    border-radius: var(--r-card);
+    background: var(--bg-alt);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04),
+      0 12px 32px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  /* The .wfVisualPanel children inside use absolute inset:0 + padding —
+     they need a relative parent (wfMobileVisual is relative ✓). */
+  .wfMobileVisual .wfVisualPanel {
+    position: absolute;
+    inset: 0;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Scale down the internal panels so they fit a phone width
+     without horizontal overflow. */
+  .wfMobileVisual .wfPanelLibrary {
+    max-width: 100%;
+    gap: 10px;
+  }
+  .wfMobileVisual .wfPanelLibTile {
+    padding: 14px 12px;
+    gap: 6px;
+  }
+  .wfMobileVisual .wfPanelFork {
+    max-width: 100%;
+  }
+  .wfMobileVisual .wfPanelForkBig {
+    font-size: 32px;
+  }
+  .wfMobileVisual .wfPanelPayout {
+    max-width: 100%;
+    padding: 22px 20px;
+  }
+  .wfMobileVisual .wfPanelPayoutAmount {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wfMobileVisual {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wfMobileTitleBlock,
+  .wfMobileBody,
+  .wfMobileVisual {
+    transition: none !important;
+  }
+}

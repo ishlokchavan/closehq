@@ -971,6 +971,50 @@ function HowItWorks() {
           </div>
         </div>
       </div>
+
+      {/* Mobile layout: every step renders fully, each animates in on
+          its own scroll-trigger (title from left, image from bottom).
+          Hidden on desktop via CSS — the pinned layout above takes over. */}
+      <div className={styles.wfMobile}>
+        <Reveal as="h2" className={styles.wfMobileHeading}>
+          How it works in practice.
+        </Reveal>
+
+        {WF_STEPS.map((s) => (
+          <div key={s.num} className={styles.wfMobileStep}>
+            <motion.div
+              className={styles.wfMobileTitleBlock}
+              initial={{ opacity: 0, x: -48 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className={styles.wfMobileNum}>{s.num}</div>
+              <h3 className={styles.wfMobileTitle}>{s.title}</h3>
+            </motion.div>
+
+            <motion.p
+              className={styles.wfMobileBody}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {s.body}
+            </motion.p>
+
+            <motion.div
+              className={styles.wfMobileVisual}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {s.visual}
+            </motion.div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
