@@ -880,7 +880,9 @@ function HowItWorks() {
       const scrolled = -rect.top;
       const p = Math.max(0, Math.min(1, scrolled / scrollable));
       setProgress(p);
-      const step = p >= 0.92 ? 2 : p >= 0.42 ? 1 : 0;
+      /* Even thirds: each step takes ~33% of the scrollable range, so
+         one viewport-worth of scroll advances exactly one step. */
+      const step = p >= 0.67 ? 2 : p >= 0.34 ? 1 : 0;
       setActive(step);
     };
     handleScroll();

@@ -4657,9 +4657,11 @@ a.whoCard p,
 .workflowSection {
   position: relative;
   background: var(--bg);
-  /* 3 stops × ~110vh of scroll + buffer. !important to win over any
-     stale .snapSection { min-height: 0 } rule still in the cascade. */
-  min-height: 360vh !important;
+  /* 100vh pin + ~50vh of scroll per step × 3 steps = ~250vh total.
+     This makes "one scroll-swipe = one step" feel right on both
+     trackpads and mouse wheels (previously was 360vh, which forced
+     ~130vh of scroll per step — about two swipes each). */
+  min-height: 250vh !important;
   padding: 0 !important;
   /* Sticky won't work if a containing block has overflow:hidden/clip
      reset here as a safety net. */
