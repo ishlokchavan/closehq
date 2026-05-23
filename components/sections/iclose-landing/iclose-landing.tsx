@@ -134,57 +134,9 @@ function WhoIsThisFor() {
 }
 
 
-/* ---------------- WHAT IS IT (masonry of photo cards) ---------------- */
-
-type WhatCard = {
-  title: string;
-  body: string;
-  src: string;
-  alt: string;
-  ratio: 'portrait' | 'landscape' | 'wide' | 'tall';
-};
-
-const WHAT_CARDS: WhatCard[] = [
-  {
-    title: 'Learn any UAE community.',
-    body: 'Master Marina, Downtown, Palm and JVC — top to bottom.',
-    src: '/images/gallery-urban-hub.jpg',
-    alt: 'UAE community skyline',
-    ratio: 'tall',
-  },
-  {
-    title: 'Match the right specialist.',
-    body: 'One inquiry, matched to the closer who knows the building.',
-    src: '/images/gallery-community.jpg',
-    alt: 'A residential UAE community',
-    ratio: 'landscape',
-  },
-  {
-    title: 'Close at elite splits.',
-    body: 'Keep up to 100% on every deal you close yourself.',
-    src: '/images/hero-luxury.jpg',
-    alt: 'Luxury Dubai residence interior',
-    ratio: 'portrait',
-  },
-  {
-    title: 'Earn what you actually deserve.',
-    body: 'Performance is the ceiling. We set it high.',
-    src: '/images/perks-yacht.jpg',
-    alt: 'UAE waterfront lifestyle',
-    ratio: 'wide',
-  },
-];
+/* ---------------- WHAT IS IT (animated mock-UI masonry) ---------------- */
 
 function WhatIsIt() {
-  const ratioCls = (r: WhatCard['ratio']) =>
-    r === 'tall'
-      ? styles.whatImgCardTall
-      : r === 'portrait'
-        ? styles.whatImgCardPortrait
-        : r === 'wide'
-          ? styles.whatImgCardWide
-          : styles.whatImgCardLandscape;
-
   return (
     <section className={styles.whatSection}>
       <div className={styles.wrapWide}>
@@ -193,33 +145,205 @@ function WhatIsIt() {
         </Reveal>
 
         <div className={styles.whatGrid}>
-          {WHAT_CARDS.map((c, i) => (
-            <motion.figure
-              key={c.title}
-              className={`${styles.whatImgCard} ${ratioCls(c.ratio)}`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{
-                duration: 0.65,
-                delay: i * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <Image
-                src={c.src}
-                alt={c.alt}
-                fill
-                sizes="(max-width: 600px) 100vw, (max-width: 980px) 50vw, 540px"
-                className={styles.whatImgCardImg}
-              />
-              <div className={styles.whatImgCardOverlay} aria-hidden="true" />
-              <figcaption className={styles.whatImgCardCaption}>
-                <h3>{c.title}</h3>
-                <p>{c.body}</p>
-              </figcaption>
-            </motion.figure>
-          ))}
+          {/* Card 1: Dashboard overview */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardA}`} delay={1}>
+            <h3 className={styles.whatTitle}>One clear overview</h3>
+            <p className={styles.whatSub}>
+              Every offer, viewing, and closing — visible at a glance.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockDashboard}>
+                <div className={styles.mockTabs}>
+                  <span>Saved</span>
+                  <span>Viewings</span>
+                  <span className={styles.mockTabActive}>Your offers</span>
+                  <span>Closed</span>
+                </div>
+                <div className={`${styles.mockRow} ${styles.mockRowAnimA}`}>
+                  <span className={styles.mockCheck} />
+                  <span className={styles.mockPrice}>AED 1,440,000</span>
+                  <span className={styles.mockStatus}>Offer sent</span>
+                </div>
+                <div className={`${styles.mockRow} ${styles.mockRowAnimB}`}>
+                  <span className={styles.mockCheck} />
+                  <span className={styles.mockPrice}>AED 1,430,000</span>
+                  <span className={styles.mockStatus}>Counter received</span>
+                </div>
+                <div className={`${styles.mockRow} ${styles.mockRowAnimC}`}>
+                  <span className={styles.mockCheck} />
+                  <span className={styles.mockPrice}>AED 1,410,000</span>
+                  <span className={styles.mockStatus}>Closed ✓</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 2: Specialist match */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardB}`} delay={2}>
+            <h3 className={styles.whatTitle}>
+              Match with the right specialist
+            </h3>
+            <p className={styles.whatSub}>
+              Post an inquiry. We match you to the vetted UAE expert.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockMatch}>
+                <div
+                  className={`${styles.mockMatchRow} ${styles.mockMatchA}`}
+                >
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                </div>
+                <div
+                  className={`${styles.mockMatchRow} ${styles.mockMatchB}`}
+                >
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                  <span className={styles.mockBadgeBlue}>Matched</span>
+                </div>
+                <div
+                  className={`${styles.mockMatchRow} ${styles.mockMatchC}`}
+                >
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                </div>
+                <div
+                  className={`${styles.mockMatchRow} ${styles.mockMatchD}`}
+                >
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockMatchLine} />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 3: Conversations */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardC}`} delay={3}>
+            <h3 className={styles.whatTitle}>
+              Every conversation in one place
+            </h3>
+            <p className={styles.whatSub}>
+              Briefs, viewings, offers — one thread per deal.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockChat}>
+                <div className={`${styles.mockChatRow} ${styles.mockChatA}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockChatBubble}>Client brief →</span>
+                </div>
+                <div
+                  className={`${styles.mockChatRow} ${styles.mockChatRowRight} ${styles.mockChatB}`}
+                >
+                  <span className={styles.mockChatBubble}>3 units ready ✓</span>
+                  <span
+                    className={`${styles.mockAvatar} ${styles.mockAvatarAlt}`}
+                  />
+                </div>
+                <div className={`${styles.mockChatRow} ${styles.mockChatC}`}>
+                  <span className={styles.mockAvatar} />
+                  <span className={styles.mockChatBubble}>Booking viewing</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 4: Make an offer */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardD}`} delay={4}>
+            <h3 className={styles.whatTitle}>Make an offer, faster than ever</h3>
+            <p className={styles.whatSub}>
+              Submit, counter, and close — without the back-and-forth.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockOffer}>
+                <div className={styles.mockOfferTitle}>Offer submitted</div>
+                <div className={styles.mockOfferAmount}>AED 1,425,000</div>
+                <div className={styles.mockOfferMeta}>
+                  <span>Buyer</span>
+                  <span>Seller</span>
+                  <span>Notary</span>
+                </div>
+                <div className={styles.mockOfferBar}>
+                  <div
+                    className={`${styles.mockOfferFill} ${styles.mockOfferAnim}`}
+                  />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 5: Community explorer */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardE}`} delay={5}>
+            <h3 className={styles.whatTitle}>Learn any UAE community</h3>
+            <p className={styles.whatSub}>
+              Deep-dive playbooks for the towers and clusters you work.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockExplore}>
+                <div className={styles.mockExploreSearch}>
+                  <span className={styles.mockExploreIcon} aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="11" cy="11" r="6" />
+                      <path d="M16 16l4 4" />
+                    </svg>
+                  </span>
+                  <span className={styles.mockExploreQuery}>
+                    <span className={styles.mockExploreTyped}>Dubai Marina</span>
+                    <span className={styles.mockExploreCaret} />
+                  </span>
+                </div>
+                <div className={styles.mockExploreList}>
+                  <div className={styles.mockExploreItem}>
+                    <span className={styles.mockExploreDot} />
+                    <span>Marina Heights · 1502</span>
+                  </div>
+                  <div className={styles.mockExploreItem}>
+                    <span className={styles.mockExploreDot} />
+                    <span>Princess Tower</span>
+                  </div>
+                  <div className={styles.mockExploreItem}>
+                    <span className={styles.mockExploreDot} />
+                    <span>Cayan Tower</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Card 6: Close the deal */}
+          <Reveal className={`${styles.whatCard} ${styles.whatCardF}`} delay={6}>
+            <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
+            <p className={styles.whatSub}>
+              All parties aligned, paperwork tracked, commission landed.
+            </p>
+            <div className={styles.whatMedia} aria-hidden="true">
+              <div className={styles.mockClose}>
+                <div className={styles.mockCloseHeader}>
+                  <span className={styles.mockCloseAddr}>
+                    Marina Heights · 1502
+                  </span>
+                  <span className={styles.mockCloseCity}>Dubai Marina</span>
+                </div>
+                <div className={styles.mockCloseGrid}>
+                  <div>
+                    <div className={styles.mockCloseLabel}>Offer price</div>
+                    <div className={styles.mockCloseValue}>AED 1,425,000</div>
+                  </div>
+                  <div>
+                    <div className={styles.mockCloseLabel}>Key transfer</div>
+                    <div className={styles.mockCloseValue}>14 Mar</div>
+                  </div>
+                  <div>
+                    <div className={styles.mockCloseLabel}>Notary</div>
+                    <div
+                      className={`${styles.mockCloseValue} ${styles.mockCloseConfirmed}`}
+                    >
+                      Confirmed ✓
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
