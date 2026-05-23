@@ -1,11 +1,40 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import styles from './persona.module.css';
+
+const ease = [0.22, 1, 0.36, 1] as const;
+const inView = { once: true, margin: '-10% 0px' };
+
+const animFromLeft = {
+  initial: { opacity: 0, x: -56 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: inView,
+  transition: { duration: 0.6, ease },
+};
+const animFromRight = {
+  initial: { opacity: 0, x: 56 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: inView,
+  transition: { duration: 0.6, ease },
+};
+const animRise = {
+  initial: { opacity: 0, y: 48 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: inView,
+  transition: { duration: 0.6, ease },
+};
+const animScale = {
+  initial: { opacity: 0, scale: 0.92 },
+  whileInView: { opacity: 1, scale: 1 },
+  viewport: inView,
+  transition: { duration: 0.55, ease },
+};
 
 /* ------- Shared chrome (nav + footer) ------- */
 export function PersonaChrome({ children }: { children: ReactNode }) {
@@ -56,7 +85,14 @@ export function PersonaHero({
   return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
-        <div className={styles.heroCopy}>
+        {/* Copy slides in from LEFT, image from BOTTOM — same pairing
+            as the landing's HowItWorks slides. */}
+        <motion.div
+          className={styles.heroCopy}
+          initial={{ opacity: 0, x: -48 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, ease }}
+        >
           <span className={tagCls}>{tagLabel}</span>
           <h1>{headline}</h1>
           <p>{sub}</p>
@@ -79,8 +115,13 @@ export function PersonaHero({
               </Link>
             )}
           </div>
-        </div>
-        <div className={styles.heroMedia}>
+        </motion.div>
+        <motion.div
+          className={styles.heroMedia}
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease, delay: 0.1 }}
+        >
           <Image
             src={heroImage}
             alt={heroAlt}
@@ -89,7 +130,7 @@ export function PersonaHero({
             className={styles.heroImg}
             priority
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -109,18 +150,26 @@ export function PersonaIntro({
 }) {
   return (
     <section className={styles.intro}>
-      <div className={styles.introLead}>
+      {/* Intro heading enters from the RIGHT. */}
+      <motion.div className={styles.introLead} {...animFromRight}>
         <div className={styles.introEyebrow}>{eyebrow}</div>
         <h2 className={styles.introHeading}>{heading}</h2>
         <p className={styles.introBody}>{body}</p>
-      </div>
+      </motion.div>
       <div className={styles.valueGrid}>
-        {items.map((it) => (
-          <article className={styles.valueCard} key={it.title}>
+        {items.map((it, i) => (
+          <motion.article
+            className={styles.valueCard}
+            key={it.title}
+            initial={{ opacity: 0, y: 44 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, delay: i * 0.08, ease }}
+          >
             <div className={styles.valueCardHead}>{it.tag}</div>
             <h3>{it.title}</h3>
             <p>{it.body}</p>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>
@@ -141,14 +190,22 @@ export function PersonaSteps({
 }) {
   return (
     <section className={styles.steps}>
-      <div className={styles.stepsHeader}>
+      {/* Steps heading slides in from LEFT (matches landing workflow). */}
+      <motion.div className={styles.stepsHeader} {...animFromLeft}>
         {eyebrow && <div className={styles.introEyebrow}>{eyebrow}</div>}
         <h2 className={styles.introHeading}>{heading}</h2>
         {body && <p className={styles.introBody}>{body}</p>}
-      </div>
+      </motion.div>
       <div className={styles.stepsList}>
         {steps.map((s, i) => (
-          <div className={styles.stepRow} key={s.title}>
+          <motion.div
+            className={styles.stepRow}
+            key={s.title}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, delay: i * 0.08, ease }}
+          >
             <div className={styles.stepNum}>
               {String(i + 1).padStart(2, '0')}
             </div>
@@ -156,7 +213,7 @@ export function PersonaSteps({
               <h3>{s.title}</h3>
               <p>{s.body}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -179,12 +236,13 @@ export function PersonaMath({
 }) {
   return (
     <section className={styles.math}>
-      <div className={styles.mathHeader}>
+      {/* Math heading rises from the bottom; the card scale-pops in. */}
+      <motion.div className={styles.mathHeader} {...animRise}>
         {eyebrow && <div className={styles.introEyebrow}>{eyebrow}</div>}
         <h2 className={styles.introHeading}>{heading}</h2>
         {body && <p className={styles.introBody}>{body}</p>}
-      </div>
-      <div className={styles.mathCard}>
+      </motion.div>
+      <motion.div className={styles.mathCard} {...animScale}>
         {rows.map((r) => (
           <div className={styles.mathRow} key={r.label}>
             <span className={styles.mathLabel}>{r.label}</span>
@@ -195,7 +253,7 @@ export function PersonaMath({
             </span>
           </div>
         ))}
-      </div>
+      </motion.div>
       {footnote && <p className={styles.mathFoot}>{footnote}</p>}
     </section>
   );
@@ -219,13 +277,18 @@ export function PersonaCompare({
 }) {
   return (
     <section className={styles.math}>
-      <div className={styles.mathHeader}>
+      {/* Compare heading rises; the two cards fly in from opposite sides
+          so the "vs" comparison literally clashes on entry. */}
+      <motion.div className={styles.mathHeader} {...animRise}>
         {eyebrow && <div className={styles.introEyebrow}>{eyebrow}</div>}
         <h2 className={styles.introHeading}>{heading}</h2>
         {body && <p className={styles.introBody}>{body}</p>}
-      </div>
+      </motion.div>
       <div className={styles.compareGrid}>
-        <article className={`${styles.compareCard} ${styles.compareCardMuted}`}>
+        <motion.article
+          className={`${styles.compareCard} ${styles.compareCardMuted}`}
+          {...animFromLeft}
+        >
           <div className={styles.compareTitle}>{left.title}</div>
           <div className={styles.compareRows}>
             {left.rows.map((r) => (
@@ -239,11 +302,23 @@ export function PersonaCompare({
             <span>{left.takeLabel}</span>
             <span className={styles.compareTakeValue}>{left.takeValue}</span>
           </div>
-        </article>
+        </motion.article>
 
-        <div className={styles.compareVs} aria-hidden="true">vs</div>
+        <motion.div
+          className={styles.compareVs}
+          aria-hidden="true"
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={inView}
+          transition={{ duration: 0.45, delay: 0.25, ease }}
+        >
+          vs
+        </motion.div>
 
-        <article className={`${styles.compareCard} ${styles.compareCardHero}`}>
+        <motion.article
+          className={`${styles.compareCard} ${styles.compareCardHero}`}
+          {...animFromRight}
+        >
           <div className={styles.compareTitle}>{right.title}</div>
           <div className={styles.compareRows}>
             {right.rows.map((r) => (
@@ -257,7 +332,7 @@ export function PersonaCompare({
             <span>{right.takeLabel}</span>
             <span className={styles.compareTakeValue}>{right.takeValue}</span>
           </div>
-        </article>
+        </motion.article>
       </div>
       {footnote && <p className={styles.mathFoot}>{footnote}</p>}
     </section>
@@ -276,13 +351,21 @@ export function PersonaAudience({
 }) {
   return (
     <section className={styles.audience}>
-      <div className={styles.stepsHeader}>
+      {/* Audience heading from the LEFT, items stagger-rise. */}
+      <motion.div className={styles.stepsHeader} {...animFromLeft}>
         <h2 className={styles.introHeading}>{heading}</h2>
         {body && <p className={styles.introBody}>{body}</p>}
-      </div>
+      </motion.div>
       <div className={styles.audienceList}>
-        {items.map((it) => (
-          <div className={styles.audienceItem} key={it.title}>
+        {items.map((it, i) => (
+          <motion.div
+            className={styles.audienceItem}
+            key={it.title}
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.5, delay: i * 0.07, ease }}
+          >
             <span className={styles.audienceCheck} aria-hidden="true">
               ✓
             </span>
@@ -290,7 +373,7 @@ export function PersonaAudience({
               <h3>{it.title}</h3>
               <p>{it.body}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -311,17 +394,25 @@ export function PersonaFeatures({
 }) {
   return (
     <section className={styles.features}>
-      <div className={styles.stepsHeader}>
+      {/* Features heading from RIGHT, cards rise with stagger. */}
+      <motion.div className={styles.stepsHeader} {...animFromRight}>
         {eyebrow && <div className={styles.introEyebrow}>{eyebrow}</div>}
         <h2 className={styles.introHeading}>{heading}</h2>
         {body && <p className={styles.introBody}>{body}</p>}
-      </div>
+      </motion.div>
       <div className={styles.featureGrid}>
-        {items.map((it) => (
-          <article className={styles.featureCard} key={it.title}>
+        {items.map((it, i) => (
+          <motion.article
+            className={styles.featureCard}
+            key={it.title}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, delay: i * 0.06, ease }}
+          >
             <h3>{it.title}</h3>
             <p>{it.body}</p>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>
@@ -338,15 +429,24 @@ export function PersonaFacts({
 }) {
   return (
     <section className={styles.facts}>
-      <div className={styles.stepsHeader}>
+      {/* Facts heading rises; stat cards scale-in with stagger so each
+          number "lands" individually. */}
+      <motion.div className={styles.stepsHeader} {...animRise}>
         <h2 className={styles.introHeading}>{heading}</h2>
-      </div>
+      </motion.div>
       <div className={styles.factGrid}>
-        {items.map((it) => (
-          <div className={styles.factCard} key={it.label}>
+        {items.map((it, i) => (
+          <motion.div
+            className={styles.factCard}
+            key={it.label}
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={inView}
+            transition={{ duration: 0.5, delay: i * 0.08, ease }}
+          >
             <div className={styles.factStat}>{it.stat}</div>
             <div className={styles.factLabel}>{it.label}</div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -365,11 +465,20 @@ export function PersonaQuote({
 }) {
   return (
     <section className={styles.quote}>
-      <blockquote className={styles.quoteBody}>&ldquo;{quote}&rdquo;</blockquote>
-      <figcaption className={styles.quoteMeta}>
+      {/* Quote scale-pops in — a "moment" beat in the page rhythm. */}
+      <motion.blockquote className={styles.quoteBody} {...animScale}>
+        &ldquo;{quote}&rdquo;
+      </motion.blockquote>
+      <motion.figcaption
+        className={styles.quoteMeta}
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={inView}
+        transition={{ duration: 0.5, delay: 0.2, ease }}
+      >
         <span className={styles.quoteName}>{name}</span>
         <span className={styles.quoteRole}>{role}</span>
-      </figcaption>
+      </motion.figcaption>
     </section>
   );
 }
@@ -386,11 +495,31 @@ export function PersonaCta({
 }) {
   return (
     <section className={styles.cta}>
-      <h2 className={styles.ctaHeading}>{heading}</h2>
-      {body && <p className={styles.ctaSub}>{body}</p>}
-      <Link href={cta.href} className={styles.btnBlueLg}>
-        {cta.label}
-      </Link>
+      {/* Final CTA: heading rises, button scale-pops in. */}
+      <motion.h2 className={styles.ctaHeading} {...animRise}>
+        {heading}
+      </motion.h2>
+      {body && (
+        <motion.p
+          className={styles.ctaSub}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.5, delay: 0.1, ease }}
+        >
+          {body}
+        </motion.p>
+      )}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={inView}
+        transition={{ duration: 0.5, delay: 0.2, ease }}
+      >
+        <Link href={cta.href} className={styles.btnBlueLg}>
+          {cta.label}
+        </Link>
+      </motion.div>
     </section>
   );
 }
@@ -407,18 +536,23 @@ export function PersonaFaq({
   return (
     <section className={styles.faq}>
       <div className={styles.faqInner}>
-        <div className={styles.faqHeader}>
+        {/* FAQ heading from LEFT, items stagger-rise. */}
+        <motion.div className={styles.faqHeader} {...animFromLeft}>
           <h2 className={styles.introHeading}>{heading}</h2>
-        </div>
+        </motion.div>
         <div className={styles.faqList}>
           {items.map((it, i) => {
             const isOpen = open === i;
             return (
-              <div
+              <motion.div
                 key={it.q}
                 className={`${styles.faqItem} ${
                   isOpen ? styles.faqItemOpen : ''
                 }`}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={inView}
+                transition={{ duration: 0.45, delay: i * 0.05, ease }}
               >
                 <button
                   type="button"
@@ -436,7 +570,7 @@ export function PersonaFaq({
                     <p>{it.a}</p>
                   </div>
                 )}
-              </div>
+              </motion.div>
             );
           })}
         </div>

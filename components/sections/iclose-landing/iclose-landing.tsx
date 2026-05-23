@@ -35,6 +35,37 @@ const wfBarVar = {
   },
 };
 
+/* Site-wide whileInView presets — kept short and used selectively so
+   each section has a slightly different entry feel (pattern interrupt
+   without being repetitive). */
+const ease = [0.22, 1, 0.36, 1] as const;
+const v = { once: true, margin: '-10% 0px' };
+
+const animFromLeft = {
+  initial: { opacity: 0, x: -56 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: v,
+  transition: { duration: 0.6, ease },
+};
+const animFromRight = {
+  initial: { opacity: 0, x: 56 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: v,
+  transition: { duration: 0.6, ease },
+};
+const animRise = {
+  initial: { opacity: 0, y: 44 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: v,
+  transition: { duration: 0.55, ease },
+};
+const animScale = {
+  initial: { opacity: 0, scale: 0.92 },
+  whileInView: { opacity: 1, scale: 1 },
+  viewport: v,
+  transition: { duration: 0.55, ease },
+};
+
 type RevealProps = {
   as?: keyof JSX.IntrinsicElements;
   delay?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -69,9 +100,14 @@ function WhoIsThisFor() {
   return (
     <section className={`${styles.whoSection}`}>
       <div className={styles.wrapWide}>
-        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+        {/* Heading slides in from the LEFT (matches the workflow's
+            title-from-left so the two land as paired moments). */}
+        <motion.h2
+          className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
+          {...animFromLeft}
+        >
           Who is this for?
-        </Reveal>
+        </motion.h2>
 
         <div className={styles.whoGrid}>
           <Reveal className={styles.whoCardWrap} delay={1}>
@@ -134,19 +170,30 @@ function WhoIsThisFor() {
 }
 
 
-/* ---------------- WHAT IS IT (animated mock-UI masonry) ---------------- */
+/* ---------------- WHAT IS IT (4 animated mock cards · 2×2 grid) ---------------- */
 
 function WhatIsIt() {
   return (
     <section className={styles.whatSection}>
       <div className={styles.wrapWide}>
-        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+        {/* Heading slides in from the RIGHT — pattern-interrupt vs the
+            workflow section's left-slide title. */}
+        <motion.h2
+          className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
+          {...animFromRight}
+        >
           What is it?
-        </Reveal>
+        </motion.h2>
 
-        <div className={styles.whatGrid}>
+        <div className={styles.whatGrid4}>
           {/* Card 1: Dashboard overview */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardA}`} delay={1}>
+          <motion.article
+            className={`${styles.whatCard} ${styles.whatCardA}`}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={v}
+            transition={{ duration: 0.6, delay: 0, ease }}
+          >
             <h3 className={styles.whatTitle}>One clear overview</h3>
             <p className={styles.whatSub}>
               Every offer, viewing, and closing — visible at a glance.
@@ -176,10 +223,16 @@ function WhatIsIt() {
                 </div>
               </div>
             </div>
-          </Reveal>
+          </motion.article>
 
           {/* Card 2: Specialist match */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardB}`} delay={2}>
+          <motion.article
+            className={`${styles.whatCard} ${styles.whatCardB}`}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={v}
+            transition={{ duration: 0.6, delay: 0.1, ease }}
+          >
             <h3 className={styles.whatTitle}>
               Match with the right specialist
             </h3>
@@ -188,37 +241,35 @@ function WhatIsIt() {
             </p>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockMatch}>
-                <div
-                  className={`${styles.mockMatchRow} ${styles.mockMatchA}`}
-                >
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchA}`}>
                   <span className={styles.mockAvatar} />
                   <span className={styles.mockMatchLine} />
                 </div>
-                <div
-                  className={`${styles.mockMatchRow} ${styles.mockMatchB}`}
-                >
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchB}`}>
                   <span className={styles.mockAvatar} />
                   <span className={styles.mockMatchLine} />
                   <span className={styles.mockBadgeBlue}>Matched</span>
                 </div>
-                <div
-                  className={`${styles.mockMatchRow} ${styles.mockMatchC}`}
-                >
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchC}`}>
                   <span className={styles.mockAvatar} />
                   <span className={styles.mockMatchLine} />
                 </div>
-                <div
-                  className={`${styles.mockMatchRow} ${styles.mockMatchD}`}
-                >
+                <div className={`${styles.mockMatchRow} ${styles.mockMatchD}`}>
                   <span className={styles.mockAvatar} />
                   <span className={styles.mockMatchLine} />
                 </div>
               </div>
             </div>
-          </Reveal>
+          </motion.article>
 
           {/* Card 3: Conversations */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardC}`} delay={3}>
+          <motion.article
+            className={`${styles.whatCard} ${styles.whatCardC}`}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={v}
+            transition={{ duration: 0.6, delay: 0.2, ease }}
+          >
             <h3 className={styles.whatTitle}>
               Every conversation in one place
             </h3>
@@ -245,72 +296,16 @@ function WhatIsIt() {
                 </div>
               </div>
             </div>
-          </Reveal>
+          </motion.article>
 
-          {/* Card 4: Make an offer */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardD}`} delay={4}>
-            <h3 className={styles.whatTitle}>Make an offer, faster than ever</h3>
-            <p className={styles.whatSub}>
-              Submit, counter, and close — without the back-and-forth.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockOffer}>
-                <div className={styles.mockOfferTitle}>Offer submitted</div>
-                <div className={styles.mockOfferAmount}>AED 1,425,000</div>
-                <div className={styles.mockOfferMeta}>
-                  <span>Buyer</span>
-                  <span>Seller</span>
-                  <span>Notary</span>
-                </div>
-                <div className={styles.mockOfferBar}>
-                  <div
-                    className={`${styles.mockOfferFill} ${styles.mockOfferAnim}`}
-                  />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 5: Community explorer */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardE}`} delay={5}>
-            <h3 className={styles.whatTitle}>Learn any UAE community</h3>
-            <p className={styles.whatSub}>
-              Deep-dive playbooks for the towers and clusters you work.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockExplore}>
-                <div className={styles.mockExploreSearch}>
-                  <span className={styles.mockExploreIcon} aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                      <circle cx="11" cy="11" r="6" />
-                      <path d="M16 16l4 4" />
-                    </svg>
-                  </span>
-                  <span className={styles.mockExploreQuery}>
-                    <span className={styles.mockExploreTyped}>Dubai Marina</span>
-                    <span className={styles.mockExploreCaret} />
-                  </span>
-                </div>
-                <div className={styles.mockExploreList}>
-                  <div className={styles.mockExploreItem}>
-                    <span className={styles.mockExploreDot} />
-                    <span>Marina Heights · 1502</span>
-                  </div>
-                  <div className={styles.mockExploreItem}>
-                    <span className={styles.mockExploreDot} />
-                    <span>Princess Tower</span>
-                  </div>
-                  <div className={styles.mockExploreItem}>
-                    <span className={styles.mockExploreDot} />
-                    <span>Cayan Tower</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 6: Close the deal */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardF}`} delay={6}>
+          {/* Card 4: Close the deal */}
+          <motion.article
+            className={`${styles.whatCard} ${styles.whatCardF}`}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={v}
+            transition={{ duration: 0.6, delay: 0.3, ease }}
+          >
             <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
             <p className={styles.whatSub}>
               All parties aligned, paperwork tracked, commission landed.
@@ -343,7 +338,7 @@ function WhatIsIt() {
                 </div>
               </div>
             </div>
-          </Reveal>
+          </motion.article>
         </div>
       </div>
     </section>
@@ -427,9 +422,14 @@ function TestimonialsCarousel() {
   return (
     <section className={`${styles.testimonialsSection}`}>
       <div className={styles.wrapWide}>
-        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+        {/* Heading rises from the bottom — different motion to the
+            who/workflow sections so it reads as its own beat. */}
+        <motion.h2
+          className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
+          {...animRise}
+        >
           What members say.
-        </Reveal>
+        </motion.h2>
 
         <div
           className={styles.testimonialStage}
@@ -528,9 +528,14 @@ function ExplainedBy() {
   return (
     <section className={`${styles.explainedSection}`}>
       <div className={styles.wrap}>
-        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+        {/* Heading slides in from the RIGHT — counterweight to the
+            who/workflow left-slides. */}
+        <motion.h2
+          className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
+          {...animFromRight}
+        >
           See how it works.
-        </Reveal>
+        </motion.h2>
 
         <div className={styles.explainedGrid}>
           {EXPLAINERS.map((e, i) => (
@@ -1064,12 +1069,17 @@ export function ICloseLanding() {
         id="waitlist"
       >
         <div className={styles.wlInner}>
-          <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          {/* Heading scale-pops in — a third distinct motion so the
+              waitlist feels like a "now act" moment. */}
+          <motion.h2
+            className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
+            {...animScale}
+          >
             Join the waitlist.
-          </Reveal>
-          <Reveal delay={1}>
+          </motion.h2>
+          <motion.div {...animRise} transition={{ ...animRise.transition, delay: 0.15 }}>
             <WaitlistForm />
-          </Reveal>
+          </motion.div>
         </div>
       </section>
 

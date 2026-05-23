@@ -5296,3 +5296,42 @@ a.whoCard p,
   }
 }
 
+
+/* ============================================================
+   v3.5 — What-is-it: 4 cards, real 2x2 grid (no more masonry)
+   ============================================================ */
+
+.whatGrid4 {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+  column-count: auto !important;
+}
+.whatGrid4 > .whatCard {
+  margin: 0 !important;
+  padding: 26px 26px 8px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+.whatGrid4 .whatMedia {
+  min-height: 180px;
+  padding: 8px 0 18px;
+  transform: scale(1);
+}
+
+@media (max-width: 820px) {
+  .whatGrid4 {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+  .whatGrid4 > .whatCard {
+    min-height: 260px;
+    padding: 22px 22px 8px;
+  }
+  .whatGrid4 .whatMedia {
+    min-height: 150px;
+  }
+}
