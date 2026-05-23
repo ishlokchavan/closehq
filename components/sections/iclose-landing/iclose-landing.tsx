@@ -36,41 +36,91 @@ function Reveal({ as: Tag = 'div', delay, className, children }: RevealProps) {
 
 /* ---------------- WHO IS THIS FOR ---------------- */
 
+type Persona = {
+  initials: string;
+  name: string;
+  role: string;
+  bg: string;
+};
+
+const BROKER_PERSONAS: Persona[] = [
+  {
+    initials: 'SK',
+    name: 'Sarah K.',
+    role: 'JVC Broker',
+    bg: 'linear-gradient(135deg, #1d3557 0%, #457b9d 100%)',
+  },
+  {
+    initials: 'MA',
+    name: 'Mohammed A.',
+    role: 'Marina Specialist',
+    bg: 'linear-gradient(135deg, #2a4a3a 0%, #4a7c5c 100%)',
+  },
+  {
+    initials: 'TR',
+    name: 'Tariq R.',
+    role: 'Downtown Closer',
+    bg: 'linear-gradient(135deg, #3d2645 0%, #6e4c7b 100%)',
+  },
+];
+
+const COLLAB_PERSONAS: Persona[] = [
+  {
+    initials: 'LH',
+    name: 'Layla H.',
+    role: 'Private Client Lawyer',
+    bg: 'linear-gradient(135deg, #4a2e2a 0%, #8a5a4c 100%)',
+  },
+  {
+    initials: 'JC',
+    name: 'James C.',
+    role: 'Wealth Advisor',
+    bg: 'linear-gradient(135deg, #1f3a4d 0%, #3e6a82 100%)',
+  },
+  {
+    initials: 'AM',
+    name: 'Aisha M.',
+    role: 'Family Office Partner',
+    bg: 'linear-gradient(135deg, #3a3a3a 0%, #6e6e73 100%)',
+  },
+];
+
+function PersonaPortrait({ p }: { p: Persona }) {
+  return (
+    <figure className={styles.whoPortrait}>
+      <div
+        className={styles.whoPortraitImg}
+        style={{ background: p.bg }}
+        aria-hidden="true"
+      >
+        <svg className={styles.whoPortraitSilhouette} viewBox="0 0 64 64">
+          <circle cx="32" cy="24" r="10" />
+          <path d="M12 60c0-11 9-18 20-18s20 7 20 18" />
+        </svg>
+        <span className={styles.whoPortraitInitials}>{p.initials}</span>
+      </div>
+      <figcaption className={styles.whoPortraitCaption}>
+        <span className={styles.whoPortraitName}>{p.name}</span>
+        <span className={styles.whoPortraitRole}>{p.role}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
 function WhoIsThisFor() {
   return (
     <section className={`${styles.snapSection} ${styles.whoSection}`}>
       <div className={styles.wrapWide}>
-        <Reveal className={styles.sectionEyebrow}>Who is this for?</Reveal>
-        <Reveal as="h2" delay={1}>
-          Two ways in.
-          <br />
-          <span className={styles.muted}>One platform.</span>
-        </Reveal>
-        <Reveal as="p" className={styles.sectionSub} delay={2}>
-          Whether you close deals yourself or bring the client, iClose was
-          built for both sides of the transaction.
+        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          Who is this for?
         </Reveal>
 
         <div className={styles.whoGrid}>
           <Reveal className={styles.whoCard} delay={1}>
-            <div className={styles.whoMedia} aria-hidden="true">
-              <div className={styles.whoIllustration}>
-                <div className={styles.whoIllRow}>
-                  <span className={styles.whoIllDot} />
-                  <span className={styles.whoIllBar} style={{ width: '64%' }} />
-                </div>
-                <div className={styles.whoIllRow}>
-                  <span className={styles.whoIllDot} />
-                  <span className={styles.whoIllBar} style={{ width: '82%' }} />
-                </div>
-                <div className={styles.whoIllRow}>
-                  <span
-                    className={`${styles.whoIllDot} ${styles.whoIllDotActive}`}
-                  />
-                  <span className={styles.whoIllBar} style={{ width: '54%' }} />
-                </div>
-                <div className={styles.whoIllChip}>Broker · Closing</div>
-              </div>
+            <div className={styles.whoPortraitRow} aria-hidden="false">
+              {BROKER_PERSONAS.map((p) => (
+                <PersonaPortrait key={p.initials} p={p} />
+              ))}
             </div>
             <div className={styles.whoTag}>For Brokers</div>
             <h3>Close more deals, keep more of each one.</h3>
@@ -87,26 +137,10 @@ function WhoIsThisFor() {
           </Reveal>
 
           <Reveal className={styles.whoCard} delay={2}>
-            <div className={styles.whoMedia} aria-hidden="true">
-              <div className={styles.whoIllustration}>
-                <div className={styles.whoIllChatRow}>
-                  <span className={styles.whoIllAvatar} />
-                  <span className={styles.whoIllBubble}>
-                    Client wants 2BR · canal view
-                  </span>
-                </div>
-                <div
-                  className={`${styles.whoIllChatRow} ${styles.whoIllChatRowAlt}`}
-                >
-                  <span className={styles.whoIllBubble}>
-                    Matched · 3 units ready
-                  </span>
-                  <span
-                    className={`${styles.whoIllAvatar} ${styles.whoIllAvatarAlt}`}
-                  />
-                </div>
-                <div className={styles.whoIllChip}>You + Specialist</div>
-              </div>
+            <div className={styles.whoPortraitRow}>
+              {COLLAB_PERSONAS.map((p) => (
+                <PersonaPortrait key={p.initials} p={p} />
+              ))}
             </div>
             <div className={`${styles.whoTag} ${styles.whoTagAlt}`}>
               For Collaborators
@@ -139,15 +173,8 @@ function WhatIsIt() {
       id="workflow"
     >
       <div className={styles.wrapWide}>
-        <Reveal className={styles.sectionEyebrow}>What is it?</Reveal>
-        <Reveal as="h2" delay={1}>
-          One platform.
-          <br />
-          <span className={styles.muted}>Everything a closer needs.</span>
-        </Reveal>
-        <Reveal as="p" className={styles.sectionSub} delay={2}>
-          A modern home for UAE real estate — learn, connect, transact, and
-          get paid, without ever leaving the platform.
+        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          What is it?
         </Reveal>
 
         <div className={styles.whatGrid}>
@@ -339,14 +366,16 @@ function TestimonialsCarousel() {
 
   const go = (i: number) => setActive(((i % len) + len) % len);
 
+  const visible = [0, 1, 2].map((i) => ({
+    t: TESTIMONIALS[(active + i) % len],
+    key: `${active}-${i}`,
+  }));
+
   return (
     <section className={`${styles.snapSection} ${styles.testimonialsSection}`}>
-      <div className={styles.wrap}>
-        <Reveal className={styles.sectionEyebrow}>Loved by closers</Reveal>
-        <Reveal as="h2" delay={1}>
-          What members
-          <br />
-          <span className={styles.muted}>say about iClose.</span>
+      <div className={styles.wrapWide}>
+        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          What members say.
         </Reveal>
 
         <div
@@ -354,38 +383,22 @@ function TestimonialsCarousel() {
           aria-roledescription="carousel"
           aria-label="Member testimonials"
         >
-          <div className={styles.testimonialTrack}>
-            {TESTIMONIALS.map((t, i) => {
-              const offset = i - active;
-              const isActive = i === active;
-              return (
-                <article
-                  key={t.initials + i}
-                  className={`${styles.testimonialCard} ${
-                    isActive ? styles.testimonialCardActive : ''
-                  }`}
-                  style={{
-                    transform: `translateX(${offset * 28}px) scale(${
-                      isActive ? 1 : 0.94
-                    })`,
-                    opacity: isActive ? 1 : Math.max(0, 0.3 - Math.abs(offset) * 0.1),
-                    zIndex: 10 - Math.abs(offset),
-                    pointerEvents: isActive ? 'auto' : 'none',
-                  }}
-                  aria-hidden={!isActive}
-                >
-                  <blockquote className={styles.testimonialQuote}>
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <figcaption className={styles.testimonialMeta}>
-                    <span className={styles.testimonialAvatar}>
-                      {t.initials}
-                    </span>
-                    <span className={styles.testimonialRole}>{t.role}</span>
-                  </figcaption>
-                </article>
-              );
-            })}
+          <div className={styles.testimonialRow}>
+            {visible.map(({ t, key }, slot) => (
+              <article
+                key={key}
+                className={styles.testimonialCard3}
+                style={{ animationDelay: `${slot * 60}ms` }}
+              >
+                <blockquote className={styles.testimonialQuote}>
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className={styles.testimonialMeta}>
+                  <span className={styles.testimonialAvatar}>{t.initials}</span>
+                  <span className={styles.testimonialRole}>{t.role}</span>
+                </figcaption>
+              </article>
+            ))}
           </div>
 
           <div className={styles.testimonialControls}>
@@ -456,15 +469,8 @@ function ExplainedBy() {
   return (
     <section className={`${styles.snapSection} ${styles.explainedSection}`}>
       <div className={styles.wrap}>
-        <Reveal className={styles.sectionEyebrow}>In their words</Reveal>
-        <Reveal as="h2" delay={1}>
-          iClose explained by
-          <br />
-          <span className={styles.explainedAccent}>Max.</span>
-        </Reveal>
-        <Reveal as="p" className={styles.sectionSub} delay={2}>
-          The simplest way to understand how iClose works for the role
-          you&apos;re playing. No jargon, no fluff. Just Max.
+        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          Explained by <span className={styles.explainedAccent}>Max.</span>
         </Reveal>
 
         <div className={styles.explainedGrid}>
@@ -562,15 +568,8 @@ function FaqAccordion() {
     >
       <div className={styles.faqWrap}>
         <div className={styles.faqHeader}>
-          <Reveal className={styles.sectionEyebrow}>Clarity</Reveal>
-          <Reveal as="h2" delay={1}>
-            Frequently asked
-            <br />
-            <span className={styles.muted}>questions.</span>
-          </Reveal>
-          <Reveal as="p" className={styles.sectionSubLeft} delay={2}>
-            Clear answers about iClose, membership, and how the platform
-            works.
+          <Reveal as="h2" className={styles.sectionHeadingSolo}>
+            Frequently asked questions.
           </Reveal>
         </div>
         <div className={styles.faqList}>
@@ -699,15 +698,10 @@ export function ICloseLanding() {
         id="waitlist"
       >
         <div className={styles.wlInner}>
-          <Reveal className={styles.sectionEyebrow}>Early access</Reveal>
-          <Reveal as="h2" delay={1}>
-            Be one of the first.
+          <Reveal as="h2" className={styles.sectionHeadingSolo}>
+            Join the waitlist.
           </Reveal>
-          <Reveal as="p" className={styles.sectionSub} delay={2}>
-            iClose opens soon. Tell us a bit about you and we&apos;ll reach
-            out to walk you through how it works for someone like you.
-          </Reveal>
-          <Reveal delay={3}>
+          <Reveal delay={1}>
             <WaitlistForm />
           </Reveal>
         </div>
