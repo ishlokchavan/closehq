@@ -18,6 +18,8 @@ import styles from './iclose-landing.module.css';
 
 /* Simplified shape — collected as-is by the form, then split into the
    first/last+consent shape the existing /api/lead route expects. */
+const intentValues = ['buyer', 'closer'] as const;
+
 const simpleSchema = z.object({
   fullName: z
     .string()
@@ -29,6 +31,9 @@ const simpleSchema = z.object({
     .min(7, 'Enter a valid phone number')
     .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
+  intent: z.enum(intentValues, {
+    errorMap: () => ({ message: 'Pick one to continue' }),
+  }),
   focus: z
     .array(z.enum(leadFocusValues))
     .min(1, 'Pick at least one focus area')
@@ -36,6 +41,23 @@ const simpleSchema = z.object({
   website: z.string().optional(),
 });
 type SimpleValues = z.infer<typeof simpleSchema>;
+
+const intentOptions: {
+  value: (typeof intentValues)[number];
+  label: string;
+  sub: string;
+}[] = [
+  {
+    value: 'buyer',
+    label: 'Buy a property',
+    sub: 'Source units, earn back up to 80% commission.',
+  },
+  {
+    value: 'closer',
+    label: 'Close / refer deals',
+    sub: 'Broker, lawyer, advisor or anyone with clients.',
+  },
+];
 
 const focusOptions: { value: (typeof leadFocusValues)[number]; label: string }[] = [
   { value: 'residential', label: 'Residential' },
@@ -70,6 +92,12 @@ const STEPS: StepDef[] = [
     validateKeys: ['phone'],
   },
   {
+    key: 'intent',
+    title: 'What brings you here?',
+    hint: 'So we can tailor the follow-up.',
+    validateKeys: ['intent'],
+  },
+  {
     key: 'focus',
     title: 'What are you focusing more on?',
     hint: 'Pick all that apply.',
@@ -101,6 +129,7 @@ export function WaitlistForm() {
       fullName: '',
       email: '',
       phone: '',
+      intent: undefined,
       focus: [],
       website: '',
     },
@@ -170,16 +199,26 @@ export function WaitlistForm() {
     // Submit one row per selected focus to keep the existing API shape
     // (focus enum was previously single-value). Pick the first as the
     // primary; pass the rest as the dealTypes array for context.
+    /* Tag intent + extra focuses into the existing payload so the
+       team sees them in the lead notification email without needing
+       a backend migration:
+         - intent goes into jobTitle ("Buyer" / "Closer")
+         - any focus beyond the primary rides along in `message` */
+    const intentLabel = data.intent === 'buyer' ? 'Buyer' : 'Closer';
+    const extraFocus =
+      data.focus.length > 1
+        ? `Also interested in: ${data.focus.slice(1).join(', ')}`
+        : '';
+
     const payload: LeadFormValues = {
       firstName,
       lastName,
       email: data.email,
       phone: data.phone,
+      jobTitle: intentLabel,
       focus: data.focus[0],
       dealTypes: [],
-      message: data.focus.length > 1
-        ? `Also interested in: ${data.focus.slice(1).join(', ')}`
-        : '',
+      message: extraFocus,
       consentPrivacy: true,
       consentMarketing: marketingOptIn,
       website: data.website ?? '',
@@ -495,6 +534,42 @@ function StepField({
         autoComplete="tel"
         error={err('phone')}
         registration={register('phone')}
+      />
+    );
+  }
+  if (step === 'intent') {
+    return (
+      <Controller
+        control={control}
+        name="intent"
+        render={({ field }) => (
+          <>
+            <div className={styles.intentGroup} role="radiogroup">
+              {intentOptions.map((opt) => {
+                const checked = field.value === opt.value;
+                return (
+                  <label
+                    key={opt.value}
+                    className={`${styles.intentOption} ${
+                      checked ? styles.intentOptionActive : ''
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="intent"
+                      value={opt.value}
+                      checked={checked}
+                      onChange={() => field.onChange(opt.value)}
+                    />
+                    <span className={styles.intentLabel}>{opt.label}</span>
+                    <span className={styles.intentSub}>{opt.sub}</span>
+                  </label>
+                );
+              })}
+            </div>
+            {err('intent') && <p className={styles.tfError}>{err('intent')}</p>}
+          </>
+        )}
       />
     );
   }

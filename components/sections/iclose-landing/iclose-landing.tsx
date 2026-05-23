@@ -106,7 +106,8 @@ function WhoIsThisFor() {
           className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
           {...animFromLeft}
         >
-          Who is this for?
+          Close it. Or buy it. <br />
+          Either way, you keep more.
         </motion.h2>
 
         <div className={styles.whoGrid}>
