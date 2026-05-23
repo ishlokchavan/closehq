@@ -154,13 +154,13 @@ function WhoIsThisFor() {
                 </div>
               </div>
               <h3>
-                Get up to 16% cashback on off-plan, or pay only 0.4%
+                Get up to 5% cashback on off-plan, or pay only 0.4%
                 commission on ready units.
               </h3>
               <p>
                 We handle everything, from finding the right unit to closing
                 the deal. On off-plan we negotiate with the developer and
-                rebate up to 16% of the deal value back to you. On ready
+                rebate up to 5% of the deal value back to you. On ready
                 secondary units we charge a flat 0.4% commission instead of
                 the standard 2%.
               </p>

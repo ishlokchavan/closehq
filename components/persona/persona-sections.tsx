@@ -268,6 +268,7 @@ export function PersonaCompare({
   left,
   right,
   footnote,
+  badge = 'vs',
 }: {
   eyebrow?: string;
   heading: ReactNode;
@@ -275,6 +276,7 @@ export function PersonaCompare({
   left: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: string };
   right: { title: string; rows: { label: string; value: string }[]; takeLabel: string; takeValue: string };
   footnote?: string;
+  badge?: string;
 }) {
   return (
     <section className={styles.math}>
@@ -313,7 +315,7 @@ export function PersonaCompare({
           viewport={inView}
           transition={{ duration: 0.45, delay: 0.25, ease }}
         >
-          vs
+          {badge}
         </motion.div>
 
         <motion.article

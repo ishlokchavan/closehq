@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: 'For Buyers · iClose',
   description:
-    'iClose gives UAE buyers up to 16% cashback on off-plan deals or a flat 0.4% commission on ready secondary units, instead of the standard 2%.',
+    'iClose gives UAE buyers up to 5% cashback on off-plan deals or a flat 0.4% commission on ready secondary units, instead of the standard 2%.',
 };
 
 export default function ForBuyersPage() {
@@ -28,7 +28,7 @@ export default function ForBuyersPage() {
         heroAlt="A premium UAE residence interior. Your potential home"
         headline={
           <>
-            Up to 16% cashback on off-plan.
+            Up to 5% cashback on off-plan.
             <br />
             <span>0.4% on ready units.</span>
           </>
@@ -37,14 +37,14 @@ export default function ForBuyersPage() {
           <>
             UAE real estate is one of the world&apos;s best investments. iClose
             gives you the deep market intelligence to buy with confidence and
-            rebates most of the agent commission back to you. Up to 16%
+            rebates most of the agent commission back to you. Up to 5%
             cashback on off-plan, or a flat 0.4% commission on ready secondary
             units instead of the standard 2%.
           </>
         }
         primaryCta={{ label: 'Get started free', href: '/#waitlist' }}
         chips={[
-          'Up to 16% cashback on off-plan deals',
+          'Up to 5% cashback on off-plan deals',
           'Flat 0.4% commission on ready secondary units',
           'Deep market intel before you commit',
         ]}
@@ -124,7 +124,8 @@ export default function ForBuyersPage() {
 
       <PersonaCompare
         eyebrow="The math"
-        heading={<>Off-plan vs ready, both pay you back.</>}
+        badge="or"
+        heading={<>Off-plan or ready, both pay you back.</>}
         body={
           <>
             On a typical AED 2M deal, here&apos;s the difference between
@@ -146,13 +147,13 @@ export default function ForBuyersPage() {
           title: 'Off-plan unit',
           rows: [
             { label: 'Deal value', value: 'AED 2,000,000' },
-            { label: 'Developer incentive', value: 'Up to 20%' },
+            { label: 'Total commission (5%)', value: 'AED 100,000' },
             { label: 'iClose rebate share', value: '80%' },
           ],
           takeLabel: 'You get back',
-          takeValue: 'Up to AED 320,000',
+          takeValue: 'Up to AED 80,000',
         }}
-        footnote="Exact savings confirmed upfront. No surprises at signing."
+        footnote="Exact cashback confirmed upfront. No surprises at signing."
       />
 
       <PersonaSteps

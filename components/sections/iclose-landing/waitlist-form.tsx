@@ -50,7 +50,7 @@ const intentOptions: {
   {
     value: 'buyer',
     label: 'Buy a property',
-    sub: 'Up to 16% cashback on off-plan, or 0.4% on ready units.',
+    sub: 'Up to 5% cashback on off-plan, or 0.4% on ready units.',
   },
   {
     value: 'closer',
