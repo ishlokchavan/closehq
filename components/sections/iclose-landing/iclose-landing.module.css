@@ -5295,3 +5295,110 @@ a.whoCard p,
     gap: 14px;
   }
 }
+
+/* ============================================================
+   v3.4 — What-is-it: 4 photo cards in masonry, mixed orientations
+   ============================================================ */
+
+/* Override the previous animated-mock grid rules — same .whatGrid
+   class but now hosts <figure> photo cards in a 2-col masonry. */
+.whatGrid {
+  display: block !important;
+  column-count: 2 !important;
+  column-gap: 18px !important;
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+  grid-template-columns: none !important;
+}
+
+.whatImgCard {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 0 18px !important;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--bg-alt);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04),
+    0 12px 32px rgba(0, 0, 0, 0.06);
+  break-inside: avoid;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s ease;
+}
+
+.whatImgCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06),
+    0 24px 64px rgba(0, 0, 0, 0.12);
+}
+
+/* Mixed aspect ratios so the masonry visibly stacks */
+.whatImgCardTall      { aspect-ratio: 3 / 5; }   /* tall portrait */
+.whatImgCardPortrait  { aspect-ratio: 4 / 5; }   /* standard portrait */
+.whatImgCardLandscape { aspect-ratio: 16 / 11; } /* mid landscape */
+.whatImgCardWide      { aspect-ratio: 16 / 9; }  /* wide landscape */
+
+.whatImgCardImg {
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.whatImgCard:hover .whatImgCardImg {
+  transform: scale(1.05);
+}
+
+.whatImgCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 35%,
+    rgba(0, 0, 0, 0.55) 80%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+.whatImgCardCaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 28px 26px;
+  color: #fff;
+  z-index: 2;
+}
+
+.whatImgCardCaption h3 {
+  font-size: clamp(20px, 1.9vw, 26px);
+  font-weight: 600;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.whatImgCardCaption p {
+  font-size: clamp(14px, 1.15vw, 17px) !important;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
+@media (max-width: 720px) {
+  .whatGrid {
+    column-count: 1 !important;
+    max-width: 480px !important;
+  }
+  .whatImgCardCaption {
+    padding: 22px 22px 20px;
+  }
+  .whatImgCardCaption h3 {
+    font-size: 19px;
+  }
+  .whatImgCardCaption p {
+    font-size: 14px !important;
+  }
+}

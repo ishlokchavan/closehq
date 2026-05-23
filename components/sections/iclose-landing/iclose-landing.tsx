@@ -133,9 +133,58 @@ function WhoIsThisFor() {
   );
 }
 
-/* ---------------- WHAT IS IT ---------------- */
+
+/* ---------------- WHAT IS IT (masonry of photo cards) ---------------- */
+
+type WhatCard = {
+  title: string;
+  body: string;
+  src: string;
+  alt: string;
+  ratio: 'portrait' | 'landscape' | 'wide' | 'tall';
+};
+
+const WHAT_CARDS: WhatCard[] = [
+  {
+    title: 'Learn any UAE community.',
+    body: 'Master Marina, Downtown, Palm and JVC — top to bottom.',
+    src: '/images/gallery-urban-hub.jpg',
+    alt: 'UAE community skyline',
+    ratio: 'tall',
+  },
+  {
+    title: 'Match the right specialist.',
+    body: 'One inquiry, matched to the closer who knows the building.',
+    src: '/images/gallery-community.jpg',
+    alt: 'A residential UAE community',
+    ratio: 'landscape',
+  },
+  {
+    title: 'Close at elite splits.',
+    body: 'Keep up to 100% on every deal you close yourself.',
+    src: '/images/hero-luxury.jpg',
+    alt: 'Luxury Dubai residence interior',
+    ratio: 'portrait',
+  },
+  {
+    title: 'Earn what you actually deserve.',
+    body: 'Performance is the ceiling. We set it high.',
+    src: '/images/perks-yacht.jpg',
+    alt: 'UAE waterfront lifestyle',
+    ratio: 'wide',
+  },
+];
 
 function WhatIsIt() {
+  const ratioCls = (r: WhatCard['ratio']) =>
+    r === 'tall'
+      ? styles.whatImgCardTall
+      : r === 'portrait'
+        ? styles.whatImgCardPortrait
+        : r === 'wide'
+          ? styles.whatImgCardWide
+          : styles.whatImgCardLandscape;
+
   return (
     <section className={styles.whatSection}>
       <div className={styles.wrapWide}>
@@ -144,580 +193,33 @@ function WhatIsIt() {
         </Reveal>
 
         <div className={styles.whatGrid}>
-          {/* Card 1: Dashboard overview */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardA}`} delay={1}>
-            <h3 className={styles.whatTitle}>One clear overview</h3>
-            <p className={styles.whatSub}>
-              Every offer, viewing, and closing — visible at a glance.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockDashboard}>
-                <div className={styles.mockTabs}>
-                  <span>Saved</span>
-                  <span>Viewings</span>
-                  <span className={styles.mockTabActive}>Your offers</span>
-                  <span>Closed</span>
-                </div>
-                <div className={`${styles.mockRow} ${styles.mockRowAnimA}`}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,440,000</span>
-                  <span className={styles.mockStatus}>Offer sent</span>
-                </div>
-                <div className={`${styles.mockRow} ${styles.mockRowAnimB}`}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,430,000</span>
-                  <span className={styles.mockStatus}>Counter received</span>
-                </div>
-                <div className={`${styles.mockRow} ${styles.mockRowAnimC}`}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,410,000</span>
-                  <span className={styles.mockStatus}>Closed ✓</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 2: Specialist match */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardB}`} delay={2}>
-            <h3 className={styles.whatTitle}>Match with the right specialist</h3>
-            <p className={styles.whatSub}>
-              Post an inquiry. We match you to the vetted UAE expert.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockMatch}>
-                <div className={`${styles.mockMatchRow} ${styles.mockMatchA}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                </div>
-                <div className={`${styles.mockMatchRow} ${styles.mockMatchB}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                  <span className={styles.mockBadgeBlue}>Matched</span>
-                </div>
-                <div className={`${styles.mockMatchRow} ${styles.mockMatchC}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                </div>
-                <div className={`${styles.mockMatchRow} ${styles.mockMatchD}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockMatchLine} />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 3: Conversations */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardC}`} delay={3}>
-            <h3 className={styles.whatTitle}>Every conversation in one place</h3>
-            <p className={styles.whatSub}>
-              Briefs, viewings, offers — one thread per deal.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockChat}>
-                <div className={`${styles.mockChatRow} ${styles.mockChatA}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockChatBubble}>Client brief →</span>
-                </div>
-                <div
-                  className={`${styles.mockChatRow} ${styles.mockChatRowRight} ${styles.mockChatB}`}
-                >
-                  <span className={styles.mockChatBubble}>3 units ready ✓</span>
-                  <span
-                    className={`${styles.mockAvatar} ${styles.mockAvatarAlt}`}
-                  />
-                </div>
-                <div className={`${styles.mockChatRow} ${styles.mockChatC}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockChatBubble}>Booking viewing</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 4: Make an offer */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardD}`} delay={4}>
-            <h3 className={styles.whatTitle}>Make an offer, faster than ever</h3>
-            <p className={styles.whatSub}>
-              Submit, counter, and close — without the back-and-forth.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockOffer}>
-                <div className={styles.mockOfferTitle}>Offer submitted</div>
-                <div className={styles.mockOfferAmount}>AED 1,425,000</div>
-                <div className={styles.mockOfferMeta}>
-                  <span>Buyer</span>
-                  <span>Seller</span>
-                  <span>Notary</span>
-                </div>
-                <div className={styles.mockOfferBar}>
-                  <div className={`${styles.mockOfferFill} ${styles.mockOfferAnim}`} />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 5: Community explorer */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardE}`} delay={5}>
-            <h3 className={styles.whatTitle}>Learn any UAE community</h3>
-            <p className={styles.whatSub}>
-              Deep-dive playbooks for the towers and clusters you work.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockExplore}>
-                <div className={styles.mockExploreSearch}>
-                  <span className={styles.mockExploreIcon} aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                      <circle cx="11" cy="11" r="6" />
-                      <path d="M16 16l4 4" />
-                    </svg>
-                  </span>
-                  <span className={styles.mockExploreQuery}>
-                    <span className={styles.mockExploreTyped}>
-                      Dubai Marina
-                    </span>
-                    <span className={styles.mockExploreCaret} />
-                  </span>
-                </div>
-                <div className={styles.mockExploreList}>
-                  <div className={styles.mockExploreItem}>
-                    <span className={styles.mockExploreDot} />
-                    <span>Marina Heights · 1502</span>
-                  </div>
-                  <div className={styles.mockExploreItem}>
-                    <span className={styles.mockExploreDot} />
-                    <span>Princess Tower</span>
-                  </div>
-                  <div className={styles.mockExploreItem}>
-                    <span className={styles.mockExploreDot} />
-                    <span>Cayan Tower</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Card 6: Close the deal */}
-          <Reveal className={`${styles.whatCard} ${styles.whatCardF}`} delay={6}>
-            <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
-            <p className={styles.whatSub}>
-              All parties aligned, paperwork tracked, commission landed.
-            </p>
-            <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockClose}>
-                <div className={styles.mockCloseHeader}>
-                  <span className={styles.mockCloseAddr}>
-                    Marina Heights · 1502
-                  </span>
-                  <span className={styles.mockCloseCity}>Dubai Marina</span>
-                </div>
-                <div className={styles.mockCloseGrid}>
-                  <div>
-                    <div className={styles.mockCloseLabel}>Offer price</div>
-                    <div className={styles.mockCloseValue}>AED 1,425,000</div>
-                  </div>
-                  <div>
-                    <div className={styles.mockCloseLabel}>Key transfer</div>
-                    <div className={styles.mockCloseValue}>14 Mar</div>
-                  </div>
-                  <div>
-                    <div className={styles.mockCloseLabel}>Notary</div>
-                    <div
-                      className={`${styles.mockCloseValue} ${styles.mockCloseConfirmed}`}
-                    >
-                      Confirmed ✓
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- PATTERN INTERRUPTS ---------------- */
-
-/* Bold dark stat strip — disrupts the white-card rhythm with a single
-   massive number that fades-and-counts up when it enters the viewport. */
-function StatStripBig({
-  eyebrow,
-  big,
-  bigSub,
-  caption,
-}: {
-  eyebrow: string;
-  big: string;
-  bigSub: string;
-  caption: string;
-}) {
-  return (
-    <section className={styles.statStrip}>
-      <div className={styles.statStripInner}>
-        <motion.div
-          className={styles.statStripEyebrow}
-          initial={{ opacity: 0, letterSpacing: '0.3em' }}
-          whileInView={{ opacity: 1, letterSpacing: '0.16em' }}
-          viewport={{ once: true, margin: '-15% 0px' }}
-          transition={{ duration: 0.6 }}
-        >
-          {eyebrow}
-        </motion.div>
-        <motion.div
-          className={styles.statStripBig}
-          initial={{ opacity: 0, y: 30, scale: 0.92 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-15% 0px' }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        >
-          {big}
-          <span className={styles.statStripBigSub}>{bigSub}</span>
-        </motion.div>
-        <motion.p
-          className={styles.statStripCaption}
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-15% 0px' }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {caption}
-        </motion.p>
-      </div>
-    </section>
-  );
-}
-
-/* Horizontal marquee — auto-scrolling ticker of closing notifications.
-   A second pattern interrupt with a different visual rhythm. */
-function ClosingMarquee() {
-  const items = [
-    'Marina Heights · 1502 · AED 1.42M · Closed',
-    'Burj Vista · 3812 · AED 2.10M · Counter received',
-    'Palm Tower · 1108 · AED 3.85M · Offer sent',
-    'JVC · Plaza Residences · AED 0.94M · Closed',
-    'Downtown · The Address · AED 4.20M · Closed',
-    'Business Bay · DAMAC Towers · AED 1.65M · Closed',
-    'Dubai Hills · Acacia · AED 2.40M · Closed',
-  ];
-  const doubled = [...items, ...items];
-  return (
-    <section className={styles.marquee} aria-label="Recent closings">
-      <div className={styles.marqueeTrack}>
-        {doubled.map((it, i) => (
-          <span className={styles.marqueeItem} key={i}>
-            <span className={styles.marqueeDot} />
-            {it}
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- HOW IT WORKS IN PRACTICE (pinned scroll) ---------------- */
-
-type WfStep = {
-  num: string;
-  title: string;
-  body: string;
-  visual: ReactNode;
-};
-
-/* ----- Step 1 visual: community library tiles ----- */
-function WfStep1Visual() {
-  const tiles = [
-    { tag: 'Dubai Marina', bars: [60, 80, 45] },
-    { tag: 'Downtown', bars: [72, 54, 68] },
-    { tag: 'Palm Jumeirah', bars: [50, 74, 40] },
-    { tag: 'JVC', bars: [65, 80, 38] },
-  ];
-  return (
-    <motion.div
-      className={styles.wfVisualPanel}
-      variants={wfContainerVar}
-      initial="hidden"
-      animate="show"
-    >
-      <div className={styles.wfPanelLibrary}>
-        {tiles.map((t) => (
-          <motion.div
-            key={t.tag}
-            className={styles.wfPanelLibTile}
-            variants={wfItemVar}
-          >
-            {t.bars.map((w, i) => (
-              <motion.span
-                key={i}
-                className={styles.wfPanelLibBar}
-                style={{ width: `${w}%`, transformOrigin: 'left center' }}
-                variants={wfBarVar}
-              />
-            ))}
-            <motion.span
-              className={styles.wfPanelLibTag}
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
+          {WHAT_CARDS.map((c, i) => (
+            <motion.figure
+              key={c.title}
+              className={`${styles.whatImgCard} ${ratioCls(c.ratio)}`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
               transition={{
-                duration: 0.45,
-                delay: 0.6,
+                duration: 0.65,
+                delay: i * 0.08,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              {t.tag}
-            </motion.span>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-/* ----- Step 2 visual: route fork ----- */
-function WfStep2Visual() {
-  return (
-    <motion.div
-      className={styles.wfVisualPanel}
-      variants={wfContainerVar}
-      initial="hidden"
-      animate="show"
-    >
-      <div className={styles.wfPanelFork}>
-        <motion.div
-          className={styles.wfPanelForkCard}
-          initial={{ opacity: 0, x: -40, rotate: -2 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className={styles.wfPanelForkTag}>Closer route</div>
-          <motion.div
-            className={styles.wfPanelForkBig}
-            initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
-            animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
-            transition={{ duration: 0.65, delay: 0.25 }}
-          >
-            100%
-          </motion.div>
-          <div className={styles.wfPanelForkSub}>commission, kept</div>
-        </motion.div>
-
-        <motion.div
-          className={styles.wfPanelForkOr}
-          aria-hidden="true"
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay: 0.45 }}
-        >
-          or
-        </motion.div>
-
-        <motion.div
-          className={`${styles.wfPanelForkCard} ${styles.wfPanelForkCardAlt}`}
-          initial={{ opacity: 0, x: 40, rotate: 2 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
-          transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className={styles.wfPanelForkTag}>Referral route</div>
-          <motion.div
-            className={styles.wfPanelForkBig}
-            initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
-            animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
-            transition={{ duration: 0.65, delay: 0.35 }}
-          >
-            80%
-          </motion.div>
-          <div className={styles.wfPanelForkSub}>commission, hands-off</div>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ----- Step 3 visual: payout card ----- */
-function WfStep3Visual() {
-  return (
-    <motion.div className={styles.wfVisualPanel}>
-      <motion.div
-        className={styles.wfPanelPayout}
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <motion.div
-          className={styles.wfPanelPayoutHead}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-        >
-          Commission paid
-        </motion.div>
-        <motion.div
-          className={styles.wfPanelPayoutAmount}
-          initial={{ opacity: 0, y: 14, letterSpacing: '0.08em' }}
-          animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
-          transition={{ duration: 0.7, delay: 0.25 }}
-        >
-          AED 90,000
-        </motion.div>
-        <motion.div
-          className={styles.wfPanelPayoutMeta}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.5 }}
-        >
-          <span>Marina Heights · 1502</span>
-          <span className={styles.wfPanelPayoutOk}>Transfer complete ✓</span>
-        </motion.div>
-        <div className={styles.wfPanelPayoutBar}>
-          <motion.div
-            className={styles.wfPanelPayoutFill}
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            style={{ transformOrigin: 'left center' }}
-            transition={{ duration: 1.1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-const WF_STEPS: WfStep[] = [
-  {
-    num: '01',
-    title: 'Learn the market.',
-    body: 'Master any UAE community through expert-led sessions, playbooks, and live deal breakdowns. From launch specs to payment-plan nuances — every developer, every cluster, every tower.',
-    visual: <WfStep1Visual />,
-  },
-  {
-    num: '02',
-    title: 'Pick your route.',
-    body: 'Close it yourself under your own name and keep up to 100% of the commission — or refer the client, let an iClose specialist close alongside you, and earn up to 80%.',
-    visual: <WfStep2Visual />,
-  },
-  {
-    num: '03',
-    title: 'Get paid.',
-    body: 'Commission lands directly in your account — tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
-    visual: <WfStep3Visual />,
-  },
-];
-
-function HowItWorks() {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState(0);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const scrollable = el.offsetHeight - vh;
-      if (scrollable <= 0) {
-        setActive(0);
-        return;
-      }
-      const scrolled = -rect.top;
-      const p = Math.max(0, Math.min(1, scrolled / scrollable));
-      setProgress(p);
-      // Three equal stops. Clamp so the last 8% biases to step 3.
-      const step = p >= 0.92 ? 2 : p >= 0.42 ? 1 : 0;
-      setActive(step);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
-
-  return (
-    <section
-      ref={sectionRef}
-      className={styles.workflowSection}
-      id="workflow"
-    >
-      <div className={styles.wfPin}>
-        <div className={styles.wfPinInner}>
-          <Reveal as="h2" className={styles.wfPinHeading}>
-            How it works in practice.
-          </Reveal>
-
-          <div className={styles.wfStage}>
-            <div className={styles.wfStageCopy}>
-              {/* Step number + title — slide in from the left.
-                  Synced with the visual on the right (same duration/easing). */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`title-${active}`}
-                  className={styles.wfStageTitleBlock}
-                  initial={{ opacity: 0, x: -64 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -32 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <div className={styles.wfStageNum}>
-                    {WF_STEPS[active].num}
-                  </div>
-                  <h3 className={styles.wfStageTitle}>
-                    {WF_STEPS[active].title}
-                  </h3>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Description — stays put. Just swaps content with a soft
-                  cross-fade so the layout doesn't twitch. */}
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={`body-${active}`}
-                  className={styles.wfStageBody}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  {WF_STEPS[active].body}
-                </motion.p>
-              </AnimatePresence>
-            </div>
-
-            <div className={styles.wfStageVisual}>
-              {/* Image — rises from bottom to top. Synced with the title. */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`visual-${active}`}
-                  className={`${styles.wfStageVisualPanel} ${styles.wfStageVisualPanelActive}`}
-                  initial={{ opacity: 0, y: 80 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -32 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {WF_STEPS[active].visual}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className={styles.wfProgress} aria-hidden="true">
-            <div
-              className={styles.wfProgressBar}
-              style={{ transform: `scaleX(${progress})` }}
-            />
-            <div className={styles.wfDots}>
-              {WF_STEPS.map((s, i) => (
-                <span
-                  key={s.num}
-                  className={`${styles.wfDot} ${
-                    i <= active ? styles.wfDotActive : ''
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+              <Image
+                src={c.src}
+                alt={c.alt}
+                fill
+                sizes="(max-width: 600px) 100vw, (max-width: 980px) 50vw, 540px"
+                className={styles.whatImgCardImg}
+              />
+              <div className={styles.whatImgCardOverlay} aria-hidden="true" />
+              <figcaption className={styles.whatImgCardCaption}>
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </figcaption>
+            </motion.figure>
+          ))}
         </div>
       </div>
     </section>
@@ -1037,6 +539,307 @@ function FaqAccordion() {
               </div>
             );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- HOW IT WORKS IN PRACTICE (pinned scroll) ---------------- */
+
+type WfStep = {
+  num: string;
+  title: string;
+  body: string;
+  visual: ReactNode;
+};
+
+function WfStep1Visual() {
+  const tiles = [
+    { tag: 'Dubai Marina', bars: [60, 80, 45] },
+    { tag: 'Downtown', bars: [72, 54, 68] },
+    { tag: 'Palm Jumeirah', bars: [50, 74, 40] },
+    { tag: 'JVC', bars: [65, 80, 38] },
+  ];
+  return (
+    <motion.div
+      className={styles.wfVisualPanel}
+      variants={wfContainerVar}
+      initial="hidden"
+      animate="show"
+    >
+      <div className={styles.wfPanelLibrary}>
+        {tiles.map((t) => (
+          <motion.div
+            key={t.tag}
+            className={styles.wfPanelLibTile}
+            variants={wfItemVar}
+          >
+            {t.bars.map((w, i) => (
+              <motion.span
+                key={i}
+                className={styles.wfPanelLibBar}
+                style={{ width: `${w}%`, transformOrigin: 'left center' }}
+                variants={wfBarVar}
+              />
+            ))}
+            <motion.span
+              className={styles.wfPanelLibTag}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.45, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {t.tag}
+            </motion.span>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function WfStep2Visual() {
+  return (
+    <motion.div
+      className={styles.wfVisualPanel}
+      variants={wfContainerVar}
+      initial="hidden"
+      animate="show"
+    >
+      <div className={styles.wfPanelFork}>
+        <motion.div
+          className={styles.wfPanelForkCard}
+          initial={{ opacity: 0, x: -40, rotate: -2 }}
+          animate={{ opacity: 1, x: 0, rotate: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className={styles.wfPanelForkTag}>Closer route</div>
+          <motion.div
+            className={styles.wfPanelForkBig}
+            initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
+            animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
+            transition={{ duration: 0.65, delay: 0.25 }}
+          >
+            100%
+          </motion.div>
+          <div className={styles.wfPanelForkSub}>commission, kept</div>
+        </motion.div>
+
+        <motion.div
+          className={styles.wfPanelForkOr}
+          aria-hidden="true"
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.45 }}
+        >
+          or
+        </motion.div>
+
+        <motion.div
+          className={`${styles.wfPanelForkCard} ${styles.wfPanelForkCardAlt}`}
+          initial={{ opacity: 0, x: 40, rotate: 2 }}
+          animate={{ opacity: 1, x: 0, rotate: 0 }}
+          transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className={styles.wfPanelForkTag}>Referral route</div>
+          <motion.div
+            className={styles.wfPanelForkBig}
+            initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
+            animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
+            transition={{ duration: 0.65, delay: 0.35 }}
+          >
+            80%
+          </motion.div>
+          <div className={styles.wfPanelForkSub}>commission, hands-off</div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+function WfStep3Visual() {
+  return (
+    <motion.div className={styles.wfVisualPanel}>
+      <motion.div
+        className={styles.wfPanelPayout}
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <motion.div
+          className={styles.wfPanelPayoutHead}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+        >
+          Commission paid
+        </motion.div>
+        <motion.div
+          className={styles.wfPanelPayoutAmount}
+          initial={{ opacity: 0, y: 14, letterSpacing: '0.08em' }}
+          animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+        >
+          AED 90,000
+        </motion.div>
+        <motion.div
+          className={styles.wfPanelPayoutMeta}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
+        >
+          <span>Marina Heights · 1502</span>
+          <span className={styles.wfPanelPayoutOk}>Transfer complete ✓</span>
+        </motion.div>
+        <div className={styles.wfPanelPayoutBar}>
+          <motion.div
+            className={styles.wfPanelPayoutFill}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            style={{ transformOrigin: 'left center' }}
+            transition={{ duration: 1.1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+const WF_STEPS: WfStep[] = [
+  {
+    num: '01',
+    title: 'Learn the market.',
+    body: 'Master any UAE community through expert-led sessions, playbooks, and live deal breakdowns. From launch specs to payment-plan nuances — every developer, every cluster, every tower.',
+    visual: <WfStep1Visual />,
+  },
+  {
+    num: '02',
+    title: 'Pick your route.',
+    body: 'Close it yourself under your own name and keep up to 100% of the commission — or refer the client, let an iClose specialist close alongside you, and earn up to 80%.',
+    visual: <WfStep2Visual />,
+  },
+  {
+    num: '03',
+    title: 'Get paid.',
+    body: 'Commission lands directly in your account — tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
+    visual: <WfStep3Visual />,
+  },
+];
+
+function HowItWorks() {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const scrollable = el.offsetHeight - vh;
+      if (scrollable <= 0) {
+        setActive(0);
+        return;
+      }
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / scrollable));
+      setProgress(p);
+      const step = p >= 0.92 ? 2 : p >= 0.42 ? 1 : 0;
+      setActive(step);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className={styles.workflowSection}
+      id="workflow"
+    >
+      <div className={styles.wfPin}>
+        <div className={styles.wfPinInner}>
+          <Reveal as="h2" className={styles.wfPinHeading}>
+            How it works in practice.
+          </Reveal>
+
+          <div className={styles.wfStage}>
+            <div className={styles.wfStageCopy}>
+              {/* Step number + title — slide in from the left.
+                  whileInView so the first slide animates the moment the
+                  section actually scrolls into view, not on initial mount. */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`title-${active}`}
+                  className={styles.wfStageTitleBlock}
+                  initial={{ opacity: 0, x: -64 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: false, amount: 0.2, margin: '-15% 0px' }}
+                  exit={{ opacity: 0, x: -32 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <div className={styles.wfStageNum}>
+                    {WF_STEPS[active].num}
+                  </div>
+                  <h3 className={styles.wfStageTitle}>
+                    {WF_STEPS[active].title}
+                  </h3>
+                </motion.div>
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`body-${active}`}
+                  className={styles.wfStageBody}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {WF_STEPS[active].body}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            <div className={styles.wfStageVisual}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`visual-${active}`}
+                  className={`${styles.wfStageVisualPanel} ${styles.wfStageVisualPanelActive}`}
+                  initial={{ opacity: 0, y: 80 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2, margin: '-15% 0px' }}
+                  exit={{ opacity: 0, y: -32 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {WF_STEPS[active].visual}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <div className={styles.wfProgress} aria-hidden="true">
+            <div
+              className={styles.wfProgressBar}
+              style={{ transform: `scaleX(${progress})` }}
+            />
+            <div className={styles.wfDots}>
+              {WF_STEPS.map((s, i) => (
+                <span
+                  key={s.num}
+                  className={`${styles.wfDot} ${
+                    i <= active ? styles.wfDotActive : ''
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
