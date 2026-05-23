@@ -4422,3 +4422,147 @@ a.whoCard:hover .whoCta {
     height: 24px;
   }
 }
+
+/* ============================================================
+   v2.9 — heavier-set typography (bigger small fonts), workflow
+   heading spacing, what-card title hover, FAQ heading right-align
+   ============================================================ */
+
+/* ---- TYPOGRAPHY BUMP (small fonts were hard to read) ----- */
+.whatSub {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+.whatTitle {
+  font-size: 18px !important;
+}
+.explainedTitle {
+  font-size: 19px !important;
+}
+.explainedDesc {
+  font-size: 15px !important;
+}
+.testimonialRole {
+  font-size: 14px !important;
+}
+.testimonialScroller .testimonialQuote {
+  font-size: 20px !important;
+}
+.footerTagline,
+.fLinks a,
+.fLinks button {
+  font-size: 14px !important;
+}
+.fCopy {
+  font-size: 13px !important;
+}
+.faqQ {
+  font-size: 17px !important;
+}
+.faqA p {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+.heroSub {
+  font-size: clamp(18px, 1.7vw, 22px) !important;
+}
+.tfHint {
+  font-size: 15px !important;
+}
+.consent span {
+  font-size: 14px !important;
+}
+.navLinks a:not(.navCta) {
+  font-size: 14px !important;
+}
+.whoCta {
+  font-size: 15px !important;
+}
+.whoBullets li {
+  font-size: 15px !important;
+}
+a.whoCard p,
+.whoCard p {
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+}
+
+/* Mock UI internals — bump readability one notch */
+.mockPrice {
+  font-size: 12px !important;
+}
+.mockStatus {
+  font-size: 11px !important;
+}
+.mockTabs span {
+  font-size: 11px !important;
+}
+.mockExploreItem,
+.mockExploreQuery {
+  font-size: 12px !important;
+}
+.mockChatBubble {
+  font-size: 12px !important;
+}
+.mockCloseAddr {
+  font-size: 14px !important;
+}
+.mockCloseValue {
+  font-size: 14px !important;
+}
+.mockCloseLabel {
+  font-size: 11px !important;
+}
+.mockOfferAmount {
+  font-size: 22px !important;
+}
+
+/* On phones, scale back up so it's still legible */
+@media (max-width: 600px) {
+  .whatSub {
+    font-size: 13px !important;
+  }
+  .testimonialScroller .testimonialQuote {
+    font-size: 17px !important;
+  }
+  .heroSub {
+    font-size: 17px !important;
+  }
+}
+
+/* ---- WHAT-IS-IT: title turns blue on card hover ---------- */
+.whatCard {
+  cursor: default;
+}
+.whatCard:hover .whatTitle {
+  color: var(--blue);
+  transition: color 0.2s ease;
+}
+.whatTitle {
+  transition: color 0.2s ease;
+}
+
+/* ---- HOW IT WORKS (workflow section restored) ------------ */
+.workflowSection {
+  background: var(--bg);
+}
+.workflowSection .sectionHeadingSolo {
+  margin-bottom: 40px;
+}
+.workflow {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ---- FAQ heading right-aligned --------------------------- */
+.faqHeading {
+  text-align: right !important;
+  margin: 0 0 0 auto !important;
+  max-width: none !important;
+}
+@media (max-width: 820px) {
+  .faqHeading {
+    text-align: left !important;
+    margin: 0 auto 28px 0 !important;
+  }
+}

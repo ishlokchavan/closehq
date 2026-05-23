@@ -313,6 +313,100 @@ function WhatIsIt() {
   );
 }
 
+/* ---------------- HOW IT WORKS IN PRACTICE ---------------- */
+
+function HowItWorks() {
+  return (
+    <section
+      className={`${styles.snapSection} ${styles.workflowSection}`}
+      id="workflow"
+    >
+      <div className={styles.wrapWide}>
+        <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          How it works in practice.
+        </Reveal>
+
+        <div className={styles.workflow}>
+          <Reveal className={styles.wfCard}>
+            <div className={styles.wfStepIcon}>
+              <svg viewBox="0 0 24 24">
+                <path d="M4 5a2 2 0 0 1 2-2h14v18H6a2 2 0 0 1-2-2z" />
+                <path d="M4 17a2 2 0 0 1 2-2h14" />
+              </svg>
+            </div>
+            <div className={styles.wfStepNum}>Step 1</div>
+            <h3>Learn the market.</h3>
+            <p>
+              Master any UAE community through expert-led sessions, playbooks,
+              and deal breakdowns.
+            </p>
+          </Reveal>
+
+          <Reveal className={styles.wfArrow} delay={1}>
+            <span aria-hidden="true" />
+          </Reveal>
+
+          <Reveal className={styles.wfForkGroup} delay={2}>
+            <div className={styles.wfForkLabel}>Step 2 · Pick your route</div>
+            <div className={styles.wfForkRow}>
+              <div className={styles.wfForkCard}>
+                <div className={styles.wfPathTag}>Closer route</div>
+                <h4>Close it yourself.</h4>
+                <p>
+                  Use the platform&apos;s network, listings, and tools to close
+                  the deal under your own name.
+                </p>
+                <div className={styles.wfMini}>
+                  <span className={styles.label}>Your split</span>
+                  <span className={styles.val}>Up to 100%</span>
+                </div>
+              </div>
+
+              <div className={styles.wfOr} aria-hidden="true">
+                OR
+              </div>
+
+              <div className={styles.wfForkCard}>
+                <div
+                  className={`${styles.wfPathTag} ${styles.wfPathTagAlt}`}
+                >
+                  Referral route
+                </div>
+                <h4>Bring the client.</h4>
+                <p>
+                  Got someone but not a license? Submit an inquiry. We match
+                  you with the right specialist who closes alongside you.
+                </p>
+                <div className={`${styles.wfMini} ${styles.wfMiniAlt}`}>
+                  <span className={styles.label}>You earn</span>
+                  <span className={styles.val}>Up to 80%</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal className={styles.wfArrow} delay={3}>
+            <span aria-hidden="true" />
+          </Reveal>
+
+          <Reveal className={styles.wfCard} delay={4}>
+            <div className={styles.wfStepIcon}>
+              <svg viewBox="0 0 24 24">
+                <path d="M3 12l6 6L21 6" />
+              </svg>
+            </div>
+            <div className={styles.wfStepNum}>Step 3</div>
+            <h3>Get paid.</h3>
+            <p>
+              Commission lands directly. Transparent from day one. No surprises.
+            </p>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- TESTIMONIALS CAROUSEL ---------------- */
 
 const TESTIMONIALS = [
@@ -590,7 +684,10 @@ function FaqAccordion() {
     >
       <div className={styles.faqWrap}>
         <div className={styles.faqHeader}>
-          <Reveal as="h2" className={styles.sectionHeadingSolo}>
+          <Reveal
+            as="h2"
+            className={`${styles.sectionHeadingSolo} ${styles.faqHeading}`}
+          >
             Frequently asked questions.
           </Reveal>
         </div>
@@ -693,10 +790,10 @@ export function ICloseLanding() {
           </p>
           <div className={styles.heroCtas}>
             <a href="#waitlist" className={styles.btnBlue}>
-              Join the waitlist
+              Get Started
             </a>
-            <a href="#workflow" className={styles.btnLink}>
-              See how it works
+            <a href="/specialists" className={styles.btnLink}>
+              Become an Educator
             </a>
           </div>
         </div>
@@ -707,6 +804,9 @@ export function ICloseLanding() {
 
       {/* WHAT IS IT */}
       <WhatIsIt />
+
+      {/* HOW IT WORKS */}
+      <HowItWorks />
 
       {/* TESTIMONIALS */}
       <TestimonialsCarousel />
