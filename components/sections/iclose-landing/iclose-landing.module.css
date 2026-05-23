@@ -5471,3 +5471,64 @@ a.whoCard p,
     transition: none !important;
   }
 }
+
+/* ============================================================
+   v3.7 — Mobile workflow: TikTok-style 100vh snap stops
+   ============================================================ */
+
+@media (max-width: 820px) {
+  /* Override v3.6: each step is now a full-viewport snap stop. */
+  .wfMobileStep {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    /* Centre content vertically inside the 100vh slide so it reads as
+       "one step per screen", not "content squashed at top". */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 18px 32px !important;
+    gap: 20px;
+    /* Drop the hairline dividers from the previous stacked layout —
+       each step is now its own complete screen. */
+    border-top: none !important;
+  }
+
+  /* Section padding gets baked into each slide instead. */
+  .workflowSection {
+    padding: 0 !important;
+  }
+
+  /* The "How it works in practice." heading floats above the snap
+     scroll zone, with its own 100vh that the user scrolls past
+     before snap engages. Compact so it doesn't waste a screen. */
+  .wfMobile {
+    max-width: none;
+  }
+  .wfMobileHeading {
+    padding: 80px 22px 32px;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Bound the visual so it never blows past the screen. */
+  .wfMobileVisual {
+    aspect-ratio: 4 / 3;
+    max-height: 50vh;
+  }
+  .wfMobileVisual .wfVisualPanel {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 380px) {
+  /* On very small phones, drop the title-block min-height and tighten. */
+  .wfMobileTitle {
+    font-size: 26px;
+  }
+  .wfMobileBody {
+    font-size: 16px !important;
+  }
+}
+

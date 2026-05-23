@@ -20,6 +20,25 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* On mobile, enable mandatory snap on html so that any element with
+     scroll-snap-align (currently just the workflow steps on the
+     landing page) acts as a TikTok-style snap stop. Other pages have
+     no snap-align elements, so this is a no-op there. */
+  @media (max-width: 820px) {
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-padding-top: 56px;
+    }
+  }
+
+  /* Respect reduced-motion: drop the mandatory snap so the page
+     scrolls naturally for users who've opted out of motion. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-snap-type: none !important;
+    }
+  }
+
   body {
     background: var(--background);
     color: var(--foreground);
