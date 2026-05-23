@@ -26,22 +26,22 @@ export default function ForBrokersPage() {
         heroAlt="A broker in a modern Dubai office"
         headline={
           <>
-            Learn it. Know it.
+            Bring the client.
             <br />
-            <span>Close it.</span>
+            <span>Close the deal.</span>
           </>
         }
         sub={
           <>
-            The UAE market is worth trillions. iClose gives you everything you
-            need to become the closer who gets the biggest slice — full project
-            knowledge, elite resources, and the highest commission splits in
-            the country.
+            Brokers, lawyers, advisors, executives, networkers — anyone with a
+            client to refer or a deal to close. iClose gives you the market
+            intelligence, sales tools, and commission structure that the top
+            UAE closers run on.
           </>
         }
         primaryCta={{ label: 'Start closing', href: '/#waitlist' }}
         secondaryCta={{ label: 'See how it works', href: '#how' }}
-        chips={['No experience required — only ambition.']}
+        chips={['No license needed to refer · Up to 100% on deals you close']}
       />
 
       <PersonaIntro
@@ -49,9 +49,10 @@ export default function ForBrokersPage() {
         heading={<>Not another brokerage.</>}
         body={
           <>
-            iClose is a closer&apos;s platform. We don&apos;t manage agents.
-            We equip closers — with the market intelligence, sales tools, and
-            deal structure to win every room they walk into.
+            iClose is a platform for anyone who closes — or knows someone who
+            will. We don&apos;t manage agents. We equip closers and referrers
+            with the market intelligence, sales tools, and commission
+            structure to win every room they walk into.
           </>
         }
         items={[
@@ -66,14 +67,14 @@ export default function ForBrokersPage() {
             body: 'Brochures, floor plans, presentations, and pricing. Updated, organised, always ready to send.',
           },
           {
-            tag: 'Deal flow',
-            title: 'Close-ready structure.',
-            body: 'We connect you to the right deals with the commission structure top performers deserve.',
+            tag: 'Refer or close',
+            title: 'Two paths, one structure.',
+            body: 'Close it yourself and keep up to 100%, or refer the client and earn up to 80% — your call, deal by deal.',
           },
           {
             tag: 'Reputation',
             title: 'Performance track record.',
-            body: 'Build your verified close history. Let your numbers do the talking.',
+            body: 'Build your verified close (or referral) history. Let your numbers do the talking.',
           },
         ]}
       />
@@ -196,20 +197,20 @@ export default function ForBrokersPage() {
         heading={<>Who this is for.</>}
         items={[
           {
-            title: 'Complete beginners.',
-            body: "You want to break into UAE property with a real foundation — not just a LinkedIn title.",
+            title: 'Brokers ready to keep more.',
+            body: "You're already in the market and tired of weak training, low splits, and zero support from your current agency.",
           },
           {
-            title: 'Agents stuck on low splits.',
-            body: "You're already in the market and tired of weak training and zero support from your current setup.",
+            title: 'Lawyers, advisors & consultants.',
+            body: 'Your clients are moving money into UAE property. You already have the relationship — earn up to 80% by referring them through iClose.',
+          },
+          {
+            title: 'Executives & community connectors.',
+            body: "Your network constantly asks who to call for property. Now you have a real answer — and a real share when they close.",
           },
           {
             title: 'Sales pros from other industries.',
-            body: 'You know how to close people — and want to apply that in a higher-value market.',
-          },
-          {
-            title: 'Ambitious operators.',
-            body: 'You understand that in this market, knowledge is leverage — and you&apos;re ready to build both.',
+            body: 'You know how to close people — and want to apply that in one of the world&apos;s highest-value markets.',
           },
         ]}
       />

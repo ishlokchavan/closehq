@@ -24,8 +24,8 @@ export default function ForBuyersPage() {
       <PersonaHero
         variant="buyer"
         tagLabel="For Buyers"
-        heroImage="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
-        heroAlt="A UAE skyline representing the buyer's market"
+        heroImage="/images/hero-luxury.jpg"
+        heroAlt="A premium UAE residence interior — your potential home"
         headline={
           <>
             Buy smarter.
@@ -136,7 +136,6 @@ export default function ForBuyersPage() {
           { label: 'Standard agent commission (2%)', value: 'AED 40,000' },
           { label: 'Your savings (up to 80%)', value: 'Up to AED 32,000', hi: true },
           { label: 'Listings accessible', value: 'Full UAE market' },
-          { label: 'Fee transparency', value: '100%' },
         ]}
         footnote="Your savings are confirmed upfront — no surprises at signing."
       />

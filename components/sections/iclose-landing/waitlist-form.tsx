@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { useForm, Controller, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -108,6 +109,7 @@ export function WaitlistForm() {
   const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
   /* Remember the user's name + email from the form so we can prefill
      the Calendly embed once it opens in the success state. */
   const [submitted, setSubmitted] = useState<{ name: string; email: string } | null>(null);
@@ -179,7 +181,7 @@ export function WaitlistForm() {
         ? `Also interested in: ${data.focus.slice(1).join(', ')}`
         : '',
       consentPrivacy: true,
-      consentMarketing: false,
+      consentMarketing: marketingOptIn,
       website: data.website ?? '',
     };
 
@@ -266,45 +268,53 @@ export function WaitlistForm() {
           </div>
         </div>
 
-        <AnimatePresence>
-          {showCalendly && (
-            <motion.div
-              className={styles.calendlyOverlay}
-              onClick={() => setShowCalendly(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Schedule a callback"
-            >
-              <motion.div
-                className={styles.calendlyModal}
-                onClick={(e) => e.stopPropagation()}
-                initial={{ opacity: 0, scale: 0.96, y: 16 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96, y: 16 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <button
-                  type="button"
-                  className={styles.calendlyClose}
+        {/* Portal the modal to document.body so it escapes any
+            ancestor that has transform/filter/perspective (the
+            section blur-in animation creates such ancestors, which
+            otherwise re-root position:fixed and clip the overlay). */}
+        {typeof document !== 'undefined' &&
+          createPortal(
+            <AnimatePresence>
+              {showCalendly && (
+                <motion.div
+                  className={styles.calendlyOverlay}
                   onClick={() => setShowCalendly(false)}
-                  aria-label="Close scheduling"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Schedule a callback"
                 >
-                  ×
-                </button>
-                <iframe
-                  src={calendlyEmbedUrl}
-                  title="Schedule a callback with iClose"
-                  className={styles.calendlyFrame}
-                  allow="camera; microphone; fullscreen"
-                />
-              </motion.div>
-            </motion.div>
+                  <motion.div
+                    className={styles.calendlyModal}
+                    onClick={(e) => e.stopPropagation()}
+                    initial={{ opacity: 0, scale: 0.96, y: 16 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, y: 16 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <button
+                      type="button"
+                      className={styles.calendlyClose}
+                      onClick={() => setShowCalendly(false)}
+                      aria-label="Close scheduling"
+                    >
+                      ×
+                    </button>
+                    <iframe
+                      src={calendlyEmbedUrl}
+                      title="Schedule a callback with iClose"
+                      className={styles.calendlyFrame}
+                      allow="camera; microphone; fullscreen"
+                    />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>,
+            document.body,
           )}
-        </AnimatePresence>
       </>
     );
   }
@@ -362,6 +372,24 @@ export function WaitlistForm() {
             />
           </div>
 
+          {/* Compliance: marketing-consent opt-in only on the final
+              step, and a privacy notice under the submit button. The
+              privacy consent is implicit on submission (covered by the
+              notice + Privacy Policy link). */}
+          {step === total - 1 && (
+            <label className={styles.tfConsent}>
+              <input
+                type="checkbox"
+                checked={marketingOptIn}
+                onChange={(e) => setMarketingOptIn(e.target.checked)}
+              />
+              <span>
+                Send me product updates and launch news. (Optional —
+                we don&apos;t share your details.)
+              </span>
+            </label>
+          )}
+
           <div className={styles.tfControls}>
             <button
               type="button"
@@ -393,6 +421,20 @@ export function WaitlistForm() {
           {serverError && (
             <p className={styles.serverError} style={{ marginTop: 16 }}>
               {serverError}
+            </p>
+          )}
+
+          {step === total - 1 && (
+            <p className={styles.tfLegal}>
+              By submitting you agree to our{' '}
+              <a href="/privacy" target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </a>{' '}
+              and{' '}
+              <a href="/terms" target="_blank" rel="noopener noreferrer">
+                Terms of Service
+              </a>
+              . We&apos;ll only use your details to follow up about iClose.
             </p>
           )}
         </motion.div>
