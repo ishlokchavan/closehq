@@ -115,19 +115,20 @@ function WhoIsThisFor() {
               <div className={styles.whoHero}>
                 <Image
                   src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
-                  alt="A broker in a modern Dubai office"
+                  alt="A closer in a modern Dubai office"
                   fill
                   sizes="(max-width: 820px) 100vw, 520px"
                   className={styles.whoHeroImg}
                   priority={false}
                 />
                 <div className={styles.whoHeroOverlay} />
-                <div className={styles.whoHeroTag}>For Brokers</div>
+                <div className={styles.whoHeroTag}>For Closers</div>
               </div>
-              <h3>Close more deals, keep more of each one.</h3>
+              <h3>Close more deals. Keep more of each one.</h3>
               <p>
-                Learn any UAE community top-to-bottom from the people actually
-                closing there. Keep up to 100% of every commission you earn.
+                Brokers and lawyers, advisors, executives, networkers — anyone
+                with a client to refer or a deal to close. Keep up to 100% of
+                every commission you earn.
               </p>
               <span className={styles.whoCta}>
                 Learn more <span aria-hidden="true">→</span>
@@ -136,11 +137,11 @@ function WhoIsThisFor() {
           </Reveal>
 
           <Reveal className={styles.whoCardWrap} delay={2}>
-            <Link href="/for-collaborators" className={styles.whoCard}>
+            <Link href="/for-buyers" className={styles.whoCard}>
               <div className={styles.whoHero}>
                 <Image
                   src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
-                  alt="A private-client advisor reviewing documents with a client"
+                  alt="A buyer sourcing a UAE property with iClose"
                   fill
                   sizes="(max-width: 820px) 100vw, 520px"
                   className={styles.whoHeroImg}
@@ -148,13 +149,14 @@ function WhoIsThisFor() {
                 />
                 <div className={styles.whoHeroOverlay} />
                 <div className={`${styles.whoHeroTag} ${styles.whoHeroTagAlt}`}>
-                  For Collaborators
+                  For Buyers
                 </div>
               </div>
-              <h3>Bring the client. We bring the expert.</h3>
+              <h3>Source the unit yourself. Pay 20% commission, not 100%.</h3>
               <p>
-                Lawyers, advisors, executives, networkers — anyone with a client
-                to refer. Earn up to 80% of the commission when it closes.
+                We source the unit seller-side and handle conveyancing — or, on
+                off-plan, negotiate with the developer and secure the unit for
+                you. You only pay 20% of the agent commission.
               </p>
               <span
                 className={`${styles.whoCta} ${styles.whoCtaAlt}`}
@@ -1084,9 +1086,6 @@ export function ICloseLanding() {
             <a href="#waitlist" className={styles.btnBlue}>
               Get Started
             </a>
-            <a href="/specialists" className={styles.btnLink}>
-              Become an Educator
-            </a>
           </div>
         </div>
       </section>
@@ -1103,10 +1102,10 @@ export function ICloseLanding() {
       {/* TESTIMONIALS */}
       <TestimonialsCarousel />
 
-      {/* EXPLAINED BY */}
-      <ExplainedBy />
+      {/* EXPLAINED BY — hidden for now; component still defined in file. */}
+      {/* <ExplainedBy /> */}
 
-      {/* WAITLIST (Typeform) */}
+      {/* WAITLIST */}
       <section
         className={`${styles.waitlist}`}
         id="waitlist"

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const leadFocusValues = ['offplan', 'secondary', 'both'] as const;
+export const leadFocusValues = ['residential', 'commercial', 'offplan'] as const;
 export const leadDealTypeValues = [
   'apartments',
   'villas',
