@@ -152,11 +152,11 @@ function WhoIsThisFor() {
                   For Buyers
                 </div>
               </div>
-              <h3>Source the unit yourself. Pay 20% commission, not 100%.</h3>
+              <h3>Source the unit yourself. Earn back up to 80% of the commission.</h3>
               <p>
                 We source the unit seller-side and handle conveyancing — or, on
                 off-plan, negotiate with the developer and secure the unit for
-                you. You only pay 20% of the agent commission.
+                you. You earn back up to 80% of the agent commission.
               </p>
               <span
                 className={`${styles.whoCta} ${styles.whoCtaAlt}`}
@@ -237,6 +237,13 @@ function WhatIsIt() {
             </h3>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockMatch}>
+                <svg
+                  className={styles.mockCursor}
+                  viewBox="0 0 18 22"
+                  aria-hidden="true"
+                >
+                  <path d="M2 1.5l13 7.5-6 1.5-2 7-5-16z" />
+                </svg>
                 <div className={`${styles.mockMatchRow} ${styles.mockMatchA}`}>
                   <span className={styles.mockAvatar} />
                   <span className={styles.mockMatchLine} />
@@ -671,6 +678,7 @@ type WfStep = {
   title: string;
   body: string;
   visual: ReactNode;
+  cta?: { label: string; href: string };
 };
 
 function WfStep1Visual() {
@@ -842,6 +850,7 @@ const WF_STEPS: WfStep[] = [
     title: 'Get paid.',
     body: 'Commission lands directly in your account — tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
     visual: <WfStep3Visual />,
+    cta: { label: 'Start for free', href: '#waitlist' },
   },
 ];
 
@@ -925,6 +934,19 @@ function HowItWorks() {
                   {WF_STEPS[active].body}
                 </motion.p>
               </AnimatePresence>
+              {WF_STEPS[active].cta && (
+                <motion.a
+                  key={`cta-${active}`}
+                  href={WF_STEPS[active].cta!.href}
+                  className={styles.wfStartCta}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {WF_STEPS[active].cta!.label}
+                  <span aria-hidden="true">→</span>
+                </motion.a>
+              )}
             </div>
 
             <div className={styles.wfStageVisual}>
@@ -999,6 +1021,23 @@ function HowItWorks() {
             >
               {s.body}
             </motion.p>
+            {s.cta && (
+              <motion.a
+                href={s.cta.href}
+                className={styles.wfStartCta}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{
+                  root: mobileScrollerRef,
+                  once: false,
+                  amount: 0.4,
+                }}
+                transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {s.cta.label}
+                <span aria-hidden="true">→</span>
+              </motion.a>
+            )}
 
             <motion.div
               className={styles.wfMobileVisual}

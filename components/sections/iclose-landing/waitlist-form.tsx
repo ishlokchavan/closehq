@@ -253,14 +253,14 @@ export function WaitlistForm() {
                 href={`tel:${CALL_PHONE.replace(/\s+/g, '')}`}
                 className={styles.btnBluePrimary}
               >
-                <span aria-hidden="true">📞</span> Call us now
+                Call us now
               </a>
               <button
                 type="button"
                 className={styles.btnGhost}
                 onClick={() => setShowCalendly(true)}
               >
-                <span aria-hidden="true">🗓️</span> Schedule a callback later
+                Schedule a callback later
               </button>
             </div>
           </div>

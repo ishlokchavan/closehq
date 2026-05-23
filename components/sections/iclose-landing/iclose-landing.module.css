@@ -5865,3 +5865,188 @@ a.whoCard p,
     height: 40px;
   }
 }
+
+/* ============================================================
+   v4.2 — Flatten the success card (no box-in-box), responsive
+   FAQ, mockMatch cursor animation, workflow CTA, section
+   scroll-driven blur+rise transitions
+   ============================================================ */
+
+/* Drop the inner card chrome — success state now flows inside .tfShell
+   without a second outline. Padding only. */
+.wlSuccess {
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 28px 36px 32px !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* FAQ heading column was 320px wide and squashed the headline into 3
+   lines. Widen it and let the headline clamp tighter. */
+.faqWrap {
+  grid-template-columns: minmax(360px, 0.9fr) 1.5fr !important;
+  gap: 48px !important;
+}
+.faqHeading {
+  font-size: clamp(28px, 3.2vw, 40px) !important;
+}
+@media (max-width: 980px) {
+  .faqWrap {
+    grid-template-columns: minmax(320px, 1fr) 1.6fr !important;
+    gap: 36px !important;
+  }
+}
+@media (max-width: 820px) {
+  .faqWrap {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .faqHeading {
+    text-align: left !important;
+    margin: 0 auto 16px 0 !important;
+  }
+}
+
+/* Match-specialist mock: add an animated cursor that walks the rows
+   in sync with the .mockMatchOn highlight cycle (period 6s, four
+   stops 0/1.5/3/4.5s). The cursor uses absolute positioning so
+   .mockMatch needs to be relative. */
+.mockMatch {
+  position: relative;
+}
+.mockCursor {
+  position: absolute;
+  right: 14%;
+  width: 18px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+  animation: mockCursorMove 6s cubic-bezier(0.45, 0.1, 0.5, 0.95) infinite;
+}
+.mockCursor path {
+  fill: #fff;
+  stroke: #1d1d1f;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+@keyframes mockCursorMove {
+  0%, 18%   { top: 6%; }
+  21%, 43%  { top: 30%; }
+  46%, 68%  { top: 54%; }
+  71%, 93%  { top: 78%; }
+  100%      { top: 6%; }
+}
+/* Subtle click pulse on the cursor as it lands on each row */
+.mockCursor::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 113, 227, 0.55);
+  opacity: 0;
+  animation: mockCursorClick 6s linear infinite;
+}
+@keyframes mockCursorClick {
+  0%, 5%   { opacity: 0; transform: scale(0.6); }
+  9%       { opacity: 0.9; transform: scale(1); }
+  16%      { opacity: 0; transform: scale(1.6); }
+  25%      { opacity: 0; transform: scale(0.6); }
+  /* repeat each ~25% — 4 clicks across 6s */
+  30%      { opacity: 0; transform: scale(0.6); }
+  34%      { opacity: 0.9; transform: scale(1); }
+  41%      { opacity: 0; transform: scale(1.6); }
+  50%      { opacity: 0; transform: scale(0.6); }
+  55%      { opacity: 0; transform: scale(0.6); }
+  59%      { opacity: 0.9; transform: scale(1); }
+  66%      { opacity: 0; transform: scale(1.6); }
+  75%      { opacity: 0; transform: scale(0.6); }
+  80%      { opacity: 0; transform: scale(0.6); }
+  84%      { opacity: 0.9; transform: scale(1); }
+  91%      { opacity: 0; transform: scale(1.6); }
+  100%     { opacity: 0; transform: scale(0.6); }
+}
+
+/* Workflow "Start for free" CTA inside the get-paid step's stage */
+.wfStartCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 12px 22px;
+  border-radius: var(--r-pill);
+  background: var(--blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: background 0.2s, transform 0.15s;
+  align-self: flex-start;
+}
+.wfStartCta:hover {
+  background: var(--blue-hover);
+}
+.wfStartCta:active {
+  transform: scale(0.98);
+}
+
+/* Section scroll-driven blur+rise. Apply to every direct section in
+   the landing's main root. Modern browsers (Chrome 115+, Safari TP)
+   honor view() timelines — older browsers ignore the rule and the
+   section just appears statically (graceful fallback). */
+@supports (animation-timeline: view()) {
+  .root > section,
+  .root > div > section {
+    animation-name: sectionEnter, sectionExit;
+    animation-fill-mode: both, both;
+    animation-timing-function: linear, linear;
+    animation-timeline: view(), view();
+    animation-range: entry 0% entry 60%, exit 40% exit 100%;
+  }
+  /* Don't animate the hero on entry (it's the first paint). */
+  .root > section:first-of-type {
+    animation: none;
+  }
+  /* Don't apply to the workflow section — it has its own pinned
+     scroll story. */
+  .workflowSection {
+    animation: none !important;
+  }
+}
+
+@keyframes sectionEnter {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(48px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes sectionExit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.55;
+    filter: blur(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @supports (animation-timeline: view()) {
+    .root > section,
+    .root > div > section {
+      animation: none !important;
+    }
+  }
+}

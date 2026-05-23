@@ -30,21 +30,21 @@ export default function ForBuyersPage() {
           <>
             Buy smarter.
             <br />
-            <span>Pay less. Own more.</span>
+            <span>Earn back up to 80%.</span>
           </>
         }
         sub={
           <>
             UAE real estate is one of the world&apos;s best investments — if
             you know what you&apos;re doing. iClose gives you the deep market
-            intelligence to buy with confidence, and the platform to save on
-            commission when you do.
+            intelligence to buy with confidence, and earns you back up to 80%
+            of the agent commission on every deal.
           </>
         }
         primaryCta={{ label: 'Get started free', href: '/#waitlist' }}
         chips={[
           'Deep insights on every project before you commit',
-          'Up to 2% commission savings',
+          'Earn back up to 80% of the agent commission',
           'Zero guesswork — data-backed decisions',
         ]}
       />
@@ -122,24 +122,23 @@ export default function ForBuyersPage() {
       />
 
       <PersonaMath
-        eyebrow="The saving"
-        heading={<>When you close through iClose, you keep more.</>}
+        eyebrow="The savings"
+        heading={<>Earn back up to 80% of the commission.</>}
         body={
           <>
-            Because you&apos;re coming in educated and deal-ready, we pass a
-            share of the commission back to you. That&apos;s money most buyers
-            never knew they could save.
+            Because you&apos;re coming in educated and deal-ready, we pass
+            most of the commission back to you. Money most buyers never knew
+            they could earn back.
           </>
         }
         rows={[
           { label: 'Property value', value: 'AED 2,000,000' },
           { label: 'Standard agent commission (2%)', value: 'AED 40,000' },
-          { label: 'Your saving with iClose', value: 'Up to AED 20,000', hi: true },
-          { label: 'What you actually pay', value: 'AED 20,000 or less', hi: true },
+          { label: 'Your savings (up to 80%)', value: 'Up to AED 32,000', hi: true },
           { label: 'Listings accessible', value: 'Full UAE market' },
           { label: 'Fee transparency', value: '100%' },
         ]}
-        footnote="Your saving is confirmed upfront — no surprises at signing."
+        footnote="Your savings are confirmed upfront — no surprises at signing."
       />
 
       <PersonaSteps

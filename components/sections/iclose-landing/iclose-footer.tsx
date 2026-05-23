@@ -3,9 +3,8 @@
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 import { siteConfig } from '@/lib/site-config';
+import { formatPhone, telHref } from '@/lib/utils';
 import styles from './iclose-landing.module.css';
-
-const telHref = (phone: string) => `tel:+${phone.replace(/\D/g, '')}`;
 
 const openCookieSettings = () =>
   window.dispatchEvent(new Event('iclose:open-cookie-settings'));
@@ -29,7 +28,22 @@ export function ICloseFooter() {
               <Link href="/#workflow">How it works</Link>
             </li>
             <li>
-              <Link href="/#waitlist">Early access</Link>
+              <Link href="/#waitlist">Get started</Link>
+            </li>
+            <li>
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_CALENDLY_URL ||
+                  'https://calendly.com/hello-iclose/30min'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a call
+              </a>
+            </li>
+            <li>
+              <Link href="/team">Team</Link>
             </li>
             <li>
               <Link href="/careers">Careers</Link>
@@ -59,7 +73,9 @@ export function ICloseFooter() {
             )}
             {siteConfig.phone && (
               <li>
-                <a href={telHref(siteConfig.phone)}>{siteConfig.phone}</a>
+                <a href={telHref(siteConfig.phone)}>
+                  {formatPhone(siteConfig.phone)}
+                </a>
               </li>
             )}
             <li>
