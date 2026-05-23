@@ -34,7 +34,7 @@
   letter-spacing: -0.005em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .root *,
@@ -4152,9 +4152,12 @@ a.whoCard:hover .whoCta {
    - 420   small phone
    ============================================================ */
 
-/* Belt-and-braces: keep the page from ever scrolling sideways */
+/* Use overflow-x: clip (not hidden) so position: sticky still works
+   on descendants — `hidden` makes the element a scroll container,
+   which breaks the pinned HowItWorks section. `clip` clips without
+   establishing a new scroll container. */
 .root {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ---- NAV ------------------------------------------------- */
@@ -4660,9 +4663,13 @@ a.whoCard p,
 .workflowSection {
   position: relative;
   background: var(--bg);
-  /* 3 stops × ~110vh of scroll + buffer */
-  min-height: 360vh;
+  /* 3 stops × ~110vh of scroll + buffer. !important to win over any
+     stale .snapSection { min-height: 0 } rule still in the cascade. */
+  min-height: 360vh !important;
   padding: 0 !important;
+  /* Sticky won't work if a containing block has overflow:hidden/clip
+     reset here as a safety net. */
+  overflow: visible;
 }
 .wfPin {
   position: sticky;

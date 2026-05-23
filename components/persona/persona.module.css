@@ -363,7 +363,9 @@
    ============================================================ */
 
 .root {
-  overflow-x: hidden;
+  /* clip, not hidden — hidden would make .root a scroll container
+     and break position: sticky inside (used by HowItWorks etc.) */
+  overflow-x: clip;
 }
 
 /* Nav */
