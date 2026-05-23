@@ -195,9 +195,6 @@ function WhatIsIt() {
             transition={{ duration: 0.6, delay: 0, ease }}
           >
             <h3 className={styles.whatTitle}>One clear overview</h3>
-            <p className={styles.whatSub}>
-              Every offer, viewing, and closing — visible at a glance.
-            </p>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockDashboard}>
                 <div className={styles.mockTabs}>
@@ -236,9 +233,6 @@ function WhatIsIt() {
             <h3 className={styles.whatTitle}>
               Match with the right specialist
             </h3>
-            <p className={styles.whatSub}>
-              Post an inquiry. We match you to the vetted UAE expert.
-            </p>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockMatch}>
                 <div className={`${styles.mockMatchRow} ${styles.mockMatchA}`}>
@@ -273,9 +267,6 @@ function WhatIsIt() {
             <h3 className={styles.whatTitle}>
               Every conversation in one place
             </h3>
-            <p className={styles.whatSub}>
-              Briefs, viewings, offers — one thread per deal.
-            </p>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockChat}>
                 <div className={`${styles.mockChatRow} ${styles.mockChatA}`}>
@@ -307,9 +298,6 @@ function WhatIsIt() {
             transition={{ duration: 0.6, delay: 0.3, ease }}
           >
             <h3 className={styles.whatTitle}>Close the deal with confidence</h3>
-            <p className={styles.whatSub}>
-              All parties aligned, paperwork tracked, commission landed.
-            </p>
             <div className={styles.whatMedia} aria-hidden="true">
               <div className={styles.mockClose}>
                 <div className={styles.mockCloseHeader}>
