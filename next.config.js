@@ -3,6 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  // Allow ngrok/tunneled dev URLs so HMR/asset requests aren't rejected
+  // as cross-origin. Tighten to a specific subdomain when sharing externally.
+  allowedDevOrigins: [
+    '*.ngrok-free.dev',
+    '*.ngrok-free.app',
+    '*.ngrok.io',
+    '*.trycloudflare.com',
+  ],
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

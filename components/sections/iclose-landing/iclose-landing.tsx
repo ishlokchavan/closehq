@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import Image from 'next/image';
 import { Logo } from '@/components/ui/logo';
 import styles from './iclose-landing.module.css';
 import { ICloseFooter } from './iclose-footer';
@@ -36,77 +37,6 @@ function Reveal({ as: Tag = 'div', delay, className, children }: RevealProps) {
 
 /* ---------------- WHO IS THIS FOR ---------------- */
 
-type Persona = {
-  initials: string;
-  name: string;
-  role: string;
-  bg: string;
-};
-
-const BROKER_PERSONAS: Persona[] = [
-  {
-    initials: 'SK',
-    name: 'Sarah K.',
-    role: 'JVC Broker',
-    bg: 'linear-gradient(135deg, #1d3557 0%, #457b9d 100%)',
-  },
-  {
-    initials: 'MA',
-    name: 'Mohammed A.',
-    role: 'Marina Specialist',
-    bg: 'linear-gradient(135deg, #2a4a3a 0%, #4a7c5c 100%)',
-  },
-  {
-    initials: 'TR',
-    name: 'Tariq R.',
-    role: 'Downtown Closer',
-    bg: 'linear-gradient(135deg, #3d2645 0%, #6e4c7b 100%)',
-  },
-];
-
-const COLLAB_PERSONAS: Persona[] = [
-  {
-    initials: 'LH',
-    name: 'Layla H.',
-    role: 'Private Client Lawyer',
-    bg: 'linear-gradient(135deg, #4a2e2a 0%, #8a5a4c 100%)',
-  },
-  {
-    initials: 'JC',
-    name: 'James C.',
-    role: 'Wealth Advisor',
-    bg: 'linear-gradient(135deg, #1f3a4d 0%, #3e6a82 100%)',
-  },
-  {
-    initials: 'AM',
-    name: 'Aisha M.',
-    role: 'Family Office Partner',
-    bg: 'linear-gradient(135deg, #3a3a3a 0%, #6e6e73 100%)',
-  },
-];
-
-function PersonaPortrait({ p }: { p: Persona }) {
-  return (
-    <figure className={styles.whoPortrait}>
-      <div
-        className={styles.whoPortraitImg}
-        style={{ background: p.bg }}
-        aria-hidden="true"
-      >
-        <svg className={styles.whoPortraitSilhouette} viewBox="0 0 64 64">
-          <circle cx="32" cy="24" r="10" />
-          <path d="M12 60c0-11 9-18 20-18s20 7 20 18" />
-        </svg>
-        <span className={styles.whoPortraitInitials}>{p.initials}</span>
-      </div>
-      <figcaption className={styles.whoPortraitCaption}>
-        <span className={styles.whoPortraitName}>{p.name}</span>
-        <span className={styles.whoPortraitRole}>{p.role}</span>
-      </figcaption>
-    </figure>
-  );
-}
-
 function WhoIsThisFor() {
   return (
     <section className={`${styles.snapSection} ${styles.whoSection}`}>
@@ -117,12 +47,18 @@ function WhoIsThisFor() {
 
         <div className={styles.whoGrid}>
           <Reveal className={styles.whoCard} delay={1}>
-            <div className={styles.whoPortraitRow} aria-hidden="false">
-              {BROKER_PERSONAS.map((p) => (
-                <PersonaPortrait key={p.initials} p={p} />
-              ))}
+            <div className={styles.whoHero}>
+              <Image
+                src="/images/gallery-urban-hub.jpg"
+                alt="UAE skyline — a broker's market"
+                fill
+                sizes="(max-width: 820px) 100vw, 520px"
+                className={styles.whoHeroImg}
+                priority={false}
+              />
+              <div className={styles.whoHeroOverlay} />
+              <div className={styles.whoHeroTag}>For Brokers</div>
             </div>
-            <div className={styles.whoTag}>For Brokers</div>
             <h3>Close more deals, keep more of each one.</h3>
             <p>
               Learn any UAE community top-to-bottom from the people actually
@@ -131,19 +67,24 @@ function WhoIsThisFor() {
             </p>
             <ul className={styles.whoBullets}>
               <li>Expert-led community playbooks &amp; deal breakdowns</li>
-              <li>Tools, listings &amp; back-office to close independently</li>
               <li>Up to 100% commission on every deal you close</li>
             </ul>
           </Reveal>
 
           <Reveal className={styles.whoCard} delay={2}>
-            <div className={styles.whoPortraitRow}>
-              {COLLAB_PERSONAS.map((p) => (
-                <PersonaPortrait key={p.initials} p={p} />
-              ))}
-            </div>
-            <div className={`${styles.whoTag} ${styles.whoTagAlt}`}>
-              For Collaborators
+            <div className={styles.whoHero}>
+              <Image
+                src="/images/gallery-community.jpg"
+                alt="Residential community — the collaborator's network"
+                fill
+                sizes="(max-width: 820px) 100vw, 520px"
+                className={styles.whoHeroImg}
+                priority={false}
+              />
+              <div className={styles.whoHeroOverlay} />
+              <div className={`${styles.whoHeroTag} ${styles.whoHeroTagAlt}`}>
+                For Collaborators
+              </div>
             </div>
             <h3>Bring the client. We bring the expert.</h3>
             <p>
@@ -153,8 +94,7 @@ function WhoIsThisFor() {
               closes.
             </p>
             <ul className={styles.whoBullets}>
-              <li>Submit one inquiry, get matched to a vetted specialist</li>
-              <li>No license, no listings, no follow-up to manage</li>
+              <li>One inquiry, matched to a vetted specialist</li>
               <li>Up to 80% commission when the deal closes</li>
             </ul>
           </Reveal>
@@ -350,26 +290,45 @@ const TESTIMONIALS = [
 ];
 
 function TestimonialsCarousel() {
-  const [active, setActive] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const VISIBLE = 3;
   const len = TESTIMONIALS.length;
+  const lastPos = Math.max(0, len - VISIBLE); // = 2 for 5 testimonials
+  const [active, setActive] = useState(0);
+  const directionRef = useRef<1 | -1>(1);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      setActive((i) => (i + 1) % len);
-    }, 6500);
+      setActive((i) => {
+        let dir = directionRef.current;
+        let next = i + dir;
+        if (next > lastPos) {
+          dir = -1;
+          next = i - 1;
+        } else if (next < 0) {
+          dir = 1;
+          next = i + 1;
+        }
+        directionRef.current = dir;
+        return next;
+      });
+    }, 7000);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [active, len]);
+  }, [active, lastPos]);
 
-  const go = (i: number) => setActive(((i % len) + len) % len);
+  const clamp = (n: number) => Math.max(0, Math.min(lastPos, n));
+  const go = (i: number) => {
+    directionRef.current = i >= active ? 1 : -1;
+    setActive(clamp(i));
+  };
 
-  const visible = [0, 1, 2].map((i) => ({
-    t: TESTIMONIALS[(active + i) % len],
-    key: `${active}-${i}`,
-  }));
+  // step = card width + gap; in CSS we use calc((100% - 32px)/3 + 16px)
+  const trackStyle = {
+    transform: `translateX(calc(-1 * ${active} * (((100% - 32px) / 3) + 16px)))`,
+  };
 
   return (
     <section className={`${styles.snapSection} ${styles.testimonialsSection}`}>
@@ -383,22 +342,22 @@ function TestimonialsCarousel() {
           aria-roledescription="carousel"
           aria-label="Member testimonials"
         >
-          <div className={styles.testimonialRow}>
-            {visible.map(({ t, key }, slot) => (
-              <article
-                key={key}
-                className={styles.testimonialCard3}
-                style={{ animationDelay: `${slot * 60}ms` }}
-              >
-                <blockquote className={styles.testimonialQuote}>
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption className={styles.testimonialMeta}>
-                  <span className={styles.testimonialAvatar}>{t.initials}</span>
-                  <span className={styles.testimonialRole}>{t.role}</span>
-                </figcaption>
-              </article>
-            ))}
+          <div className={styles.testimonialWindow}>
+            <div className={styles.testimonialTrack} style={trackStyle}>
+              {TESTIMONIALS.map((t) => (
+                <article key={t.initials} className={styles.testimonialCard3}>
+                  <blockquote className={styles.testimonialQuote}>
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className={styles.testimonialMeta}>
+                    <span className={styles.testimonialAvatar}>
+                      {t.initials}
+                    </span>
+                    <span className={styles.testimonialRole}>{t.role}</span>
+                  </figcaption>
+                </article>
+              ))}
+            </div>
           </div>
 
           <div className={styles.testimonialControls}>
@@ -406,20 +365,21 @@ function TestimonialsCarousel() {
               type="button"
               className={styles.testimonialArrow}
               onClick={() => go(active - 1)}
+              disabled={active === 0}
               aria-label="Previous testimonial"
             >
               ‹
             </button>
             <div className={styles.testimonialDots}>
-              {TESTIMONIALS.map((t, i) => (
+              {Array.from({ length: lastPos + 1 }).map((_, i) => (
                 <button
-                  key={t.initials + i}
+                  key={i}
                   type="button"
                   className={`${styles.testimonialDot} ${
                     i === active ? styles.testimonialDotActive : ''
                   }`}
                   onClick={() => go(i)}
-                  aria-label={`Go to testimonial ${i + 1}`}
+                  aria-label={`Go to slide ${i + 1}`}
                   aria-current={i === active}
                 />
               ))}
@@ -428,6 +388,7 @@ function TestimonialsCarousel() {
               type="button"
               className={styles.testimonialArrow}
               onClick={() => go(active + 1)}
+              disabled={active === lastPos}
               aria-label="Next testimonial"
             >
               ›
@@ -470,7 +431,7 @@ function ExplainedBy() {
     <section className={`${styles.snapSection} ${styles.explainedSection}`}>
       <div className={styles.wrap}>
         <Reveal as="h2" className={styles.sectionHeadingSolo}>
-          Explained by <span className={styles.explainedAccent}>Max.</span>
+          See how it works.
         </Reveal>
 
         <div className={styles.explainedGrid}>
