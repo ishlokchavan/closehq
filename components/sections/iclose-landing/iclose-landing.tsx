@@ -158,10 +158,11 @@ function WhoIsThisFor() {
                 commission on ready units.
               </h3>
               <p>
-                Source the unit yourself, we handle the rest. On off-plan we
-                negotiate with the developer and rebate up to 16% of the deal
-                value back to you. On ready secondary units we charge a flat
-                0.4% commission instead of the standard 2%.
+                We handle everything, from finding the right unit to closing
+                the deal. On off-plan we negotiate with the developer and
+                rebate up to 16% of the deal value back to you. On ready
+                secondary units we charge a flat 0.4% commission instead of
+                the standard 2%.
               </p>
               <span
                 className={`${styles.whoCta} ${styles.whoCtaAlt}`}

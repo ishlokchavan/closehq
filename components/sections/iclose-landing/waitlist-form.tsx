@@ -50,7 +50,7 @@ const intentOptions: {
   {
     value: 'buyer',
     label: 'Buy a property',
-    sub: 'Source units, earn back up to 80% commission.',
+    sub: 'Up to 16% cashback on off-plan, or 0.4% on ready units.',
   },
   {
     value: 'closer',
