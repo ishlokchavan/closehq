@@ -94,14 +94,14 @@ export async function POST(request: Request) {
     try {
       await sendEmail({
         to: email,
-        subject: 'Application received — iClose Internship',
+        subject: 'Application received. IClose Internship',
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;color:#1d1d1f;">
             <p style="font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em;">Application received, ${firstName}.</p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:20px;letter-spacing:-0.01em;">
               Thanks for applying to the iClose internship programme. We review every application personally and will be in touch within a few days.
             </p>
-            <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
+            <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
             <hr style="border:none;border-top:1px solid #d2d2d7;margin:32px 0;"/>
             <p style="font-size:12px;color:#a1a1a6;">iClose · Dubai, UAE · <a href="https://iclose.ae" style="color:#0071e3;text-decoration:none;">iclose.ae</a></p>
           </div>
@@ -125,7 +125,7 @@ export async function POST(request: Request) {
               <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${phone}</td></tr>
               ${instagram ? `<tr><td style="padding:8px 0;color:#6e6e73;">Instagram</td><td style="padding:8px 0;">@${instagram.replace(/^@/, '')}</td></tr>` : ''}
               <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer || 'direct'}</td></tr>
-              ${resumePath ? `<tr><td style="padding:8px 0;color:#6e6e73;">CV</td><td style="padding:8px 0;">Uploaded — check Supabase Storage &rarr; resumes/${resumePath}</td></tr>` : '<tr><td style="padding:8px 0;color:#6e6e73;">CV</td><td style="padding:8px 0;">Not uploaded</td></tr>'}
+              ${resumePath ? `<tr><td style="padding:8px 0;color:#6e6e73;">CV</td><td style="padding:8px 0;">Uploaded. Check Supabase Storage &rarr; resumes/${resumePath}</td></tr>` : '<tr><td style="padding:8px 0;color:#6e6e73;">CV</td><td style="padding:8px 0;">Not uploaded</td></tr>'}
             </table>
             ${message ? `<p style="font-size:15px;color:#6e6e73;margin-top:20px;margin-bottom:6px;"><strong style="color:#1d1d1f;">Message</strong></p><p style="font-size:15px;color:#1d1d1f;background:#f5f5f7;padding:16px;border-radius:8px;line-height:1.55;">${message}</p>` : ''}
           </div>

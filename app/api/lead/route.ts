@@ -60,11 +60,11 @@ export async function POST(request: Request) {
       commercial: 'Commercial',
       other: 'Other',
     };
-    const focusLabel = focus ? focusLabels[focus] : '—';
+    const focusLabel = focus ? focusLabels[focus] : ', ';
     const dealTypesLabel =
       dealTypes && dealTypes.length
         ? dealTypes.map((d) => dealTypeLabels[d] ?? d).join(', ')
-        : '—';
+        : ', ';
     const escapeHtml = (s: string) =>
       s
         .replace(/&/g, '&amp;')
@@ -112,12 +112,12 @@ export async function POST(request: Request) {
     try {
       await sendEmail({
         to: email,
-        subject: "You're in — confirm your iClose email",
+        subject: "You're in. Confirm your iClose email",
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;color:#1d1d1f;">
             <p style="font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em;">Welcome, ${firstName}.</p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:20px;letter-spacing:-0.01em;">
-              You've joined the iClose founding cohort as a <strong style="color:#1d1d1f;">Member</strong>. One last step — confirm your email to secure your place.
+              You've joined the iClose founding cohort as a <strong style="color:#1d1d1f;">Member</strong>. One last step. Confirm your email to secure your place.
             </p>
             <a href="${verifyUrl}" style="display:inline-block;margin-bottom:24px;padding:14px 28px;background:#1d1d1f;color:#ffffff;border-radius:100px;font-size:15px;font-weight:500;text-decoration:none;letter-spacing:-0.01em;">
               Confirm my email
@@ -126,7 +126,7 @@ export async function POST(request: Request) {
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:28px;letter-spacing:-0.01em;">
               Founding members get first access and locked-in terms before public launch.
             </p>
-            <p style="font-size:15px;color:#6e6e73;">— The iClose team</p>
+            <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
             ${emailFooter()}
           </div>
         `,
@@ -135,7 +135,7 @@ export async function POST(request: Request) {
       console.error('[member] verification email failed:', err);
     }
 
-    // Admin notification — PII masked
+    // Admin notification, PII masked
     if (notifyEmail) {
       try {
         await sendEmail({
@@ -148,10 +148,10 @@ export async function POST(request: Request) {
                 <tr><td style="padding:8px 0;color:#6e6e73;width:120px;">Name</td><td style="padding:8px 0;">${name}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Email</td><td style="padding:8px 0;">${maskEmail(email)}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Phone</td><td style="padding:8px 0;">${maskPhone(phone)}</td></tr>
-                <tr><td style="padding:8px 0;color:#6e6e73;">Job title</td><td style="padding:8px 0;">${jobTitle ? escapeHtml(jobTitle) : '—'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Job title</td><td style="padding:8px 0;">${jobTitle ? escapeHtml(jobTitle) : ', '}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Focus</td><td style="padding:8px 0;">${focusLabel}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Deal types</td><td style="padding:8px 0;">${dealTypesLabel}</td></tr>
-                <tr><td style="padding:8px 0;color:#6e6e73;vertical-align:top;">Notes</td><td style="padding:8px 0;white-space:pre-wrap;">${message ? escapeHtml(message) : '—'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;vertical-align:top;">Notes</td><td style="padding:8px 0;white-space:pre-wrap;">${message ? escapeHtml(message) : ', '}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Marketing</td><td style="padding:8px 0;">${consentMarketing ? 'Opted in' : 'Not opted in'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Status</td><td style="padding:8px 0;">Pending email confirmation</td></tr>
@@ -163,7 +163,7 @@ export async function POST(request: Request) {
         console.error('[member] admin notification failed:', err);
       }
     } else {
-      console.warn('[member] NOTIFY_EMAIL not set — skipping admin notification');
+      console.warn('[member] NOTIFY_EMAIL not set. Skipping admin notification');
     }
 
     return NextResponse.json({ ok: true });

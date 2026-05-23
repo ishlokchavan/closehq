@@ -3,6 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  // Allow ngrok/tunneled dev URLs so HMR/asset requests aren't rejected
+  // as cross-origin. Tighten to a specific subdomain when sharing externally.
+  allowedDevOrigins: [
+    '*.ngrok-free.dev',
+    '*.ngrok-free.app',
+    '*.ngrok.io',
+    '*.trycloudflare.com',
+  ],
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -13,6 +21,13 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.pexels.com',
+      },
+      // Generated persona photography for the "Who is this for?" cards.
+      // Vercel + local dev both reach this CDN; only the sandbox build
+      // container does not, which is why these aren't vendored to /public.
+      {
+        protocol: 'https',
+        hostname: 'd8j0ntlcm91z4.cloudfront.net',
       },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],

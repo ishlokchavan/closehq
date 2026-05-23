@@ -2,10 +2,7 @@
 
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
-import { siteConfig } from '@/lib/site-config';
 import styles from './iclose-landing.module.css';
-
-const telHref = (phone: string) => `tel:+${phone.replace(/\D/g, '')}`;
 
 const openCookieSettings = () =>
   window.dispatchEvent(new Event('iclose:open-cookie-settings'));
@@ -29,7 +26,22 @@ export function ICloseFooter() {
               <Link href="/#workflow">How it works</Link>
             </li>
             <li>
-              <Link href="/#waitlist">Early access</Link>
+              <Link href="/#waitlist">Get started</Link>
+            </li>
+            <li>
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_CALENDLY_URL ||
+                  'https://calendly.com/hello-iclose/30min'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a call
+              </a>
+            </li>
+            <li>
+              <Link href="/team">Team</Link>
             </li>
             <li>
               <Link href="/careers">Careers</Link>
@@ -49,26 +61,8 @@ export function ICloseFooter() {
           </ul>
         </div>
 
-        <div className={styles.footerCol}>
-          <p className={styles.footerHeading}>Contact</p>
-          <ul className={styles.fLinks}>
-            {siteConfig.email && (
-              <li>
-                <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-              </li>
-            )}
-            {siteConfig.phone && (
-              <li>
-                <a href={telHref(siteConfig.phone)}>{siteConfig.phone}</a>
-              </li>
-            )}
-            <li>
-              <span style={{ color: 'var(--text-light)', fontSize: 13 }}>
-                Dubai, UAE
-              </span>
-            </li>
-          </ul>
-        </div>
+        {/* Contact column hidden for now — phone/email/location not
+            ready to be public. Re-enable once the team confirms. */}
       </div>
 
       <div className={styles.footerDivider} />
