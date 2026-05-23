@@ -1,19 +1,22 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm, type FieldErrors } from 'react-hook-form';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
+import { useForm, Controller, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import {
-  leadFocusValues,
-  type LeadFormValues,
-} from '@/lib/validations';
+import { motion, AnimatePresence } from 'framer-motion';
+import { leadFocusValues, type LeadFormValues } from '@/lib/validations';
 import { siteConfig } from '@/lib/site-config';
 import styles from './iclose-landing.module.css';
 
-/* Simplified form schema — collected as-is by the form, then split into
-   firstName/lastName/etc on submit so the existing /api/lead contract
-   stays intact. */
+/* Simplified shape — collected as-is by the form, then split into the
+   first/last+consent shape the existing /api/lead route expects. */
 const simpleSchema = z.object({
   fullName: z
     .string()
@@ -25,9 +28,10 @@ const simpleSchema = z.object({
     .min(7, 'Enter a valid phone number')
     .max(20)
     .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
-  focus: z.enum(leadFocusValues, {
-    errorMap: () => ({ message: 'Pick one focus area' }),
-  }),
+  focus: z
+    .array(z.enum(leadFocusValues))
+    .min(1, 'Pick at least one focus area')
+    .max(3),
   website: z.string().optional(),
 });
 type SimpleValues = z.infer<typeof simpleSchema>;
@@ -38,10 +42,46 @@ const focusOptions: { value: (typeof leadFocusValues)[number]; label: string }[]
   { value: 'offplan', label: 'Offplan' },
 ];
 
-/* Booking + call destinations — swap CALENDLY_URL for the real one
-   when the account is set up. Phone falls back to siteConfig.phone or
-   a placeholder. */
-const CALENDLY_URL = 'https://calendly.com/iclose-uae/intro-call';
+type StepDef = {
+  key: keyof SimpleValues;
+  title: string;
+  hint?: string;
+  validateKeys: (keyof SimpleValues)[];
+};
+
+const STEPS: StepDef[] = [
+  {
+    key: 'fullName',
+    title: 'First, what should we call you?',
+    hint: 'Your full name.',
+    validateKeys: ['fullName'],
+  },
+  {
+    key: 'email',
+    title: 'Where should we reach you?',
+    hint: 'We’ll email you to confirm — nothing else.',
+    validateKeys: ['email'],
+  },
+  {
+    key: 'phone',
+    title: 'And the best number to reach you on?',
+    hint: 'We only call if you ask us to.',
+    validateKeys: ['phone'],
+  },
+  {
+    key: 'focus',
+    title: 'What are you focusing more on?',
+    hint: 'Pick all that apply.',
+    validateKeys: ['focus'],
+  },
+];
+
+/* Configurable destinations. Set NEXT_PUBLIC_CALENDLY_URL and
+   NEXT_PUBLIC_CONTACT_PHONE in env to point these at the real account
+   + number. Both have safe placeholders for now. */
+const CALENDLY_URL =
+  process.env.NEXT_PUBLIC_CALENDLY_URL ||
+  'https://calendly.com/iclose-uae/intro-call';
 const CALL_PHONE = siteConfig.phone || '+971501234567';
 
 export function WaitlistForm() {
@@ -50,6 +90,9 @@ export function WaitlistForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    control,
+    trigger,
+    watch,
   } = useForm<SimpleValues>({
     resolver: zodResolver(simpleSchema),
     mode: 'onTouched',
@@ -57,32 +100,65 @@ export function WaitlistForm() {
       fullName: '',
       email: '',
       phone: '',
-      focus: undefined,
+      focus: [],
       website: '',
     },
   });
 
+  const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const stepRef = useRef<HTMLDivElement | null>(null);
+
+  // Auto-focus the first input on each step.
+  useEffect(() => {
+    if (!stepRef.current) return;
+    const el = stepRef.current.querySelector<HTMLElement>(
+      'input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea',
+    );
+    if (el && typeof (el as HTMLInputElement).focus === 'function') {
+      setTimeout(() => (el as HTMLInputElement).focus({ preventScroll: true }), 80);
+    }
+  }, [step]);
+
+  const total = STEPS.length;
+  const current = STEPS[step];
+  const progress = ((step + (success ? 1 : 0)) / total) * 100;
+
+  const goNext = async () => {
+    setServerError(null);
+    const ok = await trigger(current.validateKeys);
+    if (!ok) return;
+    if (step < total - 1) setStep(step + 1);
+  };
+
+  const goBack = () => {
+    setServerError(null);
+    if (step > 0) setStep(step - 1);
+  };
 
   const onSubmit = async (data: SimpleValues) => {
     setServerError(null);
 
-    // Split the single "Full name" field into the first/last shape the
-    // /api/lead route still expects.
     const trimmed = data.fullName.trim();
     const parts = trimmed.split(/\s+/);
     const firstName = parts[0] || trimmed;
     const lastName = parts.length > 1 ? parts.slice(1).join(' ') : firstName;
 
+    // Submit one row per selected focus to keep the existing API shape
+    // (focus enum was previously single-value). Pick the first as the
+    // primary; pass the rest as the dealTypes array for context.
     const payload: LeadFormValues = {
       firstName,
       lastName,
       email: data.email,
       phone: data.phone,
-      focus: data.focus,
+      focus: data.focus[0],
       dealTypes: [],
-      message: '',
+      message: data.focus.length > 1
+        ? `Also interested in: ${data.focus.slice(1).join(', ')}`
+        : '',
       consentPrivacy: true,
       consentMarketing: false,
       website: data.website ?? '',
@@ -109,36 +185,54 @@ export function WaitlistForm() {
     }
   };
 
-  const onInvalid = (_errs: FieldErrors<SimpleValues>) => {
-    // (Inline field errors render below each input.)
+  const onInvalid = (errs: FieldErrors<SimpleValues>) => {
+    const firstKey = Object.keys(errs)[0] as keyof SimpleValues;
+    const idx = STEPS.findIndex((s) => s.validateKeys.includes(firstKey));
+    if (idx >= 0) setStep(idx);
+  };
+
+  const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'Enter') return;
+    if ((e.target as HTMLElement).tagName === 'TEXTAREA') return;
+    e.preventDefault();
+    if (step === total - 1) {
+      formRef.current?.requestSubmit();
+    } else {
+      void goNext();
+    }
   };
 
   if (success) {
     return (
-      <div className={styles.wlSuccess}>
-        <div className={styles.successBadge} aria-hidden="true">
-          ✓
+      <div className={styles.tfShell}>
+        <div className={styles.tfProgress}>
+          <div className={styles.tfProgressBar} style={{ width: '100%' }} />
         </div>
-        <h3 className={styles.successTitle}>You&apos;re on the list.</h3>
-        <p className={styles.successBody}>
-          We&apos;ll be in touch shortly. Or skip the wait — pick how
-          you&apos;d like to talk.
-        </p>
-        <div className={styles.wlSuccessCtas}>
-          <a
-            href={`tel:${CALL_PHONE.replace(/\s+/g, '')}`}
-            className={styles.btnBluePrimary}
-          >
-            <span aria-hidden="true">📞</span> Call us now
-          </a>
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.btnGhost}
-          >
-            <span aria-hidden="true">🗓️</span> Schedule a callback later
-          </a>
+        <div className={styles.wlSuccess}>
+          <div className={styles.successBadge} aria-hidden="true">
+            ✓
+          </div>
+          <h3 className={styles.successTitle}>You&apos;re on the list.</h3>
+          <p className={styles.successBody}>
+            We&apos;ll be in touch shortly. Or skip the wait — pick how
+            you&apos;d like to talk.
+          </p>
+          <div className={styles.wlSuccessCtas}>
+            <a
+              href={`tel:${CALL_PHONE.replace(/\s+/g, '')}`}
+              className={styles.btnBluePrimary}
+            >
+              <span aria-hidden="true">📞</span> Call us now
+            </a>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.btnGhost}
+            >
+              <span aria-hidden="true">🗓️</span> Schedule a callback later
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -146,8 +240,9 @@ export function WaitlistForm() {
 
   return (
     <form
+      ref={formRef}
       onSubmit={handleSubmit(onSubmit, onInvalid)}
-      className={styles.wlSimple}
+      className={styles.tfShell}
       noValidate
     >
       <input
@@ -162,75 +257,199 @@ export function WaitlistForm() {
         aria-hidden
       />
 
-      <div className={styles.wlField}>
-        <label htmlFor="wl-name">Full name</label>
-        <input
-          id="wl-name"
-          type="text"
-          autoComplete="name"
-          placeholder="Your full name"
-          className={errors.fullName ? styles.fieldInputError : undefined}
-          {...register('fullName')}
+      <div className={styles.tfProgress}>
+        <div
+          className={styles.tfProgressBar}
+          style={{ width: `${progress}%` }}
         />
-        {errors.fullName && (
-          <p className={styles.wlError}>{errors.fullName.message}</p>
-        )}
       </div>
 
-      <div className={styles.wlField}>
-        <label htmlFor="wl-email">Email</label>
-        <input
-          id="wl-email"
-          type="email"
-          autoComplete="email"
-          placeholder="you@example.com"
-          className={errors.email ? styles.fieldInputError : undefined}
-          {...register('email')}
-        />
-        {errors.email && (
-          <p className={styles.wlError}>{errors.email.message}</p>
-        )}
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          ref={stepRef}
+          key={`step-${step}`}
+          className={styles.tfStep}
+          onKeyDown={handleEnter}
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -24 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className={styles.tfStepMeta}>
+            Step {step + 1} of {total}
+          </div>
+          <h3 className={styles.tfTitle}>{current.title}</h3>
+          {current.hint && <p className={styles.tfHint}>{current.hint}</p>}
 
-      <div className={styles.wlField}>
-        <label htmlFor="wl-phone">Phone</label>
-        <input
-          id="wl-phone"
-          type="tel"
-          autoComplete="tel"
-          placeholder="+971 50 123 4567"
-          className={errors.phone ? styles.fieldInputError : undefined}
-          {...register('phone')}
-        />
-        {errors.phone && (
-          <p className={styles.wlError}>{errors.phone.message}</p>
-        )}
-      </div>
+          <div className={styles.tfField}>
+            <StepField
+              step={current.key}
+              register={register}
+              control={control}
+              errors={errors}
+              watch={watch}
+            />
+          </div>
 
-      <div className={styles.wlField}>
-        <label>Focusing more on?</label>
-        <div className={styles.segGroup} role="radiogroup">
-          {focusOptions.map((opt) => (
-            <label key={opt.value} className={styles.segOption}>
-              <input type="radio" value={opt.value} {...register('focus')} />
-              <span>{opt.label}</span>
-            </label>
-          ))}
-        </div>
-        {errors.focus && (
-          <p className={styles.wlError}>{errors.focus.message}</p>
-        )}
-      </div>
+          <div className={styles.tfControls}>
+            <button
+              type="button"
+              className={styles.tfBack}
+              onClick={goBack}
+              disabled={step === 0}
+            >
+              ← Back
+            </button>
+            {step < total - 1 ? (
+              <button
+                type="button"
+                className={styles.tfNext}
+                onClick={goNext}
+              >
+                Continue <span aria-hidden="true">↵</span>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className={styles.tfNext}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending…' : 'Submit'}
+              </button>
+            )}
+          </div>
 
-      {serverError && <p className={styles.serverError}>{serverError}</p>}
-
-      <button
-        type="submit"
-        className={styles.submitBtn}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Sending…' : 'Submit'}
-      </button>
+          {serverError && (
+            <p className={styles.serverError} style={{ marginTop: 16 }}>
+              {serverError}
+            </p>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </form>
+  );
+}
+
+function StepField({
+  step,
+  register,
+  control,
+  errors,
+  watch,
+}: {
+  step: StepDef['key'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: any;
+  errors: FieldErrors<SimpleValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  watch: any;
+}): ReactNode {
+  const err = (key: keyof SimpleValues) =>
+    errors[key]?.message as string | undefined;
+
+  if (step === 'fullName') {
+    return (
+      <TextInput
+        id="tf-name"
+        type="text"
+        placeholder="Your full name"
+        autoComplete="name"
+        error={err('fullName')}
+        registration={register('fullName')}
+      />
+    );
+  }
+  if (step === 'email') {
+    return (
+      <TextInput
+        id="tf-email"
+        type="email"
+        placeholder="you@example.com"
+        autoComplete="email"
+        error={err('email')}
+        registration={register('email')}
+      />
+    );
+  }
+  if (step === 'phone') {
+    return (
+      <TextInput
+        id="tf-phone"
+        type="tel"
+        placeholder="+971 50 123 4567"
+        autoComplete="tel"
+        error={err('phone')}
+        registration={register('phone')}
+      />
+    );
+  }
+  if (step === 'focus') {
+    return (
+      <Controller
+        control={control}
+        name="focus"
+        render={({ field }) => {
+          const value: string[] = field.value ?? [];
+          const toggle = (v: (typeof leadFocusValues)[number]) => {
+            if (value.includes(v)) {
+              field.onChange(value.filter((x) => x !== v));
+            } else {
+              field.onChange([...value, v]);
+            }
+          };
+          return (
+            <>
+              <div className={styles.chipGrid}>
+                {focusOptions.map((opt) => (
+                  <label key={opt.value} className={styles.segOption}>
+                    <input
+                      type="checkbox"
+                      checked={value.includes(opt.value)}
+                      onChange={() => toggle(opt.value)}
+                    />
+                    <span>{opt.label}</span>
+                  </label>
+                ))}
+              </div>
+              {err('focus') && <p className={styles.tfError}>{err('focus')}</p>}
+            </>
+          );
+        }}
+      />
+    );
+  }
+  return null;
+}
+
+function TextInput({
+  id,
+  type,
+  placeholder,
+  autoComplete,
+  error,
+  registration,
+}: {
+  id: string;
+  type: string;
+  placeholder: string;
+  autoComplete?: string;
+  error?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  registration: any;
+}) {
+  return (
+    <div className={styles.tfInputWrap}>
+      <input
+        id={id}
+        type={type}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        className={`${styles.tfInput} ${error ? styles.tfInputError : ''}`}
+        {...registration}
+      />
+      {error && <p className={styles.tfError}>{error}</p>}
+    </div>
   );
 }
