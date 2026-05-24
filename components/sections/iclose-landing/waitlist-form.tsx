@@ -301,7 +301,7 @@ export function WaitlistForm() {
                 className={styles.btnGhost}
                 onClick={() => setShowCalendly(true)}
               >
-                Schedule a callback later
+                Book a call
               </button>
             </div>
           </div>
@@ -324,7 +324,7 @@ export function WaitlistForm() {
                   transition={{ duration: 0.2 }}
                   role="dialog"
                   aria-modal="true"
-                  aria-label="Schedule a callback"
+                  aria-label="Book a call"
                 >
                   <motion.div
                     className={styles.calendlyModal}
@@ -344,10 +344,21 @@ export function WaitlistForm() {
                     </button>
                     <iframe
                       src={calendlyEmbedUrl}
-                      title="Schedule a callback with iClose"
+                      title="Book a call with iClose"
                       className={styles.calendlyFrame}
                       allow="camera; microphone; fullscreen"
                     />
+                    {/* Escape hatch: if the iframe shows Calendly's 404
+                        (wrong URL / private event type), or if the user
+                        prefers a fresh tab, the link below always works. */}
+                    <a
+                      href={CALENDLY_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.calendlyOpen}
+                    >
+                      Open in a new tab ↗
+                    </a>
                   </motion.div>
                 </motion.div>
               )}

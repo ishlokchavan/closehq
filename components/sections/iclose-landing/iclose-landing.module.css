@@ -6171,3 +6171,26 @@ a.whoCard p,
   letter-spacing: -0.005em;
   line-height: 1.5;
 }
+
+/* Fallback link inside the Calendly modal — visible just above the
+   iframe so it's reachable even when the embed shows a 404. */
+.calendlyOpen {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  z-index: 2;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--blue);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  letter-spacing: -0.005em;
+  transition: background 0.2s, border-color 0.2s;
+}
+.calendlyOpen:hover {
+  background: var(--bg-alt);
+  border-color: var(--text-muted);
+}
