@@ -50,6 +50,18 @@ const nextConfig = {
       },
     ];
   },
+  // Permanently redirect the old broker slug so any bookmark, share
+  // link, or stale referral that points to /for-brokers lands on the
+  // new /for-closers route.
+  async redirects() {
+    return [
+      {
+        source: '/for-brokers',
+        destination: '/for-closers',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

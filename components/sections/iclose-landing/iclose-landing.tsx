@@ -112,7 +112,7 @@ function WhoIsThisFor() {
 
         <div className={styles.whoGrid}>
           <Reveal className={styles.whoCardWrap} delay={1}>
-            <Link href="/for-brokers" className={styles.whoCard}>
+            <Link href="/for-closers" className={styles.whoCard}>
               <div className={styles.whoHero}>
                 <Image
                   src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"

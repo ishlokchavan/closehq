@@ -42,7 +42,7 @@ export default function ForBuyersPage() {
             units instead of the standard 2%.
           </>
         }
-        primaryCta={{ label: 'Get started free', href: '/#waitlist' }}
+        primaryCta={{ label: 'Get started free', href: '#waitlist' }}
         chips={[
           'Up to 5% cashback on off-plan deals',
           'Flat 0.4% commission on ready secondary units',

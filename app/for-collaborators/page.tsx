@@ -37,7 +37,7 @@ export default function ForCollaboratorsPage() {
             hustle, no awkward pitch.
           </>
         }
-        primaryCta={{ label: 'Get access', href: '/#waitlist' }}
+        primaryCta={{ label: 'Get access', href: '#waitlist' }}
         secondaryCta={{ label: 'See the math', href: '#math' }}
         chips={[
           'Up to 80% of the commission on every closed deal',

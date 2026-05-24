@@ -39,7 +39,7 @@ export default function ForBrokersPage() {
             UAE closers run on.
           </>
         }
-        primaryCta={{ label: 'Start closing', href: '/#waitlist' }}
+        primaryCta={{ label: 'Start closing', href: '#waitlist' }}
         secondaryCta={{ label: 'See how it works', href: '#how' }}
         chips={['No license needed to refer · Up to 100% on deals you close']}
       />

@@ -46,7 +46,10 @@ export function PersonaChrome({ children }: { children: ReactNode }) {
           <span aria-hidden="true">←</span>
           <Logo />
         </Link>
-        <Link href="/#waitlist" className={styles.navCta}>
+        {/* Same-page anchor: each persona page renders its own waitlist
+            (id="waitlist") near the bottom via PersonaWaitlist, so a
+            relative '#waitlist' link scrolls there without a navigation. */}
+        <Link href="#waitlist" className={styles.navCta}>
           Get started
         </Link>
       </nav>
