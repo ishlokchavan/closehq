@@ -365,6 +365,69 @@ export function PersonaCompare({
   );
 }
 
+/* ------- Scenarios block — two side-by-side cards, no vs ------- */
+/* Used when the two cards are *complementary* situations a buyer
+   can be in (off-plan vs secondary), not a head-to-head competitor
+   comparison. Same card chrome as PersonaCompare but no clashing
+   entry animation and no center badge. */
+export function PersonaScenarios({
+  eyebrow,
+  heading,
+  body,
+  cards,
+  footnote,
+}: {
+  eyebrow?: string;
+  heading: ReactNode;
+  body?: ReactNode;
+  cards: {
+    title: string;
+    tag?: string;
+    rows: { label: string; value: string }[];
+    takeLabel: string;
+    takeValue: ReactNode;
+  }[];
+  footnote?: string;
+}) {
+  return (
+    <section className={styles.math}>
+      <motion.div className={styles.mathHeader} {...animRise}>
+        {eyebrow && <div className={styles.introEyebrow}>{eyebrow}</div>}
+        <h2 className={styles.introHeading}>{heading}</h2>
+        {body && <p className={styles.introBody}>{body}</p>}
+      </motion.div>
+      <div className={styles.scenariosGrid}>
+        {cards.map((c, i) => (
+          <motion.article
+            key={c.title}
+            className={`${styles.compareCard} ${styles.compareCardHero}`}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, delay: 0.05 * i, ease }}
+          >
+            {c.tag && <div className={styles.scenarioTag}>{c.tag}</div>}
+            <div className={styles.compareTitle}>{c.title}</div>
+            <div className={styles.compareRows}>
+              {c.rows.map((r) => (
+                <div className={styles.compareRow} key={r.label}>
+                  <span>{r.label}</span>
+                  <span>{r.value}</span>
+                </div>
+              ))}
+            </div>
+            <div className={`${styles.compareTake} ${styles.compareTakeHi}`}>
+              <span>{c.takeLabel}</span>
+              <span className={styles.compareTakeValue}>{c.takeValue}</span>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+      {footnote && <p className={styles.mathFoot}>{footnote}</p>}
+    </section>
+  );
+}
+
 /* ------- Audience block ------- */
 export function PersonaAudience({
   heading,

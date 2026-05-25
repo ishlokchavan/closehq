@@ -1260,3 +1260,33 @@
     padding: 72px 18px 96px;
   }
 }
+
+/* Side-by-side scenarios (no center vs badge). */
+.scenariosGrid {
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+.scenarioTag {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  background: rgba(52, 199, 89, 0.12);
+  color: #1d8a40;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+@media (max-width: 720px) {
+  .scenariosGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}

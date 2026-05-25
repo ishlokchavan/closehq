@@ -5,6 +5,7 @@ import {
   PersonaFeatures,
   PersonaSteps,
   PersonaCompare,
+  PersonaScenarios,
   PersonaFacts,
   PersonaQuote,
   PersonaFaq,
@@ -123,36 +124,73 @@ export default function ForBuyersPage() {
       />
 
       <PersonaCompare
-        eyebrow="The math"
+        eyebrow="Secondary market"
         badge="vs"
-        heading={<>The full commission, rebated back to you.</>}
+        heading={<>Stop paying commission to buy.</>}
         body={
           <>
-            On a typical AED 2M deal, here&apos;s the difference between
-            buying through a standard agent and buying through iClose.
+            On a typical AED 2M ready secondary purchase, here&apos;s the
+            difference between buying through a standard agent and buying
+            through iClose.
           </>
         }
         left={{
           title: 'Standard agent',
           rows: [
             { label: 'Deal value', value: 'AED 2,000,000' },
-            { label: 'Commission paid', value: '2% (AED 40,000)' },
-            { label: 'Rebated to you', value: 'AED 0' },
+            { label: 'Buyer commission', value: '2%' },
+            { label: 'You pay the agent', value: 'AED 40,000' },
           ],
-          takeLabel: 'You get back',
-          takeValue: 'AED 0',
+          takeLabel: 'You pay',
+          takeValue: 'AED 40,000',
         }}
         right={{
           title: 'iClose',
           rows: [
             { label: 'Deal value', value: 'AED 2,000,000' },
-            { label: 'Commission paid', value: '2% (AED 40,000)' },
-            { label: 'iClose rebate', value: '100%' },
+            { label: 'Buyer commission', value: '0%' },
+            { label: 'You pay the agent', value: 'AED 0' },
           ],
-          takeLabel: 'You get back',
-          takeValue: 'AED 40,000',
+          takeLabel: 'You pay',
+          takeValue: 'AED 0',
         }}
-        footnote="Exact cashback confirmed upfront, paid on transfer. No surprises at signing."
+        footnote="Confirmed in writing before you sign. No surprises at transfer."
+      />
+
+      <PersonaScenarios
+        eyebrow="Two routes, both in your favour"
+        heading={<>Off-plan or secondary, you come out ahead.</>}
+        body={
+          <>
+            iClose works the same way whichever side of the market you&apos;re
+            buying on. The economics just look different.
+          </>
+        }
+        cards={[
+          {
+            tag: 'Off-plan',
+            title: 'You get 100% cashback',
+            rows: [
+              { label: 'Deal value', value: 'AED 2,000,000' },
+              { label: 'Developer commission', value: '5% (AED 100,000)' },
+              { label: 'iClose rebate to you', value: '100%' },
+            ],
+            takeLabel: 'You get back',
+            takeValue: 'AED 100,000',
+          },
+          {
+            tag: 'Secondary',
+            title: 'You pay no commission',
+            rows: [
+              { label: 'Deal value', value: 'AED 2,000,000' },
+              { label: 'Standard commission', value: '2% (AED 40,000)' },
+              { label: 'iClose charges you', value: 'Nothing' },
+            ],
+            takeLabel: 'You save',
+            takeValue: 'AED 40,000',
+          },
+        ]}
+        footnote="Exact figures confirmed up front before you commit to any deal."
       />
 
       <PersonaSteps

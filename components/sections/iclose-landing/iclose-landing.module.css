@@ -7440,3 +7440,31 @@ a.whoCard:hover .whoLearn {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   v3.9 — Hero headline: uppercase, ultra-bold, locked to two lines.
+   ============================================================ */
+.hero h1 {
+  font-weight: 900 !important;
+  text-transform: uppercase;
+  /* Dial down the size + tighten tracking so the full sentence
+     (with "Keep 100% of every deal." accent) fits on two lines
+     across the typical desktop, tablet, and phone breakpoints. */
+  font-size: clamp(32px, 5.6vw, 64px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.025em !important;
+  max-width: 1080px !important;
+}
+.heroAccent {
+  /* Accent inherits the uppercase + weight from the parent h1 but
+     we hard-pin the weight here so any earlier 600 override loses. */
+  font-weight: 900 !important;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: clamp(28px, 8.4vw, 38px) !important;
+    letter-spacing: -0.02em !important;
+  }
+}
