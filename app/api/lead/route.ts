@@ -219,7 +219,7 @@ export async function POST(request: Request) {
             </a>
             <p style="font-size:13px;color:#a1a1a6;margin-bottom:20px;">Or copy this link: <a href="${verifyUrl}" style="color:#0071e3;">${verifyUrl}</a></p>
             <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:28px;letter-spacing:-0.01em;">
-              Founding members get first access and locked-in terms before public launch.
+              Founding members get first access and locked-in terms.
             </p>
             <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
             ${emailFooter()}

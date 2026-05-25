@@ -99,16 +99,25 @@
 .navCta {
   background: var(--blue) !important;
   color: #fff !important;
-  padding: 5px 12px;
+  padding: 9px 18px !important;
   border-radius: var(--r-pill);
-  font-size: 12px !important;
+  font-size: 14px !important;
   font-weight: 500 !important;
   opacity: 1 !important;
-  transition: background 0.2s !important;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  transition: background 0.2s, transform 0.15s !important;
 }
 
 .navCta:hover {
   background: var(--blue-hover) !important;
+}
+
+.navCta:active {
+  transform: scale(0.97);
 }
 
 /* HERO */
@@ -4163,19 +4172,15 @@ a.whoCard:hover .whoCta {
   .navLinks {
     gap: 14px;
   }
-  /* Re-show "How it works" — keep one secondary link visible */
   .navLinks li:not(:last-child) {
     display: list-item;
   }
-  .navLinks li:nth-child(2) {
-    display: none; /* hide FAQ to save room */
-  }
   .navLinks a:not(.navCta) {
-    font-size: 12px;
+    font-size: 13px;
   }
   .navCta {
-    padding: 6px 11px !important;
-    font-size: 12px !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
   }
 }
 @media (max-width: 380px) {
@@ -6956,4 +6961,75 @@ a.whoCard:hover .whoLearn {
    newest message. */
 .mockPhoneBody {
   justify-content: flex-end;
+}
+
+/* ============================================================
+   v3.4 — Inline CTA strip + cleaner workflow (no dots)
+   ============================================================ */
+.ctaStrip {
+  padding: 56px 22px !important;
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+.ctaStripInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+.ctaStripCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.ctaStripEyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.ctaStripTitle {
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.18;
+}
+.ctaStrip .btnBlue {
+  padding: 14px 28px;
+  font-size: 16px;
+}
+@media (max-width: 600px) {
+  .ctaStripInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .ctaStrip .btnBlue {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Footer "Get started" rendered as a button so the global modal
+   trigger works without an href. Inherits the link look. */
+.footerLinkBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  letter-spacing: inherit;
+}
+.footerLinkBtn:hover {
+  color: var(--text);
 }

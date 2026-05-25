@@ -3,6 +3,7 @@ import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
 import { CookieConsent } from '@/components/cookie-consent';
+import { GetStartedProvider } from '@/components/get-started-modal';
 import './globals.css';
 
 const fontDisplay = Inter_Tight({
@@ -123,7 +124,7 @@ export default function RootLayout({
       className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
     >
       <body className="font-sans bg-paper text-ink antialiased">
-        {children}
+        <GetStartedProvider>{children}</GetStartedProvider>
 
         {/* Structured Data — not tracking, always loads */}
         <Script

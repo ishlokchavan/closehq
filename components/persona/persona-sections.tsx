@@ -46,12 +46,19 @@ export function PersonaChrome({ children }: { children: ReactNode }) {
           <span aria-hidden="true">←</span>
           <Logo />
         </Link>
-        {/* Same-page anchor: each persona page renders its own waitlist
-            (id="waitlist") near the bottom via PersonaWaitlist, so a
-            relative '#waitlist' link scrolls there without a navigation. */}
-        <Link href="#waitlist" className={styles.navCta}>
-          Get started
-        </Link>
+        <ul className={styles.navLinks}>
+          <li>
+            <Link href="/for-closers">For Closers</Link>
+          </li>
+          <li>
+            <Link href="/for-buyers">For Buyers</Link>
+          </li>
+          <li>
+            <button type="button" className={styles.navCta} data-get-started>
+              Get started
+            </button>
+          </li>
+        </ul>
       </nav>
       {children}
       <ICloseFooter />
@@ -110,9 +117,13 @@ export function PersonaHero({
             </div>
           )}
           <div className={styles.heroCtas}>
-            <Link href={primaryCta.href} className={styles.btnBlue}>
+            <button
+              type="button"
+              className={styles.btnBlue}
+              data-get-started
+            >
               {primaryCta.label}
-            </Link>
+            </button>
             {secondaryCta && (
               <Link href={secondaryCta.href} className={styles.btnLink}>
                 {secondaryCta.label}
@@ -522,9 +533,13 @@ export function PersonaCta({
         viewport={inView}
         transition={{ duration: 0.5, delay: 0.2, ease }}
       >
-        <Link href={cta.href} className={styles.btnBlueLg}>
+        <button
+          type="button"
+          className={styles.btnBlueLg}
+          data-get-started
+        >
           {cta.label}
-        </Link>
+        </button>
       </motion.div>
     </section>
   );

@@ -46,7 +46,7 @@ const intentOptions: {
 }[] = [
   {
     value: 'closer',
-    label: 'Close / refer deals',
+    label: 'Close deal or Enquire',
     sub: 'Broker, lawyer, advisor or anyone with clients.',
   },
   {
@@ -454,7 +454,7 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
           className={styles.wlSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Sending…' : 'Get early access →'}
+          {isSubmitting ? 'Sending…' : 'Get started →'}
         </button>
 
         {serverError && (

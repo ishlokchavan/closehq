@@ -570,6 +570,7 @@ const TESTIMONIALS: Testimonial[] = [
 function TestimonialsCarousel() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
   const len = TESTIMONIALS.length;
 
   useEffect(() => {
@@ -604,6 +605,27 @@ function TestimonialsCarousel() {
     }
   };
 
+  /* Auto-advance. Pauses on hover/focus so a reader can finish a
+     quote, and on user-initiated scroll (drag/swipe) so we don't
+     fight the user. */
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => {
+      setActive((cur) => {
+        const next = (cur + 1) % len;
+        const el = scrollerRef.current;
+        if (el) {
+          const target = el.querySelectorAll<HTMLElement>('[data-tcard]')[next];
+          if (target) {
+            el.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+          }
+        }
+        return next;
+      });
+    }, 4200);
+    return () => clearInterval(id);
+  }, [paused, len]);
+
   return (
     <section className={`${styles.testimonialsSection}`}>
       <div className={styles.wrapWide}>
@@ -620,6 +642,12 @@ function TestimonialsCarousel() {
           className={styles.testimonialStage}
           aria-roledescription="carousel"
           aria-label="Member testimonials"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setPaused(false)}
         >
           <div
             ref={scrollerRef}
@@ -792,8 +820,8 @@ const FAQS: { q: string; a: string }[] = [
     a: 'iClose is a Dubai real estate community and education platform built around three types of professionals: agents who want to build expertise in the secondary market, professionals (lawyers, accountants, advisors, family offices) whose clients have property requirements, and Specialists who have area or building expertise and inventory to match.',
   },
   {
-    q: 'Why should I trust a pre-launch platform?',
-    a: 'Joining the waitlist costs nothing and commits to nothing. Founding-member access locks in only when we open, and you can walk away if it doesn’t deliver.',
+    q: 'Why should I trust iClose?',
+    a: 'Signing up costs nothing and commits to nothing. Founding-member access locks in only once you confirm, and you can walk away any time if it doesn’t deliver.',
   },
   {
     q: "How is “up to 100% commission” actually possible?",
@@ -1089,7 +1117,7 @@ const WF_STEPS: WfStep[] = [
     title: 'Get paid.',
     body: 'Commission lands directly in your account. Tracked through your iClose dashboard. Transparent from day one. No splits to negotiate, no chasing, no surprises.',
     visual: <WfStep3Visual />,
-    cta: { label: 'Start for free', href: '#waitlist' },
+    cta: { label: 'Get started', href: '#waitlist' },
   },
 ];
 
@@ -1097,7 +1125,6 @@ function HowItWorks() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1112,7 +1139,6 @@ function HowItWorks() {
       }
       const scrolled = -rect.top;
       const p = Math.max(0, Math.min(1, scrolled / scrollable));
-      setProgress(p);
       /* Even thirds: each step takes ~33% of the scrollable range, so
          one viewport-worth of scroll advances exactly one step. */
       const step = p >= 0.67 ? 2 : p >= 0.34 ? 1 : 0;
@@ -1176,9 +1202,10 @@ function HowItWorks() {
                 </motion.p>
               </AnimatePresence>
               {WF_STEPS[active].cta && (
-                <motion.a
+                <motion.button
                   key={`cta-${active}`}
-                  href={WF_STEPS[active].cta!.href}
+                  type="button"
+                  data-get-started
                   className={styles.wfStartCta}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -1186,7 +1213,7 @@ function HowItWorks() {
                 >
                   {WF_STEPS[active].cta!.label}
                   <span aria-hidden="true">→</span>
-                </motion.a>
+                </motion.button>
               )}
             </div>
 
@@ -1207,22 +1234,6 @@ function HowItWorks() {
             </div>
           </div>
 
-          <div className={styles.wfProgress} aria-hidden="true">
-            <div
-              className={styles.wfProgressBar}
-              style={{ transform: `scaleX(${progress})` }}
-            />
-            <div className={styles.wfDots}>
-              {WF_STEPS.map((s, i) => (
-                <span
-                  key={s.num}
-                  className={`${styles.wfDot} ${
-                    i <= active ? styles.wfDotActive : ''
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1263,8 +1274,9 @@ function HowItWorks() {
               {s.body}
             </motion.p>
             {s.cta && (
-              <motion.a
-                href={s.cta.href}
+              <motion.button
+                type="button"
+                data-get-started
                 className={styles.wfStartCta}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1277,7 +1289,7 @@ function HowItWorks() {
               >
                 {s.cta.label}
                 <span aria-hidden="true">→</span>
-              </motion.a>
+              </motion.button>
             )}
 
             <motion.div
@@ -1295,6 +1307,41 @@ function HowItWorks() {
             </motion.div>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- INLINE CTA STRIP ---------------- */
+
+/* Compact band that slots between full sections so the "Get started"
+   prompt is never more than a screen away while reading. Trigger is
+   data-driven so it flows through the global GetStartedProvider. */
+function CtaStrip({
+  eyebrow,
+  title,
+}: {
+  eyebrow: string;
+  title: string;
+}) {
+  return (
+    <section className={styles.ctaStrip}>
+      <div className={styles.ctaStripInner}>
+        <div className={styles.ctaStripCopy}>
+          <div className={styles.ctaStripEyebrow}>{eyebrow}</div>
+          <h3
+            className={styles.ctaStripTitle}
+            // The apostrophe is encoded above for JSX safety.
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+        </div>
+        <button
+          type="button"
+          className={styles.btnBlue}
+          data-get-started
+        >
+          Get started
+        </button>
       </div>
     </section>
   );
@@ -1336,15 +1383,19 @@ export function ICloseLanding() {
         <Logo />
         <ul className={styles.navLinks}>
           <li>
-            <a href="#workflow">How it works</a>
+            <Link href="/for-closers">For Closers</Link>
           </li>
           <li>
-            <a href="#faq">FAQ</a>
+            <Link href="/for-buyers">For Buyers</Link>
           </li>
           <li>
-            <a href="#waitlist" className={styles.navCta}>
+            <button
+              type="button"
+              className={styles.navCta}
+              data-get-started
+            >
               Get started
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
@@ -1367,9 +1418,13 @@ export function ICloseLanding() {
             buy the property yourself.
           </p>
           <div className={styles.heroCtas}>
-            <a href="#waitlist" className={styles.btnBlue}>
-              Get early access
-            </a>
+            <button
+              type="button"
+              className={styles.btnBlue}
+              data-get-started
+            >
+              Get started
+            </button>
             <a href="#workflow" className={styles.heroGhostCta}>
               See how it works <span aria-hidden="true">→</span>
             </a>
@@ -1385,11 +1440,21 @@ export function ICloseLanding() {
       {/* WHO IS THIS FOR */}
       <WhoIsThisFor />
 
+      <CtaStrip
+        eyebrow="Two ways in."
+        title="Pick yours. We&apos;ll handle the rest."
+      />
+
       {/* WHAT IS IT */}
       <WhatIsIt />
 
       {/* HOW IT WORKS */}
       <HowItWorks />
+
+      <CtaStrip
+        eyebrow="One platform."
+        title="Built for everyone in the deal."
+      />
 
       {/* TESTIMONIALS */}
       <TestimonialsCarousel />

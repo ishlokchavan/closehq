@@ -55,18 +55,57 @@
   color: var(--text);
 }
 
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.navLinks a {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  transition: color 0.2s;
+}
+.navLinks a:hover {
+  color: var(--text);
+}
 .navCta {
   background: var(--blue);
   color: #fff;
-  padding: 7px 14px;
+  padding: 9px 18px;
   border-radius: var(--r-pill);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  transition: background 0.2s, transform 0.15s;
 }
 .navCta:hover {
   background: var(--blue-hover);
+}
+.navCta:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 600px) {
+  .navLinks {
+    gap: 14px;
+  }
+  .navLinks a {
+    font-size: 13px;
+  }
+  .navCta {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
 }
 
 /* Section wrap */

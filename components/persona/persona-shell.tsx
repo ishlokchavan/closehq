@@ -42,9 +42,9 @@ export function PersonaShell({
           <span aria-hidden="true">←</span>
           <Logo />
         </Link>
-        <Link href="/#waitlist" className={styles.navCta}>
+        <button type="button" className={styles.navCta} data-get-started>
           Get started
-        </Link>
+        </button>
       </nav>
 
       <section className={styles.hero}>
@@ -54,9 +54,13 @@ export function PersonaShell({
             <h1>{headline}</h1>
             <p>{sub}</p>
             <div className={styles.heroCtas}>
-              <Link href="/#waitlist" className={styles.btnBlue}>
+              <button
+                type="button"
+                className={styles.btnBlue}
+                data-get-started
+              >
                 {ctaLabel}
-              </Link>
+              </button>
               <Link href="/" className={styles.btnLink}>
                 Back to overview
               </Link>
@@ -120,11 +124,15 @@ export function PersonaShell({
         <div className={styles.wrap}>
           <h2 className={styles.ctaHeading}>{ctaLabel}.</h2>
           <p className={styles.ctaSub}>
-            iClose opens soon. Be one of the first to get access.
+            Be one of the first to get access.
           </p>
-          <Link href="/#waitlist" className={styles.btnBlueLg}>
+          <button
+            type="button"
+            className={styles.btnBlueLg}
+            data-get-started
+          >
             {ctaLabel}
-          </Link>
+          </button>
         </div>
       </section>
 

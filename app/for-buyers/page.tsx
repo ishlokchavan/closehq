@@ -42,7 +42,7 @@ export default function ForBuyersPage() {
             in your pocket, not ours.
           </>
         }
-        primaryCta={{ label: 'Get started free', href: '#waitlist' }}
+        primaryCta={{ label: 'Get started', href: '#waitlist' }}
         chips={[
           '100% cashback on every deal',
           'Off-plan, ready, secondary — all covered',

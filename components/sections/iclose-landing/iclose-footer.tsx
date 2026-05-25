@@ -26,7 +26,13 @@ export function ICloseFooter() {
               <Link href="/#workflow">How it works</Link>
             </li>
             <li>
-              <Link href="/#waitlist">Get started</Link>
+              <button
+                type="button"
+                className={styles.footerLinkBtn}
+                data-get-started
+              >
+                Get started
+              </button>
             </li>
             <li>
               <a
