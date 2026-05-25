@@ -38,10 +38,16 @@ export function PersonaShell({
   return (
     <div className={styles.root}>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.backLink} aria-label="Back to home">
-          <span aria-hidden="true">←</span>
+        <span className={styles.backLink}>
+          <Link
+            href="/"
+            aria-label="Back to home"
+            className={styles.backArrow}
+          >
+            <span aria-hidden="true">←</span>
+          </Link>
           <Logo />
-        </Link>
+        </span>
         <button type="button" className={styles.navCta} data-get-started>
           Get started
         </button>

@@ -42,10 +42,19 @@ export function PersonaChrome({ children }: { children: ReactNode }) {
   return (
     <div className={styles.root}>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.backLink} aria-label="Back to home">
-          <span aria-hidden="true">←</span>
+        {/* Logo already links to "/", so wrapping it in another <Link>
+            produced <a><a></a></a> and broke hydration. Render the
+            back arrow as a separate <Link>. */}
+        <span className={styles.backLink}>
+          <Link
+            href="/"
+            aria-label="Back to home"
+            className={styles.backArrow}
+          >
+            <span aria-hidden="true">←</span>
+          </Link>
           <Logo />
-        </Link>
+        </span>
         <ul className={styles.navLinks}>
           <li>
             <Link href="/for-closers">For Closers</Link>

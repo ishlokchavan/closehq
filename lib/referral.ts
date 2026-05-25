@@ -68,7 +68,11 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match.split('=')[1]) : null;
 }
 
-/* Grab ?ref= from the current URL, persist it, and clean the URL. */
+/* Grab ?ref= from the current URL and persist it as a cookie +
+   localStorage entry. The query param is left in place so the
+   visitor (and our analytics) can see which link they came from;
+   first-touch attribution still wins because we never overwrite an
+   existing cookie. */
 export function captureReferralFromUrl(): string | null {
   if (typeof window === 'undefined') return null;
   const params = new URLSearchParams(window.location.search);
@@ -76,7 +80,6 @@ export function captureReferralFromUrl(): string | null {
   if (!raw) return null;
   const code = raw.toUpperCase();
   if (!isValidReferralCode(code)) return null;
-  // First-touch wins. If we already have a code, keep the existing one.
   const existing = getCookie(COOKIE_NAME) || localStorage.getItem(STORAGE_KEY);
   if (!existing) {
     setCookie(COOKIE_NAME, code, ATTRIBUTION_DAYS);
@@ -86,11 +89,6 @@ export function captureReferralFromUrl(): string | null {
       // localStorage may be blocked; cookie still works.
     }
   }
-  params.delete('ref');
-  const newQuery = params.toString();
-  const newUrl =
-    window.location.pathname + (newQuery ? `?${newQuery}` : '') + window.location.hash;
-  window.history.replaceState({}, '', newUrl);
   return existing || code;
 }
 
