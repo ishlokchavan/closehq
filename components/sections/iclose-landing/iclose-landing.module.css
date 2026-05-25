@@ -6709,3 +6709,251 @@ a.whoCard:hover .whoChip:not(.whoChipPrimary):not(.whoChipAlt) {
   letter-spacing: -0.005em;
   margin: 0;
 }
+
+/* ============================================================
+   v3.3 — Bank-style Two-options cards + smoother phone chat.
+   Pills become the focus; a large stat figure anchors each
+   card the way a product card on a banking marketing site
+   would; the image moves to a supporting tag-with-meta band.
+   ============================================================ */
+
+/* ---- Bank-style Who card --------------------------------- */
+.whoCardBank {
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(0, 113, 227, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 26px 26px 28px;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.whoCardAlt {
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(52, 199, 89, 0.07) 0%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #f8faf9 100%);
+}
+.whoCardBank::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.015) 100%);
+  pointer-events: none;
+}
+
+.whoCardBank .whoChipRow {
+  margin-bottom: 0;
+}
+
+/* Pill */
+.whoPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 10px;
+  background: rgba(0, 113, 227, 0.08);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  border: 1px solid rgba(0, 113, 227, 0.18);
+}
+.whoPillPrimary {
+  background: rgba(0, 113, 227, 0.1);
+  color: var(--blue);
+  border-color: rgba(0, 113, 227, 0.22);
+}
+.whoPillAlt {
+  background: rgba(52, 199, 89, 0.1);
+  color: #2faf4e;
+  border-color: rgba(52, 199, 89, 0.25);
+}
+.whoPillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px currentColor;
+  opacity: 0.95;
+  animation: heroBadgePulse 2.4s ease-in-out infinite;
+}
+.whoPillAlt .whoPillDot {
+  color: #2faf4e;
+}
+
+/* Learn more link in the chip row */
+.whoLearn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: -0.005em;
+  transition: gap 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.whoLearnAlt {
+  color: #2faf4e;
+}
+a.whoCard:hover .whoLearn {
+  gap: 10px;
+}
+
+/* Stat block (the bank-style hero figure) */
+.whoStatBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.whoStatLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.whoStatValue {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.whoStatPrefix {
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+.whoStatNumber {
+  font-size: clamp(64px, 8vw, 92px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  line-height: 1;
+}
+.whoStatUnit {
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.whoStatValuePrimary .whoStatNumber,
+.whoStatValuePrimary .whoStatUnit {
+  background: linear-gradient(135deg, #0058a3 0%, #0071e3 70%, #2997ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.whoStatValueAlt .whoStatNumber,
+.whoStatValueAlt .whoStatUnit {
+  background: linear-gradient(135deg, #1d8a40 0%, #34c759 60%, #6dd897 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.whoStatFine {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* Slimmer hero band with a meta caption */
+.whoCardBank .whoHero {
+  aspect-ratio: 16 / 7;
+  margin: 0;
+  border-radius: 14px;
+}
+.whoHeroMeta {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: flex-start;
+  z-index: 1;
+}
+.whoHeroMetaTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.005em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+}
+
+.whoCardBank h3 {
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .whoCardBank {
+    padding: 22px 20px 22px;
+    gap: 16px;
+  }
+  .whoStatNumber {
+    font-size: clamp(56px, 16vw, 72px);
+  }
+  .whoCardBank .whoHero {
+    aspect-ratio: 16 / 8;
+  }
+}
+
+/* ---- Smoother typing indicator in phone chat -------------- */
+.mockPhoneTyping {
+  display: inline-flex !important;
+  gap: 4px;
+  padding: 9px 12px !important;
+}
+.mockPhoneTypingDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+.mockPhoneTyping {
+  color: var(--text-muted);
+}
+.mockPhoneBubbleRight.mockPhoneTyping {
+  color: #fff;
+}
+.mockPhoneTyping .mockPhoneTypingDot:nth-child(1) { animation-delay: 0s; }
+.mockPhoneTyping .mockPhoneTypingDot:nth-child(2) { animation-delay: 0.15s; }
+.mockPhoneTyping .mockPhoneTypingDot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typingDot {
+  0%, 80%, 100% { opacity: 0.35; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* The body uses flex-end so bubbles stack from the bottom of the
+   phone — feels more like a live thread that just received the
+   newest message. */
+.mockPhoneBody {
+  justify-content: flex-end;
+}

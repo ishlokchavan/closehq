@@ -111,50 +111,93 @@ function WhoIsThisFor() {
 
         <div className={styles.whoGrid}>
           <Reveal className={styles.whoCardWrap} delay={1}>
-            <Link href="/for-closers" className={styles.whoCard}>
+            <Link
+              href="/for-closers"
+              className={`${styles.whoCard} ${styles.whoCardBank}`}
+            >
               <div className={styles.whoChipRow}>
-                <span className={`${styles.whoChip} ${styles.whoChipPrimary}`}>
+                <span className={`${styles.whoPill} ${styles.whoPillPrimary}`}>
+                  <span className={styles.whoPillDot} />
                   For Closers
                 </span>
-                <span className={styles.whoChip}>Learn more →</span>
+                <span className={styles.whoLearn}>
+                  Learn more <span aria-hidden="true">→</span>
+                </span>
               </div>
+
+              <div className={styles.whoStatBlock}>
+                <div className={styles.whoStatLabel}>Commission kept</div>
+                <div className={`${styles.whoStatValue} ${styles.whoStatValuePrimary}`}>
+                  <span className={styles.whoStatPrefix}>up to</span>
+                  <span className={styles.whoStatNumber}>100</span>
+                  <span className={styles.whoStatUnit}>%</span>
+                </div>
+                <div className={styles.whoStatFine}>
+                  of every commission you close · paid into your account
+                </div>
+              </div>
+
               <div className={styles.whoHero}>
                 <Image
-                  src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
-                  alt="A closer in a modern Dubai office"
+                  src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1200&q=80&auto=format&fit=crop"
+                  alt="Dubai skyline at dusk"
                   fill
                   sizes="(max-width: 820px) 100vw, 520px"
                   className={styles.whoHeroImg}
                   priority={false}
                 />
                 <div className={styles.whoHeroOverlay} />
+                <div className={styles.whoHeroMeta}>
+                  <span className={styles.whoHeroMetaTag}>Brokers · Advisors · Networkers</span>
+                </div>
               </div>
-              <h3>Keep 100% of every commission.</h3>
+
+              <h3>Keep every dirham you earn.</h3>
             </Link>
           </Reveal>
 
           <Reveal className={styles.whoCardWrap} delay={2}>
-            <Link href="/for-buyers" className={styles.whoCard}>
+            <Link
+              href="/for-buyers"
+              className={`${styles.whoCard} ${styles.whoCardBank} ${styles.whoCardAlt}`}
+            >
               <div className={styles.whoChipRow}>
-                <span className={`${styles.whoChip} ${styles.whoChipAlt}`}>
+                <span className={`${styles.whoPill} ${styles.whoPillAlt}`}>
+                  <span className={styles.whoPillDot} />
                   For Buyers
                 </span>
-                <span className={`${styles.whoChip} ${styles.whoChipAltGhost}`}>
-                  Learn more →
+                <span className={`${styles.whoLearn} ${styles.whoLearnAlt}`}>
+                  Learn more <span aria-hidden="true">→</span>
                 </span>
               </div>
+
+              <div className={styles.whoStatBlock}>
+                <div className={styles.whoStatLabel}>Cashback rebate</div>
+                <div className={`${styles.whoStatValue} ${styles.whoStatValueAlt}`}>
+                  <span className={styles.whoStatNumber}>100</span>
+                  <span className={styles.whoStatUnit}>%</span>
+                </div>
+                <div className={styles.whoStatFine}>
+                  of the commission, rebated back to you · off-plan or ready
+                </div>
+              </div>
+
               <div className={styles.whoHero}>
                 <Image
-                  src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
-                  alt="A buyer sourcing a UAE property with iClose"
+                  src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80&auto=format&fit=crop"
+                  alt="Modern apartment interior in Dubai"
                   fill
                   sizes="(max-width: 820px) 100vw, 520px"
                   className={styles.whoHeroImg}
                   priority={false}
                 />
                 <div className={styles.whoHeroOverlay} />
+                <div className={styles.whoHeroMeta}>
+                  <span className={styles.whoHeroMetaTag}>Off-plan · Ready · Secondary</span>
+                </div>
               </div>
-              <h3>100% cashback on every deal.</h3>
+
+              <h3>Get the full commission back.</h3>
             </Link>
           </Reveal>
         </div>
@@ -237,22 +280,52 @@ function TabbedDashboardMock() {
   );
 }
 
-/* iMessage-style mobile frame so the chat reads as a real conversation
-   rather than a dashboard row. Bubbles animate in on a loop. */
+/* iMessage-style mobile frame. The conversation fills the body, holds,
+   then cycles forward by one message — the oldest fades out at the
+   top while a new one fades in at the bottom. No jarring full-reset:
+   the visible bubble count stays constant once primed, so the frame
+   reads as a continuously-moving thread. */
 function PhoneChatMock() {
-  const MESSAGES = [
+  const SCRIPT = [
     { side: 'left' as const, text: 'Client brief — 2BR, canal view' },
     { side: 'right' as const, text: '3 ready in Business Bay' },
     { side: 'left' as const, text: 'Send floor plans?' },
-    { side: 'right' as const, text: 'On the way ✓' },
+    { side: 'right' as const, text: 'Sent ✓' },
+    { side: 'left' as const, text: 'Booking viewing tomorrow' },
+    { side: 'right' as const, text: '11am works · confirmed' },
+    { side: 'left' as const, text: 'Offer at AED 1.42M' },
+    { side: 'right' as const, text: 'Counter accepted · closing 🎉' },
   ];
-  const [count, setCount] = useState(1);
+  const WINDOW = 4;
+  const [head, setHead] = useState(0);
+  const [typing, setTyping] = useState(false);
+
   useEffect(() => {
-    const id = setInterval(() => {
-      setCount((c) => (c >= MESSAGES.length ? 1 : c + 1));
-    }, 1300);
-    return () => clearInterval(id);
-  }, [MESSAGES.length]);
+    // Show typing indicator briefly, then commit the next message.
+    let cancelled = false;
+    const tick = () => {
+      if (cancelled) return;
+      setTyping(true);
+      const typeTimer = setTimeout(() => {
+        if (cancelled) return;
+        setTyping(false);
+        setHead((h) => (h + 1) % SCRIPT.length);
+      }, 600);
+      return () => clearTimeout(typeTimer);
+    };
+    const intervalId = setInterval(tick, 2200);
+    return () => {
+      cancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [SCRIPT.length]);
+
+  const visible = Array.from({ length: WINDOW }, (_, i) => {
+    const idx = (head + i) % SCRIPT.length;
+    return { ...SCRIPT[idx], key: `m-${idx}` };
+  });
+  const nextTypingSide = SCRIPT[(head + WINDOW) % SCRIPT.length].side;
+
   return (
     <div className={styles.mockPhone}>
       <div className={styles.mockPhoneNotch} />
@@ -261,21 +334,47 @@ function PhoneChatMock() {
         <span className={styles.mockPhoneName}>Specialist · Business Bay</span>
       </div>
       <div className={styles.mockPhoneBody}>
-        <AnimatePresence>
-          {MESSAGES.slice(0, count).map((m, i) => (
+        <AnimatePresence initial={false}>
+          {visible.map((m, i) => (
             <motion.div
-              key={`${i}-${count}`}
+              layout
+              key={m.key}
               className={`${styles.mockPhoneBubble} ${
                 m.side === 'right' ? styles.mockPhoneBubbleRight : ''
               }`}
-              initial={{ opacity: 0, y: 8, scale: 0.96 }}
+              initial={
+                i === visible.length - 1
+                  ? { opacity: 0, y: 12, scale: 0.95 }
+                  : false
+              }
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{
+                layout: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
               {m.text}
             </motion.div>
           ))}
+          {typing && (
+            <motion.div
+              key="typing"
+              layout
+              className={`${styles.mockPhoneBubble} ${styles.mockPhoneTyping} ${
+                nextTypingSide === 'right' ? styles.mockPhoneBubbleRight : ''
+              }`}
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className={styles.mockPhoneTypingDot} />
+              <span className={styles.mockPhoneTypingDot} />
+              <span className={styles.mockPhoneTypingDot} />
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </div>
@@ -514,7 +613,7 @@ function TestimonialsCarousel() {
           className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
           {...animRise}
         >
-          What members say.
+          See what others say about us.
         </motion.h2>
 
         <div
@@ -838,7 +937,7 @@ function WfStep2Visual() {
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={styles.wfPanelForkTag}>Closer route</div>
+          <div className={styles.wfPanelForkTag}>For Closers</div>
           <motion.div
             className={styles.wfPanelForkBig}
             initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
@@ -868,7 +967,7 @@ function WfStep2Visual() {
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={styles.wfPanelForkTag}>Buyer route</div>
+          <div className={styles.wfPanelForkTag}>For Buyers</div>
           <motion.div
             className={styles.wfPanelForkBig}
             initial={{ opacity: 0, y: 18, letterSpacing: '0.1em' }}
