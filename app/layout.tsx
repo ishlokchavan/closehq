@@ -3,6 +3,7 @@ import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
 import { CookieConsent } from '@/components/cookie-consent';
+import { GoaffproTracker } from '@/components/goaffpro-tracker';
 import './globals.css';
 
 const fontDisplay = Inter_Tight({
@@ -141,6 +142,11 @@ export default function RootLayout({
 
         {/* GA4 + Meta Pixel load only after cookie consent — see CookieConsent component */}
         <CookieConsent />
+
+        {/* GoAffPro affiliate tracking — only mounts if NEXT_PUBLIC_GOAFFPRO_SHOP
+            is set. Loader sets its own attribution cookie; we also stash the
+            ?ref= query param so the waitlist form can forward it server-side. */}
+        <GoaffproTracker />
       </body>
     </html>
   );

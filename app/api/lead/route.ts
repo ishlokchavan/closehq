@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 import { leadSchema } from '@/lib/validations';
 import { sendEmail } from '@/lib/mailer';
+import { reportGoaffproConversion } from '@/lib/goaffpro';
 
 const emailFooter = () => {
   const contact = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@iclose.ae';
@@ -47,7 +48,9 @@ export async function POST(request: Request) {
       focus,
       dealTypes,
       message,
+      referralCode,
     } = parsed.data;
+    const refCode = referralCode?.trim() || null;
     const focusLabels: Record<string, string> = {
       offplan: 'Offplan',
       secondary: 'Secondary',
@@ -98,6 +101,7 @@ export async function POST(request: Request) {
           verification_token: verificationToken,
           consent_marketing: consentMarketing ?? false,
           consented_at: new Date().toISOString(),
+          referral_code: refCode,
         });
         if (error) console.error('[member] DB insert failed:', error.message);
       }
@@ -164,6 +168,15 @@ export async function POST(request: Request) {
       }
     } else {
       console.warn('[member] NOTIFY_EMAIL not set. Skipping admin notification');
+    }
+
+    if (refCode) {
+      await reportGoaffproConversion({
+        referralCode: refCode,
+        email,
+        name,
+        orderNumber: verificationToken,
+      });
     }
 
     return NextResponse.json({ ok: true });

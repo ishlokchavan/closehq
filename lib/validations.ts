@@ -35,6 +35,12 @@ export const leadSchema = z.object({
   }),
   consentMarketing: z.boolean().optional().default(false),
   website: z.string().optional(),
+  referralCode: z
+    .string()
+    .max(64)
+    .regex(/^[A-Za-z0-9_-]*$/, 'Invalid referral code')
+    .optional()
+    .or(z.literal('')),
 });
 
 export type LeadFormValues = z.infer<typeof leadSchema>;

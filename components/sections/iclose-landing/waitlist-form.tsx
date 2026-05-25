@@ -14,6 +14,7 @@ import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { leadFocusValues, type LeadFormValues } from '@/lib/validations';
 import { siteConfig } from '@/lib/site-config';
+import { readStoredRef } from '@/components/goaffpro-tracker';
 import styles from './iclose-landing.module.css';
 
 /* Simplified shape. Collected as-is by the form, then split into the
@@ -222,6 +223,7 @@ export function WaitlistForm() {
       consentPrivacy: true,
       consentMarketing: marketingOptIn,
       website: data.website ?? '',
+      referralCode: readStoredRef() ?? '',
     };
 
     try {
