@@ -454,7 +454,7 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
           className={styles.wlSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Sending…' : 'Join the waitlist →'}
+          {isSubmitting ? 'Sending…' : 'Get early access →'}
         </button>
 
         {serverError && (

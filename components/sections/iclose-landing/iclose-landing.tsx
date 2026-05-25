@@ -139,8 +139,8 @@ function WhoIsThisFor() {
 
               <div className={styles.whoHero}>
                 <Image
-                  src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1200&q=80&auto=format&fit=crop"
-                  alt="Dubai skyline at dusk"
+                  src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
+                  alt="A closer in a modern Dubai office"
                   fill
                   sizes="(max-width: 820px) 100vw, 520px"
                   className={styles.whoHeroImg}
@@ -184,8 +184,8 @@ function WhoIsThisFor() {
 
               <div className={styles.whoHero}>
                 <Image
-                  src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80&auto=format&fit=crop"
-                  alt="Modern apartment interior in Dubai"
+                  src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
+                  alt="A buyer sourcing a UAE property with iClose"
                   fill
                   sizes="(max-width: 820px) 100vw, 520px"
                   className={styles.whoHeroImg}
@@ -1357,10 +1357,6 @@ export function ICloseLanding() {
           <span className={styles.heroBlobC} />
         </div>
         <div className={styles.heroInner}>
-          <div className={styles.heroBadge}>
-            <span className={styles.heroBadgeDot} />
-            <span>Founding cohort · UAE real estate</span>
-          </div>
           <h1>
             Learn from the best.{' '}
             <span className={styles.heroAccent}>Keep 100% of every close.</span>
@@ -1372,7 +1368,7 @@ export function ICloseLanding() {
           </p>
           <div className={styles.heroCtas}>
             <a href="#waitlist" className={styles.btnBlue}>
-              Join the waitlist
+              Get early access
             </a>
             <a href="#workflow" className={styles.heroGhostCta}>
               See how it works <span aria-hidden="true">→</span>
@@ -1413,7 +1409,7 @@ export function ICloseLanding() {
             className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
             {...animScale}
           >
-            Get early access.
+            Ready to close?
           </motion.h2>
           <motion.div {...animRise} transition={{ ...animRise.transition, delay: 0.15 }}>
             <WaitlistForm />
