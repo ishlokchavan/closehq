@@ -239,8 +239,7 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
                   </button>
                 </div>
                 <p className={styles.referralHint}>
-                  Share it. We&apos;ll track who joins from your link and
-                  credit every deal we close together.
+                  Share it with anyone you think could benefit from this.
                 </p>
               </div>
             )}
