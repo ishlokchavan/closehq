@@ -1462,7 +1462,7 @@ export function ICloseLanding() {
 
           <h1>
             Learn from the best,{' '}
-            <span className={styles.heroAccent}>Keep 100% of every close.</span>
+            <span className={styles.heroAccent}>Keep 100% of every deal.</span>
           </h1>
           <p className={styles.heroSub}>
             Train with the top 0.1% of UAE agents. Close more deals. Keep
