@@ -12,11 +12,11 @@ const FAQS = [
   },
   {
     q: 'Who can join as a Member?',
-    a: "Anyone with a professional connection to Dubai real estate — agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, etc. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
+    a: "Anyone with a professional connection to Dubai real estate, agents, brokers, lawyers, accountants, financial advisors, POAs, investors, family offices, etc. If you have clients with asset requirements, or if you're building expertise in the secondary market, iClose is built for you.",
   },
   {
     q: "I'm an agent. How does iClose help me specifically?",
-    a: "iClose Academy gives you structured content from Specialists who are actively working the areas you want to enter — area playbooks, building deep-dives, and community intelligence. It's the fastest path to becoming a credible secondary market professional, built on real knowledge from people in the field.",
+    a: "iClose Academy gives you structured content from Specialists who are actively working the areas you want to enter, area playbooks, building deep-dives, and community intelligence. It's the fastest path to becoming a credible secondary market professional, built on real knowledge from people in the field.",
   },
   {
     q: "I'm a lawyer / accountant / advisor. How does this help my clients?",
@@ -24,15 +24,15 @@ const FAQS = [
   },
   {
     q: 'What is a Specialist and how is it different from a Member?',
-    a: "A Specialist is a vetted community or building expert who knows a specific area of Dubai's secondary market with real depth — transaction history, current inventory, pricing nuance. Specialists apply separately and are reviewed before joining. They publish their knowledge for Members, and when a Member inquiry falls within their domain, they are the focal point to close it.",
+    a: "A Specialist is a vetted community or building expert who knows a specific area of Dubai's secondary market with real depth, transaction history, current inventory, pricing nuance. Specialists apply separately and are reviewed before joining. They publish their knowledge for Members, and when a Member inquiry falls within their domain, they are the focal point to close it.",
   },
   {
     q: 'Why would a Specialist join iClose?',
-    a: "iClose gives Specialists access to a growing pool of professionals who have active buyers — agents, lawyers, accountants, family offices. When you share your knowledge here, you build authority with the exact people who will refer serious inquiries your way. When a Member needs a unit in your domain, you are the first and only call.",
+    a: "iClose gives Specialists access to a growing pool of professionals who have active buyers, agents, lawyers, accountants, family offices. When you share your knowledge here, you build authority with the exact people who will refer serious inquiries your way. When a Member needs a unit in your domain, you are the first and only call.",
   },
   {
     q: 'What does the transaction split mean?',
-    a: "When a deal closes through the platform, the split is the share you keep versus what goes to iClose. Plus Members keep 60%. It improves at Pro (80%), Pro Max (90%), and Ultra (100%). This is an added benefit of membership — the community and education platform are available regardless of transaction activity.",
+    a: "When a deal closes through the platform, the split is the share you keep versus what goes to iClose. Plus Members keep 60%. It improves at Pro (80%), Pro Max (90%), and Ultra (100%). This is an added benefit of membership, the community and education platform are available regardless of transaction activity.",
   },
 ];
 

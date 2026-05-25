@@ -27,7 +27,7 @@ export function DealCTA() {
               className="text-graphite text-[15px] leading-[1.55]"
               style={{ letterSpacing: '-0.012em' }}
             >
-              Every membership tier includes a transaction split. Start at 60% on Plus and earn up to 100% on Ultra. The community is free to join — the upside is entirely yours.
+              Every membership tier includes a transaction split. Start at 60% on Plus and earn up to 100% on Ultra. The community is free to join, the upside is entirely yours.
             </p>
             <a
               href="#plans"

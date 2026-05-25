@@ -70,7 +70,7 @@ export function Perks() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-6 max-w-2xl">
-              Dubai buyers expect an experience, not just a viewing. Our agents get the same arsenal a top-tier brokerage would charge you for — included.
+              Dubai buyers expect an experience, not just a viewing. Our agents get the same arsenal a top-tier brokerage would charge you for, included.
             </p>
           </Reveal>
         </div>

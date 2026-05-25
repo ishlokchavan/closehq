@@ -6,7 +6,7 @@ import { CareersForm } from '@/components/sections/iclose-landing/careers-form';
 import styles from '@/components/sections/iclose-landing/iclose-landing.module.css';
 
 export const metadata: Metadata = {
-  title: 'Careers — iClose',
+  title: 'Careers, iClose',
   description:
     'Paid internship opportunities at iClose. Content Creation, Marketing, Copywriting, Investment Analysis, Research, and Investor Relations.',
 };

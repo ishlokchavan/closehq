@@ -9,22 +9,22 @@ const VALUES = [
   {
     icon: BookOpen,
     title: 'Education from practitioners.',
-    body: 'Every piece of content on iClose is created by Specialists who are actively working in the areas they cover. Not theory, not analysis — knowledge that has been tested by real transactions.',
+    body: 'Every piece of content on iClose is created by Specialists who are actively working in the areas they cover. Not theory, not analysis, knowledge that has been tested by real transactions.',
   },
   {
     icon: Building2,
     title: 'Inventory with context.',
-    body: "When a Specialist lists a unit, it comes with the depth of someone who knows that building from the ground floor up. Members don't just get a property — they get the full picture behind it.",
+    body: "When a Specialist lists a unit, it comes with the depth of someone who knows that building from the ground floor up. Members don't just get a property, they get the full picture behind it.",
   },
   {
     icon: Users,
     title: 'A trusted professional network.',
-    body: 'iClose Members include agents, lawyers, accountants, financial advisors, family offices, and private equity. When a Specialist shares their inventory here, it reaches the professionals who have serious buyers — not browsers.',
+    body: 'iClose Members include agents, lawyers, accountants, financial advisors, family offices, and private equity. When a Specialist shares their inventory here, it reaches the professionals who have serious buyers, not browsers.',
   },
   {
     icon: ShieldCheck,
     title: 'Discretion built in.',
-    body: 'Every interaction within iClose is handled with the privacy that professional relationships require. Members and Specialists connect within the platform — quietly, directly, and without unnecessary exposure.',
+    body: 'Every interaction within iClose is handled with the privacy that professional relationships require. Members and Specialists connect within the platform, quietly, directly, and without unnecessary exposure.',
   },
 ];
 

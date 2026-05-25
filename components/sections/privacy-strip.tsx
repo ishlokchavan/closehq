@@ -21,7 +21,7 @@ export function PrivacyStrip() {
             Your name. Your network. Yours.
           </h2>
           <p className="subhead mt-6 max-w-xl mx-auto text-balance">
-            Brokers on iClose stay completely anonymous. Buyers, developers, and even other agents only see the deal — never your identity, your client list, or your pipeline.
+            Brokers on iClose stay completely anonymous. Buyers, developers, and even other agents only see the deal, never your identity, your client list, or your pipeline.
           </p>
         </motion.div>
       </div>

@@ -110,7 +110,7 @@ export function Plans({ data }: { data: MembershipPlan[] }) {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-2xl">
-              Every tier starts with community access and the education platform. As you go deeper, you get more — better Specialist matching, dedicated support, and an increasing share of any transaction you close.
+              Every tier starts with community access and the education platform. As you go deeper, you get more, better Specialist matching, dedicated support, and an increasing share of any transaction you close.
             </p>
           </Reveal>
         </div>

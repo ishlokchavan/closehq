@@ -20,7 +20,7 @@ export function Referral() {
               <p className="subhead mt-6 max-w-lg">
                 Refer another agent or connector to the platform and earn{' '}
                 <span className="text-ink font-medium">5% of every commission they generate</span>{' '}
-                — for as long as they keep closing.
+               , for as long as they keep closing.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

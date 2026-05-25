@@ -281,13 +281,13 @@ function TabbedDashboardMock() {
 }
 
 /* iMessage-style mobile frame. The conversation fills the body, holds,
-   then cycles forward by one message — the oldest fades out at the
+   then cycles forward by one message, the oldest fades out at the
    top while a new one fades in at the bottom. No jarring full-reset:
    the visible bubble count stays constant once primed, so the frame
    reads as a continuously-moving thread. */
 function PhoneChatMock() {
   const SCRIPT = [
-    { side: 'left' as const, text: 'Client brief — 2BR, canal view' },
+    { side: 'left' as const, text: 'Client brief, 2BR, canal view' },
     { side: 'right' as const, text: '3 ready in Business Bay' },
     { side: 'left' as const, text: 'Send floor plans?' },
     { side: 'right' as const, text: 'Sent ✓' },
@@ -539,7 +539,7 @@ const TESTIMONIALS: Testimonial[] = [
     image:
       'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=faces',
     quote:
-      "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement. Within 24 hours a specialist came back with three matching units.",
+      "One of my clients had a very specific brief, Business Bay, high floor, direct canal view, quick transfer. I posted the requirement. Within 24 hours a specialist came back with three matching units.",
   },
   {
     name: 'Karim Rahimi',
@@ -1466,7 +1466,7 @@ export function ICloseLanding() {
           </h1>
           <p className={styles.heroSub}>
             Train with the top 0.1% of UAE agents. Close more deals. Keep
-            every dirham of your commission — or get 100% cashback when you
+            every dirham of your commission, or get 100% cashback when you
             buy the property yourself.
           </p>
           <div className={styles.heroCtas}>

@@ -9,7 +9,7 @@ const STEPS = [
     number: '1',
     icon: UserPlus,
     title: 'Join as a Member or apply as a Specialist.',
-    body: 'Members — whether agents, lawyers, accountants, etc. sign up and get immediate access to our community. Specialists apply separately and are vetted before joining. Every role has a clear place.',
+    body: 'Members, whether agents, lawyers, accountants, etc. sign up and get immediate access to our community. Specialists apply separately and are vetted before joining. Every role has a clear place.',
   },
   // {
   //   number: '2',

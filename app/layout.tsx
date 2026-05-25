@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'iClose — Learn Dubai Real Estate from the Specialists',
+    default: 'iClose, Learn Dubai Real Estate from the Specialists',
     template: '%s | iClose',
   },
   description: siteConfig.description,
@@ -49,20 +49,20 @@ export const metadata: Metadata = {
     locale: 'en_AE',
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: 'iClose — Learn Dubai Real Estate from the Specialists',
+    title: 'iClose, Learn Dubai Real Estate from the Specialists',
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'iClose — The Dubai secondary market learning platform',
+        alt: 'iClose, The Dubai secondary market learning platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'iClose — Learn Dubai Real Estate from the Specialists',
+    title: 'iClose, Learn Dubai Real Estate from the Specialists',
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -126,7 +126,7 @@ export default function RootLayout({
       <body className="font-sans bg-paper text-ink antialiased">
         <GetStartedProvider>{children}</GetStartedProvider>
 
-        {/* Structured Data — not tracking, always loads */}
+        {/* Structured Data, not tracking, always loads */}
         <Script
           id="ld-org"
           type="application/ld+json"
@@ -140,7 +140,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
 
-        {/* GA4 + Meta Pixel load only after cookie consent — see CookieConsent component */}
+        {/* GA4 + Meta Pixel load only after cookie consent, see CookieConsent component */}
         <CookieConsent />
       </body>
     </html>

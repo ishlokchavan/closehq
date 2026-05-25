@@ -42,7 +42,7 @@ export function GetStartedProvider({ children }: { children: ReactNode }) {
 
   /* Capture ?ref=CODE once on every page load. Lives at the provider
      level so attribution sticks even if no inline form has mounted
-     yet — a visitor can land via /?ref=AB12CD, click a "Get started"
+     yet, a visitor can land via /?ref=AB12CD, click a "Get started"
      button, and the modal's form picks up the stored code. */
   useEffect(() => {
     captureReferralFromUrl();

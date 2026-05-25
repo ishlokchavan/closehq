@@ -1,5 +1,5 @@
 /* ===================================================================
-   iClose referral tracking — fully self-contained, no third-party SaaS.
+   iClose referral tracking, fully self-contained, no third-party SaaS.
 
    How it works
    ------------

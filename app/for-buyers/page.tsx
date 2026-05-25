@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: 'For Buyers · iClose',
   description:
-    "iClose gives UAE buyers 100% cashback on every deal — the entire agent commission rebated back to you.",
+    "iClose gives UAE buyers 100% cashback on every deal, the entire agent commission rebated back to you.",
 };
 
 export default function ForBuyersPage() {
@@ -36,7 +36,7 @@ export default function ForBuyersPage() {
         sub={
           <>
             UAE real estate is one of the world&apos;s best investments. iClose
-            gives you the deep market intelligence to buy with confidence — and
+            gives you the deep market intelligence to buy with confidence, and
             rebates 100% of the agent commission back to you. Off-plan or
             ready, secondary or primary. Every dirham of the commission goes
             in your pocket, not ours.
@@ -45,7 +45,7 @@ export default function ForBuyersPage() {
         primaryCta={{ label: 'Get started', href: '#waitlist' }}
         chips={[
           '100% cashback on every deal',
-          'Off-plan, ready, secondary — all covered',
+          'Off-plan, ready, secondary, all covered',
           'Deep market intel before you commit',
         ]}
       />
@@ -74,7 +74,7 @@ export default function ForBuyersPage() {
           {
             tag: 'Opacity',
             title: 'Commission baked into every deal.',
-            body: "Most buyers never see the breakdown — and never see a cent of it back.",
+            body: "Most buyers never see the breakdown, and never see a cent of it back.",
           },
           {
             tag: 'Risk',
@@ -91,7 +91,7 @@ export default function ForBuyersPage() {
           <>
             We built the platform we wish existed when buyers first entered
             this market. Unbiased, comprehensive, and built around your
-            outcome — with the entire commission rebated back to you.
+            outcome, with the entire commission rebated back to you.
           </>
         }
         items={[
@@ -200,7 +200,7 @@ export default function ForBuyersPage() {
         items={[
           {
             q: 'Is iClose free to use as a buyer?',
-            a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our closer service when you're ready to move — and that's when 100% of the commission comes back to you.",
+            a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our closer service when you're ready to move, and that's when 100% of the commission comes back to you.",
           },
           {
             q: 'Do I need to be a UAE resident to buy?',
@@ -212,7 +212,7 @@ export default function ForBuyersPage() {
           },
           {
             q: 'What if I already have a project in mind?',
-            a: "Even better. Look it up on the platform, get the full intelligence report, then connect with a closer who specialises in that development. You'll know more than most buyers who walk in cold — and still get 100% cashback on close.",
+            a: "Even better. Look it up on the platform, get the full intelligence report, then connect with a closer who specialises in that development. You'll know more than most buyers who walk in cold, and still get 100% cashback on close.",
           },
           {
             q: 'Is iClose for off-plan or secondary market too?',

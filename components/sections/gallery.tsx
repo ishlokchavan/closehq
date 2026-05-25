@@ -56,7 +56,7 @@ export function Gallery() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-6 mx-auto max-w-2xl">
-              Transactions closed across all major Dubai markets. Names withheld — confidentiality guaranteed.
+              Transactions closed across all major Dubai markets. Names withheld, confidentiality guaranteed.
             </p>
           </Reveal>
         </div>

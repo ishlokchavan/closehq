@@ -101,8 +101,8 @@ export default function TermsPage() {
 
       <LegalSection title="6. Intellectual Property">
         <p>
-          All content on the platform — including branding, copy, graphics,
-          tools, and data — is the exclusive property of {LEGAL.brand} or its
+          All content on the platform, including branding, copy, graphics,
+          tools, and data, is the exclusive property of {LEGAL.brand} or its
           licensors. No content may be reproduced, distributed, or used
           commercially without prior written consent from {LEGAL.brand}.
         </p>

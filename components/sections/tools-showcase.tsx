@@ -8,7 +8,7 @@ import { MobileCarousel } from '@/components/ui/mobile-carousel';
 const TOOLS = [
   {
     title: 'Concierge.',
-    description: 'Premium experiences for high-value clients — handled end to end.',
+    description: 'Premium experiences for high-value clients, handled end to end.',
     image: '/images/tools-concierge.jpg',
   },
   {

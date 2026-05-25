@@ -67,7 +67,7 @@ export function ICloseFooter() {
           </ul>
         </div>
 
-        {/* Contact column hidden for now — phone/email/location not
+        {/* Contact column hidden for now, phone/email/location not
             ready to be public. Re-enable once the team confirms. */}
       </div>
 

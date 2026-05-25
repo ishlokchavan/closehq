@@ -249,8 +249,8 @@ export async function POST(request: Request) {
                 <tr><td style="padding:8px 0;color:#6e6e73;vertical-align:top;">Notes</td><td style="padding:8px 0;white-space:pre-wrap;">${message ? escapeHtml(message) : ', '}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Marketing</td><td style="padding:8px 0;">${consentMarketing ? 'Opted in' : 'Not opted in'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
-                <tr><td style="padding:8px 0;color:#6e6e73;">Referred by</td><td style="padding:8px 0;">${referredByCode || '—'}</td></tr>
-                <tr><td style="padding:8px 0;color:#6e6e73;">Their code</td><td style="padding:8px 0;">${issuedReferralCode || '—'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Referred by</td><td style="padding:8px 0;">${referredByCode || ','}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Their code</td><td style="padding:8px 0;">${issuedReferralCode || ','}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Status</td><td style="padding:8px 0;">Pending email confirmation</td></tr>
               </table>
             </div>

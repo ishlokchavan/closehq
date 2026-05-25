@@ -67,7 +67,7 @@ export function LeadForm() {
             className="mt-3 text-[17px] text-graphite-dark leading-[1.5]"
             style={{ letterSpacing: '-0.012em' }}
           >
-            Check your inbox — we&apos;ve sent confirmation. We&apos;ll be in touch before launch.
+            Check your inbox, we&apos;ve sent confirmation. We&apos;ll be in touch before launch.
           </p>
         </motion.div>
       ) : (

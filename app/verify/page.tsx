@@ -23,7 +23,7 @@ export default async function VerifyPage({ searchParams }: Props) {
       icon: Info,
       iconColor: 'text-accent',
       title: 'Already verified.',
-      body: 'This link has already been used. Your email is confirmed — nothing more to do.',
+      body: 'This link has already been used. Your email is confirmed, nothing more to do.',
     },
     expired: {
       icon: XCircle,

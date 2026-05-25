@@ -11,7 +11,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label="iClose — home"
+      aria-label="iClose, home"
       className={cn('inline-flex items-baseline', className)}
     >
       <span

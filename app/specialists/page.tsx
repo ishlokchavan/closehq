@@ -5,7 +5,7 @@ import { Reveal } from '@/components/ui/reveal';
 import { Check, ChevronRight, MapPin, Users, BadgeCheck, Megaphone, Handshake } from 'lucide-react';
 
 export const metadata = {
-  title: 'Apply as a Specialist — iClose',
+  title: 'Apply as a Specialist, iClose',
   description:
     'Apply to join iClose as a Specialist. Share deep area knowledge, development intelligence, and community expertise that powers the deal desk and iClose Academy.',
 };
@@ -14,17 +14,17 @@ const WHAT_YOU_DO = [
   {
     icon: MapPin,
     title: 'Own your area.',
-    body: 'Your deep knowledge of a specific community, building, or asset class becomes structured content — the kind that changes how a Member walks into a deal.',
+    body: 'Your deep knowledge of a specific community, building, or asset class becomes structured content, the kind that changes how a Member walks into a deal.',
   },
   {
     icon: Megaphone,
     title: 'Stay active in every transaction.',
-    body: "When a Member has a buyer requirement, the Specialist who knows that area best is matched directly. Your expertise doesn't sit idle — it closes deals.",
+    body: "When a Member has a buyer requirement, the Specialist who knows that area best is matched directly. Your expertise doesn't sit idle, it closes deals.",
   },
   {
     icon: BadgeCheck,
     title: 'Get recognised for what you know.',
-    body: 'Specialists are vetted. That mark means something on a platform where credibility is earned — you become the first and only call when a Member needs your domain.',
+    body: 'Specialists are vetted. That mark means something on a platform where credibility is earned, you become the first and only call when a Member needs your domain.',
   },
 ];
 
@@ -42,7 +42,7 @@ const PERKS = [
   {
     icon: Handshake,
     label: 'Matched inquiries, not cold leads',
-    body: 'When a requirement falls within your area, you are the only Specialist notified. No competition, no noise — just the right buyer at the right time.',
+    body: 'When a requirement falls within your area, you are the only Specialist notified. No competition, no noise, just the right buyer at the right time.',
   },
 ];
 
@@ -55,7 +55,7 @@ const STEPS = [
   {
     num: '02',
     title: 'Get vetted',
-    body: "Our team reviews your application. We look for genuine depth — transaction history, area knowledge, and real skin in the game.",
+    body: "Our team reviews your application. We look for genuine depth, transaction history, area knowledge, and real skin in the game.",
   },
   {
     num: '03',
@@ -108,7 +108,7 @@ export default function SpecialistsPage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-5 text-graphite-dark leading-[1.55] max-w-lg" style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', letterSpacing: '-0.012em' }}>
-                  iClose Specialists build the market intelligence that active Members rely on to close — area playbooks, development deep-dives, and community analysis from people still in the market.
+                  iClose Specialists build the market intelligence that active Members rely on to close, area playbooks, development deep-dives, and community analysis from people still in the market.
                 </p>
               </Reveal>
               {/* <Reveal delay={0.15}>

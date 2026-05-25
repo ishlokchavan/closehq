@@ -8,7 +8,7 @@ import {
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: `Privacy Policy for ${siteConfig.name} — how we collect, use, and protect your personal information.`,
+  description: `Privacy Policy for ${siteConfig.name}, how we collect, use, and protect your personal information.`,
   robots: { index: true, follow: true },
   alternates: { canonical: `${siteConfig.url}/privacy` },
 };
@@ -97,20 +97,20 @@ export default function PrivacyPolicyPage() {
         <p>We process your personal data on the following bases:</p>
         <ul>
           <li>
-            <strong>Consent</strong> — where you have explicitly agreed,
+            <strong>Consent</strong>, where you have explicitly agreed,
             including consent given when submitting our forms and when accepting
             cookies.
           </li>
           <li>
-            <strong>Contractual necessity</strong> — to fulfil our obligations
+            <strong>Contractual necessity</strong>, to fulfil our obligations
             in connection with your application or membership.
           </li>
           <li>
-            <strong>Legitimate interests</strong> — for fraud prevention,
+            <strong>Legitimate interests</strong>, for fraud prevention,
             platform security, and improving our services.
           </li>
           <li>
-            <strong>Legal obligation</strong> — to comply with applicable UAE
+            <strong>Legal obligation</strong>, to comply with applicable UAE
             laws.
           </li>
         </ul>
@@ -122,12 +122,12 @@ export default function PrivacyPolicyPage() {
         </p>
         <ul>
           <li>
-            <strong>Service providers</strong> — third-party vendors (e.g.,
+            <strong>Service providers</strong>, third-party vendors (e.g.,
             database hosting, analytics, email delivery) who process data on our
             behalf under strict confidentiality obligations.
           </li>
           <li>
-            <strong>Regulatory authorities</strong> — when required or permitted
+            <strong>Regulatory authorities</strong>, when required or permitted
             by UAE law.
           </li>
         </ul>
@@ -135,8 +135,8 @@ export default function PrivacyPolicyPage() {
 
       <LegalSection title="6. Cookies & Tracking Technologies">
         <p>
-          We use cookies and similar technologies — including Google Analytics 4
-          and Meta Pixel — to understand how visitors interact with our website
+          We use cookies and similar technologies, including Google Analytics 4
+          and Meta Pixel, to understand how visitors interact with our website
           and to measure marketing effectiveness. Non-essential cookies
           (analytics and marketing) are only loaded after you give explicit
           consent via our cookie banner.

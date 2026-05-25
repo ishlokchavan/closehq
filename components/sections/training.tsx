@@ -5,8 +5,8 @@ import { MapPin, UserCheck, Sparkles } from 'lucide-react';
 import { Reveal } from '@/components/ui/reveal';
 
 const ACADEMY_TOPICS = [
-  'Area guides — Palm, Downtown, Marina, Hills, Creek, and more',
-  'Authority playbooks — own your patch',
+  'Area guides, Palm, Downtown, Marina, Hills, Creek, and more',
+  'Authority playbooks, own your patch',
   'Live developer briefings & launch calendars',
 ];
 
@@ -14,7 +14,7 @@ const COACH_TOPICS = [
   'Sourced from all developers',
   'Direct line to launch allocations and priority units',
   'Handles paperwork, NOCs, and developer follow-ups for you',
-  'Stays with you long-term — no churn, no handoffs',
+  'Stays with you long-term, no churn, no handoffs',
 ];
 
 const REWARDS = [
@@ -67,7 +67,7 @@ export function Training() {
             icon={<Sparkles className="h-5 w-5" strokeWidth={2} />}
             eyebrow="Rewards that compound"
             title="Get rewarded for staying."
-            body="The longer you operate on iClose, the more you earn — beyond the commission split. Loyalty, recurring performance, and lifetime referrals stack."
+            body="The longer you operate on iClose, the more you earn, beyond the commission split. Loyalty, recurring performance, and lifetime referrals stack."
             topics={REWARDS}
             delay={0.16}
           />

@@ -142,7 +142,7 @@ export function SpecialistForm() {
             <textarea
               {...register('message')}
               rows={4}
-              placeholder="Tell us which areas, developments, or communities you know deeply — and what you'd build for Members."
+              placeholder="Tell us which areas, developments, or communities you know deeply, and what you'd build for Members."
               className={textareaClasses}
             />
           </Field>

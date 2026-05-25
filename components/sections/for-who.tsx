@@ -72,7 +72,7 @@ export function ForWho() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="subhead mt-5 max-w-xl">
-              iClose is built around three types of professionals. Each one gets something distinct from the platform — and each one makes it stronger for the others.
+              iClose is built around three types of professionals. Each one gets something distinct from the platform, and each one makes it stronger for the others.
             </p>
           </Reveal>
         </div>

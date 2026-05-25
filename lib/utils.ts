@@ -22,7 +22,7 @@ export function formatPhone(raw: string | undefined | null): string {
   return raw;
 }
 
-/* tel: target — always +<digits>, no spaces */
+/* tel: target, always +<digits>, no spaces */
 export function telHref(raw: string | undefined | null): string {
   if (!raw) return '';
   const digits = raw.replace(/\D/g, '');

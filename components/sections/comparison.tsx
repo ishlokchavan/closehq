@@ -6,7 +6,7 @@ import { Reveal } from '@/components/ui/reveal';
 
 const ROWS = [
   { label: 'Commission split', us: 'Up to 100%', them: 'Typically 50%' },
-  { label: 'Anonymity', us: 'Complete', them: 'None — your name is on everything' },
+  { label: 'Anonymity', us: 'Complete', them: 'None, your name is on everything' },
   { label: 'Desk / monthly fees', us: 'None', them: 'AED 2,000–5,000+' },
   { label: 'Commission timing', us: 'Paid when buyer signs', them: 'After developer pays' },
   { label: 'Payout speed', us: '~24 hours', them: '30–90+ days' },
