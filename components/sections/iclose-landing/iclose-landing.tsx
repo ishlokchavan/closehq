@@ -1409,7 +1409,7 @@ export function ICloseLanding() {
         </div>
         <div className={styles.heroInner}>
           <h1>
-            Learn from the best.{' '}
+            Learn from the best,{' '}
             <span className={styles.heroAccent}>Keep 100% of every close.</span>
           </h1>
           <p className={styles.heroSub}>
@@ -1430,9 +1430,52 @@ export function ICloseLanding() {
             </a>
           </div>
           <div className={styles.heroChipRow} aria-hidden="true">
-            <span className={styles.heroChip}>Up to 100% commission</span>
-            <span className={styles.heroChip}>100% buyer cashback</span>
-            <span className={styles.heroChip}>No agency cut</span>
+            <span className={`${styles.heroChip} ${styles.heroChipA}`}>
+              <span className={styles.heroChipIcon} aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <path
+                    d="M4 12l5 5L20 7"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <span className={styles.heroChipNum}>up to 100%</span>
+              <span className={styles.heroChipLabel}>commission</span>
+            </span>
+            <span className={`${styles.heroChip} ${styles.heroChipB}`}>
+              <span className={styles.heroChipIcon} aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <path
+                    d="M5 12h14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              <span className={styles.heroChipNum}>0%</span>
+              <span className={styles.heroChipLabel}>buyer commission</span>
+            </span>
+            <span className={`${styles.heroChip} ${styles.heroChipC}`}>
+              <span className={styles.heroChipIcon} aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <path
+                    d="M12 5v14M5 12h14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              <span className={styles.heroChipNum}>100%</span>
+              <span className={styles.heroChipLabel}>off-plan cashback</span>
+            </span>
           </div>
         </div>
       </section>

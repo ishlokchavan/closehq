@@ -7033,3 +7033,127 @@ a.whoCard:hover .whoLearn {
 .footerLinkBtn:hover {
   color: var(--text);
 }
+
+/* ============================================================
+   v3.5 — Warm Apple-poppy gradient on the hero accent + a
+   premium 3-pill chip row with subtle category colors.
+   ============================================================ */
+
+/* ---- Hero accent: animated warm gradient ------------------ */
+.heroAccent {
+  /* Override the prior cool gradient with Apple-product-launch warm
+     tones: deep red → coral → amber → magenta. Animated by sliding
+     the background-position so the gradient sweeps left-to-right. */
+  background: linear-gradient(
+    100deg,
+    #ff3b30 0%,
+    #ff6f3c 22%,
+    #ffb340 44%,
+    #ff6f3c 66%,
+    #ff3b30 84%,
+    #ff375f 100%
+  ) !important;
+  background-size: 220% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  animation: heroAccentSweep 6s ease-in-out infinite;
+  /* Slightly heavier weight so the gradient reads on bright tones */
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+@keyframes heroAccentSweep {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroAccent { animation: none; }
+}
+
+/* ---- Hero pills — premium 3-stat row --------------------- */
+.heroChipRow {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+}
+.heroChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px 9px 10px !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 999px;
+  font-size: 14px !important;
+  letter-spacing: -0.005em;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(15, 15, 30, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.heroChip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(15, 15, 30, 0.1);
+}
+.heroChipIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #fff;
+  flex-shrink: 0;
+}
+.heroChipNum {
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.heroChipLabel {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Per-chip accent: each gets a different hue so the trio reads as
+   three distinct facts rather than a wall of the same pill. */
+.heroChipA .heroChipIcon {
+  background: linear-gradient(135deg, #ff3b30 0%, #ff6f3c 100%);
+}
+.heroChipA {
+  border-color: rgba(255, 59, 48, 0.22) !important;
+  box-shadow: 0 6px 22px rgba(255, 59, 48, 0.12);
+}
+.heroChipB .heroChipIcon {
+  background: linear-gradient(135deg, #0058a3 0%, #2997ff 100%);
+}
+.heroChipB {
+  border-color: rgba(41, 151, 255, 0.22) !important;
+  box-shadow: 0 6px 22px rgba(41, 151, 255, 0.12);
+}
+.heroChipC .heroChipIcon {
+  background: linear-gradient(135deg, #1d8a40 0%, #34c759 100%);
+}
+.heroChipC {
+  border-color: rgba(52, 199, 89, 0.24) !important;
+  box-shadow: 0 6px 22px rgba(52, 199, 89, 0.12);
+}
+
+@media (max-width: 600px) {
+  .heroChipRow {
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .heroChip {
+    font-size: 13px !important;
+    padding: 8px 12px 8px 9px !important;
+  }
+  .heroChipIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
