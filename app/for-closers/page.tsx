@@ -4,7 +4,6 @@ import {
   PersonaHero,
   PersonaIntro,
   PersonaSteps,
-  PersonaMath,
   PersonaCompare,
   PersonaAudience,
   PersonaWaitlist,
@@ -109,57 +108,6 @@ export default function ForBrokersPage() {
           ]}
         />
       </div>
-
-      <PersonaIntro
-        eyebrow="Your resource vault"
-        heading={<>Everything in one place.</>}
-        body={
-          <>
-            Stop chasing developers for materials. iClose maintains a living
-            library you can access anywhere, anytime.
-          </>
-        }
-        items={[
-          {
-            tag: 'Brochures',
-            title: 'Project brochures & decks.',
-            body: 'Latest sales materials, ready to send, never out of date.',
-          },
-          {
-            tag: 'Plans',
-            title: 'Floor plans & specs.',
-            body: 'Actual unit layouts, finishing specs, and configurations. For every active project.',
-          },
-          {
-            tag: 'Payment',
-            title: 'Payment plan breakdowns.',
-            body: 'Side-by-side comparisons so you can match the deal to the buyer.',
-          },
-          {
-            tag: 'Intel',
-            title: 'Community + market reports.',
-            body: 'Lifestyle, infrastructure, rental yields, capital appreciation. By area, not just by tower.',
-          },
-        ]}
-      />
-
-      <PersonaMath
-        eyebrow="The earning reality"
-        heading={<>What top closers make.</>}
-        body={
-          <>
-            This isn&apos;t a salaried role. It&apos;s a performance game. And
-            iClose gives you the best possible odds.
-          </>
-        }
-        rows={[
-          { label: 'Average UAE off-plan deal', value: 'AED 1.8M' },
-          { label: 'Commission on deal', value: '5%' },
-          { label: 'Your take on one close', value: 'Up to AED 90,000', hi: true },
-          { label: 'Top 10% closers earn annually', value: 'AED 1M+', hi: true },
-        ]}
-        footnote="Splits confirmed per deal type at onboarding. No ceiling on performance."
-      />
 
       <PersonaCompare
         eyebrow="The split that matters"
