@@ -1,8 +1,30 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 import { leadSchema } from '@/lib/validations';
 import { sendEmail } from '@/lib/mailer';
+import { generateReferralCode, isValidReferralCode } from '@/lib/referral';
+
+async function reserveReferralCode(db: SupabaseClient): Promise<string> {
+  // Re-roll on the (vanishingly rare) collision. We don't insert here;
+  // the row insert that follows will catch any duplicate on the unique
+  // constraint and we'll just regenerate.
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const code = generateReferralCode(8);
+    const { data, error } = await db
+      .from('leads')
+      .select('id')
+      .eq('referral_code', code)
+      .limit(1)
+      .maybeSingle();
+    if (error) {
+      // The column may not exist yet — fall back to a one-shot code.
+      return code;
+    }
+    if (!data) return code;
+  }
+  return generateReferralCode(10);
+}
 
 const emailFooter = () => {
   const contact = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@iclose.ae';
@@ -47,7 +69,12 @@ export async function POST(request: Request) {
       focus,
       dealTypes,
       message,
+      referredByCode: referredByRaw,
     } = parsed.data;
+    const referredByCode =
+      referredByRaw && isValidReferralCode(referredByRaw)
+        ? referredByRaw.toUpperCase()
+        : null;
     const focusLabels: Record<string, string> = {
       offplan: 'Offplan',
       secondary: 'Secondary',
@@ -77,6 +104,7 @@ export async function POST(request: Request) {
     const referer = request.headers.get('referer') || undefined;
     const origin = new URL(request.url).origin;
     const verificationToken = randomUUID();
+    let issuedReferralCode: string | null = null;
 
     try {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -85,7 +113,29 @@ export async function POST(request: Request) {
         console.error('[member] Missing Supabase env vars');
       } else {
         const db = createClient(supabaseUrl, supabaseKey);
-        const { error } = await db.from('leads').insert({
+
+        let referredByLeadId: string | null = null;
+        if (referredByCode) {
+          const { data: referrer, error: refErr } = await db
+            .from('leads')
+            .select('id')
+            .eq('referral_code', referredByCode)
+            .limit(1)
+            .maybeSingle();
+          if (refErr) {
+            // referral_code column may not exist yet — ignore quietly.
+            console.warn(
+              '[member] referrer lookup failed (likely schema):',
+              refErr.message,
+            );
+          } else if (referrer) {
+            referredByLeadId = referrer.id as string;
+          }
+        }
+
+        issuedReferralCode = await reserveReferralCode(db);
+
+        const baseRow: Record<string, unknown> = {
           name,
           first_name: firstName,
           last_name: lastName,
@@ -98,8 +148,53 @@ export async function POST(request: Request) {
           verification_token: verificationToken,
           consent_marketing: consentMarketing ?? false,
           consented_at: new Date().toISOString(),
-        });
-        if (error) console.error('[member] DB insert failed:', error.message);
+          referral_code: issuedReferralCode,
+          referred_by_code: referredByCode,
+          referred_by_lead_id: referredByLeadId,
+        };
+
+        const { error } = await db.from('leads').insert(baseRow);
+        if (error) {
+          // If the referral columns don't exist yet, retry without them
+          // so we don't lose the lead. The columns will be backfilled
+          // once the migration ships.
+          if (/column|schema cache/i.test(error.message)) {
+            console.warn(
+              '[member] referral columns missing, retrying without them',
+            );
+            const fallback = { ...baseRow };
+            delete fallback.referral_code;
+            delete fallback.referred_by_code;
+            delete fallback.referred_by_lead_id;
+            const retry = await db.from('leads').insert(fallback);
+            if (retry.error) {
+              console.error('[member] DB insert failed:', retry.error.message);
+            }
+            issuedReferralCode = null;
+          } else {
+            console.error('[member] DB insert failed:', error.message);
+          }
+        }
+
+        // Bump the referrer's count (best-effort). Uses a SQL function
+        // if available; otherwise read-modify-write.
+        if (referredByLeadId) {
+          const rpc = await db.rpc('bump_referral_count', {
+            p_lead_id: referredByLeadId,
+          });
+          if (rpc.error) {
+            const { data: current } = await db
+              .from('leads')
+              .select('referral_count')
+              .eq('id', referredByLeadId)
+              .maybeSingle();
+            const next = ((current?.referral_count as number) || 0) + 1;
+            await db
+              .from('leads')
+              .update({ referral_count: next })
+              .eq('id', referredByLeadId);
+          }
+        }
       }
     } catch (err) {
       console.error('[member] DB insert failed:', err);
@@ -154,6 +249,8 @@ export async function POST(request: Request) {
                 <tr><td style="padding:8px 0;color:#6e6e73;vertical-align:top;">Notes</td><td style="padding:8px 0;white-space:pre-wrap;">${message ? escapeHtml(message) : ', '}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Marketing</td><td style="padding:8px 0;">${consentMarketing ? 'Opted in' : 'Not opted in'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Source</td><td style="padding:8px 0;">${referer ? new URL(referer).hostname : 'direct'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Referred by</td><td style="padding:8px 0;">${referredByCode || '—'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6e6e73;">Their code</td><td style="padding:8px 0;">${issuedReferralCode || '—'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6e6e73;">Status</td><td style="padding:8px 0;">Pending email confirmation</td></tr>
               </table>
             </div>
@@ -166,7 +263,10 @@ export async function POST(request: Request) {
       console.warn('[member] NOTIFY_EMAIL not set. Skipping admin notification');
     }
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({
+      ok: true,
+      referralCode: issuedReferralCode,
+    });
   } catch (err) {
     console.error('Lead API error:', err);
     return NextResponse.json(

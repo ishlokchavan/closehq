@@ -113,6 +113,12 @@ function WhoIsThisFor() {
         <div className={styles.whoGrid}>
           <Reveal className={styles.whoCardWrap} delay={1}>
             <Link href="/for-closers" className={styles.whoCard}>
+              <div className={styles.whoChipRow}>
+                <span className={`${styles.whoChip} ${styles.whoChipPrimary}`}>
+                  For Closers
+                </span>
+                <span className={styles.whoChip}>Learn more →</span>
+              </div>
               <div className={styles.whoHero}>
                 <Image
                   src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150502_22aadfe1-177e-4a65-8768-ea2f66790704.png"
@@ -123,22 +129,21 @@ function WhoIsThisFor() {
                   priority={false}
                 />
                 <div className={styles.whoHeroOverlay} />
-                <div className={styles.whoHeroTag}>For Closers</div>
               </div>
-              <h3>Close more deals. Keep more of each one.</h3>
-              <p>
-                Brokers and lawyers, advisors, executives, networkers. Anyone
-                with a client to refer or a deal to close. Keep up to 100% of
-                every commission you earn.
-              </p>
-              <span className={styles.whoCta}>
-                Learn more <span aria-hidden="true">→</span>
-              </span>
+              <h3>Keep 100% of every commission.</h3>
             </Link>
           </Reveal>
 
           <Reveal className={styles.whoCardWrap} delay={2}>
             <Link href="/for-buyers" className={styles.whoCard}>
+              <div className={styles.whoChipRow}>
+                <span className={`${styles.whoChip} ${styles.whoChipAlt}`}>
+                  For Buyers
+                </span>
+                <span className={`${styles.whoChip} ${styles.whoChipAltGhost}`}>
+                  Learn more →
+                </span>
+              </div>
               <div className={styles.whoHero}>
                 <Image
                   src="https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7/hf_20260523_150508_8d5fb7fc-e484-4ba4-9d30-49813a74f7f8.png"
@@ -149,26 +154,8 @@ function WhoIsThisFor() {
                   priority={false}
                 />
                 <div className={styles.whoHeroOverlay} />
-                <div className={`${styles.whoHeroTag} ${styles.whoHeroTagAlt}`}>
-                  For Buyers
-                </div>
               </div>
-              <h3>
-                Get up to 5% cashback on off-plan, or pay only 0.4%
-                commission on ready units.
-              </h3>
-              <p>
-                We handle everything, from finding the right unit to closing
-                the deal. On off-plan we negotiate with the developer and
-                rebate up to 5% of the deal value back to you. On ready
-                secondary units we charge a flat 0.4% commission instead of
-                the standard 2%.
-              </p>
-              <span
-                className={`${styles.whoCta} ${styles.whoCtaAlt}`}
-              >
-                Learn more <span aria-hidden="true">→</span>
-              </span>
+              <h3>100% cashback on every deal.</h3>
             </Link>
           </Reveal>
         </div>
@@ -177,6 +164,124 @@ function WhoIsThisFor() {
   );
 }
 
+
+/* ---------------- ANIMATED MOCKS FOR THE WHAT-IS-IT SECTION ---------------- */
+
+/* Cycles through three tabs, animating the row content with each tab.
+   Replaces the static "Your offers" snapshot. */
+function TabbedDashboardMock() {
+  const TABS = [
+    {
+      key: 'saved',
+      rows: [
+        { price: 'AED 1,420,000', status: 'Marina Heights · 1502' },
+        { price: 'AED 980,000', status: 'JVC · The Pulse' },
+        { price: 'AED 2,180,000', status: 'Downtown · 8 Boulevard' },
+      ],
+    },
+    {
+      key: 'offers',
+      rows: [
+        { price: 'AED 1,440,000', status: 'Offer sent' },
+        { price: 'AED 1,430,000', status: 'Counter received' },
+        { price: 'AED 1,410,000', status: 'Closed ✓' },
+      ],
+    },
+    {
+      key: 'closed',
+      rows: [
+        { price: 'AED 1,410,000', status: 'Marina · transferred' },
+        { price: 'AED 1,920,000', status: 'Downtown · transferred' },
+        { price: 'AED 760,000', status: 'JVC · transferred' },
+      ],
+    },
+  ];
+  const LABELS: Record<string, string> = {
+    saved: 'Saved',
+    offers: 'Your offers',
+    closed: 'Closed',
+  };
+  const [active, setActive] = useState(1);
+  useEffect(() => {
+    const id = setInterval(() => setActive((a) => (a + 1) % TABS.length), 2400);
+    return () => clearInterval(id);
+  }, [TABS.length]);
+  const rows = TABS[active].rows;
+  return (
+    <div className={styles.mockDashboard}>
+      <div className={styles.mockTabs}>
+        {TABS.map((t, i) => (
+          <span key={t.key} className={i === active ? styles.mockTabActive : ''}>
+            {LABELS[t.key]}
+          </span>
+        ))}
+      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={TABS[active].key}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 6 }}
+        >
+          {rows.map((r, i) => (
+            <div key={i} className={styles.mockRow}>
+              <span className={styles.mockCheck} />
+              <span className={styles.mockPrice}>{r.price}</span>
+              <span className={styles.mockStatus}>{r.status}</span>
+            </div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* iMessage-style mobile frame so the chat reads as a real conversation
+   rather than a dashboard row. Bubbles animate in on a loop. */
+function PhoneChatMock() {
+  const MESSAGES = [
+    { side: 'left' as const, text: 'Client brief — 2BR, canal view' },
+    { side: 'right' as const, text: '3 ready in Business Bay' },
+    { side: 'left' as const, text: 'Send floor plans?' },
+    { side: 'right' as const, text: 'On the way ✓' },
+  ];
+  const [count, setCount] = useState(1);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount((c) => (c >= MESSAGES.length ? 1 : c + 1));
+    }, 1300);
+    return () => clearInterval(id);
+  }, [MESSAGES.length]);
+  return (
+    <div className={styles.mockPhone}>
+      <div className={styles.mockPhoneNotch} />
+      <div className={styles.mockPhoneHeader}>
+        <span className={styles.mockPhoneAvatar} />
+        <span className={styles.mockPhoneName}>Specialist · Business Bay</span>
+      </div>
+      <div className={styles.mockPhoneBody}>
+        <AnimatePresence>
+          {MESSAGES.slice(0, count).map((m, i) => (
+            <motion.div
+              key={`${i}-${count}`}
+              className={`${styles.mockPhoneBubble} ${
+                m.side === 'right' ? styles.mockPhoneBubbleRight : ''
+              }`}
+              initial={{ opacity: 0, y: 8, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {m.text}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
 
 /* ---------------- WHAT IS IT (4 animated mock cards · 2×2 grid) ---------------- */
 
@@ -194,7 +299,7 @@ function WhatIsIt() {
         </motion.h2>
 
         <div className={styles.whatGrid4}>
-          {/* Card 1: Dashboard overview */}
+          {/* Card 1: Dashboard with cycling tabs */}
           <motion.article
             className={`${styles.whatCard} ${styles.whatCardA}`}
             initial={{ opacity: 0, y: 60 }}
@@ -204,29 +309,7 @@ function WhatIsIt() {
           >
             <h3 className={styles.whatTitle}>One clear overview</h3>
             <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockDashboard}>
-                <div className={styles.mockTabs}>
-                  <span>Saved</span>
-                  <span>Viewings</span>
-                  <span className={styles.mockTabActive}>Your offers</span>
-                  <span>Closed</span>
-                </div>
-                <div className={`${styles.mockRow} ${styles.mockRowAnimA}`}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,440,000</span>
-                  <span className={styles.mockStatus}>Offer sent</span>
-                </div>
-                <div className={`${styles.mockRow} ${styles.mockRowAnimB}`}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,430,000</span>
-                  <span className={styles.mockStatus}>Counter received</span>
-                </div>
-                <div className={`${styles.mockRow} ${styles.mockRowAnimC}`}>
-                  <span className={styles.mockCheck} />
-                  <span className={styles.mockPrice}>AED 1,410,000</span>
-                  <span className={styles.mockStatus}>Closed ✓</span>
-                </div>
-              </div>
+              <TabbedDashboardMock />
             </div>
           </motion.article>
 
@@ -271,7 +354,7 @@ function WhatIsIt() {
             </div>
           </motion.article>
 
-          {/* Card 3: Conversations */}
+          {/* Card 3: Conversations in a phone frame */}
           <motion.article
             className={`${styles.whatCard} ${styles.whatCardC}`}
             initial={{ opacity: 0, y: 60 }}
@@ -283,24 +366,7 @@ function WhatIsIt() {
               Every conversation in one place
             </h3>
             <div className={styles.whatMedia} aria-hidden="true">
-              <div className={styles.mockChat}>
-                <div className={`${styles.mockChatRow} ${styles.mockChatA}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockChatBubble}>Client brief →</span>
-                </div>
-                <div
-                  className={`${styles.mockChatRow} ${styles.mockChatRowRight} ${styles.mockChatB}`}
-                >
-                  <span className={styles.mockChatBubble}>3 units ready ✓</span>
-                  <span
-                    className={`${styles.mockAvatar} ${styles.mockAvatarAlt}`}
-                  />
-                </div>
-                <div className={`${styles.mockChatRow} ${styles.mockChatC}`}>
-                  <span className={styles.mockAvatar} />
-                  <span className={styles.mockChatBubble}>Booking viewing</span>
-                </div>
-              </div>
+              <PhoneChatMock />
             </div>
           </motion.article>
 
@@ -350,34 +416,54 @@ function WhatIsIt() {
 
 /* ---------------- TESTIMONIALS CAROUSEL ---------------- */
 
-const TESTIMONIALS = [
+type Testimonial = {
+  name: string;
+  role: string;
+  quote: string;
+  image: string;
+};
+
+/* Portrait placeholders sourced from Unsplash's "this person doesn't
+   exist"-style stock collection (face_age:30-45 generic headshots).
+   Swap in real photos before launch. */
+const TESTIMONIALS: Testimonial[] = [
   {
-    initials: 'T.M.',
+    name: 'Tariq Al Marri',
     role: 'Secondary Market Agent · 4 yrs',
+    image:
+      'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop&crop=faces',
     quote:
       "I spent four years in new developments and knew nothing about the secondary market. Six months with iClose and I can walk into any conversation about JVC, Dubai Hills, or Business Bay and hold my own.",
   },
   {
-    initials: 'F.A.',
+    name: 'Farah Al Hammadi',
     role: 'Private Client Advisor',
+    image:
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=faces',
     quote:
-      "One of my clients had a very specific brief, Business Bay, high floor, direct canal view, quick transfer. I posted the requirement. Within 24 hours a specialist came back with three matching units.",
+      "One of my clients had a very specific brief — Business Bay, high floor, direct canal view, quick transfer. I posted the requirement. Within 24 hours a specialist came back with three matching units.",
   },
   {
-    initials: 'K.R.',
+    name: 'Karim Rahimi',
     role: 'Downtown Dubai Specialist',
+    image:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=faces',
     quote:
       'I used to rely on brokers I barely knew to move my units. Now I have a community of professionals who know exactly what I specialise in. When they have a buyer for Downtown, they call me first.',
   },
   {
-    initials: 'A.S.',
+    name: 'Aisha Saeed',
     role: 'Family Office Partner',
+    image:
+      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=faces',
     quote:
       "We needed to place a UHNW client into an offplan tower with very specific risk parameters. iClose gave us the matched specialist and the closing playbook in the same afternoon.",
   },
   {
-    initials: 'M.J.',
+    name: 'Mateen Javed',
     role: 'Independent Broker · JVC',
+    image:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=faces',
     quote:
       "Three months in, my close rate doubled because I finally knew the buildings better than the buyers walking in. That kind of authority is everything in this market.",
   },
@@ -388,8 +474,6 @@ function TestimonialsCarousel() {
   const [active, setActive] = useState(0);
   const len = TESTIMONIALS.length;
 
-  // Update the active dot based on the actual scroll position.
-  // Computed from each child's offsetLeft to handle any gap/padding combo.
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -446,7 +530,7 @@ function TestimonialsCarousel() {
           >
             {TESTIMONIALS.map((t) => (
               <article
-                key={t.initials}
+                key={t.name}
                 data-tcard
                 className={styles.testimonialCard3}
               >
@@ -454,8 +538,17 @@ function TestimonialsCarousel() {
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <figcaption className={styles.testimonialMeta}>
-                  <span className={styles.testimonialAvatar}>{t.initials}</span>
-                  <span className={styles.testimonialRole}>{t.role}</span>
+                  <Image
+                    src={t.image}
+                    alt={`Portrait of ${t.name}`}
+                    width={48}
+                    height={48}
+                    className={styles.testimonialPhoto}
+                  />
+                  <span className={styles.testimonialPerson}>
+                    <span className={styles.testimonialName}>{t.name}</span>
+                    <span className={styles.testimonialRole}>{t.role}</span>
+                  </span>
                 </figcaption>
               </article>
             ))}
@@ -474,7 +567,7 @@ function TestimonialsCarousel() {
             <div className={styles.testimonialDots}>
               {TESTIMONIALS.map((t, i) => (
                 <button
-                  key={t.initials + i}
+                  key={t.name + i}
                   type="button"
                   className={`${styles.testimonialDot} ${
                     i === active ? styles.testimonialDotActive : ''
@@ -781,9 +874,9 @@ function WfStep2Visual() {
             animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
             transition={{ duration: 0.65, delay: 0.35 }}
           >
-            80%
+            100%
           </motion.div>
-          <div className={styles.wfPanelForkSub}>of cashback on every deal</div>
+          <div className={styles.wfPanelForkSub}>cashback on every deal</div>
         </motion.div>
       </div>
     </motion.div>
@@ -791,6 +884,22 @@ function WfStep2Visual() {
 }
 
 function WfStep3Visual() {
+  /* Looping payout pipeline: each stage cycles from in-progress → done.
+     Driven by a JS interval so the three rows feel like a single flow
+     advancing together rather than three independent animations. */
+  const STAGES = [
+    { key: 'offer', label: 'Offer accepted' },
+    { key: 'transfer', label: 'Title transfer' },
+    { key: 'payout', label: 'Commission released' },
+  ];
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setStep((s) => (s + 1) % (STAGES.length + 1));
+    }, 1400);
+    return () => clearInterval(id);
+  }, [STAGES.length]);
+
   return (
     <motion.div className={styles.wfVisualPanel}>
       <motion.div
@@ -799,38 +908,60 @@ function WfStep3Visual() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       >
-        <motion.div
-          className={styles.wfPanelPayoutHead}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-        >
-          Commission kept
-        </motion.div>
+        <div className={styles.wfPanelPayoutHead}>Payout progress</div>
         <motion.div
           className={styles.wfPanelPayoutAmount}
-          initial={{ opacity: 0, y: 14, letterSpacing: '0.08em' }}
-          animate={{ opacity: 1, y: 0, letterSpacing: '-0.028em' }}
-          transition={{ duration: 0.7, delay: 0.25 }}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.2 }}
         >
-          Up to 100%
+          AED 84,000
         </motion.div>
-        <motion.div
-          className={styles.wfPanelPayoutMeta}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.5 }}
-        >
-          <span>Marina Heights · 1502</span>
-          <span className={styles.wfPanelPayoutOk}>Transfer complete ✓</span>
-        </motion.div>
+
+        <ul className={styles.wfPipeline}>
+          {STAGES.map((s, i) => {
+            const done = i < step;
+            const active = i === step;
+            return (
+              <li
+                key={s.key}
+                className={`${styles.wfPipelineStep} ${
+                  done ? styles.wfPipelineStepDone : ''
+                } ${active ? styles.wfPipelineStepActive : ''}`}
+              >
+                <span className={styles.wfPipelineIcon} aria-hidden="true">
+                  {done ? (
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M5 12l5 5L20 7"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        fill="none"
+                      />
+                    </svg>
+                  ) : active ? (
+                    <span className={styles.wfPipelineSpinner} />
+                  ) : (
+                    <span className={styles.wfPipelineDot} />
+                  )}
+                </span>
+                <span className={styles.wfPipelineLabel}>{s.label}</span>
+                <span className={styles.wfPipelineStatus}>
+                  {done ? 'Done' : active ? 'In progress…' : 'Pending'}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+
         <div className={styles.wfPanelPayoutBar}>
           <motion.div
             className={styles.wfPanelPayoutFill}
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
+            animate={{ scaleX: step / STAGES.length }}
             style={{ transformOrigin: 'left center' }}
-            transition={{ duration: 1.1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
       </motion.div>
@@ -841,14 +972,14 @@ function WfStep3Visual() {
 const WF_STEPS: WfStep[] = [
   {
     num: '01',
-    title: 'Learn the market.',
+    title: 'Know the market.',
     body: 'Master any UAE community through expert-led sessions, playbooks, and live deal breakdowns. From launch specs to payment-plan nuances. Every developer, every cluster, every tower.',
     visual: <WfStep1Visual />,
   },
   {
     num: '02',
-    title: 'Pick your route.',
-    body: 'Closing the deal? Keep up to 100% of the commission you earn. Buying the property yourself? Get up to 80% of that same commission back as cashback. Same platform, two ways to win.',
+    title: 'Choose your win.',
+    body: 'Closing the deal? Keep 100% of the commission you earn. Buying the property yourself? Get 100% of that commission back as cashback. Same platform, two ways to win.',
     visual: <WfStep2Visual />,
   },
   {
@@ -1117,22 +1248,38 @@ export function ICloseLanding() {
       </nav>
 
       {/* HERO */}
-      <section className={`${styles.hero}`}>
+      <section className={`${styles.hero} ${styles.heroVivid}`}>
+        <div className={styles.heroAurora} aria-hidden="true">
+          <span className={styles.heroBlobA} />
+          <span className={styles.heroBlobB} />
+          <span className={styles.heroBlobC} />
+        </div>
         <div className={styles.heroInner}>
+          <div className={styles.heroBadge}>
+            <span className={styles.heroBadgeDot} />
+            <span>Founding cohort · UAE real estate</span>
+          </div>
           <h1>
-            Learn From The Best,
-            <br />
-            <span className={styles.muted}>Close More Deals!</span>
+            Learn from the best.{' '}
+            <span className={styles.heroAccent}>Keep 100% of every close.</span>
           </h1>
           <p className={styles.heroSub}>
-            Get the training and support you need to close UAE real estate
-            deals. Learn from the top 0.1% of UAE agents and keep up to 100%
-            of your commission.
+            Train with the top 0.1% of UAE agents. Close more deals. Keep
+            every dirham of your commission — or get 100% cashback when you
+            buy the property yourself.
           </p>
           <div className={styles.heroCtas}>
             <a href="#waitlist" className={styles.btnBlue}>
-              Get Started
+              Join the waitlist
             </a>
+            <a href="#workflow" className={styles.heroGhostCta}>
+              See how it works <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div className={styles.heroChipRow} aria-hidden="true">
+            <span className={styles.heroChip}>Up to 100% commission</span>
+            <span className={styles.heroChip}>100% buyer cashback</span>
+            <span className={styles.heroChip}>No agency cut</span>
           </div>
         </div>
       </section>
@@ -1164,7 +1311,7 @@ export function ICloseLanding() {
             className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
             {...animScale}
           >
-            Join the waitlist.
+            Ready to close?
           </motion.h2>
           <motion.div {...animRise} transition={{ ...animRise.transition, delay: 0.15 }}>
             <WaitlistForm />

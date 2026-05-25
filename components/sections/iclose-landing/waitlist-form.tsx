@@ -1,23 +1,20 @@
 'use client';
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type KeyboardEvent,
-  type ReactNode,
-} from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useForm, Controller, type FieldErrors } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { leadFocusValues, type LeadFormValues } from '@/lib/validations';
 import { siteConfig } from '@/lib/site-config';
+import {
+  buildReferralLink,
+  captureReferralFromUrl,
+  getStoredReferralCode,
+} from '@/lib/referral';
 import styles from './iclose-landing.module.css';
 
-/* Simplified shape. Collected as-is by the form, then split into the
-   first/last+consent shape the existing /api/lead route expects. */
 const intentValues = ['buyer', 'closer'] as const;
 
 const simpleSchema = z.object({
@@ -50,7 +47,7 @@ const intentOptions: {
   {
     value: 'buyer',
     label: 'Buy a property',
-    sub: 'Up to 5% cashback on off-plan, or 0.4% on ready units.',
+    sub: '100% cashback on every deal you close with us.',
   },
   {
     value: 'closer',
@@ -65,49 +62,6 @@ const focusOptions: { value: (typeof leadFocusValues)[number]; label: string }[]
   { value: 'offplan', label: 'Offplan' },
 ];
 
-type StepDef = {
-  key: keyof SimpleValues;
-  title: string;
-  hint?: string;
-  validateKeys: (keyof SimpleValues)[];
-};
-
-const STEPS: StepDef[] = [
-  {
-    key: 'fullName',
-    title: 'First, what should we call you?',
-    hint: 'Your full name.',
-    validateKeys: ['fullName'],
-  },
-  {
-    key: 'email',
-    title: 'Where should we reach you?',
-    hint: 'We’ll email you to confirm. Nothing else.',
-    validateKeys: ['email'],
-  },
-  {
-    key: 'phone',
-    title: 'And the best number to reach you on?',
-    hint: 'We only call if you ask us to.',
-    validateKeys: ['phone'],
-  },
-  {
-    key: 'intent',
-    title: 'What brings you here?',
-    hint: 'So we can tailor the follow-up.',
-    validateKeys: ['intent'],
-  },
-  {
-    key: 'focus',
-    title: 'What are you focusing more on?',
-    hint: 'Pick all that apply.',
-    validateKeys: ['focus'],
-  },
-];
-
-/* Configurable destinations. NEXT_PUBLIC_* vars override at deploy
-   time; the defaults are the real iClose Calendly handle and a
-   +971 placeholder number. */
 const CALENDLY_URL =
   process.env.NEXT_PUBLIC_CALENDLY_URL ||
   'https://calendly.com/hello-iclose/30min';
@@ -120,8 +74,6 @@ export function WaitlistForm() {
     formState: { errors, isSubmitting },
     reset,
     control,
-    trigger,
-    watch,
   } = useForm<SimpleValues>({
     resolver: zodResolver(simpleSchema),
     mode: 'onTouched',
@@ -135,29 +87,19 @@ export function WaitlistForm() {
     },
   });
 
-  const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [marketingOptIn, setMarketingOptIn] = useState(false);
-  /* Remember the user's name + email from the form so we can prefill
-     the Calendly embed once it opens in the success state. */
   const [submitted, setSubmitted] = useState<{ name: string; email: string } | null>(null);
+  const [issuedCode, setIssuedCode] = useState<string | null>(null);
   const [showCalendly, setShowCalendly] = useState(false);
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const stepRef = useRef<HTMLDivElement | null>(null);
+  const [copied, setCopied] = useState(false);
 
-  // Auto-focus the first input on each step.
+  // Capture inbound ?ref= once on mount and remember it for the submission.
   useEffect(() => {
-    if (!stepRef.current) return;
-    const el = stepRef.current.querySelector<HTMLElement>(
-      'input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea',
-    );
-    if (el && typeof (el as HTMLInputElement).focus === 'function') {
-      setTimeout(() => (el as HTMLInputElement).focus({ preventScroll: true }), 80);
-    }
-  }, [step]);
+    captureReferralFromUrl();
+  }, []);
 
-  /* Modal lifecycle: Esc to close, lock body scroll while open. */
   useEffect(() => {
     if (!showCalendly) return;
     const onKey = (e: globalThis.KeyboardEvent) => {
@@ -172,22 +114,6 @@ export function WaitlistForm() {
     };
   }, [showCalendly]);
 
-  const total = STEPS.length;
-  const current = STEPS[step];
-  const progress = ((step + (success ? 1 : 0)) / total) * 100;
-
-  const goNext = async () => {
-    setServerError(null);
-    const ok = await trigger(current.validateKeys);
-    if (!ok) return;
-    if (step < total - 1) setStep(step + 1);
-  };
-
-  const goBack = () => {
-    setServerError(null);
-    if (step > 0) setStep(step - 1);
-  };
-
   const onSubmit = async (data: SimpleValues) => {
     setServerError(null);
 
@@ -195,15 +121,6 @@ export function WaitlistForm() {
     const parts = trimmed.split(/\s+/);
     const firstName = parts[0] || trimmed;
     const lastName = parts.length > 1 ? parts.slice(1).join(' ') : firstName;
-
-    // Submit one row per selected focus to keep the existing API shape
-    // (focus enum was previously single-value). Pick the first as the
-    // primary; pass the rest as the dealTypes array for context.
-    /* Tag intent + extra focuses into the existing payload so the
-       team sees them in the lead notification email without needing
-       a backend migration:
-         - intent goes into jobTitle ("Buyer" / "Closer")
-         - any focus beyond the primary rides along in `message` */
     const intentLabel = data.intent === 'buyer' ? 'Buyer' : 'Closer';
     const extraFocus =
       data.focus.length > 1
@@ -222,6 +139,7 @@ export function WaitlistForm() {
       consentPrivacy: true,
       consentMarketing: marketingOptIn,
       website: data.website ?? '',
+      referredByCode: getStoredReferralCode() || '',
     };
 
     try {
@@ -234,6 +152,8 @@ export function WaitlistForm() {
         const body = await res.json().catch(() => ({}));
         throw new Error(body?.error || 'Something went wrong');
       }
+      const body = await res.json().catch(() => ({}));
+      setIssuedCode((body?.referralCode as string) || null);
       setSubmitted({ name: trimmed, email: data.email });
       setSuccess(true);
       reset();
@@ -243,23 +163,6 @@ export function WaitlistForm() {
           ? err.message
           : 'Something went wrong. Please try again.',
       );
-    }
-  };
-
-  const onInvalid = (errs: FieldErrors<SimpleValues>) => {
-    const firstKey = Object.keys(errs)[0] as keyof SimpleValues;
-    const idx = STEPS.findIndex((s) => s.validateKeys.includes(firstKey));
-    if (idx >= 0) setStep(idx);
-  };
-
-  const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== 'Enter') return;
-    if ((e.target as HTMLElement).tagName === 'TEXTAREA') return;
-    e.preventDefault();
-    if (step === total - 1) {
-      formRef.current?.requestSubmit();
-    } else {
-      void goNext();
     }
   };
 
@@ -273,13 +176,21 @@ export function WaitlistForm() {
       if (submitted?.email) url.searchParams.set('email', submitted.email);
       return url.toString();
     })();
+    const referralLink = issuedCode ? buildReferralLink(issuedCode) : null;
+    const copyReferral = async () => {
+      if (!referralLink) return;
+      try {
+        await navigator.clipboard.writeText(referralLink);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      } catch {
+        // Fall back to a transient selection so users can still copy.
+      }
+    };
 
     return (
       <>
         <div className={styles.tfShell}>
-          <div className={styles.tfProgress}>
-            <div className={styles.tfProgressBar} style={{ width: '100%' }} />
-          </div>
           <div className={styles.wlSuccess}>
             <div className={styles.successBadge} aria-hidden="true">
               ✓
@@ -304,13 +215,31 @@ export function WaitlistForm() {
                 Book a call
               </button>
             </div>
+
+            {referralLink && (
+              <div className={styles.referralBlock}>
+                <div className={styles.referralLabel}>
+                  Your personal invite link
+                </div>
+                <div className={styles.referralLinkRow}>
+                  <code className={styles.referralLink}>{referralLink}</code>
+                  <button
+                    type="button"
+                    onClick={copyReferral}
+                    className={styles.referralCopy}
+                  >
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+                <p className={styles.referralHint}>
+                  Share it. We&apos;ll track who joins from your link and
+                  credit every deal we close together.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Portal the modal to document.body so it escapes any
-            ancestor that has transform/filter/perspective (the
-            section blur-in animation creates such ancestors, which
-            otherwise re-root position:fixed and clip the overlay). */}
         {typeof document !== 'undefined' &&
           createPortal(
             <AnimatePresence>
@@ -348,9 +277,6 @@ export function WaitlistForm() {
                       className={styles.calendlyFrame}
                       allow="camera; microphone; fullscreen"
                     />
-                    {/* Escape hatch: if the iframe shows Calendly's 404
-                        (wrong URL / private event type), or if the user
-                        prefers a fresh tab, the link below always works. */}
                     <a
                       href={CALENDLY_URL}
                       target="_blank"
@@ -369,11 +295,13 @@ export function WaitlistForm() {
     );
   }
 
+  const err = (k: keyof SimpleValues) =>
+    errors[k]?.message as string | undefined;
+
   return (
     <form
-      ref={formRef}
-      onSubmit={handleSubmit(onSubmit, onInvalid)}
-      className={styles.tfShell}
+      onSubmit={handleSubmit(onSubmit)}
+      className={`${styles.tfShell} ${styles.wlFormFlat}`}
       noValidate
     >
       <input
@@ -388,266 +316,158 @@ export function WaitlistForm() {
         aria-hidden
       />
 
-      <div className={styles.tfProgress}>
-        <div
-          className={styles.tfProgressBar}
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+      <div className={styles.wlFormBody}>
+        <div className={styles.wlField}>
+          <label className={styles.wlLabel} htmlFor="wl-name">
+            Full name
+          </label>
+          <input
+            id="wl-name"
+            type="text"
+            autoComplete="name"
+            placeholder="Your full name"
+            className={`${styles.tfInput} ${err('fullName') ? styles.tfInputError : ''}`}
+            {...register('fullName')}
+          />
+          {err('fullName') && <p className={styles.tfError}>{err('fullName')}</p>}
+        </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          ref={stepRef}
-          key={`step-${step}`}
-          className={styles.tfStep}
-          onKeyDown={handleEnter}
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -24 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className={styles.tfStepMeta}>
-            Step {step + 1} of {total}
-          </div>
-          <h3 className={styles.tfTitle}>{current.title}</h3>
-          {current.hint && <p className={styles.tfHint}>{current.hint}</p>}
-
-          <div className={styles.tfField}>
-            <StepField
-              step={current.key}
-              register={register}
-              control={control}
-              errors={errors}
-              watch={watch}
-            />
-          </div>
-
-          {/* Compliance: marketing-consent opt-in only on the final
-              step, and a privacy notice under the submit button. The
-              privacy consent is implicit on submission (covered by the
-              notice + Privacy Policy link). */}
-          {step === total - 1 && (
-            <label className={styles.tfConsent}>
-              <input
-                type="checkbox"
-                checked={marketingOptIn}
-                onChange={(e) => setMarketingOptIn(e.target.checked)}
-              />
-              <span>
-                Send me product updates and launch news. (Optional,                 we don&apos;t share your details.)
-              </span>
+        <div className={styles.wlGridTwo}>
+          <div className={styles.wlField}>
+            <label className={styles.wlLabel} htmlFor="wl-email">
+              Email
             </label>
-          )}
-
-          <div className={styles.tfControls}>
-            <button
-              type="button"
-              className={styles.tfBack}
-              onClick={goBack}
-              disabled={step === 0}
-            >
-              ← Back
-            </button>
-            {step < total - 1 ? (
-              <button
-                type="button"
-                className={styles.tfNext}
-                onClick={goNext}
-              >
-                Continue <span aria-hidden="true">↵</span>
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className={styles.tfNext}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Sending…' : 'Submit'}
-              </button>
-            )}
+            <input
+              id="wl-email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              className={`${styles.tfInput} ${err('email') ? styles.tfInputError : ''}`}
+              {...register('email')}
+            />
+            {err('email') && <p className={styles.tfError}>{err('email')}</p>}
           </div>
+          <div className={styles.wlField}>
+            <label className={styles.wlLabel} htmlFor="wl-phone">
+              Phone
+            </label>
+            <input
+              id="wl-phone"
+              type="tel"
+              autoComplete="tel"
+              placeholder="+971 50 123 4567"
+              className={`${styles.tfInput} ${err('phone') ? styles.tfInputError : ''}`}
+              {...register('phone')}
+            />
+            {err('phone') && <p className={styles.tfError}>{err('phone')}</p>}
+          </div>
+        </div>
 
-          {serverError && (
-            <p className={styles.serverError} style={{ marginTop: 16 }}>
-              {serverError}
-            </p>
-          )}
-
-          {step === total - 1 && (
-            <p className={styles.tfLegal}>
-              By submitting you agree to our{' '}
-              <a href="/privacy" target="_blank" rel="noopener noreferrer">
-                Privacy Policy
-              </a>{' '}
-              and{' '}
-              <a href="/terms" target="_blank" rel="noopener noreferrer">
-                Terms of Service
-              </a>
-              . We&apos;ll only use your details to follow up about iClose.
-            </p>
-          )}
-        </motion.div>
-      </AnimatePresence>
-    </form>
-  );
-}
-
-function StepField({
-  step,
-  register,
-  control,
-  errors,
-  watch,
-}: {
-  step: StepDef['key'];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  register: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: any;
-  errors: FieldErrors<SimpleValues>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  watch: any;
-}): ReactNode {
-  const err = (key: keyof SimpleValues) =>
-    errors[key]?.message as string | undefined;
-
-  if (step === 'fullName') {
-    return (
-      <TextInput
-        id="tf-name"
-        type="text"
-        placeholder="Your full name"
-        autoComplete="name"
-        error={err('fullName')}
-        registration={register('fullName')}
-      />
-    );
-  }
-  if (step === 'email') {
-    return (
-      <TextInput
-        id="tf-email"
-        type="email"
-        placeholder="you@example.com"
-        autoComplete="email"
-        error={err('email')}
-        registration={register('email')}
-      />
-    );
-  }
-  if (step === 'phone') {
-    return (
-      <TextInput
-        id="tf-phone"
-        type="tel"
-        placeholder="+971 50 123 4567"
-        autoComplete="tel"
-        error={err('phone')}
-        registration={register('phone')}
-      />
-    );
-  }
-  if (step === 'intent') {
-    return (
-      <Controller
-        control={control}
-        name="intent"
-        render={({ field }) => (
-          <>
-            <div className={styles.intentGroup} role="radiogroup">
-              {intentOptions.map((opt) => {
-                const checked = field.value === opt.value;
-                return (
-                  <label
-                    key={opt.value}
-                    className={`${styles.intentOption} ${
-                      checked ? styles.intentOptionActive : ''
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="intent"
-                      value={opt.value}
-                      checked={checked}
-                      onChange={() => field.onChange(opt.value)}
-                    />
-                    <span className={styles.intentLabel}>{opt.label}</span>
-                    <span className={styles.intentSub}>{opt.sub}</span>
-                  </label>
-                );
-              })}
-            </div>
-            {err('intent') && <p className={styles.tfError}>{err('intent')}</p>}
-          </>
-        )}
-      />
-    );
-  }
-  if (step === 'focus') {
-    return (
-      <Controller
-        control={control}
-        name="focus"
-        render={({ field }) => {
-          const value: string[] = field.value ?? [];
-          const toggle = (v: (typeof leadFocusValues)[number]) => {
-            if (value.includes(v)) {
-              field.onChange(value.filter((x) => x !== v));
-            } else {
-              field.onChange([...value, v]);
-            }
-          };
-          return (
-            <>
-              <div className={styles.chipGrid}>
-                {focusOptions.map((opt) => (
-                  <label key={opt.value} className={styles.segOption}>
-                    <input
-                      type="checkbox"
-                      checked={value.includes(opt.value)}
-                      onChange={() => toggle(opt.value)}
-                    />
-                    <span>{opt.label}</span>
-                  </label>
-                ))}
+        <div className={styles.wlField}>
+          <span className={styles.wlLabel}>What brings you here?</span>
+          <Controller
+            control={control}
+            name="intent"
+            render={({ field }) => (
+              <div className={styles.intentGroup} role="radiogroup">
+                {intentOptions.map((opt) => {
+                  const checked = field.value === opt.value;
+                  return (
+                    <label
+                      key={opt.value}
+                      className={`${styles.intentOption} ${
+                        checked ? styles.intentOptionActive : ''
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="intent"
+                        value={opt.value}
+                        checked={checked}
+                        onChange={() => field.onChange(opt.value)}
+                      />
+                      <span className={styles.intentLabel}>{opt.label}</span>
+                      <span className={styles.intentSub}>{opt.sub}</span>
+                    </label>
+                  );
+                })}
               </div>
-              {err('focus') && <p className={styles.tfError}>{err('focus')}</p>}
-            </>
-          );
-        }}
-      />
-    );
-  }
-  return null;
-}
+            )}
+          />
+          {err('intent') && <p className={styles.tfError}>{err('intent')}</p>}
+        </div>
 
-function TextInput({
-  id,
-  type,
-  placeholder,
-  autoComplete,
-  error,
-  registration,
-}: {
-  id: string;
-  type: string;
-  placeholder: string;
-  autoComplete?: string;
-  error?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  registration: any;
-}) {
-  return (
-    <div className={styles.tfInputWrap}>
-      <input
-        id={id}
-        type={type}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        className={`${styles.tfInput} ${error ? styles.tfInputError : ''}`}
-        {...registration}
-      />
-      {error && <p className={styles.tfError}>{error}</p>}
-    </div>
+        <div className={styles.wlField}>
+          <span className={styles.wlLabel}>What are you focusing on?</span>
+          <Controller
+            control={control}
+            name="focus"
+            render={({ field }) => {
+              const value: string[] = field.value ?? [];
+              const toggle = (v: (typeof leadFocusValues)[number]) => {
+                if (value.includes(v)) {
+                  field.onChange(value.filter((x) => x !== v));
+                } else {
+                  field.onChange([...value, v]);
+                }
+              };
+              return (
+                <div className={styles.chipGrid}>
+                  {focusOptions.map((opt) => (
+                    <label key={opt.value} className={styles.segOption}>
+                      <input
+                        type="checkbox"
+                        checked={value.includes(opt.value)}
+                        onChange={() => toggle(opt.value)}
+                      />
+                      <span>{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              );
+            }}
+          />
+          {err('focus') && <p className={styles.tfError}>{err('focus')}</p>}
+        </div>
+
+        <label className={styles.tfConsent}>
+          <input
+            type="checkbox"
+            checked={marketingOptIn}
+            onChange={(e) => setMarketingOptIn(e.target.checked)}
+          />
+          <span>
+            Send me product updates and launch news. (Optional, we don&apos;t
+            share your details.)
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          className={styles.wlSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Sending…' : 'Join the waitlist →'}
+        </button>
+
+        {serverError && (
+          <p className={styles.serverError} style={{ marginTop: 12 }}>
+            {serverError}
+          </p>
+        )}
+
+        <p className={styles.tfLegal}>
+          By submitting you agree to our{' '}
+          <a href="/privacy" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </a>{' '}
+          and{' '}
+          <a href="/terms" target="_blank" rel="noopener noreferrer">
+            Terms of Service
+          </a>
+          . We&apos;ll only use your details to follow up about iClose.
+        </p>
+      </div>
+    </form>
   );
 }

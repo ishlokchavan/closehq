@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: 'For Buyers · iClose',
   description:
-    'iClose gives UAE buyers up to 5% cashback on off-plan deals or a flat 0.4% commission on ready secondary units, instead of the standard 2%.',
+    "iClose gives UAE buyers 100% cashback on every deal — the entire agent commission rebated back to you.",
 };
 
 export default function ForBuyersPage() {
@@ -28,24 +28,24 @@ export default function ForBuyersPage() {
         heroAlt="A private-client advisor walking a buyer through a UAE purchase"
         headline={
           <>
-            Up to 5% cashback on off-plan.
+            100% cashback.
             <br />
-            <span>0.4% on ready units.</span>
+            <span>On every deal you close.</span>
           </>
         }
         sub={
           <>
             UAE real estate is one of the world&apos;s best investments. iClose
-            gives you the deep market intelligence to buy with confidence and
-            rebates most of the agent commission back to you. Up to 5%
-            cashback on off-plan, or a flat 0.4% commission on ready secondary
-            units instead of the standard 2%.
+            gives you the deep market intelligence to buy with confidence — and
+            rebates 100% of the agent commission back to you. Off-plan or
+            ready, secondary or primary. Every dirham of the commission goes
+            in your pocket, not ours.
           </>
         }
         primaryCta={{ label: 'Get started free', href: '#waitlist' }}
         chips={[
-          'Up to 5% cashback on off-plan deals',
-          'Flat 0.4% commission on ready secondary units',
+          '100% cashback on every deal',
+          'Off-plan, ready, secondary — all covered',
           'Deep market intel before you commit',
         ]}
       />
@@ -74,7 +74,7 @@ export default function ForBuyersPage() {
           {
             tag: 'Opacity',
             title: 'Commission baked into every deal.',
-            body: "Most buyers never see the breakdown or know they could save on it.",
+            body: "Most buyers never see the breakdown — and never see a cent of it back.",
           },
           {
             tag: 'Risk',
@@ -91,7 +91,7 @@ export default function ForBuyersPage() {
           <>
             We built the platform we wish existed when buyers first entered
             this market. Unbiased, comprehensive, and built around your
-            outcome.
+            outcome — with the entire commission rebated back to you.
           </>
         }
         items={[
@@ -124,52 +124,35 @@ export default function ForBuyersPage() {
 
       <PersonaCompare
         eyebrow="The math"
-        badge="or"
-        heading={<>Off-plan or ready, both pay you back.</>}
+        badge="vs"
+        heading={<>The full commission, rebated back to you.</>}
         body={
           <>
             On a typical AED 2M deal, here&apos;s the difference between
-            buying off-plan through iClose and buying a ready secondary unit
-            through iClose.
+            buying through a standard agent and buying through iClose.
           </>
         }
         left={{
-          title: 'Ready secondary unit',
+          title: 'Standard agent',
           rows: [
             { label: 'Deal value', value: 'AED 2,000,000' },
-            { label: 'Standard commission', value: '2% (AED 40,000)' },
-            { label: 'iClose flat fee', value: '0.4% only' },
-          ],
-          takeLabel: 'You pay',
-          takeValue: (
-            <>
-              AED 8,000{' '}
-              <s
-                style={{
-                  fontSize: '0.55em',
-                  color: 'var(--text-light)',
-                  fontWeight: 400,
-                  letterSpacing: 0,
-                  marginLeft: '0.4em',
-                  verticalAlign: 'middle',
-                }}
-              >
-                AED 40,000
-              </s>
-            </>
-          ),
-        }}
-        right={{
-          title: 'Off-plan unit',
-          rows: [
-            { label: 'Deal value', value: 'AED 2,000,000' },
-            { label: 'Total commission (5%)', value: 'AED 100,000' },
-            { label: 'iClose rebate share', value: '80%' },
+            { label: 'Commission paid', value: '2% (AED 40,000)' },
+            { label: 'Rebated to you', value: 'AED 0' },
           ],
           takeLabel: 'You get back',
-          takeValue: 'Up to AED 80,000',
+          takeValue: 'AED 0',
         }}
-        footnote="Exact cashback confirmed upfront. No surprises at signing."
+        right={{
+          title: 'iClose',
+          rows: [
+            { label: 'Deal value', value: 'AED 2,000,000' },
+            { label: 'Commission paid', value: '2% (AED 40,000)' },
+            { label: 'iClose rebate', value: '100%' },
+          ],
+          takeLabel: 'You get back',
+          takeValue: 'AED 40,000',
+        }}
+        footnote="Exact cashback confirmed upfront, paid on transfer. No surprises at signing."
       />
 
       <PersonaSteps
@@ -190,8 +173,8 @@ export default function ForBuyersPage() {
             body: "When you're ready to view or make an offer, we connect you with a specialist who knows your shortlist. You walk in informed. So the conversation is different.",
           },
           {
-            title: 'Close with savings.',
-            body: "Because you're closing through iClose, you qualify for discounted commission terms. Your saving is confirmed upfront. No surprises at signing.",
+            title: 'Close and collect 100%.',
+            body: "Because you're closing through iClose, the full commission we earn on the deal comes back to you as cashback. Confirmed upfront. Paid on transfer.",
           },
         ]}
       />
@@ -207,7 +190,7 @@ export default function ForBuyersPage() {
       />
 
       <PersonaQuote
-        quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks. And saved AED 35,000 on commission."
+        quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks. And got the entire AED 40,000 commission back as cashback."
         name="Buyer"
         role="2BR apartment · Dubai Hills Estate"
       />
@@ -217,23 +200,23 @@ export default function ForBuyersPage() {
         items={[
           {
             q: 'Is iClose free to use as a buyer?',
-            a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our closer service when you're ready to move. And that's when the commission saving kicks in.",
+            a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our closer service when you're ready to move — and that's when 100% of the commission comes back to you.",
           },
           {
             q: 'Do I need to be a UAE resident to buy?',
             a: 'No. Non-residents and international buyers can purchase freehold property in designated areas. A purchase above AED 2M can also qualify you for a UAE Golden Visa. iClose walks you through the full process.',
           },
           {
-            q: 'How does the commission saving work?',
-            a: 'When you close a deal through the iClose platform, we share a portion of the commission we earn with you. The exact saving depends on the developer, project type, and deal terms. Confirmed transparently before you sign anything.',
+            q: 'How does the 100% cashback work?',
+            a: 'When you close a deal through iClose, we rebate the entire agent commission we earn on the transaction back to you. The exact figure depends on the deal value and developer terms, but it is confirmed transparently before you sign anything.',
           },
           {
             q: 'What if I already have a project in mind?',
-            a: "Even better. Look it up on the platform, get the full intelligence report, then connect with a closer who specialises in that development. You'll know more than most buyers who walk in cold.",
+            a: "Even better. Look it up on the platform, get the full intelligence report, then connect with a closer who specialises in that development. You'll know more than most buyers who walk in cold — and still get 100% cashback on close.",
           },
           {
             q: 'Is iClose for off-plan or secondary market too?',
-            a: 'Both. Our primary focus is off-plan given the volume and opportunity in the UAE, but our closers work across off-plan and secondary market transactions.',
+            a: 'Both. Our closers work across off-plan and secondary market transactions, and the 100% cashback applies on every deal.',
           },
         ]}
       />
@@ -242,9 +225,8 @@ export default function ForBuyersPage() {
         heading={<>Your next property starts with the right intel.</>}
         body={
           <>
-            Tell us a bit about you, and we&apos;ll line up the cashback or
-            flat-fee structure for your next purchase. No credit card, no
-            commitment.
+            Tell us a bit about you, and we&apos;ll line up your 100% cashback
+            for your next purchase. No credit card, no commitment.
           </>
         }
       />

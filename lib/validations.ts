@@ -35,6 +35,12 @@ export const leadSchema = z.object({
   }),
   consentMarketing: z.boolean().optional().default(false),
   website: z.string().optional(),
+  referredByCode: z
+    .string()
+    .trim()
+    .max(16)
+    .optional()
+    .or(z.literal('')),
 });
 
 export type LeadFormValues = z.infer<typeof leadSchema>;
