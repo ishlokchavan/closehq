@@ -1408,28 +1408,10 @@ export function ICloseLanding() {
           <span className={styles.heroBlobC} />
         </div>
         <div className={styles.heroInner}>
-          <h1>
-            Learn from the best,{' '}
-            <span className={styles.heroAccent}>Keep 100% of every close.</span>
-          </h1>
-          <p className={styles.heroSub}>
-            Train with the top 0.1% of UAE agents. Close more deals. Keep
-            every dirham of your commission — or get 100% cashback when you
-            buy the property yourself.
-          </p>
-          <div className={styles.heroCtas}>
-            <button
-              type="button"
-              className={styles.btnBlue}
-              data-get-started
-            >
-              Get started
-            </button>
-            <a href="#workflow" className={styles.heroGhostCta}>
-              See how it works <span aria-hidden="true">→</span>
-            </a>
-          </div>
-          <div className={styles.heroChipRow} aria-hidden="true">
+          <div
+            className={`${styles.heroChipRow} ${styles.heroChipRowTop}`}
+            aria-hidden="true"
+          >
             <span className={`${styles.heroChip} ${styles.heroChipA}`}>
               <span className={styles.heroChipIcon} aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="14" height="14">
@@ -1476,6 +1458,28 @@ export function ICloseLanding() {
               <span className={styles.heroChipNum}>100%</span>
               <span className={styles.heroChipLabel}>off-plan cashback</span>
             </span>
+          </div>
+
+          <h1>
+            Learn from the best,{' '}
+            <span className={styles.heroAccent}>Keep 100% of every close.</span>
+          </h1>
+          <p className={styles.heroSub}>
+            Train with the top 0.1% of UAE agents. Close more deals. Keep
+            every dirham of your commission — or get 100% cashback when you
+            buy the property yourself.
+          </p>
+          <div className={styles.heroCtas}>
+            <button
+              type="button"
+              className={styles.btnBlue}
+              data-get-started
+            >
+              Get started
+            </button>
+            <a href="#workflow" className={styles.heroGhostCta}>
+              See how it works <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </section>

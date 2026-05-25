@@ -7157,3 +7157,53 @@ a.whoCard:hover .whoLearn {
     height: 20px;
   }
 }
+
+/* ============================================================
+   v3.6 — Pills above the headline + more visible warm sweep.
+   ============================================================ */
+
+/* Pills moved to the top of the hero copy stack */
+.heroChipRowTop {
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+}
+@media (max-width: 600px) {
+  .heroChipRowTop {
+    margin-bottom: 18px !important;
+  }
+}
+
+/* Make the warm sweep more obviously animating: bigger background
+   tile so the moving stops actually travel across the word, faster
+   loop, and !important on the animation so nothing later overrides
+   it. Forced render hint via will-change keeps it smooth. */
+.heroAccent {
+  background: linear-gradient(
+    100deg,
+    #ff3b30 0%,
+    #ff7a59 18%,
+    #ffb340 36%,
+    #ff375f 54%,
+    #ff3b30 72%,
+    #ff7a59 90%,
+    #ffb340 100%
+  ) !important;
+  background-size: 320% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+  animation: heroAccentSweep 4.2s linear infinite !important;
+  will-change: background-position;
+}
+@keyframes heroAccentSweep {
+  from { background-position: 0% 50%; }
+  to   { background-position: 320% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroAccent {
+    animation: none !important;
+    background-position: 25% 50% !important;
+  }
+}
