@@ -7207,3 +7207,128 @@ a.whoCard:hover .whoLearn {
     background-position: 25% 50% !important;
   }
 }
+
+/* ============================================================
+   v3.7 — Bulletproof form chips (intent + focus) so the cards
+   always read as cards regardless of modal context, plus
+   softer hero peach chip.
+   ============================================================ */
+
+/* ---- Intent radio cards: explicit, !important defaults so any
+        later cascade or modal-scoped reset can't strip the border. */
+.intentOption {
+  display: flex !important;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px !important;
+  border: 2px solid #d2d2d7 !important;
+  background: #ffffff !important;
+  border-radius: 14px !important;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s,
+    transform 0.18s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.intentOption:hover {
+  border-color: #86868b !important;
+  background: #fafafa !important;
+}
+.intentOptionActive {
+  border-color: var(--blue) !important;
+  background: rgba(0, 113, 227, 0.06) !important;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.14) !important;
+}
+.intentOption input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+.intentLabel {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: var(--text) !important;
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+.intentSub {
+  font-size: 13px !important;
+  color: var(--text-muted) !important;
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+}
+
+/* ---- Focus chips (Residential / Commercial / Off-plan) ----- */
+.chipGrid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+.segOption {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.segOption input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+.segOption span {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px !important;
+  border: 2px solid #d2d2d7 !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--text) !important;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s,
+    box-shadow 0.18s;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.segOption:hover span {
+  border-color: #86868b !important;
+  background: #fafafa !important;
+}
+.segOption input:checked + span {
+  background: var(--blue) !important;
+  border-color: var(--blue) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.18) !important;
+}
+
+@media (max-width: 500px) {
+  .chipGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---- Softer "up to 100% commission" chip ------------------- */
+.heroChipA {
+  /* Peach/coral instead of an aggressive red */
+  border-color: rgba(255, 122, 89, 0.28) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 244, 235, 0.95) 0%,
+    rgba(255, 255, 255, 0.85) 100%
+  ) !important;
+  box-shadow: 0 6px 22px rgba(255, 122, 89, 0.16);
+}
+.heroChipA .heroChipIcon {
+  background: linear-gradient(135deg, #ff9f6c 0%, #ffb78c 100%) !important;
+}
+.heroChipA .heroChipNum {
+  /* Pin the number color so it still reads as warm without the
+     deep red feel */
+  color: #c2440f;
+}

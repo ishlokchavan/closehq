@@ -11,6 +11,7 @@ import {
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { WaitlistForm } from '@/components/sections/iclose-landing/waitlist-form';
+import { captureReferralFromUrl } from '@/lib/referral';
 import styles from './get-started-modal.module.css';
 
 type Ctx = { open: (intent?: 'buyer' | 'closer') => void; close: () => void };
@@ -38,6 +39,14 @@ export function GetStartedProvider({ children }: { children: ReactNode }) {
     setIsOpen(true);
   }, []);
   const close = useCallback(() => setIsOpen(false), []);
+
+  /* Capture ?ref=CODE once on every page load. Lives at the provider
+     level so attribution sticks even if no inline form has mounted
+     yet — a visitor can land via /?ref=AB12CD, click a "Get started"
+     button, and the modal's form picks up the stored code. */
+  useEffect(() => {
+    captureReferralFromUrl();
+  }, []);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
