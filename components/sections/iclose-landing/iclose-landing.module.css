@@ -7332,3 +7332,111 @@ a.whoCard:hover .whoLearn {
      deep red feel */
   color: #c2440f;
 }
+
+/* ============================================================
+   v3.8 — Clean-room option picker for the waitlist form.
+   No reuse of intentOption / segOption to avoid cascade conflicts
+   with older flow styles. New class prefix: wlPick*.
+   ============================================================ */
+
+/* Intent radio cards */
+.wlPickGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wlPickCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  background: #ffffff;
+  border: 2px solid #d2d2d7;
+  border-radius: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.18s ease, background 0.18s ease,
+    box-shadow 0.18s ease, transform 0.12s ease;
+}
+.wlPickCard:hover {
+  border-color: #86868b;
+  background: #fafafa;
+}
+.wlPickCard:focus-visible {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.18);
+}
+.wlPickCardActive {
+  border-color: var(--blue);
+  background: rgba(0, 113, 227, 0.06);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.16);
+}
+.wlPickCardLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+.wlPickCardSub {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+}
+
+/* Focus checkbox chips */
+.wlPickChipRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.wlPickChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 2px solid #d2d2d7;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.18s ease, background 0.18s ease,
+    color 0.18s ease, box-shadow 0.18s ease;
+}
+.wlPickChip:hover {
+  border-color: #86868b;
+  background: #fafafa;
+}
+.wlPickChip:focus-visible {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.22);
+}
+.wlPickChipActive {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #ffffff;
+}
+.wlPickChipActive:hover {
+  background: var(--blue-hover);
+  border-color: var(--blue-hover);
+}
+
+@media (max-width: 500px) {
+  .wlPickChipRow {
+    grid-template-columns: 1fr;
+  }
+}

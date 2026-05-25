@@ -376,26 +376,23 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
             control={control}
             name="intent"
             render={({ field }) => (
-              <div className={styles.intentGroup} role="radiogroup">
+              <div className={styles.wlPickGroup} role="radiogroup">
                 {intentOptions.map((opt) => {
                   const checked = field.value === opt.value;
                   return (
-                    <label
+                    <button
                       key={opt.value}
-                      className={`${styles.intentOption} ${
-                        checked ? styles.intentOptionActive : ''
+                      type="button"
+                      role="radio"
+                      aria-checked={checked}
+                      onClick={() => field.onChange(opt.value)}
+                      className={`${styles.wlPickCard} ${
+                        checked ? styles.wlPickCardActive : ''
                       }`}
                     >
-                      <input
-                        type="radio"
-                        name="intent"
-                        value={opt.value}
-                        checked={checked}
-                        onChange={() => field.onChange(opt.value)}
-                      />
-                      <span className={styles.intentLabel}>{opt.label}</span>
-                      <span className={styles.intentSub}>{opt.sub}</span>
-                    </label>
+                      <span className={styles.wlPickCardLabel}>{opt.label}</span>
+                      <span className={styles.wlPickCardSub}>{opt.sub}</span>
+                    </button>
                   );
                 })}
               </div>
@@ -419,17 +416,24 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
                 }
               };
               return (
-                <div className={styles.chipGrid}>
-                  {focusOptions.map((opt) => (
-                    <label key={opt.value} className={styles.segOption}>
-                      <input
-                        type="checkbox"
-                        checked={value.includes(opt.value)}
-                        onChange={() => toggle(opt.value)}
-                      />
-                      <span>{opt.label}</span>
-                    </label>
-                  ))}
+                <div className={styles.wlPickChipRow}>
+                  {focusOptions.map((opt) => {
+                    const checked = value.includes(opt.value);
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        role="checkbox"
+                        aria-checked={checked}
+                        onClick={() => toggle(opt.value)}
+                        className={`${styles.wlPickChip} ${
+                          checked ? styles.wlPickChipActive : ''
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
                 </div>
               );
             }}
