@@ -536,9 +536,11 @@ export function PersonaCta({
 export function PersonaWaitlist({
   heading,
   body,
+  defaultIntent,
 }: {
   heading: ReactNode;
   body?: ReactNode;
+  defaultIntent?: 'buyer' | 'closer';
 }) {
   return (
     <section className={styles.personaWaitlist} id="waitlist">
@@ -563,7 +565,7 @@ export function PersonaWaitlist({
         viewport={inView}
         transition={{ duration: 0.6, delay: 0.2, ease }}
       >
-        <WaitlistForm />
+        <WaitlistForm defaultIntent={defaultIntent} />
       </motion.div>
     </section>
   );

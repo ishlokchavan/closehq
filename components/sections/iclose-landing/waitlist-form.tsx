@@ -45,14 +45,14 @@ const intentOptions: {
   sub: string;
 }[] = [
   {
-    value: 'buyer',
-    label: 'Buy a property',
-    sub: '100% cashback on every deal you close with us.',
-  },
-  {
     value: 'closer',
     label: 'Close / refer deals',
     sub: 'Broker, lawyer, advisor or anyone with clients.',
+  },
+  {
+    value: 'buyer',
+    label: 'Buy a property',
+    sub: '100% cashback on every deal you close with us.',
   },
 ];
 
@@ -67,7 +67,14 @@ const CALENDLY_URL =
   'https://calendly.com/hello-iclose/30min';
 const CALL_PHONE = siteConfig.phone || '+971501234567';
 
-export function WaitlistForm() {
+export type WaitlistFormProps = {
+  /* Pre-selects the intent radio. Pages tied to a persona pass their
+     persona ('buyer' on /for-buyers, 'closer' on /for-closers); the
+     landing page defaults to 'closer' (first option) for convenience. */
+  defaultIntent?: (typeof intentValues)[number];
+};
+
+export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {}) {
   const {
     register,
     handleSubmit,
@@ -81,7 +88,7 @@ export function WaitlistForm() {
       fullName: '',
       email: '',
       phone: '',
-      intent: undefined,
+      intent: defaultIntent,
       focus: [],
       website: '',
     },

@@ -222,6 +222,7 @@ export default function ForBuyersPage() {
       />
 
       <PersonaWaitlist
+        defaultIntent="buyer"
         heading={<>Your next property starts with the right intel.</>}
         body={
           <>

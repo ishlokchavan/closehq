@@ -106,8 +106,7 @@ function WhoIsThisFor() {
           className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
           {...animFromLeft}
         >
-          Close it. Or buy it. <br />
-          Either way, you keep more.
+          Two options.
         </motion.h2>
 
         <div className={styles.whoGrid}>
@@ -848,7 +847,9 @@ function WfStep2Visual() {
           >
             100%
           </motion.div>
-          <div className={styles.wfPanelForkSub}>of hard-earned commission</div>
+          <div className={styles.wfPanelForkSub}>
+            Closers get up to 100% of hard-earned commission
+          </div>
         </motion.div>
 
         <motion.div
@@ -876,7 +877,9 @@ function WfStep2Visual() {
           >
             100%
           </motion.div>
-          <div className={styles.wfPanelForkSub}>cashback on every deal</div>
+          <div className={styles.wfPanelForkSub}>
+            Buyers get 100% guaranteed cashback on every deal
+          </div>
         </motion.div>
       </div>
     </motion.div>
@@ -915,7 +918,7 @@ function WfStep3Visual() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2 }}
         >
-          AED 84,000
+          100% commission
         </motion.div>
 
         <ul className={styles.wfPipeline}>
@@ -1311,7 +1314,7 @@ export function ICloseLanding() {
             className={`${styles.sectionHeadingSolo} ${styles.reveal} ${styles.revealIn}`}
             {...animScale}
           >
-            Ready to close?
+            Get early access.
           </motion.h2>
           <motion.div {...animRise} transition={{ ...animRise.transition, delay: 0.15 }}>
             <WaitlistForm />

@@ -6406,7 +6406,16 @@ a.whoCard:hover .whoChip:not(.whoChipPrimary):not(.whoChipAlt) {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 220px;
+  /* Fixed height keeps the frame stable while bubbles fill in on the
+     loop — without this the card visibly grows/shrinks each cycle. */
+  height: 260px;
+}
+.mockPhoneBody {
+  /* Pin the body so the iMessage area itself has a constant footprint;
+     bubbles stack from the top and the area never reflows. */
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 .mockPhoneNotch {
   position: absolute;

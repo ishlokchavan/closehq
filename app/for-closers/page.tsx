@@ -216,6 +216,7 @@ export default function ForBrokersPage() {
       />
 
       <PersonaWaitlist
+        defaultIntent="closer"
         heading={<>The market won&apos;t wait.</>}
         body={
           <>
