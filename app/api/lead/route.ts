@@ -66,6 +66,7 @@ export async function POST(request: Request) {
       email,
       consentMarketing,
       jobTitle,
+      intent,
       focus,
       dealTypes,
       message,
@@ -75,6 +76,13 @@ export async function POST(request: Request) {
       referredByRaw && isValidReferralCode(referredByRaw)
         ? referredByRaw.toUpperCase()
         : null;
+    /* `focus` accepts both a single enum (legacy form) and an array
+       (waitlist). Normalise to a string[] for the focus column. */
+    const focusArray: string[] = Array.isArray(focus)
+      ? focus
+      : focus
+        ? [focus]
+        : [];
     const focusLabels: Record<string, string> = {
       offplan: 'Offplan',
       secondary: 'Secondary',
@@ -87,7 +95,10 @@ export async function POST(request: Request) {
       commercial: 'Commercial',
       other: 'Other',
     };
-    const focusLabel = focus ? focusLabels[focus] : ', ';
+    const focusLabel =
+      focusArray.length > 0
+        ? focusArray.map((f) => focusLabels[f] ?? f).join(', ')
+        : ', ';
     const dealTypesLabel =
       dealTypes && dealTypes.length
         ? dealTypes.map((d) => dealTypeLabels[d] ?? d).join(', ')
@@ -156,6 +167,8 @@ export async function POST(request: Request) {
         referral_code: issuedReferralCode,
         referred_by_code: referredByCode,
         referred_by_lead_id: referredByLeadId,
+        intent: intent ?? null,
+        focus: focusArray.length > 0 ? focusArray : null,
       };
 
       /* Insert and ask for the persisted row back. We then trust the
@@ -173,14 +186,18 @@ export async function POST(request: Request) {
         insertResult.error &&
         /column|schema cache/i.test(insertResult.error.message)
       ) {
-        // Referral columns missing (pre-migration). Retry without them.
+        /* Newer columns missing (pre-migration). Retry without the
+           full new set so we still capture the lead. Strips both the
+           referral columns and the intent/focus columns. */
         console.warn(
-          '[member] referral columns missing, retrying without them',
+          '[member] newer columns missing, retrying without them',
         );
         const fallback = { ...baseRow };
         delete fallback.referral_code;
         delete fallback.referred_by_code;
         delete fallback.referred_by_lead_id;
+        delete fallback.intent;
+        delete fallback.focus;
         insertResult = await db
           .from('leads')
           .insert(fallback)

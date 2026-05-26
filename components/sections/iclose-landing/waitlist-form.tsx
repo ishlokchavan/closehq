@@ -128,21 +128,20 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
     const parts = trimmed.split(/\s+/);
     const firstName = parts[0] || trimmed;
     const lastName = parts.length > 1 ? parts.slice(1).join(' ') : firstName;
-    const intentLabel = data.intent === 'buyer' ? 'Buyer' : 'Closer';
-    const extraFocus =
-      data.focus.length > 1
-        ? `Also interested in: ${data.focus.slice(1).join(', ')}`
-        : '';
 
     const payload: LeadFormValues = {
       firstName,
       lastName,
       email: data.email,
       phone: data.phone,
-      jobTitle: intentLabel,
-      focus: data.focus[0],
+      /* Mirror intent in jobTitle too so the admin notification email,
+         which still reads jobTitle, keeps showing "Buyer" / "Closer"
+         without code changes there. */
+      jobTitle: data.intent === 'buyer' ? 'Buyer' : 'Closer',
+      intent: data.intent,
+      focus: data.focus,
       dealTypes: [],
-      message: extraFocus,
+      message: '',
       consentPrivacy: true,
       consentMarketing: marketingOptIn,
       website: data.website ?? '',

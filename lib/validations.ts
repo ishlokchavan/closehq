@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const leadFocusValues = ['residential', 'commercial', 'offplan'] as const;
+export const leadIntentValues = ['buyer', 'closer'] as const;
 export const leadDealTypeValues = [
   'apartments',
   'villas',
@@ -23,7 +24,18 @@ export const leadSchema = z.object({
     .max(100, 'Keep it under 100 characters')
     .optional()
     .or(z.literal('')),
-  focus: z.enum(leadFocusValues).optional(),
+  /* Why the user is signing up. Waitlist form sets this from the
+     intent radio cards; legacy LeadForm leaves it undefined. */
+  intent: z.enum(leadIntentValues).optional(),
+  /* Multi-select on the waitlist. The legacy LeadForm only ever
+     sent a single value, so we accept both shapes and the API
+     normalises to an array before writing. */
+  focus: z
+    .union([
+      z.enum(leadFocusValues),
+      z.array(z.enum(leadFocusValues)).max(3),
+    ])
+    .optional(),
   dealTypes: z.array(z.enum(leadDealTypeValues)).max(5).optional(),
   message: z
     .string()
