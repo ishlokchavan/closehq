@@ -232,25 +232,12 @@ export async function POST(request: Request) {
           ?.referral_code ?? null;
       if (persistedCode) issuedReferralCode = persistedCode;
 
-      // Bump the referrer's count (best-effort). Uses a SQL function
-      // if available; otherwise read-modify-write.
-      if (referredByLeadId) {
-        const rpc = await db.rpc('bump_referral_count', {
-          p_lead_id: referredByLeadId,
-        });
-        if (rpc.error) {
-          const { data: current } = await db
-            .from('leads')
-            .select('referral_count')
-            .eq('id', referredByLeadId)
-            .maybeSingle();
-          const next = ((current?.referral_count as number) || 0) + 1;
-          await db
-            .from('leads')
-            .update({ referral_count: next })
-            .eq('id', referredByLeadId);
-        }
-      }
+      /* referral_count is maintained by a DB trigger on the academy
+         side (AFTER INSERT/DELETE on leads). We used to bump it from
+         here too, which double-counted on insert and stayed stale on
+         delete. The bump_referral_count RPC the earlier migration
+         shipped is still in place for backfills/admin use, but the
+         hot path no longer calls it. */
     } catch (err) {
       console.error('[member] DB insert failed:', err);
       return NextResponse.json(
