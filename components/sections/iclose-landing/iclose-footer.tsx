@@ -47,9 +47,6 @@ export function ICloseFooter() {
               </a>
             </li>
             <li>
-              <Link href="/team">Team</Link>
-            </li>
-            <li>
               <Link href="/careers">Careers</Link>
             </li>
           </ul>
