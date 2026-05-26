@@ -106,98 +106,140 @@ export async function POST(request: Request) {
     const verificationToken = randomUUID();
     let issuedReferralCode: string | null = null;
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('[member] Missing Supabase env vars');
+      return NextResponse.json(
+        { error: 'Server misconfigured. Please contact support.' },
+        { status: 500 },
+      );
+    }
+
     try {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-      if (!supabaseUrl || !supabaseKey) {
-        console.error('[member] Missing Supabase env vars');
-      } else {
-        const db = createClient(supabaseUrl, supabaseKey);
+      const db = createClient(supabaseUrl, supabaseKey);
 
-        let referredByLeadId: string | null = null;
-        if (referredByCode) {
-          const { data: referrer, error: refErr } = await db
+      let referredByLeadId: string | null = null;
+      if (referredByCode) {
+        const { data: referrer, error: refErr } = await db
+          .from('leads')
+          .select('id')
+          .eq('referral_code', referredByCode)
+          .limit(1)
+          .maybeSingle();
+        if (refErr) {
+          // referral_code column may not exist yet, ignore quietly.
+          console.warn(
+            '[member] referrer lookup failed (likely schema):',
+            refErr.message,
+          );
+        } else if (referrer) {
+          referredByLeadId = referrer.id as string;
+        }
+      }
+
+      issuedReferralCode = await reserveReferralCode(db);
+
+      const baseRow: Record<string, unknown> = {
+        name,
+        first_name: firstName,
+        last_name: lastName,
+        phone,
+        email,
+        plan_key: 'plus',
+        source: 'landing_page',
+        user_agent: userAgent,
+        referer,
+        verification_token: verificationToken,
+        consent_marketing: consentMarketing ?? false,
+        consented_at: new Date().toISOString(),
+        referral_code: issuedReferralCode,
+        referred_by_code: referredByCode,
+        referred_by_lead_id: referredByLeadId,
+      };
+
+      /* Insert and ask for the persisted row back. We then trust the
+         referral_code from the row, not the one we generated locally,
+         so we can never hand the user a code that isn't actually in
+         the DB. (Fixes a prior silent-failure bug where a duplicate
+         phone returned ok:true with an unsaved code.) */
+      let insertResult = await db
+        .from('leads')
+        .insert(baseRow)
+        .select('id, referral_code')
+        .single();
+
+      if (
+        insertResult.error &&
+        /column|schema cache/i.test(insertResult.error.message)
+      ) {
+        // Referral columns missing (pre-migration). Retry without them.
+        console.warn(
+          '[member] referral columns missing, retrying without them',
+        );
+        const fallback = { ...baseRow };
+        delete fallback.referral_code;
+        delete fallback.referred_by_code;
+        delete fallback.referred_by_lead_id;
+        insertResult = await db
+          .from('leads')
+          .insert(fallback)
+          .select('id')
+          .single();
+        issuedReferralCode = null;
+      }
+
+      if (insertResult.error) {
+        const dbErr = insertResult.error;
+        // Postgres unique-violation. Surface a friendly message so
+        // the user knows they're already in our system instead of
+        // getting a fake success that strands them.
+        if (dbErr.code === '23505') {
+          const msg = /phone/i.test(dbErr.message)
+            ? 'That phone number is already on our list. Try a different one, or use the email you originally signed up with.'
+            : /email/i.test(dbErr.message)
+              ? 'That email is already on our list.'
+              : "It looks like you're already on our list.";
+          return NextResponse.json({ error: msg }, { status: 409 });
+        }
+        console.error('[member] DB insert failed:', dbErr.message);
+        return NextResponse.json(
+          { error: "We couldn't save your details. Please try again." },
+          { status: 500 },
+        );
+      }
+
+      // Trust the persisted code if the row came back with one.
+      const persistedCode =
+        (insertResult.data as { referral_code?: string | null } | null)
+          ?.referral_code ?? null;
+      if (persistedCode) issuedReferralCode = persistedCode;
+
+      // Bump the referrer's count (best-effort). Uses a SQL function
+      // if available; otherwise read-modify-write.
+      if (referredByLeadId) {
+        const rpc = await db.rpc('bump_referral_count', {
+          p_lead_id: referredByLeadId,
+        });
+        if (rpc.error) {
+          const { data: current } = await db
             .from('leads')
-            .select('id')
-            .eq('referral_code', referredByCode)
-            .limit(1)
+            .select('referral_count')
+            .eq('id', referredByLeadId)
             .maybeSingle();
-          if (refErr) {
-            // referral_code column may not exist yet — ignore quietly.
-            console.warn(
-              '[member] referrer lookup failed (likely schema):',
-              refErr.message,
-            );
-          } else if (referrer) {
-            referredByLeadId = referrer.id as string;
-          }
-        }
-
-        issuedReferralCode = await reserveReferralCode(db);
-
-        const baseRow: Record<string, unknown> = {
-          name,
-          first_name: firstName,
-          last_name: lastName,
-          phone,
-          email,
-          plan_key: 'plus',
-          source: 'landing_page',
-          user_agent: userAgent,
-          referer,
-          verification_token: verificationToken,
-          consent_marketing: consentMarketing ?? false,
-          consented_at: new Date().toISOString(),
-          referral_code: issuedReferralCode,
-          referred_by_code: referredByCode,
-          referred_by_lead_id: referredByLeadId,
-        };
-
-        const { error } = await db.from('leads').insert(baseRow);
-        if (error) {
-          // If the referral columns don't exist yet, retry without them
-          // so we don't lose the lead. The columns will be backfilled
-          // once the migration ships.
-          if (/column|schema cache/i.test(error.message)) {
-            console.warn(
-              '[member] referral columns missing, retrying without them',
-            );
-            const fallback = { ...baseRow };
-            delete fallback.referral_code;
-            delete fallback.referred_by_code;
-            delete fallback.referred_by_lead_id;
-            const retry = await db.from('leads').insert(fallback);
-            if (retry.error) {
-              console.error('[member] DB insert failed:', retry.error.message);
-            }
-            issuedReferralCode = null;
-          } else {
-            console.error('[member] DB insert failed:', error.message);
-          }
-        }
-
-        // Bump the referrer's count (best-effort). Uses a SQL function
-        // if available; otherwise read-modify-write.
-        if (referredByLeadId) {
-          const rpc = await db.rpc('bump_referral_count', {
-            p_lead_id: referredByLeadId,
-          });
-          if (rpc.error) {
-            const { data: current } = await db
-              .from('leads')
-              .select('referral_count')
-              .eq('id', referredByLeadId)
-              .maybeSingle();
-            const next = ((current?.referral_count as number) || 0) + 1;
-            await db
-              .from('leads')
-              .update({ referral_count: next })
-              .eq('id', referredByLeadId);
-          }
+          const next = ((current?.referral_count as number) || 0) + 1;
+          await db
+            .from('leads')
+            .update({ referral_count: next })
+            .eq('id', referredByLeadId);
         }
       }
     } catch (err) {
       console.error('[member] DB insert failed:', err);
+      return NextResponse.json(
+        { error: "We couldn't save your details. Please try again." },
+        { status: 500 },
+      );
     }
 
     const notifyEmail = process.env.NOTIFY_EMAIL;
