@@ -17,14 +17,14 @@ const emailFooter = () => {
 
 const generateCode = (name: string) => {
   const slug = name
-    .toLowerCase()
+    .toUpperCase()
     .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
+    .replace(/[^A-Z0-9-]/g, '')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
     .slice(0, 24);
-  const suffix = Math.random().toString(36).slice(2, 6);
-  return (slug || 'partner') + '-' + suffix;
+  const suffix = Math.random().toString(36).toUpperCase().slice(2, 6);
+  return (slug || 'PARTNER') + '-' + suffix;
 };
 
 const maskEmail = (e: string) => {
@@ -67,16 +67,17 @@ export async function POST(request: Request) {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    // Reserve a unique code with a few retries against the partners.code
-    // unique constraint. The random suffix makes collisions vanishingly rare.
+    // Reserve a unique code across the shared referral namespace: it must
+    // collide with neither another partner nor a member referral_code. The
+    // random suffix makes collisions vanishingly rare; we retry a few times
+    // just in case.
     let code = generateCode(name);
     for (let attempt = 0; attempt < 4; attempt++) {
-      const { data: clash } = await db
-        .from('partners')
-        .select('id')
-        .eq('code', code)
-        .maybeSingle();
-      if (!clash) break;
+      const [{ data: partnerClash }, { data: memberClash }] = await Promise.all([
+        db.from('partners').select('id').ilike('code', code).maybeSingle(),
+        db.from('leads').select('id').ilike('referral_code', code).maybeSingle(),
+      ]);
+      if (!partnerClash && !memberClash) break;
       code = generateCode(name);
     }
 

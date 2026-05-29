@@ -13,10 +13,6 @@ import {
   captureReferralFromUrl,
   getStoredReferralCode,
 } from '@/lib/referral';
-import {
-  capturePartnerFromUrl,
-  getStoredPartnerCode,
-} from '@/lib/partner-ref';
 import styles from './iclose-landing.module.css';
 
 const intentValues = ['buyer', 'closer'] as const;
@@ -106,12 +102,12 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
   const [showCalendly, setShowCalendly] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // Capture inbound ?ref= and ?partner= once on mount. Both helpers
-  // promote the URL value into localStorage + cookie so attribution
-  // survives even if the visitor navigates away before submitting.
+  // Capture inbound ?ref= (or its ?partner= alias) once on mount. The
+  // helper promotes the URL value into localStorage + the iclose_ref
+  // cookie so attribution survives even if the visitor navigates away
+  // before submitting.
   useEffect(() => {
     captureReferralFromUrl();
-    capturePartnerFromUrl();
   }, []);
 
   useEffect(() => {
@@ -153,7 +149,6 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
       consentMarketing: marketingOptIn,
       website: data.website ?? '',
       referredByCode: getStoredReferralCode() || '',
-      partnerCode: getStoredPartnerCode() || '',
     };
 
     try {

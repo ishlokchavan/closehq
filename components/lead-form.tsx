@@ -9,10 +9,6 @@ import { leadSchema, type LeadFormValues } from '@/lib/validations';
 import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
 import {
-  capturePartnerFromUrl,
-  getStoredPartnerCode,
-} from '@/lib/partner-ref';
-import {
   captureReferralFromUrl,
   getStoredReferralCode,
 } from '@/lib/referral';
@@ -36,7 +32,6 @@ export function LeadForm() {
 
   useEffect(() => {
     captureReferralFromUrl();
-    capturePartnerFromUrl();
   }, []);
 
   const onSubmit = async (data: LeadFormValues) => {
@@ -48,7 +43,6 @@ export function LeadForm() {
         body: JSON.stringify({
           ...data,
           referredByCode: data.referredByCode || getStoredReferralCode() || '',
-          partnerCode: data.partnerCode || getStoredPartnerCode() || '',
         }),
       });
 

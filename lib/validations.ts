@@ -50,14 +50,7 @@ export const leadSchema = z.object({
   referredByCode: z
     .string()
     .trim()
-    .max(16)
-    .optional()
-    .or(z.literal('')),
-  partnerCode: z
-    .string()
-    .trim()
-    .max(48)
-    .regex(/^[a-z0-9][a-z0-9-]{1,40}[a-z0-9]$/i, 'Invalid partner code')
+    .max(40)
     .optional()
     .or(z.literal('')),
 });

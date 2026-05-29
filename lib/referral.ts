@@ -1,30 +1,39 @@
 /* ===================================================================
-   iClose referral tracking, fully self-contained, no third-party SaaS.
+   iClose referral attribution, unified across member + partner codes.
 
-   How it works
-   ------------
-   1. A visitor lands on /?ref=AB12CD. The client captures `ref`, stores
-      it in a long-lived cookie + localStorage, and strips the param so
-      the URL stays clean. The cookie wins on conflicts (the *first*
-      referrer to land sticks for the attribution window).
-   2. When the visitor submits the waitlist form, the captured code is
-      attached to the lead payload as `referredByCode`.
-   3. On the server, we look up which existing lead owns that code,
-      record the relationship on the new lead row (`referred_by_code`
-      and `referred_by_lead_id`), and bump the referrer's `referral_count`.
-   4. Every new lead also receives its own unique `referral_code`, which
-      we surface in the success state so they can share /?ref=THEIRCODE.
+   One cookie (iclose_ref), one namespace, case-insensitive. Codes are
+   uppercased on the way in and matched case-insensitively downstream.
 
-   Code shape: 8 chars, base32-style (no easily-confused glyphs). Short
-   enough to type, long enough to make collisions effectively zero at
-   any realistic signup volume.
+   Capture order on the client:
+     1. ?ref=CODE in the URL
+     2. ?partner=CODE (alias kept for legacy partner links)
+     3. existing iclose_ref cookie
+   First-touch wins: an existing cookie is never overwritten during
+   the attribution window.
+
+   We also stamp an iclose_vid visitor-id cookie (UUID, 1 year) the
+   first time we see a visitor — referral_clicks joins on it so the
+   academy can attribute the eventual signup to the click that drove
+   it.
+
+   Cookie domain comes from NEXT_PUBLIC_COOKIE_DOMAIN (e.g. .iclose.ae)
+   in production and is left unset in local dev so cookies still work
+   on localhost.
    =================================================================== */
 
 const COOKIE_NAME = 'iclose_ref';
+const VISITOR_COOKIE = 'iclose_vid';
 const STORAGE_KEY = 'iclose_ref';
-const ATTRIBUTION_DAYS = 90;
+const ATTRIBUTION_DAYS = 60;
+const VISITOR_DAYS = 365;
 
 const SAFE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I
+
+/* Shared referral-code shape: uppercase letters, digits and dashes.
+   3–40 chars, must not start with a dash. Matches both the 8-char
+   member codes (generateReferralCode) and the human-readable partner
+   codes (PSPL-HIQI). */
+const REFERRAL_CODE_RE = /^[A-Z0-9][A-Z0-9-]{2,39}$/;
 
 export function generateReferralCode(length = 8): string {
   const bytes =
@@ -42,22 +51,29 @@ export function generateReferralCode(length = 8): string {
   return out;
 }
 
-export function isValidReferralCode(code: string): boolean {
+export function isValidReferralCode(code: unknown): code is string {
   if (typeof code !== 'string') return false;
-  const clean = code.toUpperCase();
-  if (clean.length < 6 || clean.length > 16) return false;
-  for (let i = 0; i < clean.length; i++) {
-    if (!SAFE_ALPHABET.includes(clean[i])) return false;
-  }
-  return true;
+  return REFERRAL_CODE_RE.test(code.toUpperCase());
+}
+
+export function normalizeReferralCode(code: string): string | null {
+  const upper = code.trim().toUpperCase();
+  return isValidReferralCode(upper) ? upper : null;
 }
 
 /* ----------- Client helpers (no-op when called server-side) ----------- */
 
+function cookieDomain(): string | null {
+  const d = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
+  return d && d.length > 0 ? d : null;
+}
+
 function setCookie(name: string, value: string, days: number) {
   if (typeof document === 'undefined') return;
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+  const domain = cookieDomain();
+  const domainPart = domain ? `; domain=${domain}` : '';
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/${domainPart}; SameSite=Lax`;
 }
 
 function getCookie(name: string): string | null {
@@ -68,36 +84,75 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match.split('=')[1]) : null;
 }
 
-/* Grab ?ref= from the current URL and persist it as a cookie +
-   localStorage entry. The query param is left in place so the
-   visitor (and our analytics) can see which link they came from;
-   first-touch attribution still wins because we never overwrite an
-   existing cookie. */
-export function captureReferralFromUrl(): string | null {
-  if (typeof window === 'undefined') return null;
-  const params = new URLSearchParams(window.location.search);
-  const raw = params.get('ref');
-  if (!raw) return null;
-  const code = raw.toUpperCase();
-  if (!isValidReferralCode(code)) return null;
-  const existing = getCookie(COOKIE_NAME) || localStorage.getItem(STORAGE_KEY);
-  if (!existing) {
-    setCookie(COOKIE_NAME, code, ATTRIBUTION_DAYS);
-    try {
-      localStorage.setItem(STORAGE_KEY, code);
-    } catch {
-      // localStorage may be blocked; cookie still works.
-    }
+function generateUuid(): string {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
   }
-  return existing || code;
+  // RFC4122-ish fallback for ancient browsers.
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
+/* Ensure the visitor has a stable iclose_vid cookie, set fresh once
+   per visitor and re-used forever after. Returns the id. */
+export function ensureVisitorId(): string | null {
+  if (typeof document === 'undefined') return null;
+  const existing = getCookie(VISITOR_COOKIE);
+  if (existing) return existing;
+  const id = generateUuid();
+  setCookie(VISITOR_COOKIE, id, VISITOR_DAYS);
+  return id;
+}
+
+/* Promote ?ref= (or ?partner=) from the current URL into localStorage
+   + the iclose_ref cookie. Also stamps iclose_vid. First-touch wins:
+   we never overwrite an existing referral cookie within the window. */
+export function captureReferralFromUrl(): string | null {
+  if (typeof window === 'undefined') return null;
+  ensureVisitorId();
+
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get('ref') ?? params.get('partner');
+  const fromUrl = raw ? normalizeReferralCode(raw) : null;
+
+  const existing =
+    getCookie(COOKIE_NAME) ||
+    (typeof localStorage !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEY)
+      : null);
+
+  if (!existing && fromUrl) {
+    setCookie(COOKIE_NAME, fromUrl, ATTRIBUTION_DAYS);
+    try {
+      localStorage.setItem(STORAGE_KEY, fromUrl);
+    } catch {
+      // Storage blocked — cookie still covers us.
+    }
+    return fromUrl;
+  }
+  return existing || fromUrl;
+}
+
+/* Read the strongest signal we have right now: URL > localStorage >
+   cookie. URL wins so a fresh link supersedes a stale stored code if
+   the visitor clicks two partner links in sequence. */
 export function getStoredReferralCode(): string | null {
   if (typeof window === 'undefined') return null;
-  return (
-    getCookie(COOKIE_NAME) ||
-    (typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null)
-  );
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get('ref') ?? params.get('partner');
+  const fromUrl = raw ? normalizeReferralCode(raw) : null;
+  if (fromUrl) return fromUrl;
+  const fromStorage =
+    typeof localStorage !== 'undefined'
+      ? localStorage.getItem(STORAGE_KEY)
+      : null;
+  if (fromStorage && isValidReferralCode(fromStorage)) return fromStorage.toUpperCase();
+  const fromCookie = getCookie(COOKIE_NAME);
+  if (fromCookie && isValidReferralCode(fromCookie)) return fromCookie.toUpperCase();
+  return null;
 }
 
 export function buildReferralLink(code: string, origin?: string): string {

@@ -71,12 +71,7 @@ export async function POST(request: Request) {
       dealTypes,
       message,
       referredByCode: referredByRaw,
-      partnerCode: partnerCodeRaw,
     } = parsed.data;
-    const partnerCode =
-      partnerCodeRaw && partnerCodeRaw.length > 0
-        ? partnerCodeRaw.toLowerCase()
-        : null;
     const referredByCode =
       referredByRaw && isValidReferralCode(referredByRaw)
         ? referredByRaw.toUpperCase()
@@ -174,7 +169,6 @@ export async function POST(request: Request) {
         referred_by_lead_id: referredByLeadId,
         intent: intent ?? null,
         focus: focusArray.length > 0 ? focusArray : null,
-        partner_code: partnerCode,
       };
 
       /* Insert and ask for the persisted row back. We then trust the
@@ -204,7 +198,6 @@ export async function POST(request: Request) {
         delete fallback.referred_by_lead_id;
         delete fallback.intent;
         delete fallback.focus;
-        delete fallback.partner_code;
         insertResult = await db
           .from('leads')
           .insert(fallback)
@@ -246,16 +239,16 @@ export async function POST(request: Request) {
          shipped is still in place for backfills/admin use, but the
          hot path no longer calls it. */
 
-      /* Partner attribution. If the form (or the cookie/localStorage
-         fallback) carried a partner code, look up the partner and
-         record the conversion. We use a service-role client because
-         partners + referral_conversions + referral_clicks have RLS on
-         with no anon write policy — the partner code is itself the
-         token authorising attribution. Best-effort: a failure here
-         must not fail the lead signup. */
+      /* Partner attribution. referred_by_code is one shared namespace —
+         if a partner happens to own this code, record the conversion
+         so the academy's partner dashboard can show it. Lookup is
+         case-insensitive via the upper(code) unique index; everything
+         we write is already uppercased. Service role bypasses RLS on
+         partners + referral_conversions + referral_clicks. Failure
+         here must not fail the lead signup. */
       const leadId = (insertResult.data as { id?: string } | null)?.id ?? null;
       const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-      if (partnerCode && leadId && serviceKey) {
+      if (referredByCode && leadId && serviceKey) {
         try {
           const adminDb = createClient(supabaseUrl, serviceKey, {
             auth: { autoRefreshToken: false, persistSession: false },
@@ -263,7 +256,7 @@ export async function POST(request: Request) {
           const { data: partner } = await adminDb
             .from('partners')
             .select('id')
-            .eq('code', partnerCode)
+            .ilike('code', referredByCode)
             .maybeSingle();
           if (partner?.id) {
             await adminDb.from('referral_conversions').insert({
@@ -271,15 +264,24 @@ export async function POST(request: Request) {
               converted_user_id: leadId,
               type: 'signup',
             });
-            /* Backfill the most recent unconverted click for this
-               code. Not perfectly precise under concurrent traffic
-               (we have no visitor_id to match exactly), but accurate
-               enough to keep per-partner conversion rates honest. */
-            const { data: lastClick } = await adminDb
+            /* Best-effort click backfill. Prefer the click whose
+               visitor_id matches the iclose_vid cookie we set on /ref
+               — that's the click that actually drove this signup. If
+               no match (cookie cleared, fresh device, etc.), fall back
+               to the most-recent unconverted click for the code. */
+            const visitorId =
+              request.headers
+                .get('cookie')
+                ?.split('; ')
+                .find((c) => c.startsWith('iclose_vid='))
+                ?.split('=')[1] ?? null;
+            let clickQuery = adminDb
               .from('referral_clicks')
               .select('id')
-              .eq('code', partnerCode)
-              .is('converted_lead_id', null)
+              .ilike('code', referredByCode)
+              .is('converted_lead_id', null);
+            if (visitorId) clickQuery = clickQuery.eq('visitor_id', visitorId);
+            const { data: lastClick } = await clickQuery
               .order('created_at', { ascending: false })
               .limit(1)
               .maybeSingle();
