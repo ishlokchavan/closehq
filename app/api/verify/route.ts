@@ -117,7 +117,15 @@ export async function GET(request: Request) {
   }
 
   if (type === 'partner') {
-    const { data, error } = await db
+    // partners has RLS on with no anon SELECT policy, so we read + write via
+    // the service-role client. The verification_token in the URL is itself
+    // the secret that authorises this call.
+    if (!adminDb) {
+      console.error('[partner] SUPABASE_SERVICE_ROLE_KEY missing');
+      return NextResponse.redirect(`${origin}/verify?status=invalid`);
+    }
+
+    const { data, error } = await adminDb
       .from('partners')
       .select('id, name, email, code, is_verified, created_at, user_id')
       .eq('verification_token', token)
@@ -135,7 +143,7 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}/verify?status=expired`);
     }
 
-    await db
+    await adminDb
       .from('partners')
       .update({ is_verified: true, verified_at: new Date().toISOString() })
       .eq('verification_token', token);
@@ -143,7 +151,7 @@ export async function GET(request: Request) {
     // Silently provision an auth user so the partner can log into the
     // dashboard later — no Supabase email is sent because email_confirm:true
     // bypasses the confirmation flow.
-    if (adminDb && !data.user_id) {
+    if (!data.user_id) {
       try {
         const { data: created, error: authError } =
           await adminDb.auth.admin.createUser({
