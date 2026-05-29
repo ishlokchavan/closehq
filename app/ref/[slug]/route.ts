@@ -13,7 +13,9 @@ export async function GET(
 ) {
   const { slug } = await params;
   const url = new URL(request.url);
-  const redirectUrl = new URL('/', url.origin);
+  // Carry the code into the URL query so it survives cookie-blocked browsers
+  // and gets picked up by capturePartnerFromUrl on the landing page.
+  const redirectUrl = new URL(`/?partner=${encodeURIComponent(slug)}`, url.origin);
 
   const res = NextResponse.redirect(redirectUrl);
   res.cookies.set('referral_slug', slug, {

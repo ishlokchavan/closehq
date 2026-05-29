@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, Loader2, Check } from 'lucide-react';
@@ -8,6 +8,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { leadSchema, type LeadFormValues } from '@/lib/validations';
 import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
+import {
+  capturePartnerFromUrl,
+  getStoredPartnerCode,
+} from '@/lib/partner-ref';
+import {
+  captureReferralFromUrl,
+  getStoredReferralCode,
+} from '@/lib/referral';
 
 const inputClasses =
   'w-full h-12 px-4 bg-paper border border-hairline rounded-xl text-ink text-[17px] placeholder:text-graphite-light focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all';
@@ -26,13 +34,22 @@ export function LeadForm() {
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  useEffect(() => {
+    captureReferralFromUrl();
+    capturePartnerFromUrl();
+  }, []);
+
   const onSubmit = async (data: LeadFormValues) => {
     setServerError(null);
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          referredByCode: data.referredByCode || getStoredReferralCode() || '',
+          partnerCode: data.partnerCode || getStoredPartnerCode() || '',
+        }),
       });
 
       if (!res.ok) {
