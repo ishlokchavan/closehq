@@ -90,3 +90,17 @@ export const internSchema = z.object({
 });
 
 export type InternFormValues = z.infer<typeof internSchema>;
+
+export const partnerSchema = z.object({
+  name: z.string().min(2, 'Enter your full name').max(80),
+  email: z.string().email('Enter a valid email').max(120),
+  phone: z
+    .string()
+    .min(7, 'Enter a valid phone number')
+    .max(20)
+    .regex(/^[+\d\s()-]+$/, 'Use digits, spaces, +, - or ()'),
+  consentMarketing: z.boolean().optional().default(false),
+  website: z.string().optional(),
+});
+
+export type PartnerFormValues = z.infer<typeof partnerSchema>;

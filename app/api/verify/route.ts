@@ -116,6 +116,99 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/verify?status=success&type=member`);
   }
 
+  if (type === 'partner') {
+    const { data, error } = await db
+      .from('partners')
+      .select('id, name, email, code, is_verified, created_at, user_id')
+      .eq('verification_token', token)
+      .single();
+
+    if (error || !data) {
+      return NextResponse.redirect(`${origin}/verify?status=invalid`);
+    }
+    if (data.is_verified) {
+      return NextResponse.redirect(
+        `${origin}/verify?status=already&type=partner&code=${data.code}`,
+      );
+    }
+    if (Date.now() - new Date(data.created_at).getTime() > TOKEN_TTL_MS) {
+      return NextResponse.redirect(`${origin}/verify?status=expired`);
+    }
+
+    await db
+      .from('partners')
+      .update({ is_verified: true, verified_at: new Date().toISOString() })
+      .eq('verification_token', token);
+
+    // Silently provision an auth user so the partner can log into the
+    // dashboard later — no Supabase email is sent because email_confirm:true
+    // bypasses the confirmation flow.
+    if (adminDb && !data.user_id) {
+      try {
+        const { data: created, error: authError } =
+          await adminDb.auth.admin.createUser({
+            email: data.email,
+            email_confirm: true,
+            user_metadata: { full_name: data.name, role: 'partner' },
+          });
+
+        let userId: string | null = created?.user?.id ?? null;
+
+        if (
+          !userId &&
+          authError?.message.includes('already been registered')
+        ) {
+          const { data: existingId } = await adminDb.rpc(
+            'get_auth_user_id_by_email',
+            { p_email: data.email },
+          );
+          userId = existingId ?? null;
+        } else if (
+          authError &&
+          !authError.message.includes('already been registered')
+        ) {
+          console.error(
+            '[partner] auth user creation failed:',
+            authError.message,
+          );
+        }
+
+        if (userId) {
+          await adminDb
+            .from('partners')
+            .update({ user_id: userId })
+            .eq('id', data.id);
+        }
+      } catch (err) {
+        console.error('[partner] auth provisioning failed:', err);
+      }
+    }
+
+    try {
+      const partnerLink = `${origin}/ref/${data.code}`;
+      await sendEmail({
+        to: data.email,
+        subject: 'Your iClose Partner link is live',
+        html: `
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;color:#1d1d1f;">
+            <p style="font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em;">You're in, ${data.name}.</p>
+            <p style="font-size:17px;color:#6e6e73;line-height:1.55;margin-bottom:20px;letter-spacing:-0.01em;">
+              Your referral link is active. Share it anywhere — every click and signup is tracked back to you.
+            </p>
+            <p style="font-size:15px;color:#1d1d1f;font-weight:500;margin-bottom:8px;">Your link</p>
+            <p style="font-size:17px;margin-bottom:24px;"><a href="${partnerLink}" style="color:#0071e3;">${partnerLink}</a></p>
+            <p style="font-size:15px;color:#6e6e73;">, The iClose team</p>
+            ${emailFooter()}
+          </div>
+        `,
+      });
+    } catch (_) {}
+
+    return NextResponse.redirect(
+      `${origin}/verify?status=success&type=partner&code=${data.code}`,
+    );
+  }
+
   if (type === 'educator') {
     const { data, error } = await db
       .from('educators')

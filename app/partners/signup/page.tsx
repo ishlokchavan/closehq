@@ -2,12 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
-
-const generateCode = (name: string) =>
-  name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') +
-  '-' +
-  Math.random().toString(36).slice(2, 6);
 
 export default function PartnerSignup() {
   const router = useRouter();
@@ -19,37 +13,23 @@ export default function PartnerSignup() {
     setLoading(true);
     setError('');
 
-    const supabase = createClient();
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: form.email,
-      password: Math.random().toString(36).slice(2, 12),
-      options: { data: { role: 'partner', name: form.name, phone: form.phone } },
-    });
-
-    if (authError) {
-      setError(authError.message);
+    try {
+      const res = await fetch('/api/partner', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ ...form, consentMarketing: true }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong. Please try again.');
+        setLoading(false);
+        return;
+      }
+      router.push('/partners/check-email');
+    } catch {
+      setError('Network error. Please try again.');
       setLoading(false);
-      return;
     }
-
-    const code = generateCode(form.name);
-
-    const { error: partnerError } = await supabase.from('partners').insert({
-      user_id: authData.user?.id,
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
-      code,
-      status: 'active',
-    });
-
-    if (partnerError) {
-      setError(partnerError.message);
-      setLoading(false);
-      return;
-    }
-
-    router.push('/partners/welcome?code=' + code);
   };
 
   return (
@@ -80,9 +60,9 @@ export default function PartnerSignup() {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-black text-white py-3 rounded-lg font-medium hover:opacity-80 transition"
+          className="w-full bg-black text-white py-3 rounded-lg font-medium hover:opacity-80 transition disabled:opacity-50"
         >
-          {loading ? 'Creating your link...' : 'Get My Referral Link'}
+          {loading ? 'Sending confirmation email…' : 'Get My Referral Link'}
         </button>
       </div>
     </main>

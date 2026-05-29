@@ -3,27 +3,39 @@ import { Footer } from '@/components/sections/footer';
 import { CheckCircle, XCircle, Info } from 'lucide-react';
 
 interface Props {
-  searchParams: Promise<{ status?: string; type?: string }>;
+  searchParams: Promise<{ status?: string; type?: string; code?: string }>;
 }
 
 export default async function VerifyPage({ searchParams }: Props) {
-  const { status, type } = await searchParams;
+  const { status, type, code } = await searchParams;
+
+  const partnerLink = code ? `https://iclose.ae/ref/${code}` : null;
 
   const content = {
     success: {
       icon: CheckCircle,
       iconColor: 'text-green-500',
-      title: type === 'educator' ? 'Application confirmed.' : 'Email confirmed.',
+      title:
+        type === 'educator'
+          ? 'Application confirmed.'
+          : type === 'partner'
+            ? "You're in."
+            : 'Email confirmed.',
       body:
         type === 'educator'
           ? "Your Specialist application is now verified and under review. We'll be in touch within a few days."
-          : "You're on the iClose founding cohort. We'll send your Academy login credentials before launch.",
+          : type === 'partner'
+            ? 'Your partner referral link is live. Share it anywhere and we will track every click back to you.'
+            : "You're on the iClose founding cohort. We'll send your Academy login credentials before launch.",
     },
     already: {
       icon: Info,
       iconColor: 'text-accent',
       title: 'Already verified.',
-      body: 'This link has already been used. Your email is confirmed, nothing more to do.',
+      body:
+        type === 'partner'
+          ? 'This link has already been used. Your partner account is active.'
+          : 'This link has already been used. Your email is confirmed, nothing more to do.',
     },
     expired: {
       icon: XCircle,
@@ -45,6 +57,10 @@ export default async function VerifyPage({ searchParams }: Props) {
   };
 
   const Icon = content.icon;
+  const showPartnerLink =
+    type === 'partner' &&
+    (status === 'success' || status === 'already') &&
+    partnerLink;
 
   return (
     <>
@@ -62,6 +78,14 @@ export default async function VerifyPage({ searchParams }: Props) {
             <p className="text-[16px] text-graphite-dark leading-[1.55]" style={{ letterSpacing: '-0.012em' }}>
               {content.body}
             </p>
+            {showPartnerLink && (
+              <div className="mt-6 text-left">
+                <p className="text-[13px] text-graphite-dark mb-2">Your referral link</p>
+                <div className="flex items-center gap-2 border border-hairline rounded-lg px-4 py-3">
+                  <span className="flex-1 text-[14px] truncate">{partnerLink}</span>
+                </div>
+              </div>
+            )}
             <a
               href="/"
               className="mt-8 inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-hairline text-ink text-[14px] hover:bg-mist transition-colors"
