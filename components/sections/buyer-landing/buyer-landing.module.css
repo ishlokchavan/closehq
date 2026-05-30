@@ -1148,7 +1148,7 @@
    STEPS — onboarding media card + numbered timeline
    =================================================================== */
 .stepsSection {
-  padding: 100px 22px;
+  padding: 76px 22px;
   background: var(--bg);
 }
 .stepsInner {
@@ -1158,7 +1158,7 @@
 .stepsHead {
   text-align: center;
   max-width: 640px;
-  margin: 0 auto 44px;
+  margin: 0 auto 40px;
 }
 .stepsEyebrow {
   display: inline-block;
@@ -1184,6 +1184,259 @@
   line-height: 1.55;
   color: var(--text-muted);
   letter-spacing: -0.01em;
+}
+
+/* ---- Step flow: auto-advancing app screen + synced rail ---- */
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+.flowPhone {
+  position: relative;
+  width: 290px;
+  padding: 9px 9px 0;
+  background: #0f0f12;
+  border-radius: 36px 36px 24px 24px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 30px 64px rgba(17, 24, 39, 0.26);
+}
+.flowNotch {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 18px;
+  background: #0f0f12;
+  border-radius: 0 0 12px 12px;
+  z-index: 3;
+}
+.flowScreen {
+  position: relative;
+  height: 234px;
+  background: #fff;
+  border-radius: 28px 28px 16px 16px;
+  padding: 32px 18px 20px;
+  overflow: hidden;
+}
+.flowState {
+  height: 100%;
+}
+.fsBox {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.fsIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(0, 113, 227, 0.1);
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+.fsHint {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.fsField {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 13px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.fsBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--blue);
+  border-radius: 10px;
+}
+.fsNote {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-light);
+  text-align: center;
+}
+.fsProjs {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.fsProj {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 11px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+}
+.fsProjThumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  background: linear-gradient(150deg, #4aa3ff, #0058a3);
+}
+.fsProjMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.fsProjMeta b {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.fsProjMeta i {
+  font-size: 11px;
+  font-style: normal;
+  color: var(--text-light);
+}
+.fsToggle {
+  position: relative;
+  display: flex;
+  margin: 12px 0 10px;
+  padding: 4px;
+  background: var(--bg-alt);
+  border-radius: 11px;
+}
+.fsToggleKnob {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: calc(50% - 4px);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.1);
+}
+.fsToggleOpt {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+.fsToggleOn {
+  color: var(--blue);
+}
+.fsWin {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.fsWin:last-child {
+  border-bottom: none;
+}
+.fsWinTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+.fsWinVal {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #1e9e44;
+}
+.flowRail {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+.flowLine {
+  position: absolute;
+  top: 15px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  background: var(--border-soft);
+  border-radius: 999px;
+}
+.flowLineFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--blue);
+}
+.flowDots {
+  position: relative;
+  display: flex;
+}
+.flowDotItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+.flowDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--border);
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+.flowDotLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+.flowDotOn .flowDot {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+.flowDotOn .flowDotLabel {
+  color: var(--ink);
+}
+@media (max-width: 560px) {
+  .flowDotLabel { font-size: 11px; }
+  .flowPhone { width: 260px; }
 }
 
 /* Onboarding media card */

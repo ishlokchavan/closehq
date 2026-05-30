@@ -14,13 +14,12 @@ import {
   Wallet,
   BadgeCheck,
   Map,
-  Video,
-  Mic,
-  Calendar,
   Grid2x2,
   ScrollText,
   Play,
   Banknote,
+  UserPlus,
+  Send,
 } from 'lucide-react';
 import styles from './buyer-landing.module.css';
 
@@ -633,31 +632,113 @@ export function BuyerTools() {
   );
 }
 
-/* ----------------- STEPS (numbered timeline + onboarding media card) ----------------- */
-const buyerSteps = [
-  {
-    n: '01',
-    title: 'Browse the market.',
-    body: 'Sign up free. Explore every UAE project, floor plan, and price. No agent contact until you want it.',
-  },
-  {
-    n: '02',
-    title: 'Shortlist with confidence.',
-    body: 'Compare ROI, developers, and payment plans before you speak to anyone.',
-  },
-  {
-    n: '03',
-    title: 'Match with a specialist.',
-    body: 'A certified closer, briefed on your shortlist, takes it from view to offer.',
-  },
-  {
-    n: '04',
-    title: 'Close and collect 100%.',
-    body: 'The full commission comes back to you as cashback. Paid on transfer.',
-  },
-];
+/* ----------------- STEP FLOW (auto-advancing app demo) ----------------- */
+const flowSteps = ['Register', 'Access', 'Inquire', 'Buy'];
+
+/* Screen states, each a tiny in-app visual. The screen auto-advances through
+   register -> platform -> inquiry (off-plan/secondary) -> close, looping so
+   it reads like a screen-recording of the real app. Minimal text by design. */
+function FlowScreen({ active }: { active: number }) {
+  if (active === 0) {
+    return (
+      <div className={styles.fsBox}>
+        <span className={styles.fsIcon}>
+          <UserPlus size={18} strokeWidth={2.2} />
+        </span>
+        <span className={styles.fsHint}>Create your account</span>
+        <div className={styles.fsField}>you@email.com</div>
+        <div className={styles.fsBtn}>
+          Register <Check size={14} strokeWidth={3} />
+        </div>
+        <span className={styles.fsNote}>Free · 60 seconds</span>
+      </div>
+    );
+  }
+  if (active === 1) {
+    return (
+      <div className={styles.fsBox}>
+        <span className={styles.fsHint}>Your platform</span>
+        <div className={styles.fsProjs}>
+          {['Creek Vista', 'Marina Shores', 'Hartland II'].map((p, i) => (
+            <motion.div
+              className={styles.fsProj}
+              key={p}
+              initial={{ opacity: 0, x: 14 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 + i * 0.12, ease }}
+            >
+              <span className={styles.fsProjThumb} />
+              <span className={styles.fsProjMeta}>
+                <b>{p}</b>
+                <i>Off-plan · from AED 1.4M</i>
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  if (active === 2) {
+    return (
+      <div className={styles.fsBox}>
+        <span className={styles.fsHint}>New inquiry</span>
+        <div className={styles.fsProj}>
+          <span className={styles.fsProjThumb} />
+          <span className={styles.fsProjMeta}>
+            <b>Creek Vista · Unit 1204</b>
+            <i>2BR · 1,240 sqft</i>
+          </span>
+        </div>
+        <div className={styles.fsToggle}>
+          <motion.span
+            className={styles.fsToggleKnob}
+            initial={false}
+            animate={{ left: '4px' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 26 }}
+          />
+          <span className={`${styles.fsToggleOpt} ${styles.fsToggleOn}`}>Off-plan</span>
+          <span className={styles.fsToggleOpt}>Secondary</span>
+        </div>
+        <div className={styles.fsBtn}>
+          Send inquiry <Send size={13} strokeWidth={2.4} />
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className={styles.fsBox}>
+      <span className={styles.fsHint}>You close</span>
+      <div className={styles.fsWin}>
+        <span className={styles.fsWinTag}>
+          <Building2 size={12} strokeWidth={2.4} /> Off-plan
+        </span>
+        <span className={styles.fsWinVal}>100% cashback</span>
+      </div>
+      <div className={styles.fsWin}>
+        <span className={styles.fsWinTag}>
+          <RotateCcw size={12} strokeWidth={2.4} /> Secondary
+        </span>
+        <span className={styles.fsWinVal}>AED 0 you pay</span>
+      </div>
+    </div>
+  );
+}
 
 export function BuyerSteps() {
+  const reduce =
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (reduce) {
+      setActive(3);
+      return;
+    }
+    const id = setInterval(() => setActive((a) => (a + 1) % 4), 2600);
+    return () => clearInterval(id);
+  }, [reduce]);
+
   return (
     <section className={styles.stepsSection}>
       <div className={styles.stepsInner}>
@@ -669,78 +750,65 @@ export function BuyerSteps() {
           transition={{ duration: 0.6, ease }}
         >
           <span className={styles.stepsEyebrow}>How it works</span>
-          <h2 className={styles.stepsHeading}>Four steps. No pressure.</h2>
+          <h2 className={styles.stepsHeading}>From sign-up to keys.</h2>
           <p className={styles.stepsSub}>
-            From browsing to keys, in your favour at every stage.
+            Four steps, in your favour at every stage.
           </p>
         </motion.div>
 
-        {/* Onboarding media card — pure CSS mock of a call/session UI */}
         <motion.div
-          className={styles.onboard}
+          className={styles.flow}
           initial={{ opacity: 0, y: 36, scale: 0.97 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={inView}
           transition={{ duration: 0.6, ease }}
         >
-          <div className={styles.onboardScreen}>
-            <span className={styles.onboardLive}>
-              <span className={styles.onboardLiveDot} /> Live session
+          {/* App screen */}
+          <div className={styles.flowPhone} aria-hidden="true">
+            <div className={styles.flowNotch} />
+            <div className={styles.flowScreen}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active}
+                  className={styles.flowState}
+                  initial={{ opacity: 0, x: 26 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -26 }}
+                  transition={{ duration: 0.35, ease }}
+                >
+                  <FlowScreen active={active} />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Step rail */}
+          <div className={styles.flowRail}>
+            <span className={styles.flowLine}>
+              <motion.span
+                className={styles.flowLineFill}
+                animate={{ width: `${(active / 3) * 100}%` }}
+                transition={{ duration: 0.5, ease }}
+              />
             </span>
-
-            {/* main "video" tile */}
-            <div className={styles.onboardMain}>
-              <span className={styles.onboardAvatarLg}>SA</span>
-            </div>
-
-            {/* self "video" tile */}
-            <div className={styles.onboardSelf}>
-              <span className={styles.onboardAvatarSm}>You</span>
-            </div>
-
-            {/* floating session info card */}
-            <div className={styles.onboardInfo}>
-              <span className={styles.onboardInfoIcon}>
-                <Calendar size={15} strokeWidth={2.4} />
-              </span>
-              <span>
-                <span className={styles.onboardInfoTitle}>Onboarding session</span>
-                <span className={styles.onboardInfoMeta}>Today · 13:00–13:45</span>
-              </span>
-            </div>
-
-            {/* control bar */}
-            <div className={styles.onboardBar}>
-              <span className={styles.onboardCtrl}>
-                <Mic size={16} strokeWidth={2.2} />
-              </span>
-              <span className={`${styles.onboardCtrl} ${styles.onboardCtrlActive}`}>
-                <Video size={16} strokeWidth={2.2} />
-              </span>
-              <span className={styles.onboardCtrl}>
-                <Check size={16} strokeWidth={2.6} />
-              </span>
+            <div className={styles.flowDots}>
+              {flowSteps.map((label, i) => (
+                <button
+                  type="button"
+                  key={label}
+                  className={`${styles.flowDotItem} ${i <= active ? styles.flowDotOn : ''}`}
+                  onClick={() => setActive(i)}
+                  aria-label={label}
+                >
+                  <span className={styles.flowDot}>
+                    {i < active ? <Check size={13} strokeWidth={3} /> : i + 1}
+                  </span>
+                  <span className={styles.flowDotLabel}>{label}</span>
+                </button>
+              ))}
             </div>
           </div>
         </motion.div>
-
-        {/* numbered step timeline */}
-        <div className={styles.stepsGrid}>
-          {buyerSteps.map((s, i) => (
-            <motion.div
-              className={styles.stepItem}
-              key={s.n}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={inView}
-              transition={{ duration: 0.5, delay: i * 0.08, ease }}
-            >
-              <span className={styles.stepNum}>{s.n}</span>
-              <h3 className={styles.stepTitle}>{s.title}</h3>
-              <p className={styles.stepBody}>{s.body}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );
