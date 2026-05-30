@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { ICloseLanding } from '@/components/sections/iclose-landing/iclose-landing';
+import { BuyerLanding } from '@/components/sections/buyer-landing/buyer-landing';
 
 export const metadata: Metadata = {
-  title: 'iClose, Learn from the best. Close more deals.',
+  title: 'iClose, 100% cashback for UAE property buyers',
   description:
-    'A proptech education platform for UAE real estate. Learn from the top 0.1% of UAE agents and keep up to 100% of your commission.',
+    'iClose gives UAE property buyers the market intelligence to buy with confidence and rebates 100% of the agent commission back to you. Off-plan or ready, every dirham in your pocket.',
 };
 
 export default function HomePage() {
-  return <ICloseLanding />;
+  return <BuyerLanding />;
 }

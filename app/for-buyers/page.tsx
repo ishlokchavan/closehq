@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: 'For Buyers · iClose',
   description:
     "iClose gives UAE buyers 100% cashback on every deal, the entire agent commission rebated back to you.",
+  // The buyer experience now lives on the root landing page. Keep this
+  // legacy route out of the index to avoid duplicate-content competition.
+  robots: { index: false, follow: false },
 };
 
 export default function ForBuyersPage() {
