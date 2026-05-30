@@ -459,7 +459,7 @@ export function BuyerLanding() {
         body={<>Tell us a bit about you. We&apos;ll line up your 100% cashback.</>}
       />
 
-      <ICloseFooter tagline="The smarter way to buy UAE property. Get 100% of the agent commission back on every deal — off-plan or ready." />
+      <ICloseFooter tagline="The smarter way to buy UAE property. Get 100% of the agent commission back on every deal, off-plan or ready." />
       </div>
     </div>
   );
