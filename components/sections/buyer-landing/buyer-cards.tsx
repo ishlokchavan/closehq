@@ -13,13 +13,16 @@ import {
   LineChart,
   Wallet,
   BadgeCheck,
-  Search,
-  LayoutGrid,
   Map,
-  ArrowUpRight,
   Video,
   Mic,
   Calendar,
+  FileText,
+  Layers,
+  Grid2x2,
+  ScrollText,
+  Play,
+  Banknote,
 } from 'lucide-react';
 import styles from './buyer-landing.module.css';
 
@@ -369,29 +372,21 @@ export function BuyerStatement() {
 }
 
 /* ----------------- TOOLS (feature row + mock-UI product cards) ----------------- */
-const toolFeatures = [
-  {
-    icon: <LayoutGrid size={18} strokeWidth={2.2} />,
-    title: 'Project deep-dives',
-    body: 'Every active UAE project. Developer track record, construction progress, ROI data.',
-  },
-  {
-    icon: <Search size={18} strokeWidth={2.2} />,
-    title: 'Floor plans & specs',
-    body: 'Actual unit layouts, sizes, and finishing specs. Know what you buy before you visit.',
-  },
-  {
-    icon: <Map size={18} strokeWidth={2.2} />,
-    title: 'Community intelligence',
-    body: 'Rental yields and capital appreciation by area, not just by tower.',
-  },
+/* Every resource a serious buyer needs for any project — the brief a broker
+   would keep to themselves, opened up. Each chip lifts + reveals on hover. */
+const resourceDocs = [
+  { icon: <FileText size={16} strokeWidth={2.2} />, label: 'Brochure' },
+  { icon: <Grid2x2 size={16} strokeWidth={2.2} />, label: 'Floor plan' },
+  { icon: <Map size={16} strokeWidth={2.2} />, label: 'Master plan' },
+  { icon: <Layers size={16} strokeWidth={2.2} />, label: 'Cluster plan' },
+  { icon: <ScrollText size={16} strokeWidth={2.2} />, label: 'Factsheet' },
+  { icon: <Banknote size={16} strokeWidth={2.2} />, label: 'Payment plan' },
 ];
 
 export function BuyerTools() {
   return (
     <section className={styles.toolsSection}>
       <div className={styles.toolsInner}>
-        {/* heading left, paragraph right */}
         <motion.div
           className={styles.toolsHead}
           initial={{ opacity: 0, y: 28 }}
@@ -399,131 +394,107 @@ export function BuyerTools() {
           viewport={inView}
           transition={{ duration: 0.6, ease }}
         >
-          <h2 className={styles.toolsHeading}>
-            Smarter tools for buying UAE property.
-          </h2>
+          <h2 className={styles.toolsHeading}>Buy like an insider.</h2>
           <p className={styles.toolsLede}>
-            Browse, compare, and analyse every development, with the full
-            commission rebated back to you.
+            Keep the commission. See every project, every document, every
+            developer — all in one place.
           </p>
         </motion.div>
 
-        {/* 3-column feature row */}
-        <div className={styles.toolsFeatures}>
-          {toolFeatures.map((f, i) => (
-            <motion.div
-              className={styles.toolFeature}
-              key={f.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={inView}
-              transition={{ duration: 0.5, delay: i * 0.08, ease }}
-            >
-              <span className={styles.toolFeatureIcon}>{f.icon}</span>
-              <h3 className={styles.toolFeatureTitle}>{f.title}</h3>
-              <p className={styles.toolFeatureBody}>{f.body}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* mock-UI product cards */}
-        <div className={styles.toolsCards}>
-          {/* Card 1 — ROI / invested amount */}
-          <motion.div
-            className={styles.toolCard}
+        {/* Bento grid */}
+        <div className={styles.bento}>
+          {/* Resource library (large) */}
+          <motion.article
+            className={`${styles.bentoCard} ${styles.bentoLib}`}
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={inView}
             transition={{ duration: 0.55, ease }}
             {...cardHover}
           >
-            <div className={styles.toolCardBody}>
-              <div className={styles.muiRow}>
-                <span className={styles.muiLabel}>Projected ROI</span>
-                <span className={styles.muiPillGreen}>
-                  <TrendingUp size={12} strokeWidth={2.6} /> +12.4%
-                </span>
-              </div>
-              <div className={styles.muiValue}>
-                AED <CountUp value={2000000} />
-              </div>
-              <div className={styles.muiBarTrack}>
-                <motion.span
-                  className={styles.muiBarFill}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 0.68 }}
-                  viewport={inView}
-                  transition={{ duration: 1.1, delay: 0.2, ease }}
-                />
-              </div>
-              <div className={styles.muiScale}>
-                <span>0</span>
-                <span>5Y appreciation</span>
-                <span>68%</span>
-              </div>
+            <div className={styles.bentoHead}>
+              <span className={styles.bentoEyebrow}>Everything, transparent</span>
+              <h3 className={styles.bentoTitle}>Every document. Every developer.</h3>
             </div>
-            <span className={styles.toolCardTag}>Investment tracking</span>
-          </motion.div>
+            <motion.div
+              className={styles.docGrid}
+              variants={rowsContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={inView}
+            >
+              {resourceDocs.map((d) => (
+                <motion.div className={styles.docChip} key={d.label} variants={rowItem}>
+                  <span className={styles.docChipIcon}>{d.icon}</span>
+                  <span>{d.label}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+            <p className={styles.bentoFoot}>
+              Brochures, master &amp; cluster plans, factsheets, payment plans —
+              the full broker brief, no gatekeeping.
+            </p>
+          </motion.article>
 
-          {/* Card 2 — payment plan */}
-          <motion.div
-            className={styles.toolCard}
+          {/* Cashback */}
+          <motion.article
+            className={`${styles.bentoCard} ${styles.bentoCash}`}
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={inView}
-            transition={{ duration: 0.55, delay: 0.1, ease }}
+            transition={{ duration: 0.55, delay: 0.08, ease }}
             {...cardHover}
           >
-            <div className={styles.toolCardBody}>
-              <div className={styles.muiRow}>
-                <span className={styles.muiLabel}>Payment plan</span>
-                <span className={styles.muiPillBlue}>60 / 40</span>
+            <span className={styles.bentoEyebrow}>You keep the commission</span>
+            <div className={styles.cashRows}>
+              <div className={styles.cashRow}>
+                <div className={styles.cashRowTop}>
+                  <span className={styles.cashTag}>
+                    <Building2 size={12} strokeWidth={2.4} /> Off-plan
+                  </span>
+                  <span className={styles.cashStrike}>5%</span>
+                </div>
+                <div className={styles.cashBig}>
+                  <CountUp value={100} />% <span>cashback</span>
+                </div>
               </div>
-              <div className={styles.muiPlanRows}>
-                {[
-                  ['On booking', '20%'],
-                  ['During construction', '40%'],
-                  ['On handover', '40%'],
-                ].map(([k, v]) => (
-                  <div className={styles.muiPlanRow} key={k}>
-                    <span>{k}</span>
-                    <span className={styles.muiPlanVal}>{v}</span>
-                  </div>
-                ))}
+              <div className={styles.cashDivider} />
+              <div className={styles.cashRow}>
+                <div className={styles.cashRowTop}>
+                  <span className={styles.cashTag}>
+                    <RotateCcw size={12} strokeWidth={2.4} /> Secondary
+                  </span>
+                  <span className={styles.cashStrike}>2%</span>
+                </div>
+                <div className={styles.cashBig}>
+                  AED <CountUp value={0} /> <span>you pay</span>
+                </div>
               </div>
             </div>
-            <span className={styles.toolCardTag}>Payment breakdowns</span>
-          </motion.div>
+          </motion.article>
 
-          {/* Card 3 — verified specialist */}
-          <motion.div
-            className={styles.toolCard}
+          {/* Expert sessions */}
+          <motion.article
+            className={`${styles.bentoCard} ${styles.bentoSessions}`}
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={inView}
-            transition={{ duration: 0.55, delay: 0.2, ease }}
+            transition={{ duration: 0.55, delay: 0.16, ease }}
             {...cardHover}
           >
-            <div className={styles.toolCardBody}>
-              <div className={styles.muiRow}>
-                <span className={styles.muiLabel}>Your specialist</span>
-                <span className={styles.muiPillGreen}>
-                  <BadgeCheck size={12} strokeWidth={2.6} /> Verified
-                </span>
-              </div>
-              <div className={styles.muiSpecialist}>
-                <span className={styles.muiAvatar}>iC</span>
-                <span>
-                  <span className={styles.muiSpecName}>Certified closer</span>
-                  <span className={styles.muiSpecRole}>Briefed on your shortlist</span>
-                </span>
-              </div>
-              <button type="button" className={styles.muiCta} data-get-started="buyer">
-                Get connected <ArrowUpRight size={14} strokeWidth={2.4} />
-              </button>
+            <span className={styles.bentoEyebrow}>Learn from the source</span>
+            <h3 className={styles.bentoTitle}>Developer RM sessions.</h3>
+            <div className={styles.sessionList}>
+              {['Emaar', 'DAMAC', 'Sobha'].map((d, i) => (
+                <div className={styles.sessionRow} key={d}>
+                  <span className={styles.sessionPlay} data-i={i}>
+                    <Play size={11} strokeWidth={0} fill="currentColor" />
+                  </span>
+                  <span className={styles.sessionName}>{d} · live walkthrough</span>
+                </div>
+              ))}
             </div>
-            <span className={styles.toolCardTag}>Verified access</span>
-          </motion.div>
+          </motion.article>
         </div>
       </div>
     </section>
