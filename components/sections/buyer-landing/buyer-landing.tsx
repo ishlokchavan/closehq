@@ -7,14 +7,19 @@ import { Menu, X, Check, TrendingUp, BadgePercent, Landmark, Building2 } from 'l
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
-  PersonaSteps,
   PersonaFacts,
   PersonaQuote,
   PersonaFaq,
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 import personaStyles from '@/components/persona/persona.module.css';
-import { BuyerCompare, BuyerScenarios, BuyerStatement, BuyerTools } from './buyer-cards';
+import {
+  BuyerCompare,
+  BuyerScenarios,
+  BuyerStatement,
+  BuyerTools,
+  BuyerSteps,
+} from './buyer-cards';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -419,29 +424,7 @@ export function BuyerLanding() {
       <BuyerTools />
 
       <div id="how">
-        <PersonaSteps
-          eyebrow="How it works"
-          heading={<>From curious to confident buyer.</>}
-          body={<>Four steps. No pressure. Move at your own pace.</>}
-          steps={[
-            {
-              title: 'Access the platform.',
-              body: 'Sign up free. Browse the full UAE project library. Developments, floor plans, pricing, community breakdowns, and market data. No agent contact required until you want it.',
-            },
-            {
-              title: 'Get educated on your shortlist.',
-              body: "Narrow down using iClose's comparison tools. Understand ROI trajectories, developer credibility, and payment plans before you speak to a salesperson.",
-            },
-            {
-              title: 'Connect with a certified specialist.',
-              body: "When you're ready to view or make an offer, we connect you with a specialist who knows your shortlist. You walk in informed. So the conversation is different.",
-            },
-            {
-              title: 'Close and collect 100%.',
-              body: "Because you're buying through iClose, the full commission we earn on the deal comes back to you as cashback. Confirmed upfront. Paid on transfer.",
-            },
-          ]}
-        />
+        <BuyerSteps />
       </div>
 
       <PersonaFacts

@@ -17,6 +17,9 @@ import {
   LayoutGrid,
   Map,
   ArrowUpRight,
+  Video,
+  Mic,
+  Calendar,
 } from 'lucide-react';
 import styles from './buyer-landing.module.css';
 
@@ -514,6 +517,120 @@ export function BuyerTools() {
             </div>
             <span className={styles.toolCardTag}>Verified access</span>
           </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------- STEPS (numbered timeline + onboarding media card) ----------------- */
+const buyerSteps = [
+  {
+    n: '01',
+    title: 'Access the platform.',
+    body: 'Sign up free and browse the full UAE project library, floor plans, pricing, and market data. No agent contact until you want it.',
+  },
+  {
+    n: '02',
+    title: 'Get educated on your shortlist.',
+    body: 'Compare ROI trajectories, developer credibility, and payment plans before you ever speak to a salesperson.',
+  },
+  {
+    n: '03',
+    title: 'Connect with a specialist.',
+    body: 'When you’re ready to view or offer, we connect you with a certified closer briefed on your shortlist.',
+  },
+  {
+    n: '04',
+    title: 'Close and collect 100%.',
+    body: 'The full commission we earn comes back to you as cashback. Confirmed upfront, paid on transfer.',
+  },
+];
+
+export function BuyerSteps() {
+  return (
+    <section className={styles.stepsSection}>
+      <div className={styles.stepsInner}>
+        <motion.div
+          className={styles.stepsHead}
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, ease }}
+        >
+          <span className={styles.stepsEyebrow}>How it works</span>
+          <h2 className={styles.stepsHeading}>Three simple steps to get started.</h2>
+          <p className={styles.stepsSub}>
+            A simple onboarding flow that helps you connect the data, shortlist
+            with confidence, and start buying smarter in minutes.
+          </p>
+        </motion.div>
+
+        {/* Onboarding media card — pure CSS mock of a call/session UI */}
+        <motion.div
+          className={styles.onboard}
+          initial={{ opacity: 0, y: 36, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={inView}
+          transition={{ duration: 0.6, ease }}
+        >
+          <div className={styles.onboardScreen}>
+            <span className={styles.onboardLive}>
+              <span className={styles.onboardLiveDot} /> Live session
+            </span>
+
+            {/* main "video" tile */}
+            <div className={styles.onboardMain}>
+              <span className={styles.onboardAvatarLg}>SA</span>
+            </div>
+
+            {/* self "video" tile */}
+            <div className={styles.onboardSelf}>
+              <span className={styles.onboardAvatarSm}>You</span>
+            </div>
+
+            {/* floating session info card */}
+            <div className={styles.onboardInfo}>
+              <span className={styles.onboardInfoIcon}>
+                <Calendar size={15} strokeWidth={2.4} />
+              </span>
+              <span>
+                <span className={styles.onboardInfoTitle}>Onboarding session</span>
+                <span className={styles.onboardInfoMeta}>Today · 13:00–13:45</span>
+              </span>
+            </div>
+
+            {/* control bar */}
+            <div className={styles.onboardBar}>
+              <span className={styles.onboardCtrl}>
+                <Mic size={16} strokeWidth={2.2} />
+              </span>
+              <span className={`${styles.onboardCtrl} ${styles.onboardCtrlActive}`}>
+                <Video size={16} strokeWidth={2.2} />
+              </span>
+              <span className={styles.onboardCtrl}>
+                <Check size={16} strokeWidth={2.6} />
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* numbered step timeline */}
+        <div className={styles.stepsGrid}>
+          {buyerSteps.map((s, i) => (
+            <motion.div
+              className={styles.stepItem}
+              key={s.n}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={inView}
+              transition={{ duration: 0.5, delay: i * 0.08, ease }}
+            >
+              <span className={styles.stepNum}>{s.n}</span>
+              <h3 className={styles.stepTitle}>{s.title}</h3>
+              <p className={styles.stepBody}>{s.body}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
