@@ -10,6 +10,9 @@ import {
   Sparkles,
   Building2,
   RotateCcw,
+  LineChart,
+  Wallet,
+  BadgeCheck,
 } from 'lucide-react';
 import styles from './buyer-landing.module.css';
 
@@ -282,6 +285,77 @@ export function BuyerScenarios() {
         <p className={styles.cmpFoot}>
           Exact figures confirmed up front before you commit to any deal.
         </p>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------- STATEMENT (big headline + floating chips) ----------------- */
+export function BuyerStatement() {
+  const chip = (delay: number, dir: number) => ({
+    initial: { opacity: 0, y: 16, scale: 0.92 },
+    whileInView: { opacity: 1, y: 0, scale: 1 },
+    viewport: inView,
+    transition: { duration: 0.5, delay, ease },
+    style: { ['--bob-x' as string]: `${dir}px` },
+  });
+
+  return (
+    <section className={styles.stmtSection}>
+      <div className={styles.stmtInner}>
+        <motion.span
+          className={styles.stmtTag}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.5, ease }}
+        >
+          Market intelligence
+        </motion.span>
+
+        <motion.h2
+          className={styles.stmtHeading}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, delay: 0.05, ease }}
+        >
+          Turning UAE property data into{' '}
+          <span className={styles.stmtHeadingAccent}>smarter buying decisions.</span>
+        </motion.h2>
+
+        {/* Floating accent chips around the headline */}
+        <motion.div className={`${styles.stmtChip} ${styles.stmtChipA}`} {...chip(0.2, -6)}>
+          <span className={`${styles.stmtChipIcon} ${styles.stmtChipIconGreen}`}>
+            <LineChart size={16} strokeWidth={2.4} />
+          </span>
+          <span>
+            <span className={styles.stmtChipLabel}>Capital growth</span>
+            <span className={styles.stmtChipValue}>+18.4%</span>
+          </span>
+        </motion.div>
+
+        <motion.div className={`${styles.stmtChip} ${styles.stmtChipB}`} {...chip(0.32, 7)}>
+          <span className={`${styles.stmtChipIcon} ${styles.stmtChipIconBlue}`}>
+            <Wallet size={16} strokeWidth={2.4} />
+          </span>
+          <span>
+            <span className={styles.stmtChipLabel}>Cashback</span>
+            <span className={`${styles.stmtChipValue} ${styles.stmtChipValueGreen}`}>
+              AED 100,000
+            </span>
+          </span>
+        </motion.div>
+
+        <motion.div className={`${styles.stmtChip} ${styles.stmtChipC}`} {...chip(0.44, -5)}>
+          <span className={`${styles.stmtChipIcon} ${styles.stmtChipIconInk}`}>
+            <BadgeCheck size={16} strokeWidth={2.4} />
+          </span>
+          <span>
+            <span className={styles.stmtChipLabel}>Verified deals</span>
+            <span className={styles.stmtChipValue}>RERA-checked</span>
+          </span>
+        </motion.div>
       </div>
     </section>
   );

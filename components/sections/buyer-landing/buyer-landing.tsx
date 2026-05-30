@@ -7,7 +7,6 @@ import { Menu, X, Check, TrendingUp, BadgePercent, Landmark, Building2 } from 'l
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
-  PersonaIntro,
   PersonaFeatures,
   PersonaSteps,
   PersonaFacts,
@@ -16,7 +15,7 @@ import {
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 import personaStyles from '@/components/persona/persona.module.css';
-import { BuyerCompare, BuyerScenarios } from './buyer-cards';
+import { BuyerCompare, BuyerScenarios, BuyerStatement } from './buyer-cards';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -411,41 +410,9 @@ export function BuyerLanding() {
           .root. PersonaChrome supplies that wrapper on /for-buyers; here
           we replicate it so the highlighted cards and footer resolve
           their colours correctly instead of rendering washed-out. */}
-      <div className={personaStyles.root}>
-      <PersonaIntro
-        eyebrow="The real problem"
-        heading={<>Buying in UAE without the right intel is expensive.</>}
-        body={
-          <>
-            Most buyers walk into one of the world&apos;s most competitive
-            property markets with nothing but a developer&apos;s sales pitch.
-            That&apos;s not a strategy.
-          </>
-        }
-        items={[
-          {
-            tag: 'Bias',
-            title: 'Agents prioritise their commission.',
-            body: "Not the project that's actually right for your goals or budget.",
-          },
-          {
-            tag: 'Overwhelm',
-            title: 'Hundreds of launches a year.',
-            body: 'No easy way to compare quality, location ROI, developer track record, or real payment terms.',
-          },
-          {
-            tag: 'Opacity',
-            title: 'Commission baked into every deal.',
-            body: 'Most buyers never see the breakdown, and never see a cent of it back.',
-          },
-          {
-            tag: 'Risk',
-            title: 'First-time + international buyers are exposed.',
-            body: 'Navigating RERA rules, DLD fees, and developer credibility without a guide is a recipe for losses.',
-          },
-        ]}
-      />
+      <BuyerStatement />
 
+      <div className={personaStyles.root}>
       <BuyerCompare />
 
       <BuyerScenarios />
