@@ -444,9 +444,17 @@ export function BuyerTools() {
                   <TrendingUp size={12} strokeWidth={2.6} /> +12.4%
                 </span>
               </div>
-              <div className={styles.muiValue}>AED 2,000,000</div>
+              <div className={styles.muiValue}>
+                AED <CountUp value={2000000} />
+              </div>
               <div className={styles.muiBarTrack}>
-                <span className={styles.muiBarFill} style={{ width: '68%' }} />
+                <motion.span
+                  className={styles.muiBarFill}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 0.68 }}
+                  viewport={inView}
+                  transition={{ duration: 1.1, delay: 0.2, ease }}
+                />
               </div>
               <div className={styles.muiScale}>
                 <span>0</span>

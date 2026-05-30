@@ -1,8 +1,14 @@
 'use client';
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useSpring,
+  useMotionValue,
+} from 'framer-motion';
 import { Menu, X, Check, TrendingUp, BadgePercent, Landmark, Building2 } from 'lucide-react';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
@@ -226,6 +232,51 @@ function FloatingCard({
   );
 }
 
+/* Magnetic button — the element drifts toward the cursor on hover and
+   springs back on leave. Renders as a real <button> so the global
+   data-get-started click handler still fires. */
+function MagneticButton({
+  children,
+  className,
+  ...rest
+}: {
+  children: ReactNode;
+  className?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 220, damping: 16 });
+  const sy = useSpring(y, { stiffness: 220, damping: 16 });
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    x.set((e.clientX - (r.left + r.width / 2)) * 0.35);
+    y.set((e.clientY - (r.top + r.height / 2)) * 0.35);
+  };
+  const reset = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.button
+      ref={ref}
+      type="button"
+      className={className}
+      style={{ x: sx, y: sy }}
+      onMouseMove={onMove}
+      onMouseLeave={reset}
+      whileTap={{ scale: 0.96 }}
+      {...(rest as object)}
+    >
+      {children}
+    </motion.button>
+  );
+}
+
 function BuyerHero() {
   return (
     <section className={styles.hero} id="top">
@@ -266,9 +317,9 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.18, ease }}
         >
-          <button type="button" className={styles.btnPrimary} data-get-started="buyer">
+          <MagneticButton className={styles.btnPrimary} data-get-started="buyer">
             Get started
-          </button>
+          </MagneticButton>
           <a href="#how" className={styles.btnGhost}>
             See how it works <span aria-hidden="true">→</span>
           </a>
@@ -394,9 +445,21 @@ function BuyerHero() {
   );
 }
 
+/* Thin gradient bar pinned to the top that tracks scroll progress. */
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  return <motion.div className={styles.scrollProgress} style={{ scaleX }} aria-hidden="true" />;
+}
+
 export function BuyerLanding() {
   return (
     <div className={styles.root}>
+      <ScrollProgress />
       <BuyerNav />
 
       <BuyerHero />

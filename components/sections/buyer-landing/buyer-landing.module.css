@@ -20,6 +20,18 @@
   background: var(--bg);
 }
 
+/* Scroll-progress bar pinned to the very top of the viewport. */
+.scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 200;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #0071e3, #34c759);
+}
+
 /* ----------------- NAV ----------------- */
 .nav {
   position: fixed;
@@ -691,6 +703,12 @@
   background: var(--bg-alt);
   color: var(--ink);
   margin-bottom: 16px;
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+.toolFeature:hover .toolFeatureIcon {
+  background: var(--blue);
+  color: #fff;
+  transform: translateY(-3px) rotate(-6deg);
 }
 .toolFeatureTitle {
   font-size: 18px;
@@ -789,8 +807,10 @@
 }
 .muiBarFill {
   display: block;
+  width: 100%;
   height: 100%;
   border-radius: 999px;
+  transform-origin: 0 50%;
   background: linear-gradient(90deg, #34c759, #1e9e44);
 }
 .muiScale {
@@ -1091,13 +1111,21 @@
 .stepItem {
   position: relative;
   text-align: left;
+  transition: transform 0.25s;
+}
+.stepItem:hover {
+  transform: translateY(-4px);
 }
 .stepNum {
   display: block;
+  width: fit-content;
   font-size: 28px;
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: var(--blue);
+  background: linear-gradient(120deg, #0071e3, #34c759);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 12px;
 }
 .stepTitle {
