@@ -624,10 +624,12 @@ export function PersonaWaitlist({
   heading,
   body,
   defaultIntent,
+  hideIntent,
 }: {
   heading: ReactNode;
   body?: ReactNode;
   defaultIntent?: 'buyer' | 'closer';
+  hideIntent?: boolean;
 }) {
   return (
     <section className={styles.personaWaitlist} id="waitlist">
@@ -652,7 +654,7 @@ export function PersonaWaitlist({
         viewport={inView}
         transition={{ duration: 0.6, delay: 0.2, ease }}
       >
-        <WaitlistForm defaultIntent={defaultIntent} />
+        <WaitlistForm defaultIntent={defaultIntent} hideIntent={hideIntent} />
       </motion.div>
     </section>
   );

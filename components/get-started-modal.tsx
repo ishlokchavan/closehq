@@ -111,12 +111,20 @@ export function GetStartedProvider({ children }: { children: ReactNode }) {
                     ×
                   </button>
                   <div className={styles.header}>
-                    <h2 className={styles.title}>Ready to close?</h2>
+                    <h2 className={styles.title}>
+                      {intent === 'buyer' ? 'Ready to buy?' : 'Ready to close?'}
+                    </h2>
                     <p className={styles.subtitle}>
                       Tell us a bit about you. We&apos;ll be in touch shortly.
                     </p>
                   </div>
-                  <WaitlistForm defaultIntent={intent || 'closer'} />
+                  {/* On the buyer-only flow we lock the form to buyer intent
+                      and hide the closer/buyer picker. Other triggers keep
+                      the choice. */}
+                  <WaitlistForm
+                    defaultIntent={intent || 'closer'}
+                    hideIntent={intent === 'buyer'}
+                  />
                 </motion.div>
               </motion.div>
             )}

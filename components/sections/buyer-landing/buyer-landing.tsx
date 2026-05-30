@@ -532,6 +532,7 @@ export function BuyerLanding() {
 
       <PersonaWaitlist
         defaultIntent="buyer"
+        hideIntent
         heading={<>Your next property starts with the right intel.</>}
         body={
           <>

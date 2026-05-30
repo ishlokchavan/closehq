@@ -72,9 +72,16 @@ export type WaitlistFormProps = {
      persona ('buyer' on /for-buyers, 'closer' on /for-closers); the
      landing page defaults to 'closer' (first option) for convenience. */
   defaultIntent?: (typeof intentValues)[number];
+  /* Hides the "What brings you here?" intent picker entirely and locks
+     the submission to defaultIntent. Used on the buyer-only landing so
+     the form reads as a single buyer flow, not a closer/buyer choice. */
+  hideIntent?: boolean;
 };
 
-export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {}) {
+export function WaitlistForm({
+  defaultIntent = 'closer',
+  hideIntent = false,
+}: WaitlistFormProps = {}) {
   const {
     register,
     handleSubmit,
@@ -371,36 +378,38 @@ export function WaitlistForm({ defaultIntent = 'closer' }: WaitlistFormProps = {
           </div>
         </div>
 
-        <div className={styles.wlField}>
-          <span className={styles.wlLabel}>What brings you here?</span>
-          <Controller
-            control={control}
-            name="intent"
-            render={({ field }) => (
-              <div className={styles.wlPickGroup} role="radiogroup">
-                {intentOptions.map((opt) => {
-                  const checked = field.value === opt.value;
-                  return (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      role="radio"
-                      aria-checked={checked}
-                      onClick={() => field.onChange(opt.value)}
-                      className={`${styles.wlPickCard} ${
-                        checked ? styles.wlPickCardActive : ''
-                      }`}
-                    >
-                      <span className={styles.wlPickCardLabel}>{opt.label}</span>
-                      <span className={styles.wlPickCardSub}>{opt.sub}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          />
-          {err('intent') && <p className={styles.tfError}>{err('intent')}</p>}
-        </div>
+        {!hideIntent && (
+          <div className={styles.wlField}>
+            <span className={styles.wlLabel}>What brings you here?</span>
+            <Controller
+              control={control}
+              name="intent"
+              render={({ field }) => (
+                <div className={styles.wlPickGroup} role="radiogroup">
+                  {intentOptions.map((opt) => {
+                    const checked = field.value === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        role="radio"
+                        aria-checked={checked}
+                        onClick={() => field.onChange(opt.value)}
+                        className={`${styles.wlPickCard} ${
+                          checked ? styles.wlPickCardActive : ''
+                        }`}
+                      >
+                        <span className={styles.wlPickCardLabel}>{opt.label}</span>
+                        <span className={styles.wlPickCardSub}>{opt.sub}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            />
+            {err('intent') && <p className={styles.tfError}>{err('intent')}</p>}
+          </div>
+        )}
 
         <div className={styles.wlField}>
           <span className={styles.wlLabel}>What are you focusing on?</span>
