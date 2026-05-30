@@ -365,7 +365,7 @@
   height: auto;
   margin-bottom: clamp(-170px, -13vw, -110px);
   animation: orbFloat 9s ease-in-out infinite;
-  filter: drop-shadow(0 26px 54px rgba(27, 94, 32, 0.18));
+  filter: drop-shadow(0 26px 54px rgba(0, 88, 163, 0.22));
 }
 
 /* Floating stat cards */

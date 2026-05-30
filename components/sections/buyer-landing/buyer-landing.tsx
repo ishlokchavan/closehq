@@ -359,7 +359,7 @@ function BuyerHero() {
 
           <div className={styles.orbWrap}>
             <motion.img
-              src="/images/spiral-flower.webp"
+              src="/images/spiral-flower.svg"
               alt=""
               className={styles.orbFlower}
               initial={{ opacity: 0, scale: 0.8 }}
