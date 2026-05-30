@@ -450,24 +450,28 @@ export function BuyerTools() {
               <div className={styles.cashRow}>
                 <div className={styles.cashRowTop}>
                   <span className={styles.cashTag}>
-                    <Building2 size={12} strokeWidth={2.4} /> Off-plan
+                    <Building2 size={13} strokeWidth={2.4} /> Off-plan
                   </span>
-                  <span className={styles.cashStrike}>5%</span>
+                  <span className={styles.cashStrike}>was 5%</span>
                 </div>
                 <div className={styles.cashBig}>
-                  <CountUp value={100} />% <span>cashback</span>
+                  <span className={styles.cashNum}>
+                    <CountUp value={100} />%
+                  </span>
+                  <span className={styles.cashCap}>cashback to you</span>
                 </div>
               </div>
               <div className={styles.cashDivider} />
               <div className={styles.cashRow}>
                 <div className={styles.cashRowTop}>
                   <span className={styles.cashTag}>
-                    <RotateCcw size={12} strokeWidth={2.4} /> Secondary
+                    <RotateCcw size={13} strokeWidth={2.4} /> Secondary
                   </span>
-                  <span className={styles.cashStrike}>2%</span>
+                  <span className={styles.cashStrike}>was 2%</span>
                 </div>
                 <div className={styles.cashBig}>
-                  AED <CountUp value={0} /> <span>you pay</span>
+                  <span className={styles.cashNum}>AED 0</span>
+                  <span className={styles.cashCap}>you pay</span>
                 </div>
               </div>
             </div>

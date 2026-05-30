@@ -825,35 +825,40 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: #a1a1a6;
+  color: #c4c4ca;
 }
 .cashStrike {
-  font-size: 14px;
-  font-weight: 600;
-  color: #6c6c72;
-  text-decoration: line-through;
-  text-decoration-color: #c8392f;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8a8a90;
 }
 .cashBig {
-  font-size: clamp(26px, 3.4vw, 36px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+/* The win number — this is what should dominate the tile. */
+.cashNum {
+  font-size: clamp(34px, 4.4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
   line-height: 1;
   color: #fff;
 }
-.cashBig span {
-  font-size: 14px;
+/* Supporting caption — deliberately small + green, never competes. */
+.cashCap {
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
   color: #51d06a;
 }
 .cashDivider {
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
-  margin: 18px 0;
+  margin: 22px 0;
 }
 
 /* ---- Sessions tile ---- */
@@ -881,26 +886,31 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
   background: var(--blue);
   color: #fff;
   flex-shrink: 0;
   padding-left: 2px;
-  animation: playPulse 2.6s ease-in-out infinite;
+  animation: playPulse 2.2s ease-in-out infinite;
 }
-.sessionPlay[data-i='1'] { animation-delay: 0.5s; }
-.sessionPlay[data-i='2'] { animation-delay: 1s; }
+.sessionPlay[data-i='1'] { animation-delay: 0.7s; }
+.sessionPlay[data-i='2'] { animation-delay: 1.4s; }
+.sessionRow:hover .sessionPlay {
+  scale: 1.1;
+}
 .sessionName {
   font-size: 13.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--ink);
 }
+/* Stronger, continuously visible ring pulse + gentle scale. */
 @keyframes playPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.35); }
-  50% { box-shadow: 0 0 0 7px rgba(0, 113, 227, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.45); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 113, 227, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0); }
 }
 
 @media (max-width: 860px) {
