@@ -1,10 +1,17 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Cinzel, Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
 import { CookieConsent } from '@/components/cookie-consent';
 import { GetStartedProvider } from '@/components/get-started-modal';
 import './globals.css';
+
+const fontCinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
 
 const fontDisplay = Inter_Tight({
   subsets: ['latin'],
@@ -121,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
+      className={`${fontCinzel.variable} ${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
     >
       <body className="font-sans bg-paper text-ink antialiased">
         <GetStartedProvider>{children}</GetStartedProvider>
