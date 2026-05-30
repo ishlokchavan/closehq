@@ -17,6 +17,7 @@ import {
   PersonaFaq,
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
+import personaStyles from '@/components/persona/persona.module.css';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -314,6 +315,12 @@ export function BuyerLanding() {
 
       <BuyerHero />
 
+      {/* The Persona* sections + footer rely on CSS custom properties
+          (--text, --bg-dark, --border, etc.) defined on persona's own
+          .root. PersonaChrome supplies that wrapper on /for-buyers; here
+          we replicate it so the highlighted cards and footer resolve
+          their colours correctly instead of rendering washed-out. */}
+      <div className={personaStyles.root}>
       <PersonaIntro
         eyebrow="The real problem"
         heading={<>Buying in UAE without the right intel is expensive.</>}
@@ -543,6 +550,7 @@ export function BuyerLanding() {
       />
 
       <ICloseFooter />
+      </div>
     </div>
   );
 }
