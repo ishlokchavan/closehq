@@ -403,9 +403,8 @@ export function BuyerTools() {
             Smarter tools for buying UAE property.
           </h2>
           <p className={styles.toolsLede}>
-            Browse, compare, and analyse every development with clear market
-            intelligence and tools built to optimise your buying decision, with
-            the full commission rebated back to you.
+            Browse, compare, and analyse every development, with the full
+            commission rebated back to you.
           </p>
         </motion.div>
 
@@ -527,23 +526,23 @@ export function BuyerTools() {
 const buyerSteps = [
   {
     n: '01',
-    title: 'Access the platform.',
-    body: 'Sign up free and browse the full UAE project library, floor plans, pricing, and market data. No agent contact until you want it.',
+    title: 'Browse the market.',
+    body: 'Sign up free. Explore every UAE project, floor plan, and price. No agent contact until you want it.',
   },
   {
     n: '02',
-    title: 'Get educated on your shortlist.',
-    body: 'Compare ROI trajectories, developer credibility, and payment plans before you ever speak to a salesperson.',
+    title: 'Shortlist with confidence.',
+    body: 'Compare ROI, developers, and payment plans before you speak to anyone.',
   },
   {
     n: '03',
-    title: 'Connect with a specialist.',
-    body: 'When you’re ready to view or offer, we connect you with a certified closer briefed on your shortlist.',
+    title: 'Match with a specialist.',
+    body: 'A certified closer, briefed on your shortlist, takes it from view to offer.',
   },
   {
     n: '04',
     title: 'Close and collect 100%.',
-    body: 'The full commission we earn comes back to you as cashback. Confirmed upfront, paid on transfer.',
+    body: 'The full commission comes back to you as cashback. Paid on transfer.',
   },
 ];
 
@@ -559,10 +558,9 @@ export function BuyerSteps() {
           transition={{ duration: 0.6, ease }}
         >
           <span className={styles.stepsEyebrow}>How it works</span>
-          <h2 className={styles.stepsHeading}>Three simple steps to get started.</h2>
+          <h2 className={styles.stepsHeading}>Four steps. No pressure.</h2>
           <p className={styles.stepsSub}>
-            A simple onboarding flow that helps you connect the data, shortlist
-            with confidence, and start buying smarter in minutes.
+            From browsing to keys, in your favour at every stage.
           </p>
         </motion.div>
 

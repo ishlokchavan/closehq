@@ -7,19 +7,12 @@ import { Menu, X, Check, TrendingUp, BadgePercent, Landmark, Building2 } from 'l
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
-  PersonaFacts,
   PersonaQuote,
   PersonaFaq,
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 import personaStyles from '@/components/persona/persona.module.css';
-import {
-  BuyerCompare,
-  BuyerScenarios,
-  BuyerStatement,
-  BuyerTools,
-  BuyerSteps,
-} from './buyer-cards';
+import { BuyerCompare, BuyerTools, BuyerSteps } from './buyer-cards';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -263,9 +256,8 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          iClose gives UAE buyers the deep market intelligence to buy with
-          confidence, then rebates the entire agent commission back to you.
-          Off-plan or ready, every dirham goes in your pocket.
+          Deep market intelligence, then the entire agent commission rebated
+          back to you. Off-plan or ready.
         </motion.p>
 
         <motion.div
@@ -414,12 +406,8 @@ export function BuyerLanding() {
           .root. PersonaChrome supplies that wrapper on /for-buyers; here
           we replicate it so the highlighted cards and footer resolve
           their colours correctly instead of rendering washed-out. */}
-      <BuyerStatement />
-
       <div className={personaStyles.root}>
       <BuyerCompare />
-
-      <BuyerScenarios />
 
       <BuyerTools />
 
@@ -427,19 +415,9 @@ export function BuyerLanding() {
         <BuyerSteps />
       </div>
 
-      <PersonaFacts
-        heading={<>Why this market. Why now.</>}
-        items={[
-          { stat: '8–12%', label: 'Average net rental yield. Among the highest globally' },
-          { stat: '0%', label: 'Capital gains and income tax on UAE property earnings' },
-          { stat: '170+', label: 'Nationalities actively buying. The most international market on earth' },
-          { stat: 'AED 2M', label: 'Purchase threshold that qualifies you for a UAE Golden Visa' },
-        ]}
-      />
-
       <div id="reviews">
         <PersonaQuote
-          quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks. And got the entire AED 40,000 commission back as cashback."
+          quote="Everything in one place. I decided in two weeks, and got the entire AED 40,000 commission back as cashback."
           name="Buyer"
           role="2BR apartment · Dubai Hills Estate"
         />
@@ -450,24 +428,16 @@ export function BuyerLanding() {
           heading={<>Frequently asked questions.</>}
           items={[
             {
-              q: 'Is iClose free to use as a buyer?',
-              a: "Yes. Accessing the platform, browsing projects, and using our market intelligence tools is completely free. You only engage our specialist service when you're ready to move, and that's when 100% of the commission comes back to you.",
-            },
-            {
-              q: 'Do I need to be a UAE resident to buy?',
-              a: 'No. Non-residents and international buyers can purchase freehold property in designated areas. A purchase above AED 2M can also qualify you for a UAE Golden Visa. iClose walks you through the full process.',
+              q: 'Is iClose free to use?',
+              a: 'Yes. Browsing projects and market intelligence is free. You only engage a specialist when you’re ready to move, and that’s when 100% of the commission comes back to you.',
             },
             {
               q: 'How does the 100% cashback work?',
-              a: 'When you close a deal through iClose, we rebate the entire agent commission we earn on the transaction back to you. The exact figure depends on the deal value and developer terms, but it is confirmed transparently before you sign anything.',
+              a: 'We rebate the entire agent commission we earn on your deal back to you, confirmed in writing before you sign.',
             },
             {
-              q: 'What if I already have a project in mind?',
-              a: "Even better. Look it up on the platform, get the full intelligence report, then connect with a specialist who knows that development. You'll know more than most buyers who walk in cold, and still get 100% cashback on close.",
-            },
-            {
-              q: 'Is iClose for off-plan or secondary market too?',
-              a: 'Both. Our specialists work across off-plan and secondary market transactions, and the 100% cashback applies on every deal.',
+              q: 'Off-plan or secondary?',
+              a: 'Both. The 100% cashback applies on every deal, off-plan or ready.',
             },
           ]}
         />
@@ -477,12 +447,7 @@ export function BuyerLanding() {
         defaultIntent="buyer"
         hideIntent
         heading={<>Ready to buy smarter?</>}
-        body={
-          <>
-            Tell us a bit about you, and we&apos;ll line up your 100% cashback
-            for your next purchase. No credit card, no commitment.
-          </>
-        }
+        body={<>Tell us a bit about you. We&apos;ll line up your 100% cashback.</>}
       />
 
       <ICloseFooter tagline="The smarter way to buy UAE property. Get 100% of the agent commission back on every deal — off-plan or ready." />
