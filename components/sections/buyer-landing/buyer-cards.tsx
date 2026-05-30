@@ -13,6 +13,10 @@ import {
   LineChart,
   Wallet,
   BadgeCheck,
+  Search,
+  LayoutGrid,
+  Map,
+  ArrowUpRight,
 } from 'lucide-react';
 import styles from './buyer-landing.module.css';
 
@@ -356,6 +360,161 @@ export function BuyerStatement() {
             <span className={styles.stmtChipValue}>RERA-checked</span>
           </span>
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------- TOOLS (feature row + mock-UI product cards) ----------------- */
+const toolFeatures = [
+  {
+    icon: <LayoutGrid size={18} strokeWidth={2.2} />,
+    title: 'Project deep-dives',
+    body: 'Every active UAE project. Developer track record, construction progress, ROI data.',
+  },
+  {
+    icon: <Search size={18} strokeWidth={2.2} />,
+    title: 'Floor plans & specs',
+    body: 'Actual unit layouts, sizes, and finishing specs. Know what you buy before you visit.',
+  },
+  {
+    icon: <Map size={18} strokeWidth={2.2} />,
+    title: 'Community intelligence',
+    body: 'Rental yields and capital appreciation by area, not just by tower.',
+  },
+];
+
+export function BuyerTools() {
+  return (
+    <section className={styles.toolsSection}>
+      <div className={styles.toolsInner}>
+        {/* heading left, paragraph right */}
+        <motion.div
+          className={styles.toolsHead}
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, ease }}
+        >
+          <h2 className={styles.toolsHeading}>
+            Smarter tools for buying UAE property.
+          </h2>
+          <p className={styles.toolsLede}>
+            Browse, compare, and analyse every development with clear market
+            intelligence and tools built to optimise your buying decision, with
+            the full commission rebated back to you.
+          </p>
+        </motion.div>
+
+        {/* 3-column feature row */}
+        <div className={styles.toolsFeatures}>
+          {toolFeatures.map((f, i) => (
+            <motion.div
+              className={styles.toolFeature}
+              key={f.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={inView}
+              transition={{ duration: 0.5, delay: i * 0.08, ease }}
+            >
+              <span className={styles.toolFeatureIcon}>{f.icon}</span>
+              <h3 className={styles.toolFeatureTitle}>{f.title}</h3>
+              <p className={styles.toolFeatureBody}>{f.body}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* mock-UI product cards */}
+        <div className={styles.toolsCards}>
+          {/* Card 1 — ROI / invested amount */}
+          <motion.div
+            className={styles.toolCard}
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, ease }}
+            {...cardHover}
+          >
+            <div className={styles.toolCardBody}>
+              <div className={styles.muiRow}>
+                <span className={styles.muiLabel}>Projected ROI</span>
+                <span className={styles.muiPillGreen}>
+                  <TrendingUp size={12} strokeWidth={2.6} /> +12.4%
+                </span>
+              </div>
+              <div className={styles.muiValue}>AED 2,000,000</div>
+              <div className={styles.muiBarTrack}>
+                <span className={styles.muiBarFill} style={{ width: '68%' }} />
+              </div>
+              <div className={styles.muiScale}>
+                <span>0</span>
+                <span>5Y appreciation</span>
+                <span>68%</span>
+              </div>
+            </div>
+            <span className={styles.toolCardTag}>Investment tracking</span>
+          </motion.div>
+
+          {/* Card 2 — payment plan */}
+          <motion.div
+            className={styles.toolCard}
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, delay: 0.1, ease }}
+            {...cardHover}
+          >
+            <div className={styles.toolCardBody}>
+              <div className={styles.muiRow}>
+                <span className={styles.muiLabel}>Payment plan</span>
+                <span className={styles.muiPillBlue}>60 / 40</span>
+              </div>
+              <div className={styles.muiPlanRows}>
+                {[
+                  ['On booking', '20%'],
+                  ['During construction', '40%'],
+                  ['On handover', '40%'],
+                ].map(([k, v]) => (
+                  <div className={styles.muiPlanRow} key={k}>
+                    <span>{k}</span>
+                    <span className={styles.muiPlanVal}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <span className={styles.toolCardTag}>Payment breakdowns</span>
+          </motion.div>
+
+          {/* Card 3 — verified specialist */}
+          <motion.div
+            className={styles.toolCard}
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.55, delay: 0.2, ease }}
+            {...cardHover}
+          >
+            <div className={styles.toolCardBody}>
+              <div className={styles.muiRow}>
+                <span className={styles.muiLabel}>Your specialist</span>
+                <span className={styles.muiPillGreen}>
+                  <BadgeCheck size={12} strokeWidth={2.6} /> Verified
+                </span>
+              </div>
+              <div className={styles.muiSpecialist}>
+                <span className={styles.muiAvatar}>iC</span>
+                <span>
+                  <span className={styles.muiSpecName}>Certified closer</span>
+                  <span className={styles.muiSpecRole}>Briefed on your shortlist</span>
+                </span>
+              </div>
+              <button type="button" className={styles.muiCta} data-get-started="buyer">
+                Get connected <ArrowUpRight size={14} strokeWidth={2.4} />
+              </button>
+            </div>
+            <span className={styles.toolCardTag}>Verified access</span>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

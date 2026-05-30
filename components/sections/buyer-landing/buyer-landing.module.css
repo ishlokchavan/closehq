@@ -634,6 +634,264 @@
   }
 }
 
+/* ===================================================================
+   TOOLS — feature row + mock-UI product cards
+   =================================================================== */
+.toolsSection {
+  padding: 40px 22px 110px;
+  background: var(--bg);
+}
+.toolsInner {
+  max-width: 1060px;
+  margin: 0 auto;
+}
+.toolsHead {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 56px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+.toolsHeading {
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 12ch;
+}
+.toolsLede {
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.6;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* 3-column feature row */
+.toolsFeatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 40px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 52px;
+}
+.toolFeature {
+  text-align: left;
+}
+.toolFeatureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--bg-alt);
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.toolFeatureTitle {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.toolFeatureBody {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+
+/* mock-UI product cards */
+.toolsCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.toolCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  will-change: transform;
+}
+.toolCardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+}
+.toolCardTag {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  padding-left: 2px;
+}
+
+/* shared mock-UI primitives */
+.muiRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.muiLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-light);
+  letter-spacing: -0.005em;
+}
+.muiValue {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+}
+.muiPillGreen,
+.muiPillBlue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.muiPillGreen {
+  background: rgba(52, 199, 89, 0.14);
+  color: #1e9e44;
+}
+.muiPillBlue {
+  background: rgba(0, 113, 227, 0.12);
+  color: var(--blue);
+}
+.muiBarTrack {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+.muiBarFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #34c759, #1e9e44);
+}
+.muiScale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-light);
+  letter-spacing: 0.01em;
+}
+.muiPlanRows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.muiPlanRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-soft);
+}
+.muiPlanRow:last-child {
+  border-bottom: none;
+}
+.muiPlanVal {
+  font-weight: 600;
+  color: var(--ink);
+}
+.muiSpecialist {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.muiAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.muiSpecName {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+.muiSpecRole {
+  display: block;
+  font-size: 12px;
+  color: var(--text-light);
+}
+.muiCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: auto;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.muiCta:hover {
+  background: var(--blue-hover);
+}
+
+@media (max-width: 860px) {
+  .toolsHead {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .toolsFeatures {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+  }
+  .toolsCards {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
   .hero {

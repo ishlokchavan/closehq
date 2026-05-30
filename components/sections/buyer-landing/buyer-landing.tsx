@@ -7,7 +7,6 @@ import { Menu, X, Check, TrendingUp, BadgePercent, Landmark, Building2 } from 'l
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
-  PersonaFeatures,
   PersonaSteps,
   PersonaFacts,
   PersonaQuote,
@@ -15,7 +14,7 @@ import {
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 import personaStyles from '@/components/persona/persona.module.css';
-import { BuyerCompare, BuyerScenarios, BuyerStatement } from './buyer-cards';
+import { BuyerCompare, BuyerScenarios, BuyerStatement, BuyerTools } from './buyer-cards';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -417,43 +416,7 @@ export function BuyerLanding() {
 
       <BuyerScenarios />
 
-      <PersonaFeatures
-        eyebrow="What iClose gives you"
-        heading={<>Everything you need to make the right call.</>}
-        body={
-          <>
-            We built the platform we wish existed when buyers first entered
-            this market. Unbiased, comprehensive, and built around your
-            outcome, with the entire commission rebated back to you.
-          </>
-        }
-        items={[
-          {
-            title: 'Project deep-dives.',
-            body: 'Every active project in the UAE. Developer background, construction progress, community context, ROI data.',
-          },
-          {
-            title: 'Floor plans & specs.',
-            body: "Actual unit layouts, sizes, and finishing specs. Not just renders. Know what you're buying before you visit.",
-          },
-          {
-            title: 'Payment plan breakdowns.',
-            body: 'Side-by-side comparisons so you know which deal actually fits your cash flow.',
-          },
-          {
-            title: 'Community intelligence.',
-            body: 'Lifestyle, infrastructure, rental yields, and capital appreciation trends. By area, not just by tower.',
-          },
-          {
-            title: 'Market reports.',
-            body: 'Understand macro trends, supply pipelines, and where prices are heading.',
-          },
-          {
-            title: 'Verified specialist access.',
-            body: "When you're ready to move, our closers are certified and briefed. No cold handoffs.",
-          },
-        ]}
-      />
+      <BuyerTools />
 
       <div id="how">
         <PersonaSteps
