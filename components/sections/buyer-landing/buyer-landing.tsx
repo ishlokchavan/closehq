@@ -37,52 +37,14 @@ const CALENDLY_URL =
   process.env.NEXT_PUBLIC_CALENDLY_URL ||
   'https://calendly.com/hello-iclose/30min';
 
-/* Developer coverage strip. Where we have the official logo we render it as
-   an image; the rest fall back to a custom mark + wordmark until the real
-   asset lands. Drop new logos into /public/images/developers and add a
-   `logo` path below. */
-const DEVELOPERS: { name: string; mark?: ReactNode; logo?: string }[] = [
-  {
-    name: 'Emaar',
-    mark: (
-      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
-        <path d="M10 1.5 18 6v8l-8 4.5L2 14V6z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M10 6.5 14 9v2l-4 2.5L6 11V9z" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    name: 'DAMAC',
-    mark: (
-      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
-        <rect x="2.6" y="2.6" width="14.8" height="14.8" rx="2" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M7 7h3.2a3 3 0 0 1 0 6H7z" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Nakheel',
-    mark: (
-      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
-        <g stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-          <path d="M10 18V9" />
-          <path d="M10 9C10 5 7 3 3.5 3.5 5 6 7 8 10 9" />
-          <path d="M10 9c0-4 3-6 6.5-5.5C15 6 13 8 10 9" />
-          <path d="M10 10.5c-2-1.5-4.5-1-6 .5 2 1 4 1 6-.5" />
-          <path d="M10 10.5c2-1.5 4.5-1 6 .5-2 1-4 1-6-.5" />
-        </g>
-      </svg>
-    ),
-  },
-  {
-    name: 'Sobha',
-    mark: (
-      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
-        <path d="M10 1.8 17.5 6v8L10 18.2 2.5 14V6z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M12.5 7.5c-1.6-1.2-4.2-.6-4.2 1.3 0 2 3.6 1.6 3.6 3.6 0 1.9-2.7 2.4-4.3 1.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    ),
-  },
+/* Developer coverage strip — official partner logos. Drop new assets into
+   /public/images/developers and add an entry below. */
+const DEVELOPERS: { name: string; logo: string }[] = [
+  { name: 'Emaar', logo: '/images/developers/emaar.svg' },
+  { name: 'DAMAC', logo: '/images/developers/damac.svg' },
+  { name: 'Nakheel', logo: '/images/developers/nakheel.svg' },
+  { name: 'Sobha', logo: '/images/developers/sobha.svg' },
+  { name: 'Meraas', logo: '/images/developers/meraas.svg' },
   { name: 'Ellington', logo: '/images/developers/ellington.png' },
   { name: 'Binghatti', logo: '/images/developers/binghatti.png' },
 ];
@@ -413,19 +375,12 @@ function BuyerHero() {
         <div className={styles.trustBar}>
           {DEVELOPERS.map((d) => (
             <div className={styles.trustItem} key={d.name}>
-              {d.logo ? (
-                <img
-                  src={d.logo}
-                  alt={d.name}
-                  className={styles.trustLogo}
-                  loading="lazy"
-                />
-              ) : (
-                <>
-                  <span className={styles.trustMark}>{d.mark}</span>
-                  <span className={styles.trustName}>{d.name}</span>
-                </>
-              )}
+              <img
+                src={d.logo}
+                alt={d.name}
+                className={styles.trustLogo}
+                loading="lazy"
+              />
             </div>
           ))}
         </div>
