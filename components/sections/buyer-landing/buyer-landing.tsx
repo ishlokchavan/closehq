@@ -9,8 +9,6 @@ import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer
 import {
   PersonaIntro,
   PersonaFeatures,
-  PersonaCompare,
-  PersonaScenarios,
   PersonaSteps,
   PersonaFacts,
   PersonaQuote,
@@ -18,6 +16,7 @@ import {
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 import personaStyles from '@/components/persona/persona.module.css';
+import { BuyerCompare, BuyerScenarios } from './buyer-cards';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -355,77 +354,9 @@ export function BuyerLanding() {
         ]}
       />
 
-      <div id="cashback">
-        <PersonaCompare
-          eyebrow="Secondary market"
-          badge="vs"
-          heading={<>Stop paying commission to buy.</>}
-          body={
-            <>
-              On a typical AED 2M ready secondary purchase, here&apos;s the
-              difference between buying through a standard agent and buying
-              through iClose.
-            </>
-          }
-          left={{
-            title: 'Standard agent',
-            rows: [
-              { label: 'Deal value', value: 'AED 2,000,000' },
-              { label: 'Buyer commission', value: '2%' },
-              { label: 'You pay the agent', value: 'AED 40,000' },
-            ],
-            takeLabel: 'You pay',
-            takeValue: 'AED 40,000',
-          }}
-          right={{
-            title: 'iClose',
-            rows: [
-              { label: 'Deal value', value: 'AED 2,000,000' },
-              { label: 'Buyer commission', value: '0%' },
-              { label: 'You pay the agent', value: 'AED 0' },
-            ],
-            takeLabel: 'You pay',
-            takeValue: 'AED 0',
-          }}
-          footnote="Confirmed in writing before you sign. No surprises at transfer."
-        />
-      </div>
+      <BuyerCompare />
 
-      <PersonaScenarios
-        eyebrow="Two routes, both in your favour"
-        heading={<>Off-plan or secondary, you come out ahead.</>}
-        body={
-          <>
-            iClose works the same way whichever side of the market you&apos;re
-            buying on. The economics just look different.
-          </>
-        }
-        cards={[
-          {
-            tag: 'Off-plan',
-            title: 'You get 100% cashback',
-            rows: [
-              { label: 'Deal value', value: 'AED 2,000,000' },
-              { label: 'Developer commission', value: '5% (AED 100,000)' },
-              { label: 'iClose rebate to you', value: '100%' },
-            ],
-            takeLabel: 'You get back',
-            takeValue: 'AED 100,000',
-          },
-          {
-            tag: 'Secondary',
-            title: 'You pay no commission',
-            rows: [
-              { label: 'Deal value', value: 'AED 2,000,000' },
-              { label: 'Standard commission', value: '2% (AED 40,000)' },
-              { label: 'iClose charges you', value: 'Nothing' },
-            ],
-            takeLabel: 'You save',
-            takeValue: 'AED 40,000',
-          },
-        ]}
-        footnote="Exact figures confirmed up front before you commit to any deal."
-      />
+      <BuyerScenarios />
 
       <PersonaFeatures
         eyebrow="What iClose gives you"
