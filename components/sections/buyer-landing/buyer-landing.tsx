@@ -471,7 +471,7 @@ export function BuyerLanding() {
       <PersonaWaitlist
         defaultIntent="buyer"
         hideIntent
-        heading={<>Your next property starts with the right intel.</>}
+        heading={<>Ready to buy smarter?</>}
         body={
           <>
             Tell us a bit about you, and we&apos;ll line up your 100% cashback
