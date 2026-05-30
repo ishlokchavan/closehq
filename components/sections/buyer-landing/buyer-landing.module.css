@@ -747,55 +747,230 @@
   margin: 0;
 }
 
-/* document chip grid */
-.docGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.docChip {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 11px 14px;
-  background: #fff;
-  border: 1px solid var(--border-soft);
-  border-radius: 13px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
-  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
-}
-.docChip:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 113, 227, 0.4);
-  box-shadow: 0 14px 30px rgba(0, 113, 227, 0.14);
-}
-.docChipIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: rgba(0, 113, 227, 0.1);
-  color: var(--blue);
-  flex-shrink: 0;
-  transition: background 0.22s, color 0.22s;
-}
-.docChip:hover .docChipIcon {
-  background: var(--blue);
-  color: #fff;
-}
 .bentoFoot {
-  margin: auto 0 0;
+  margin: 14px 0 0;
   font-size: 13.5px;
   line-height: 1.55;
   color: var(--text-muted);
   letter-spacing: -0.005em;
+}
+
+/* ---- Library tile: copy beside a live phone app screen ---- */
+.libGrid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: center;
+  height: 100%;
+}
+.libCopy {
+  max-width: 30ch;
+}
+
+/* Phone */
+.phone {
+  position: relative;
+  width: 236px;
+  flex-shrink: 0;
+  padding: 9px 9px 0;
+  background: #0f0f12;
+  border-radius: 34px 34px 22px 22px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 30px 60px rgba(17, 24, 39, 0.28);
+  animation: phoneFloat 7s ease-in-out infinite;
+}
+@keyframes phoneFloat {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-10px) rotate(-1.5deg); }
+}
+.phoneNotch {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86px;
+  height: 18px;
+  background: #0f0f12;
+  border-radius: 0 0 12px 12px;
+  z-index: 3;
+}
+.phoneScreen {
+  position: relative;
+  background: #fff;
+  border-radius: 26px 26px 14px 14px;
+  padding: 30px 16px 22px;
+  overflow: hidden;
+}
+.phoneHead {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.phoneDev {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.phoneProj {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-light);
+}
+.phoneVerified {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #1e9e44;
+  background: rgba(52, 199, 89, 0.13);
+  padding: 3px 7px;
+  border-radius: 999px;
+}
+
+/* tabs */
+.phoneTabs {
+  position: relative;
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.phoneTab {
+  flex: 1;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 2px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-light);
+  background: var(--bg-alt);
+  border-radius: 10px;
+  transition: background 0.3s, color 0.3s;
+}
+.phoneTabOn {
+  background: var(--blue);
+  color: #fff;
+}
+.phoneTap {
+  position: absolute;
+  top: -6px;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+}
+.phoneTapRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(0, 113, 227, 0.5);
+}
+
+/* body preview */
+.phoneBody {
+  height: 132px;
+  background: var(--bg-alt);
+  border-radius: 12px;
+  padding: 14px;
+  overflow: hidden;
+}
+.phaseInner {
+  height: 100%;
+}
+/* floor plan layout */
+.phFloor {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  height: 100%;
+}
+.phFloor span {
+  background: #fff;
+  border: 1.5px solid rgba(0, 113, 227, 0.35);
+  border-radius: 5px;
+}
+/* master plan plots */
+.phMaster {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  height: 100%;
+}
+.phMaster span {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1.5px rgba(0, 113, 227, 0.22);
+}
+.phMaster span[data-x='1'] { background: rgba(0, 113, 227, 0.12); }
+.phMaster span[data-x='3'] { background: rgba(52, 199, 89, 0.14); }
+/* payment rows */
+.phPay {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  justify-content: center;
+}
+.phPayRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.phPayRow span:first-child {
+  width: 64px;
+  flex-shrink: 0;
+}
+.phPayTrack {
+  flex: 1;
+  height: 7px;
+  background: #fff;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.phPayFill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #0071e3, #34c759);
+}
+.phPayRow b {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink);
+}
+/* factsheet rows */
+.phFacts {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+.phFactRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.phFactRow:last-child {
+  border-bottom: none;
+}
+.phFactRow b {
+  font-weight: 700;
+  color: var(--ink);
 }
 
 /* ---- Cashback tile ---- */
@@ -951,13 +1126,20 @@
   .bentoLib {
     grid-row: auto;
   }
-  .docGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .libGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    justify-items: center;
+    text-align: center;
+  }
+  .libCopy {
+    max-width: 38ch;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sessionPlay {
+  .sessionPlay,
+  .phone {
     animation: none;
   }
 }

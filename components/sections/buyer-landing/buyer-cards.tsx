@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { motion, useInView, animate, type Variants } from 'framer-motion';
+import { motion, AnimatePresence, useInView, animate, type Variants } from 'framer-motion';
 import {
   Check,
   ArrowDownRight,
@@ -17,8 +17,6 @@ import {
   Video,
   Mic,
   Calendar,
-  FileText,
-  Layers,
   Grid2x2,
   ScrollText,
   Play,
@@ -371,17 +369,150 @@ export function BuyerStatement() {
   );
 }
 
-/* ----------------- TOOLS (feature row + mock-UI product cards) ----------------- */
-/* Every resource a serious buyer needs for any project — the brief a broker
-   would keep to themselves, opened up. Each chip lifts + reveals on hover. */
-const resourceDocs = [
-  { icon: <FileText size={16} strokeWidth={2.2} />, label: 'Brochure' },
-  { icon: <Grid2x2 size={16} strokeWidth={2.2} />, label: 'Floor plan' },
-  { icon: <Map size={16} strokeWidth={2.2} />, label: 'Master plan' },
-  { icon: <Layers size={16} strokeWidth={2.2} />, label: 'Cluster plan' },
-  { icon: <ScrollText size={16} strokeWidth={2.2} />, label: 'Factsheet' },
-  { icon: <Banknote size={16} strokeWidth={2.2} />, label: 'Payment plan' },
+/* ----------------- TOOLS (phone app mock + value bento) ----------------- */
+
+/* Tabs the in-phone screen auto-cycles through. Each carries its own little
+   in-screen visual so the loop feels like a real app flipping documents. */
+const phoneTabs = [
+  { icon: <Grid2x2 size={15} strokeWidth={2.2} />, label: 'Floor' },
+  { icon: <Map size={15} strokeWidth={2.2} />, label: 'Master' },
+  { icon: <Banknote size={15} strokeWidth={2.2} />, label: 'Payment' },
+  { icon: <ScrollText size={15} strokeWidth={2.2} />, label: 'Facts' },
 ];
+
+/* The app screen: a phone that flips through project documents on a loop,
+   with a tap ripple landing on the active tab. Pure CSS/SVG, no images —
+   reads as a live app without a line of explanation. */
+function PhoneMock() {
+  const reduce =
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (reduce) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % phoneTabs.length), 2200);
+    return () => clearInterval(id);
+  }, [reduce]);
+
+  return (
+    <div className={styles.phone} aria-hidden="true">
+      <div className={styles.phoneNotch} />
+      <div className={styles.phoneScreen}>
+        {/* app header */}
+        <div className={styles.phoneHead}>
+          <span className={styles.phoneDev}>EMAAR</span>
+          <span className={styles.phoneProj}>Creek Vista</span>
+          <span className={styles.phoneVerified}>
+            <BadgeCheck size={11} strokeWidth={2.6} /> Verified
+          </span>
+        </div>
+
+        {/* document tabs — active one highlights on the loop */}
+        <div className={styles.phoneTabs}>
+          {phoneTabs.map((t, i) => (
+            <span
+              key={t.label}
+              className={`${styles.phoneTab} ${i === active ? styles.phoneTabOn : ''}`}
+            >
+              {t.icon}
+              {t.label}
+            </span>
+          ))}
+          {/* tap ripple that travels to the active tab */}
+          <motion.span
+            className={styles.phoneTap}
+            animate={{
+              left: `calc(${(active + 0.5) * (100 / phoneTabs.length)}% - 14px)`,
+            }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+          >
+            <motion.span
+              className={styles.phoneTapRing}
+              key={active}
+              initial={{ scale: 0.4, opacity: 0.6 }}
+              animate={{ scale: 1.8, opacity: 0 }}
+              transition={{ duration: 0.7, ease }}
+            />
+          </motion.span>
+        </div>
+
+        {/* content preview swaps per active tab */}
+        <div className={styles.phoneBody}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              className={styles.phaseInner}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease }}
+            >
+              {active === 0 && (
+                /* Floor plan: a little unit layout grid */
+                <div className={styles.phFloor}>
+                  <span style={{ gridArea: '1 / 1 / 3 / 3' }} />
+                  <span style={{ gridArea: '1 / 3 / 2 / 5' }} />
+                  <span style={{ gridArea: '2 / 3 / 4 / 4' }} />
+                  <span style={{ gridArea: '2 / 4 / 3 / 5' }} />
+                  <span style={{ gridArea: '3 / 1 / 4 / 3' }} />
+                  <span style={{ gridArea: '3 / 4 / 4 / 5' }} />
+                </div>
+              )}
+              {active === 1 && (
+                /* Master plan: clustered plots + a road */
+                <div className={styles.phMaster}>
+                  {Array.from({ length: 12 }).map((_, k) => (
+                    <span key={k} data-x={k % 4} />
+                  ))}
+                </div>
+              )}
+              {active === 2 && (
+                /* Payment plan: milestone bars */
+                <div className={styles.phPay}>
+                  {[
+                    ['On booking', 20],
+                    ['Construction', 40],
+                    ['Handover', 40],
+                  ].map(([k, v]) => (
+                    <div className={styles.phPayRow} key={k as string}>
+                      <span>{k}</span>
+                      <span className={styles.phPayTrack}>
+                        <motion.span
+                          className={styles.phPayFill}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: (v as number) / 40 }}
+                          transition={{ duration: 0.6, ease }}
+                        />
+                      </span>
+                      <b>{v}%</b>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {active === 3 && (
+                /* Factsheet: key/value spec rows */
+                <div className={styles.phFacts}>
+                  {[
+                    ['Handover', 'Q4 2027'],
+                    ['Size', '1,240 sqft'],
+                    ['Price', 'AED 2.4M'],
+                    ['Net yield', '8.6%'],
+                  ].map(([k, v]) => (
+                    <div className={styles.phFactRow} key={k}>
+                      <span>{k}</span>
+                      <b>{v}</b>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function BuyerTools() {
   return (
@@ -403,7 +534,7 @@ export function BuyerTools() {
 
         {/* Bento grid */}
         <div className={styles.bento}>
-          {/* Resource library (large) */}
+          {/* Resource library — live app screen */}
           <motion.article
             className={`${styles.bentoCard} ${styles.bentoLib}`}
             initial={{ opacity: 0, y: 36 }}
@@ -412,28 +543,17 @@ export function BuyerTools() {
             transition={{ duration: 0.55, ease }}
             {...cardHover}
           >
-            <div className={styles.bentoHead}>
-              <span className={styles.bentoEyebrow}>Everything, transparent</span>
-              <h3 className={styles.bentoTitle}>Every document. Every developer.</h3>
+            <div className={styles.libGrid}>
+              <div className={styles.libCopy}>
+                <span className={styles.bentoEyebrow}>Everything, transparent</span>
+                <h3 className={styles.bentoTitle}>Every document, every developer.</h3>
+                <p className={styles.bentoFoot}>
+                  Brochures, master &amp; cluster plans, factsheets, payment
+                  plans. The full broker brief in your pocket.
+                </p>
+              </div>
+              <PhoneMock />
             </div>
-            <motion.div
-              className={styles.docGrid}
-              variants={rowsContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={inView}
-            >
-              {resourceDocs.map((d) => (
-                <motion.div className={styles.docChip} key={d.label} variants={rowItem}>
-                  <span className={styles.docChipIcon}>{d.icon}</span>
-                  <span>{d.label}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-            <p className={styles.bentoFoot}>
-              Brochures, master &amp; cluster plans, factsheets, payment plans.
-              The full broker brief, no gatekeeping.
-            </p>
           </motion.article>
 
           {/* Cashback */}
@@ -490,9 +610,9 @@ export function BuyerTools() {
             <h3 className={styles.bentoTitle}>Sessions with developer RMs.</h3>
             <div className={styles.sessionList}>
               {[
-                { dev: 'Emaar', topic: 'Dubai Creek Harbour', meta: '32 min' },
-                { dev: 'DAMAC', topic: 'Payment plan deep-dive', meta: '24 min' },
-                { dev: 'Sobha', topic: 'Hartland II launch', meta: '28 min' },
+                { dev: 'Emaar', topic: 'Dubai Creek Harbour', meta: '9 min' },
+                { dev: 'DAMAC', topic: 'Payment plan deep-dive', meta: '11 min' },
+                { dev: 'Sobha', topic: 'Hartland II launch', meta: '8 min' },
               ].map((s, i) => (
                 <div className={styles.sessionRow} key={s.dev}>
                   <span className={styles.sessionPlay} data-i={i}>
