@@ -384,7 +384,7 @@ function BuyerHero() {
           ))}
         </div>
         <div className={styles.trustLabel}>
-          Coverage across the UAE&apos;s leading developers
+          Coverage across the UAE&apos;s leading developers and more.
         </div>
       </div>
     </section>
