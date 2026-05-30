@@ -216,7 +216,7 @@ function BuyerHero() {
         <div className={styles.heroStage} aria-hidden="true">
           <div className={styles.orbWrap}>
             <motion.img
-              src="/spiral-flower.svg"
+              src="/images/spiral-flower.webp"
               alt=""
               className={styles.orbFlower}
               initial={{ opacity: 0, scale: 0.8 }}
