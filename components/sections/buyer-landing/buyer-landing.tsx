@@ -45,7 +45,7 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
   {
     name: 'Emaar',
     mark: (
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
         <path d="M10 1.5 18 6v8l-8 4.5L2 14V6z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
         <path d="M10 6.5 14 9v2l-4 2.5L6 11V9z" fill="currentColor" />
       </svg>
@@ -54,7 +54,7 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
   {
     name: 'DAMAC',
     mark: (
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
         <rect x="2.6" y="2.6" width="14.8" height="14.8" rx="2" stroke="currentColor" strokeWidth="1.6" />
         <path d="M7 7h3.2a3 3 0 0 1 0 6H7z" fill="currentColor" />
       </svg>
@@ -63,7 +63,7 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
   {
     name: 'Nakheel',
     mark: (
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
         <g stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
           <path d="M10 18V9" />
           <path d="M10 9C10 5 7 3 3.5 3.5 5 6 7 8 10 9" />
@@ -77,7 +77,7 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
   {
     name: 'Sobha',
     mark: (
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
         <path d="M10 1.8 17.5 6v8L10 18.2 2.5 14V6z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
         <path d="M12.5 7.5c-1.6-1.2-4.2-.6-4.2 1.3 0 2 3.6 1.6 3.6 3.6 0 1.9-2.7 2.4-4.3 1.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       </svg>
@@ -86,7 +86,7 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
   {
     name: 'Meraas',
     mark: (
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
         <path d="M3 17V7l3.5-3.5L10 7l3.5-3.5L17 7v10" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
       </svg>
     ),
@@ -94,7 +94,7 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
   {
     name: 'Binghatti',
     mark: (
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
         <g stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
           <path d="M4 7.5h12" />
           <path d="M4 12.5h12" />
