@@ -37,11 +37,11 @@ const CALENDLY_URL =
   process.env.NEXT_PUBLIC_CALENDLY_URL ||
   'https://calendly.com/hello-iclose/30min';
 
-/* Developer coverage strip. Each mark is a custom abstract glyph (not the
-   developer's official trademarked logo) paired with the wordmark, styled
-   like the reference partner bar. Drop official SVGs into
-   /public/images/developers and swap `mark` for an <img> to go pixel-exact. */
-const DEVELOPERS: { name: string; mark: ReactNode }[] = [
+/* Developer coverage strip. Where we have the official logo we render it as
+   an image; the rest fall back to a custom mark + wordmark until the real
+   asset lands. Drop new logos into /public/images/developers and add a
+   `logo` path below. */
+const DEVELOPERS: { name: string; mark?: ReactNode; logo?: string }[] = [
   {
     name: 'Emaar',
     mark: (
@@ -83,27 +83,8 @@ const DEVELOPERS: { name: string; mark: ReactNode }[] = [
       </svg>
     ),
   },
-  {
-    name: 'Meraas',
-    mark: (
-      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
-        <path d="M3 17V7l3.5-3.5L10 7l3.5-3.5L17 7v10" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Binghatti',
-    mark: (
-      <svg viewBox="0 0 20 20" width="26" height="26" fill="none" aria-hidden="true">
-        <g stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
-          <path d="M4 7.5h12" />
-          <path d="M4 12.5h12" />
-          <path d="M8 3.5 6 16.5" />
-          <path d="M14 3.5l-2 13" />
-        </g>
-      </svg>
-    ),
-  },
+  { name: 'Ellington', logo: '/images/developers/ellington.png' },
+  { name: 'Binghatti', logo: '/images/developers/binghatti.png' },
 ];
 
 function BuyerNav() {
@@ -432,8 +413,19 @@ function BuyerHero() {
         <div className={styles.trustBar}>
           {DEVELOPERS.map((d) => (
             <div className={styles.trustItem} key={d.name}>
-              <span className={styles.trustMark}>{d.mark}</span>
-              <span className={styles.trustName}>{d.name}</span>
+              {d.logo ? (
+                <img
+                  src={d.logo}
+                  alt={d.name}
+                  className={styles.trustLogo}
+                  loading="lazy"
+                />
+              ) : (
+                <>
+                  <span className={styles.trustMark}>{d.mark}</span>
+                  <span className={styles.trustName}>{d.name}</span>
+                </>
+              )}
             </div>
           ))}
         </div>

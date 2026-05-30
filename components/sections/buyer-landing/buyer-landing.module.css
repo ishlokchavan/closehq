@@ -364,6 +364,10 @@
   width: clamp(560px, 76vw, 920px);
   height: auto;
   margin-bottom: clamp(-120px, -8vw, -70px);
+  /* Tilt the flat vector back in 3D so we look *into* the bloom at an angle,
+     approximating the reference render's perspective. */
+  transform: perspective(1100px) rotateX(34deg);
+  transform-origin: center 60%;
   animation: orbFloat 9s ease-in-out infinite;
   filter: drop-shadow(0 26px 54px rgba(0, 88, 163, 0.22));
 }
@@ -434,9 +438,11 @@
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -12px; }
 }
+/* Bob via standalone translate/scale so the perspective `transform`
+   tilt on .orbFlower is preserved during the animation. */
 @keyframes orbFloat {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-14px) scale(1.015); }
+  0%, 100% { translate: 0 0; scale: 1; }
+  50% { translate: 0 -14px; scale: 1.015; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -502,6 +508,19 @@
   letter-spacing: -0.025em;
   color: var(--ink);
   white-space: nowrap;
+}
+/* Real developer logo image — sized by height so varied aspect ratios
+   line up. Rendered in ink via brightness/contrast for a mono partner row. */
+.trustLogo {
+  height: 30px;
+  width: auto;
+  max-width: 168px;
+  object-fit: contain;
+  opacity: 0.82;
+  transition: opacity 0.2s;
+}
+.trustItem:hover .trustLogo {
+  opacity: 1;
 }
 
 .trustLabel {
