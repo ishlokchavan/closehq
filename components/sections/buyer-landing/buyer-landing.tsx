@@ -212,23 +212,17 @@ function BuyerHero() {
           </a>
         </motion.div>
 
-        {/* Abstract centerpiece + floating stat cards (CSS/JS, no image) */}
+        {/* Abstract centerpiece + floating stat cards */}
         <div className={styles.heroStage} aria-hidden="true">
           <div className={styles.orbWrap}>
-            <motion.div
-              className={styles.orb}
+            <motion.img
+              src="/spiral-flower.svg"
+              alt=""
+              className={styles.orbFlower}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2, ease }}
-            >
-              <span className={styles.orbRing} />
-              <span className={styles.orbRing2} />
-              <span className={styles.orbGloss} />
-              <span className={styles.orbBadge}>
-                <span className={styles.orbBadgeNum}>100%</span>
-                <span className={styles.orbBadgeLabel}>cashback</span>
-              </span>
-            </motion.div>
+              transition={{ duration: 0.9, delay: 0.2, ease }}
+            />
           </div>
 
           <FloatingCard

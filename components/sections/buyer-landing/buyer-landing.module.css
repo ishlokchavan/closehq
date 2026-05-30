@@ -323,7 +323,7 @@
   margin: 44px auto 0;
 }
 
-/* The abstract orb — concentric glass discs over a blue gradient core. */
+/* Spiral-flower SVG centrepiece */
 .orbWrap {
   position: absolute;
   inset: 0;
@@ -331,64 +331,11 @@
   align-items: center;
   justify-content: center;
 }
-.orb {
-  position: relative;
+.orbFlower {
   width: 320px;
   height: 320px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 28%, #4aa3ff 0%, #0071e3 42%, #0058a3 100%);
-  box-shadow:
-    0 30px 90px rgba(0, 88, 163, 0.32),
-    inset 0 2px 18px rgba(255, 255, 255, 0.4);
   animation: orbFloat 9s ease-in-out infinite;
-}
-.orbRing {
-  position: absolute;
-  inset: -34px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 113, 227, 0.18);
-  animation: orbSpin 26s linear infinite;
-}
-.orbRing2 {
-  position: absolute;
-  inset: -70px;
-  border-radius: 50%;
-  border: 1px dashed rgba(0, 113, 227, 0.14);
-  animation: orbSpin 40s linear infinite reverse;
-}
-.orbGloss {
-  position: absolute;
-  top: 14%;
-  left: 18%;
-  width: 46%;
-  height: 36%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, rgba(255, 255, 255, 0.65), transparent 70%);
-  filter: blur(2px);
-}
-.orbBadge {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  text-align: center;
-}
-.orbBadgeNum {
-  font-size: 64px;
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-.orbBadgeLabel {
-  margin-top: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.88);
+  filter: drop-shadow(0 28px 60px rgba(27, 94, 32, 0.32));
 }
 
 /* Floating stat cards */
@@ -458,13 +405,10 @@
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-14px) scale(1.015); }
 }
-@keyframes orbSpin {
-  to { transform: rotate(360deg); }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .fcardA, .fcardB, .fcardC, .fcardD, .fcardE,
-  .orb, .orbRing, .orbRing2 {
+  .orbFlower {
     animation: none;
   }
 }
@@ -511,15 +455,10 @@
     height: 380px;
     max-width: 460px;
   }
-  .orb {
-    width: 230px;
-    height: 230px;
+  .orbFlower {
+    width: 240px;
+    height: 240px;
   }
-  .orbBadgeNum {
-    font-size: 46px;
-  }
-  .orbRing { inset: -22px; }
-  .orbRing2 { inset: -46px; }
   /* Trim the two outer cards on small screens to avoid clutter/overflow */
   .fcardC,
   .fcardE {
