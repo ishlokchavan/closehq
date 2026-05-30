@@ -214,6 +214,36 @@ function BuyerHero() {
 
         {/* Abstract centerpiece + floating stat cards */}
         <div className={styles.heroStage} aria-hidden="true">
+          {/* Dashed elliptical orbit rings behind the flower (Elegostra-style) */}
+          <svg
+            className={styles.orbits}
+            viewBox="0 0 1000 520"
+            preserveAspectRatio="xMidYMid meet"
+            aria-hidden="true"
+          >
+            <g transform="rotate(-9 500 260)" fill="none" strokeWidth="1.5">
+              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(0,113,227,0.16)" />
+              <ellipse
+                cx="500"
+                cy="260"
+                rx="372"
+                ry="142"
+                stroke="rgba(110,110,125,0.30)"
+                strokeDasharray="1.5 10"
+                strokeLinecap="round"
+              />
+              <ellipse
+                cx="500"
+                cy="260"
+                rx="262"
+                ry="98"
+                stroke="rgba(0,113,227,0.14)"
+                strokeDasharray="1.5 10"
+                strokeLinecap="round"
+              />
+            </g>
+          </svg>
+
           <div className={styles.orbWrap}>
             <motion.img
               src="/images/spiral-flower.webp"
