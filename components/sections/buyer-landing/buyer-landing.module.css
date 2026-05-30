@@ -330,9 +330,9 @@
 .heroStage {
   position: relative;
   width: 100%;
-  max-width: 1040px;
-  height: clamp(500px, 58vw, 660px);
-  margin: 36px auto 0;
+  max-width: 1180px;
+  height: clamp(520px, 56vw, 700px);
+  margin: 20px auto 0;
   /* Clip the bottom so the oversized flower bleeds off the edge, the way
      the reference render is cut by the hero card. */
   overflow: hidden;
@@ -342,9 +342,9 @@
 .orbits {
   position: absolute;
   left: 50%;
-  top: 58%;
-  width: 162%;
-  max-width: 1480px;
+  top: 66%;
+  width: 172%;
+  max-width: 1640px;
   transform: translate(-50%, -50%);
   z-index: 0;
   pointer-events: none;
@@ -361,9 +361,9 @@
   z-index: 1;
 }
 .orbFlower {
-  width: clamp(470px, 62vw, 760px);
+  width: clamp(560px, 76vw, 920px);
   height: auto;
-  margin-bottom: clamp(-170px, -13vw, -110px);
+  margin-bottom: clamp(-120px, -8vw, -70px);
   animation: orbFloat 9s ease-in-out infinite;
   filter: drop-shadow(0 26px 54px rgba(0, 88, 163, 0.22));
 }
@@ -1169,12 +1169,12 @@
     padding: 64px 18px;
   }
   .heroStage {
-    height: 360px;
-    max-width: 460px;
+    height: 380px;
+    max-width: 520px;
   }
   .orbFlower {
-    width: 320px;
-    margin-bottom: -56px;
+    width: 420px;
+    margin-bottom: -48px;
   }
   /* Trim the two outer cards on small screens to avoid clutter/overflow */
   .fcardC,
