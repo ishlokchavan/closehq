@@ -7,16 +7,16 @@ import styles from './iclose-landing.module.css';
 const openCookieSettings = () =>
   window.dispatchEvent(new Event('iclose:open-cookie-settings'));
 
-export function ICloseFooter() {
+const DEFAULT_TAGLINE =
+  'A proptech education platform for UAE real estate. Learn from the top 0.1% of agents and keep more of every deal.';
+
+export function ICloseFooter({ tagline }: { tagline?: string }) {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerTop}>
         <div className={styles.footerBrand}>
           <Logo />
-          <p className={styles.footerTagline}>
-            A proptech education platform for UAE real estate. Learn from the
-            top 0.1% of agents and keep more of every deal.
-          </p>
+          <p className={styles.footerTagline}>{tagline ?? DEFAULT_TAGLINE}</p>
         </div>
 
         <div className={styles.footerCol}>
