@@ -397,7 +397,7 @@ export function BuyerTools() {
           <h2 className={styles.toolsHeading}>Buy like an insider.</h2>
           <p className={styles.toolsLede}>
             Keep the commission. See every project, every document, every
-            developer — all in one place.
+            developer, all in one place.
           </p>
         </motion.div>
 
@@ -431,8 +431,8 @@ export function BuyerTools() {
               ))}
             </motion.div>
             <p className={styles.bentoFoot}>
-              Brochures, master &amp; cluster plans, factsheets, payment plans —
-              the full broker brief, no gatekeeping.
+              Brochures, master &amp; cluster plans, factsheets, payment plans.
+              The full broker brief, no gatekeeping.
             </p>
           </motion.article>
 
@@ -487,14 +487,22 @@ export function BuyerTools() {
             {...cardHover}
           >
             <span className={styles.bentoEyebrow}>Learn from the source</span>
-            <h3 className={styles.bentoTitle}>Developer RM sessions.</h3>
+            <h3 className={styles.bentoTitle}>Sessions with developer RMs.</h3>
             <div className={styles.sessionList}>
-              {['Emaar', 'DAMAC', 'Sobha'].map((d, i) => (
-                <div className={styles.sessionRow} key={d}>
+              {[
+                { dev: 'Emaar', topic: 'Dubai Creek Harbour', meta: '32 min' },
+                { dev: 'DAMAC', topic: 'Payment plan deep-dive', meta: '24 min' },
+                { dev: 'Sobha', topic: 'Hartland II launch', meta: '28 min' },
+              ].map((s, i) => (
+                <div className={styles.sessionRow} key={s.dev}>
                   <span className={styles.sessionPlay} data-i={i}>
                     <Play size={11} strokeWidth={0} fill="currentColor" />
                   </span>
-                  <span className={styles.sessionName}>{d} · live walkthrough</span>
+                  <span className={styles.sessionMeta}>
+                    <span className={styles.sessionName}>{s.dev}</span>
+                    <span className={styles.sessionTopic}>{s.topic}</span>
+                  </span>
+                  <span className={styles.sessionDur}>{s.meta}</span>
                 </div>
               ))}
             </div>

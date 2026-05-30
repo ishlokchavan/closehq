@@ -673,7 +673,7 @@
    TOOLS — feature row + mock-UI product cards
    =================================================================== */
 .toolsSection {
-  padding: 100px 22px;
+  padding: 76px 22px;
   background: var(--bg);
 }
 .toolsInner {
@@ -683,9 +683,9 @@
 .toolsHead {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px 56px;
+  gap: 24px 56px;
   align-items: end;
-  margin-bottom: 56px;
+  margin-bottom: 36px;
 }
 .toolsHeading {
   font-size: clamp(30px, 4.2vw, 48px);
@@ -709,16 +709,16 @@
   display: grid;
   grid-template-columns: 1.6fr 1fr;
   grid-template-rows: auto auto;
-  gap: 20px;
+  gap: 16px;
 }
 .bentoCard {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 28px;
+  padding: 24px;
   background: var(--bg-alt);
   border: 1px solid var(--border-soft);
-  border-radius: 24px;
+  border-radius: 22px;
   overflow: hidden;
   will-change: transform;
 }
@@ -727,7 +727,7 @@
   grid-row: 1 / span 2;
 }
 .bentoHead {
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 .bentoEyebrow {
   display: inline-block;
@@ -751,17 +751,17 @@
 .docGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 .docChip {
   display: flex;
   align-items: center;
   gap: 11px;
-  padding: 14px 16px;
+  padding: 11px 14px;
   background: #fff;
   border: 1px solid var(--border-soft);
-  border-radius: 14px;
+  border-radius: 13px;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -865,14 +865,14 @@
 .sessionList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: auto;
+  gap: 8px;
+  margin-top: 16px;
 }
 .sessionRow {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
+  gap: 11px;
+  padding: 9px 12px;
   background: #fff;
   border: 1px solid var(--border-soft);
   border-radius: 12px;
@@ -886,8 +886,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   background: var(--blue);
   color: #fff;
@@ -900,11 +900,37 @@
 .sessionRow:hover .sessionPlay {
   scale: 1.1;
 }
+.sessionMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
 .sessionName {
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--ink);
+  line-height: 1.2;
+}
+.sessionTopic {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-light);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sessionDur {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+  background: var(--bg-alt);
+  padding: 3px 8px;
+  border-radius: 999px;
 }
 /* Stronger, continuously visible ring pulse + gentle scale. */
 @keyframes playPulse {
