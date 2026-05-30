@@ -44,7 +44,6 @@ const DEVELOPERS: { name: string; logo: string }[] = [
   { name: 'DAMAC', logo: '/images/developers/damac.svg' },
   { name: 'Nakheel', logo: '/images/developers/nakheel.svg' },
   { name: 'Sobha', logo: '/images/developers/sobha.svg' },
-  { name: 'Meraas', logo: '/images/developers/meraas.svg' },
   { name: 'Ellington', logo: '/images/developers/ellington.png' },
   { name: 'Binghatti', logo: '/images/developers/binghatti.png' },
 ];
