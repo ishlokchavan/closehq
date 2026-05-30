@@ -434,35 +434,79 @@
 
 /* ---------- Trust / developer strip ---------- */
 .trust {
-  margin: 8px auto 0;
-  padding: 30px 22px 6px;
+  margin: -28px auto 0;
+  padding: 0 22px;
   max-width: 1100px;
   text-align: center;
 }
+
+/* Floating white card holding the developer logo lockups */
+.trustBar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 0;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 18px 14px;
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 18px 44px rgba(17, 24, 39, 0.10);
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 4px 30px;
+  color: var(--ink);
+  transition: opacity 0.2s, transform 0.2s;
+}
+/* Divider between items (not after the last) */
+.trustItem:not(:last-child) {
+  box-shadow: 1px 0 0 var(--border-soft);
+}
+.trustItem:hover {
+  transform: translateY(-1px);
+}
+.trustMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.trustName {
+  font-size: clamp(15px, 1.7vw, 18px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
 .trustLabel {
+  margin-top: 22px;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-light);
 }
-.trustRow {
-  margin-top: 18px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 14px 38px;
-}
-.trustItem {
-  font-size: clamp(16px, 2vw, 21px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #b6b6bd;
-  transition: color 0.2s;
-}
-.trustItem:hover {
-  color: var(--text-muted);
+
+@media (max-width: 760px) {
+  .trustItem {
+    padding: 4px 16px;
+  }
+  /* Drop dividers on wrap to avoid stray vertical lines */
+  .trustItem:not(:last-child) {
+    box-shadow: none;
+  }
 }
 
 /* ---------- Responsive ---------- */
