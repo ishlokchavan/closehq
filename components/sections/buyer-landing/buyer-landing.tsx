@@ -276,7 +276,7 @@ function BuyerHero() {
         <motion.h1
           ref={titleRef}
           className={styles.heroTitle}
-          style={{ marginTop: '20px' }}
+          style={{ marginTop: '40px' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
@@ -291,8 +291,7 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          Deep market intelligence, then the entire agent commission rebated
-          back to you. Off-plan or ready.
+          
         </motion.p>
 
         <motion.div
@@ -302,10 +301,10 @@ function BuyerHero() {
           transition={{ duration: 0.6, delay: 0.18, ease }}
         >
           <MagneticButton className={styles.btnPrimary} data-get-started="buyer">
-            Get started
+            View Properties 
           </MagneticButton>
           <a href="#how" className={styles.btnGhost}>
-            See how it works <span aria-hidden="true">→</span>
+           Buy Now <span aria-hidden="true">→</span>
           </a>
         </motion.div>
 
