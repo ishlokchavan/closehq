@@ -411,6 +411,7 @@
 .orbFlower {
   width: clamp(854px, 110.4vw, 1376px);
   height: auto;
+  margin-top: 100px;
   margin-bottom: clamp(20px, 5vw, 60px);
   clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%);
   transform: none;
@@ -521,7 +522,7 @@
 
 /* ---------- Trust / developer strip ---------- */
 .trust {
-  margin: -400px auto 0;
+  margin: -390px auto 0;
   padding: 0 22px;
   max-width: 1100px;
   text-align: center;
