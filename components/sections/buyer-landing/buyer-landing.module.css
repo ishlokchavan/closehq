@@ -1796,7 +1796,11 @@
 
 @media (max-width: 420px) {
   .hero {
-    padding: 80px 16px 140px;
+    padding: 80px 16px 180px;
+  }
+  .trust {
+    margin-top: 40px;
+    padding: 24px 16px;
   }
   .heroTitle {
     font-size: clamp(28px, 5vw, 40px);
@@ -1859,7 +1863,11 @@
 /* Extra small devices (iPhone SE, small Android) */
 @media (max-width: 375px) {
   .hero {
-    padding: 70px 12px 120px;
+    padding: 70px 12px 160px;
+  }
+  .trust {
+    margin-top: 40px;
+    padding: 20px 12px;
   }
   .heroTitle {
     font-size: clamp(24px, 4.5vw, 32px);
