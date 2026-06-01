@@ -1782,27 +1782,42 @@
      absolute "flanking" positions, which can't fit a phone width). */
   .heroStage {
     height: auto;
-    max-width: 460px;
-    margin: 28px auto 0;
+    width: 100%;
+    max-width: 520px;
+    margin: 22px auto 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 20px 12px;
   }
-  /* Flower sits on its own row above the cards. */
+  /* Flower is a big centerpiece on its own row above the cards. The PNG
+     carries ~22% transparent padding each side (bloom = 56% of the file),
+     so the image is scaled to ~180% to push the bloom out to the full
+     stage width (~89vw on a phone). The wrap crops to roughly the bloom's
+     top ~60% and a soft mask fades the cut so the flower bleeds straight
+     into the cards/logos below — echoing the desktop centerpiece. */
   .orbWrap {
     position: relative;
     flex: 0 0 100%;
+    width: 100%;
+    aspect-ratio: 1.5;
+    overflow: hidden;
     align-items: center;
+    -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
   }
   .orbFlower {
-    width: clamp(300px, 84vw, 460px);
-    margin-bottom: 0;
+    position: absolute;
+    left: 50%;
+    top: -31%;
+    width: 180%;
+    height: auto;
+    margin: 0;
+    transform: translateX(-50%);
     display: block !important;
-    transform: none;
     clip-path: none;
-    filter: drop-shadow(0 18px 38px rgba(0, 88, 163, 0.18));
+    filter: drop-shadow(0 22px 44px rgba(0, 88, 163, 0.20));
   }
   /* Decorative orbit rings overflow awkwardly on narrow screens. */
   .orbits {
@@ -1868,18 +1883,16 @@
     height: 46px;
     font-size: 14px;
   }
+  /* Full-bleed stage so the scaled flower bloom reaches ~89vw. */
   .heroStage {
-    max-width: 340px;
-    margin: 24px auto 0;
-    gap: 10px;
-  }
-  .orbFlower {
-    width: clamp(240px, 74vw, 340px);
+    max-width: 100%;
+    margin: 20px auto 0;
+    gap: 16px 10px;
   }
   /* Stack the stat cards full-width on phones so every label stays readable. */
   .fcard {
     flex: 1 1 100%;
-    max-width: 100%;
+    max-width: 360px;
   }
 }
 
@@ -1916,11 +1929,8 @@
     padding: 0 16px;
   }
   .heroStage {
-    max-width: 320px;
-    margin: 20px auto 0;
-  }
-  .orbFlower {
-    width: clamp(220px, 72vw, 320px);
+    max-width: 100%;
+    margin: 16px auto 0;
   }
 }
 
