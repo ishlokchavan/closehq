@@ -636,12 +636,32 @@
 }
 
 @media (max-width: 760px) {
-  .trustItem {
-    padding: 4px 16px;
+  /* Uniform 2-column logo grid: equal cells + equal gaps so every logo
+     sits in the same footprint with consistent spacing. */
+  .trustBar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 14px;
+    padding: 28px 20px;
+    place-items: center;
   }
-  /* Drop dividers on wrap to avoid stray vertical lines */
+  .trustItem {
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+  }
+  /* Drop dividers on the grid to avoid stray vertical lines */
   .trustItem:not(:last-child) {
     box-shadow: none;
+  }
+  /* Normalise every logo to the same height; cap width to the cell so the
+     very wide marks (DAMAC, EMAAR) can't blow out the row. The old 104px
+     cap shrank wide logos' height — removing it keeps heights consistent. */
+  .trustLogo {
+    height: 26px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 }
 
@@ -1832,7 +1852,9 @@
   .orbits {
     display: none;
   }
-  /* Take the stat cards out of absolute flow and lay them in a 2-up grid. */
+  /* Take the stat cards out of absolute flow and lay them in a 2-up grid.
+     A shared min-height + centred content keeps all four the same size
+     regardless of how many lines each label/value wraps to. */
   .fcard {
     position: static;
     rotate: 0deg;
@@ -1840,6 +1862,9 @@
     flex: 1 1 calc(50% - 12px);
     min-width: 0;
     max-width: calc(50% - 6px);
+    min-height: 96px;
+    box-sizing: border-box;
+    align-items: center;
     white-space: normal;
   }
   .fcardA,
