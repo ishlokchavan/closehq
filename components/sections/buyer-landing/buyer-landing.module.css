@@ -1843,6 +1843,40 @@
   }
 }
 
+/* Extra small devices (iPhone SE, small Android) */
+@media (max-width: 375px) {
+  .hero {
+    padding: 70px 12px 24px;
+  }
+  .heroTitle {
+    font-size: clamp(24px, 4.5vw, 32px);
+  }
+  .heroSub {
+    font-size: clamp(13px, 3vw, 14px);
+    margin: 16px auto 0;
+  }
+  .heroCtas {
+    margin-top: 18px;
+  }
+  .btnPrimary,
+  .btnGhost {
+    height: 40px;
+    font-size: 13px;
+    padding: 0 16px;
+  }
+  .fcard {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  .heroStage {
+    height: 250px;
+  }
+  .orbFlower {
+    width: 240px !important;
+    margin-bottom: -24px;
+  }
+}
+
 /* ===================================================================
    BUYER COMPARISON + SCENARIO CARDS
    Dedicated, animated redesign (isolated from the shared Persona*
