@@ -267,6 +267,26 @@ function BuyerHero() {
           ease: 'power2.inOut',
         }
       );
+
+      // Red line animation - moves from left to right
+      gsap.fromTo(
+        accentRef.current,
+        {
+          '--red-line-width': '0%',
+        },
+        {
+          '--red-line-width': '100%',
+          duration: 1.2,
+          delay: 1.4,
+          ease: 'power2.inOut',
+          onUpdate() {
+            const width = gsap.getProperty(accentRef.current, '--red-line-width');
+            if (accentRef.current) {
+              (accentRef.current as any).style.setProperty('--red-line-width', width);
+            }
+          },
+        }
+      );
     }
   }, []);
 
@@ -434,6 +454,49 @@ function ScrollProgress() {
 }
 
 export function BuyerLanding() {
+  useEffect(() => {
+    // Animate "Ready to buy smarter?" - color transition black to blue
+    const readyHeading = document.querySelector(`.${styles.readyToHeading}`) as HTMLElement;
+    if (readyHeading) {
+      gsap.fromTo(
+        readyHeading,
+        { color: '#1d1d1f' },
+        {
+          color: '#0071e3',
+          duration: 1,
+          delay: 0.5,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: readyHeading,
+            start: 'top 75%',
+            once: false,
+          },
+        }
+      );
+    }
+
+    // Animate "smarter?" emphasis on scroll into view
+    const smarterEl = document.querySelector(`.${styles.smarterEmphasis}`) as HTMLElement;
+    if (smarterEl) {
+      gsap.fromTo(
+        smarterEl,
+        { scale: 1, opacity: 1 },
+        {
+          scale: 1.15,
+          repeat: 3,
+          yoyo: true,
+          duration: 0.4,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: smarterEl,
+            start: 'top center',
+            once: false,
+          },
+        }
+      );
+    }
+  }, []);
+
   return (
     <div className={styles.root}>
       <ScrollProgress />
@@ -486,7 +549,7 @@ export function BuyerLanding() {
       <PersonaWaitlist
         defaultIntent="buyer"
         hideIntent
-        heading={<>Ready to buy smarter?</>}
+        heading={<><span className={styles.readyToHeading}>Ready to buy <span className={styles.smarterEmphasis}>smarter?</span></span></>}
         body={<>Tell us a bit about you. We&apos;ll line up your 100% cashback.</>}
       />
 
