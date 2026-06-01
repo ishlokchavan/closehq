@@ -12,7 +12,7 @@ import {
 } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
-import { Menu, X, Check, TrendingUp, BadgePercent, Landmark } from 'lucide-react';
+import { Menu, X, Check, BadgePercent } from 'lucide-react';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
@@ -384,17 +384,6 @@ function BuyerHero() {
             valueGreen
           />
           <FloatingCard
-            cls={styles.fcardB}
-            delay={0.5}
-            icon={
-              <span className={`${styles.fcardIcon} ${styles.fcardIconBlue}`}>
-                <TrendingUp size={17} strokeWidth={2.4} />
-              </span>
-            }
-            label="Net rental yield"
-            value="8–12% p.a."
-          />
-          <FloatingCard
             cls={styles.fcardC}
             delay={0.6}
             icon={
@@ -404,17 +393,6 @@ function BuyerHero() {
             }
             label="You pay the agent"
             value="0% commission"
-          />
-          <FloatingCard
-            cls={styles.fcardD}
-            delay={0.7}
-            icon={
-              <span className={`${styles.fcardIcon} ${styles.fcardIconBlue}`}>
-                <Landmark size={17} strokeWidth={2.2} />
-              </span>
-            }
-            label="AED 2M+ purchase"
-            value="Golden Visa eligible"
           />
         </div>
       </div>
