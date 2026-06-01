@@ -1819,10 +1819,9 @@
   .stmtSection {
     padding: 64px 18px;
   }
-  /* Mobile keeps every value prop from the desktop hero, but reflows the
-     stage: the flower becomes a full-width centerpiece and the four stat
-     cards drop into a tidy grid beneath it (instead of the desktop's
-     absolute "flanking" positions, which can't fit a phone width). */
+  /* Mobile reflows the stage: the flower is a full-width centerpiece and the
+     two stat cards stack as clean full-width rows beneath it (the desktop's
+     absolute left/right flanking can't fit a phone width). */
   .heroStage {
     height: auto;
     width: 100%;
@@ -1832,7 +1831,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 20px 12px;
+    gap: 12px;
   }
   /* Flower is a big centerpiece on its own row above the cards. The PNG
      carries ~22% transparent padding each side (bloom = 56% of the file),
@@ -1875,19 +1874,22 @@
   .orbits {
     display: none;
   }
-  /* Take the stat cards out of absolute flow and lay them in a 2-up grid.
-     A shared min-height + centred content keeps all four the same size
-     regardless of how many lines each label/value wraps to. */
+  /* Two cards only: take them out of absolute flow and stack them full-width
+     as clean list-style rows — icon left, text left-aligned beside it. This
+     avoids the cramped 2-up wrapping and the centred-text look. */
   .fcard {
     position: static;
     rotate: 0deg;
     animation: none;
-    flex: 1 1 calc(50% - 12px);
-    min-width: 0;
-    max-width: calc(50% - 6px);
-    min-height: 96px;
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 440px;
     box-sizing: border-box;
     align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 14px;
+    padding: 15px 18px;
     white-space: normal;
   }
   .fcardA,
