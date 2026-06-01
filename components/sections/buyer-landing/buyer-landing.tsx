@@ -281,8 +281,8 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
         >
-          Smarter property buys. <br /> {' '}
-          <span ref={accentRef} className={styles.heroTitleAccent}>Your full cash back, guaranteed</span>
+         Do you want to buy real estate in UAE without an agent? <br />
+          <span ref={accentRef} className={styles.heroTitleAccent}>Pay zero percent commission or get 100% cash back from developers</span>
         </motion.h1>
 
         <motion.p
