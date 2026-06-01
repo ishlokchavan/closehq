@@ -1807,14 +1807,17 @@
     -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
   }
+  /* Centre horizontally with a left offset, NOT transform: framer-motion
+     sets an inline transform on this <img> for its scale-in animation,
+     which would override transform-based centering and shove the flower
+     off to the side. For a 180%-wide image, left:-40% centres it. */
   .orbFlower {
     position: absolute;
-    left: 50%;
+    left: -40%;
     top: -31%;
     width: 180%;
     height: auto;
     margin: 0;
-    transform: translateX(-50%);
     display: block !important;
     clip-path: none;
     filter: drop-shadow(0 22px 44px rgba(0, 88, 163, 0.20));
