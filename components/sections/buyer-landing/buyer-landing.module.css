@@ -1797,27 +1797,33 @@
      stage width (~89vw on a phone). The wrap crops to roughly the bloom's
      top ~60% and a soft mask fades the cut so the flower bleeds straight
      into the cards/logos below — echoing the desktop centerpiece. */
+  /* Crop window: flex-centre an over-wide flower and clip the overflow.
+     Flex centering (not transform/left offsets) is deterministic AND
+     immune to the inline transform framer-motion sets on the <img> for
+     its scale-in — transforms are applied after layout, around the
+     element's centre, so the flower stays put. The mask fades the bottom
+     so the flower bleeds straight into the cards/logos below. */
   .orbWrap {
     position: relative;
     flex: 0 0 100%;
     width: 100%;
     aspect-ratio: 1.5;
     overflow: hidden;
-    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
   }
-  /* Centre horizontally with a left offset, NOT transform: framer-motion
-     sets an inline transform on this <img> for its scale-in animation,
-     which would override transform-based centering and shove the flower
-     off to the side. For a 180%-wide image, left:-40% centres it. */
   .orbFlower {
-    position: absolute;
-    left: -40%;
-    top: -31%;
+    flex: 0 0 auto;
     width: 180%;
+    max-width: none;
     height: auto;
-    margin: 0;
+    /* Pull up so the bloom (which sits ~18% down inside the PNG's
+       transparent padding) frames near the top of the window. */
+    margin: -21% 0 0 0;
+    animation: none;
     display: block !important;
     clip-path: none;
     filter: drop-shadow(0 22px 44px rgba(0, 88, 163, 0.20));
