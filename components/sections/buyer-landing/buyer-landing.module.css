@@ -20,6 +20,34 @@
   background: var(--bg);
 }
 
+/* Blur overlay for scroll transitions */
+.blurOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
+  z-index: 49;
+  transition: backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.blurOverlay.active {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 1;
+}
+
+/* Panel scroll effect container */
+.panel {
+  width: 100%;
+  position: relative;
+}
+
 /* Scroll-progress bar pinned to the very top of the viewport. */
 .scrollProgress {
   position: fixed;
@@ -244,7 +272,7 @@
 
 .heroTitle {
   font-size: clamp(21px, 5.5vw, 36px);
-  line-height: 1.03;
+  line-height: 1.1;
   font-weight: 600;
   letter-spacing: -0.035em;
   margin: 0;
@@ -258,6 +286,16 @@
   background-size: 100% 3px;
   background-repeat: no-repeat;
   transition: background-image 0.3s ease;
+}
+
+.heroAccentPara {
+  font-size: 17px;
+  line-height: 0.2;
+  color: var(--blue);
+  letter-spacing: -0.01em;
+  margin: 16px auto 0;
+  max-width: 600px;
+  font-weight: 500;
 }
 
 .heroSub {
@@ -340,6 +378,7 @@
   cursor: pointer;
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s;
+  position: relative;
   pointer-events: auto;
   z-index: 11;
 }

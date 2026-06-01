@@ -224,7 +224,6 @@ function MagneticButton({
 
 function BuyerHero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const accentRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!titleRef.current) return;
@@ -239,35 +238,6 @@ function BuyerHero() {
         ease: 'power3.out',
       }
     );
-
-    const textElements = titleRef.current.querySelectorAll('span');
-    gsap.fromTo(
-      textElements,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.8,
-        delay: 0.3,
-        stagger: 0.1,
-        ease: 'power2.out',
-      }
-    );
-
-    // Underline animation on "guaranteed"
-    if (accentRef.current) {
-      gsap.fromTo(
-        accentRef.current,
-        {
-          backgroundSize: '0% 3px',
-        },
-        {
-          backgroundSize: '100% 3px',
-          duration: 1,
-          delay: 1.2,
-          ease: 'power2.inOut',
-        }
-      );
-    }
   }, []);
 
   return (
@@ -281,17 +251,16 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
         >
-         Do you want to buy real estate in UAE without an agent? <br />
-          <span ref={accentRef} className={styles.heroTitleAccent}>Pay zero percent commission or get 100% cash back from developers</span>
+         Do you want to buy real estate in UAE without an agent?
         </motion.h1>
 
         <motion.p
-          className={styles.heroSub}
+          className={styles.heroAccentPara}
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          
+          Pay zero percent commission or get  100% cash back from developers
         </motion.p>
 
         <motion.div
@@ -318,13 +287,13 @@ function BuyerHero() {
             aria-hidden="true"
           >
             <g transform="rotate(0 500 260)" fill="none" strokeWidth="1.5">
-              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(0,113,227,0.16)" />
+              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(1,113,227,0.40)" />
               <ellipse
                 cx="500"
                 cy="260"
                 rx="372"
                 ry="142"
-                stroke="rgba(110,110,125,0.30)"
+                stroke="rgba(1,113,227,0.40)"
                 strokeDasharray="1.5 10"
                 strokeLinecap="round"
               />
@@ -333,7 +302,7 @@ function BuyerHero() {
                 cy="260"
                 rx="262"
                 ry="98"
-                stroke="rgba(0,113,227,0.14)"
+                stroke="rgba(1,113,227,0.40)"
                 strokeDasharray="1.5 10"
                 strokeLinecap="round"
               />
@@ -433,8 +402,13 @@ function ScrollProgress() {
 }
 
 export function BuyerLanding() {
+  useEffect(() => {
+    // Infinite scroll effect removed - sections now scroll normally
+  }, []);
+
   return (
     <div className={styles.root}>
+      <div className={styles.blurOverlay} />
       <ScrollProgress />
       <BuyerNav />
 
@@ -446,11 +420,15 @@ export function BuyerLanding() {
           we replicate it so the highlighted cards and footer resolve
           their colours correctly instead of rendering washed-out. */}
       <div className={personaStyles.root}>
-      <BuyerCompare />
+      <div className={styles.panel}>
+        <BuyerCompare />
+      </div>
 
-      <BuyerTools />
+      <div className={styles.panel}>
+        <BuyerTools />
+      </div>
 
-      <div id="how">
+      <div className={styles.panel} id="how">
         <BuyerSteps />
       </div>
 

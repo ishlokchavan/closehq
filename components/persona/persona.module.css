@@ -186,18 +186,35 @@
 }
 
 .btnBlue {
-  background: var(--blue);
+  background: var(--bg-dark);
   color: #fff;
   padding: 12px 22px;
   border-radius: var(--r-pill);
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+}
+.btnBlue::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .btnBlue:hover {
-  background: var(--blue-hover);
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+.btnBlue:hover::before {
+  left: 100%;
 }
 .btnLink {
   color: var(--blue);
@@ -243,7 +260,7 @@
   font-size: clamp(28px, 3.4vw, 44px);
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.030em;
   color: var(--text);
   text-align: center;
   margin: 0 0 48px;
@@ -265,7 +282,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .pillarNum {
   font-size: 12px;
@@ -335,7 +352,7 @@
 /* QUOTE */
 .quote {
   padding: 96px 22px;
-  background: var(--bg-alt);
+  background: radial-gradient(70% 60% at 50% 0%, rgba(0, 113, 227, 0.04), transparent 70%), var(--bg-alt);
 }
 .quoteBody {
   font-size: clamp(22px, 2.8vw, 32px);
@@ -369,11 +386,12 @@
 .cta {
   padding: 96px 22px 120px;
   text-align: center;
+  background: radial-gradient(80% 70% at 50% 0%, rgba(0, 113, 227, 0.06), transparent 70%), var(--bg);
 }
 .ctaHeading {
   font-size: clamp(32px, 4.4vw, 52px);
   font-weight: 600;
-  letter-spacing: -0.024em;
+  letter-spacing: -0.030em;
   line-height: 1.06;
   margin: 0 0 14px;
   color: var(--text);
@@ -387,18 +405,35 @@
 }
 .btnBlueLg {
   display: inline-block;
-  background: var(--blue);
+  background: var(--bg-dark);
   color: #fff;
   padding: 14px 28px;
   border-radius: var(--r-pill);
   font-size: 17px;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+}
+.btnBlueLg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .btnBlueLg:hover {
-  background: var(--blue-hover);
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+.btnBlueLg:hover::before {
+  left: 100%;
 }
 
 /* ============================================================
@@ -544,14 +579,17 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--blue);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  background: rgba(0, 113, 227, 0.08);
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-block;
   margin-bottom: 14px;
 }
 .introHeading {
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 600;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.030em;
   line-height: 1.1;
   color: var(--text);
   margin: 0 0 16px;
@@ -574,6 +612,7 @@
   background: var(--bg-alt);
   border-radius: var(--r-card);
   padding: 32px 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .valueCardHead {
   font-size: 11px;
@@ -610,7 +649,7 @@
 /* STEPS (numbered, vertical layout) */
 .steps {
   padding: 96px 22px;
-  background: var(--bg-alt);
+  background: radial-gradient(70% 60% at 50% 0%, rgba(0, 113, 227, 0.04), transparent 70%), var(--bg-alt);
 }
 .stepsHeader {
   text-align: center;
@@ -632,7 +671,7 @@
   background: #fff;
   border-radius: var(--r-card);
   padding: 26px 28px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .stepNum {
   font-size: 14px;
@@ -688,6 +727,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .mathRow {
   display: flex;
@@ -759,7 +799,7 @@
   background: #fff;
   border-radius: var(--r-card);
   padding: 24px 26px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .audienceCheck {
   flex: 0 0 24px;
@@ -814,6 +854,7 @@
   background: var(--bg-alt);
   border-radius: var(--r-card);
   padding: 26px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .featureCard h3 {
   font-size: 17px;
@@ -886,7 +927,7 @@
 /* MARKET FACTS (Why this market) */
 .facts {
   padding: 96px 22px;
-  background: var(--bg-alt);
+  background: radial-gradient(70% 60% at 50% 0%, rgba(0, 113, 227, 0.04), transparent 70%), var(--bg-alt);
 }
 .factGrid {
   display: grid;
@@ -900,7 +941,7 @@
   border-radius: var(--r-card);
   padding: 28px 24px;
   text-align: center;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .factStat {
   font-size: clamp(22px, 2.8vw, 32px);
@@ -948,6 +989,7 @@
   border: 1px solid var(--border-soft);
   border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .faqQ {
   width: 100%;
@@ -1077,6 +1119,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(17, 24, 39, 0.07);
 }
 .compareCardMuted {
   background: var(--bg-alt);
@@ -1085,7 +1128,7 @@
 .compareCardHero {
   background: var(--bg-dark);
   color: var(--text-on-dark, #f5f5f7);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 24px 60px rgba(0, 113, 227, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), 0 30px 70px rgba(0, 88, 163, 0.22);
 }
 .compareTitle {
   font-size: 13px;
