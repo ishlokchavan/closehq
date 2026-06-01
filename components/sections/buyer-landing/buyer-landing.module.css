@@ -203,6 +203,7 @@
   .navBrand {
     justify-self: center;
     grid-column: 2;
+    transform: scale(1.1) translateY(-6px);
   }
   .navBurger {
     display: inline-flex;
