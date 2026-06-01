@@ -1776,19 +1776,28 @@
   .stmtSection {
     padding: 64px 18px;
   }
-  /* Let the flower define its own height in normal flow instead of the
-     desktop overlay math (which broke once the stage shrank on mobile). */
+  /* Mobile keeps every value prop from the desktop hero, but reflows the
+     stage: the flower becomes a full-width centerpiece and the four stat
+     cards drop into a tidy grid beneath it (instead of the desktop's
+     absolute "flanking" positions, which can't fit a phone width). */
   .heroStage {
     height: auto;
-    max-width: 100%;
+    max-width: 460px;
     margin: 28px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
   }
+  /* Flower sits on its own row above the cards. */
   .orbWrap {
     position: relative;
+    flex: 0 0 100%;
     align-items: center;
   }
   .orbFlower {
-    width: clamp(300px, 84vw, 520px);
+    width: clamp(300px, 84vw, 460px);
     margin-bottom: 0;
     display: block !important;
     transform: none;
@@ -1799,19 +1808,31 @@
   .orbits {
     display: none;
   }
-  /* Floating stat cards are too cramped to read on mobile — hide them so
-     the flower + logo strip read cleanly. */
+  /* Take the stat cards out of absolute flow and lay them in a 2-up grid. */
+  .fcard {
+    position: static;
+    rotate: 0deg;
+    animation: none;
+    flex: 1 1 calc(50% - 12px);
+    min-width: 0;
+    max-width: calc(50% - 6px);
+    white-space: normal;
+  }
   .fcardA,
   .fcardB,
   .fcardC,
   .fcardD,
   .fcardE {
-    display: none;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: flex;
   }
-  /* Flow the developer logo card directly below the flower (the desktop
+  /* Flow the developer logo card directly below the stage (the desktop
      -400px overlay would otherwise sit on top of it). */
   .trust {
-    margin: 20px auto 0;
+    margin: 28px auto 0;
   }
 }
 
@@ -1848,10 +1869,17 @@
     font-size: 14px;
   }
   .heroStage {
+    max-width: 340px;
     margin: 24px auto 0;
+    gap: 10px;
   }
   .orbFlower {
-    width: clamp(260px, 80vw, 440px);
+    width: clamp(240px, 74vw, 340px);
+  }
+  /* Stack the stat cards full-width on phones so every label stays readable. */
+  .fcard {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }
 
@@ -1888,10 +1916,11 @@
     padding: 0 16px;
   }
   .heroStage {
+    max-width: 320px;
     margin: 20px auto 0;
   }
   .orbFlower {
-    width: clamp(240px, 78vw, 380px);
+    width: clamp(220px, 72vw, 320px);
   }
 }
 
