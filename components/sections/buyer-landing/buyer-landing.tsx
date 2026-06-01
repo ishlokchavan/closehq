@@ -311,8 +311,7 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          Deep market intelligence, then the entire agent commission rebated
-          back to you. Off-plan or ready.
+          Do you want to buy real estate in UAE without an agent? Pay zero percent commission or get 100% cash back from developers.
         </motion.p>
 
         <motion.div
