@@ -658,7 +658,7 @@
      very wide marks (DAMAC, EMAAR) can't blow out the row. The old 104px
      cap shrank wide logos' height — removing it keeps heights consistent. */
   .trustLogo {
-    height: 26px;
+    height: 18px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
