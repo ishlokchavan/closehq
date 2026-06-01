@@ -391,7 +391,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  z-index: 1;
+  z-index: 10;
   overflow: visible;
 }
 
@@ -504,13 +504,13 @@
    (set above) is preserved during the bob. */
 @keyframes bob {
   0%, 100% { translate: 0 0; }
-  50% { translate: 0 -12px; }
+  50% { translate: 0 -6px; }
 }
 /* Bob via standalone translate/scale so the perspective `transform`
    tilt on .orbFlower is preserved during the animation. */
 @keyframes orbFloat {
   0%, 100% { translate: 0 0; scale: 1; }
-  50% { translate: 0 -14px; scale: 1.015; }
+  50% { translate: 0 -7px; scale: 1.015; }
 }
 
 @media (prefers-reduced-motion: reduce) {
