@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, useRef, useEffect, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import gsap from 'gsap';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import { WaitlistForm } from '@/components/sections/iclose-landing/waitlist-form';
@@ -667,7 +668,68 @@ export function PersonaFaq({
   heading: ReactNode;
   items: { q: string; a: string }[];
 }) {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
+  const answerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleToggle = (index: number) => {
+    const isCurrentlyOpen = open === index;
+    setOpen(isCurrentlyOpen ? null : index);
+
+    // Smooth height reveal with staggered effects
+    if (!isCurrentlyOpen && answerRefs.current[index]) {
+      const answerDiv = answerRefs.current[index];
+      const buttonDiv = buttonRefs.current[index];
+
+      // Animate the container height
+      gsap.fromTo(
+        answerDiv,
+        {
+          opacity: 0,
+          height: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+        },
+        {
+          opacity: 1,
+          height: 'auto',
+          paddingTop: 22,
+          paddingBottom: 22,
+          duration: 0.5,
+          ease: 'power3.out'
+        }
+      );
+
+      // Animate the answer text with stagger
+      const paragraphs = answerDiv.querySelectorAll('p');
+      gsap.fromTo(
+        paragraphs,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          delay: 0.1,
+          ease: 'power2.out',
+        }
+      );
+
+      // Button background animation
+      gsap.to(buttonDiv, {
+        backgroundColor: 'rgba(0, 113, 227, 0.08)',
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+    } else if (isCurrentlyOpen && buttonRefs.current[index]) {
+      // Reset button background when closing
+      gsap.to(buttonRefs.current[index], {
+        backgroundColor: 'transparent',
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+    }
+  };
+
   return (
     <section className={styles.faq}>
       <div className={styles.faqInner}>
@@ -690,9 +752,12 @@ export function PersonaFaq({
                 transition={{ duration: 0.45, delay: i * 0.05, ease }}
               >
                 <button
+                  ref={(el) => {
+                    buttonRefs.current[i] = el;
+                  }}
                   type="button"
                   className={styles.faqQ}
-                  onClick={() => setOpen(isOpen ? null : i)}
+                  onClick={() => handleToggle(i)}
                   aria-expanded={isOpen}
                 >
                   <span>{it.q}</span>
@@ -701,7 +766,12 @@ export function PersonaFaq({
                   </span>
                 </button>
                 {isOpen && (
-                  <div className={styles.faqA}>
+                  <div
+                    ref={(el) => {
+                      answerRefs.current[i] = el;
+                    }}
+                    className={styles.faqA}
+                  >
                     <p>{it.a}</p>
                   </div>
                 )}

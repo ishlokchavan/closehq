@@ -24,13 +24,13 @@ import {
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const inView = { once: true, margin: '-12% 0px' } as const;
+const inView = { once: false, margin: '-12% 0px' } as const;
 
 /* Count-up micro-animation. Animates from 0 → value the first time the
    number scrolls into view, formatted with thousands separators. */
 function CountUp({ value, prefix = '' }: { value: number; prefix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const seen = useInView(ref, { once: true, margin: '-15% 0px' });
+  const seen = useInView(ref, { once: false, margin: '-15% 0px' });
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
@@ -103,12 +103,10 @@ export function BuyerCompare() {
           viewport={inView}
           transition={{ duration: 0.6, ease }}
         >
-          <span className={styles.cmpEyebrow}>The commission problem</span>
-          <h2 className={styles.cmpHeading}>Never pay commission again.</h2>
+          <span className={styles.cmpEyebrow}>Zero Commission Real Estate in Dubai</span>
+          <h2 className={styles.cmpHeading}>Buy property in Dubai without paying agent commission.</h2>
           <p className={styles.cmpSub}>
-            On a typical AED 2M ready secondary purchase, here&apos;s the
-            difference between buying through a standard agent and buying
-            through iClose.
+            On a typical AED 2M ready secondary purchase, a standard agent charges 2% — that&apos;s AED 40,000 in commission fees. Buy through iClose and you pay zero. Here&apos;s how the two compare side by side.
           </p>
         </motion.div>
 

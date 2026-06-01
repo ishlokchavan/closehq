@@ -966,13 +966,26 @@
   text-align: left;
   cursor: pointer;
   line-height: 1.35;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+.faqQ:hover {
+  background: rgba(0, 113, 227, 0.05);
+  color: var(--blue);
+}
+
 .faqChev {
   flex-shrink: 0;
   color: var(--text-muted);
   font-size: 18px;
-  transition: transform 0.2s, color 0.2s;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
 }
+
 .faqItemOpen .faqChev {
   transform: rotate(90deg);
   color: var(--blue);
@@ -983,6 +996,19 @@
   line-height: 1.6;
   color: var(--text-muted);
   letter-spacing: -0.005em;
+  animation: fadeInContent 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 600px) {

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import Link from 'next/link';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   motion,
   AnimatePresence,
@@ -9,7 +10,9 @@ import {
   useSpring,
   useMotionValue,
 } from 'framer-motion';
-import { Menu, X, Check, TrendingUp, BadgePercent, Landmark, Building2 } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
+import { Menu, X, Check, TrendingUp, BadgePercent, Landmark } from 'lucide-react';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
@@ -220,27 +223,66 @@ function MagneticButton({
 }
 
 function BuyerHero() {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const accentRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!titleRef.current) return;
+
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+      }
+    );
+
+    const textElements = titleRef.current.querySelectorAll('span');
+    gsap.fromTo(
+      textElements,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 0.8,
+        delay: 0.3,
+        stagger: 0.1,
+        ease: 'power2.out',
+      }
+    );
+
+    // Underline animation on "guaranteed"
+    if (accentRef.current) {
+      gsap.fromTo(
+        accentRef.current,
+        {
+          backgroundSize: '0% 3px',
+        },
+        {
+          backgroundSize: '100% 3px',
+          duration: 1,
+          delay: 1.2,
+          ease: 'power2.inOut',
+        }
+      );
+    }
+  }, []);
+
   return (
     <section className={styles.hero} id="top">
       <div className={styles.heroInner}>
-        <motion.span
-          className={styles.heroEyebrow}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease }}
-        >
-          <span className={styles.heroEyebrowDot} aria-hidden="true" />
-          100% cashback for UAE property buyers
-        </motion.span>
-
         <motion.h1
+          ref={titleRef}
           className={styles.heroTitle}
+          style={{ marginTop: '20px' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05, ease }}
+          transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
         >
-          Buy smarter.{' '}
-          <span className={styles.heroTitleAccent}>Get 100% of the commission back.</span>
+          Smarter property buys. <br /> {' '}
+          <span ref={accentRef} className={styles.heroTitleAccent}>Your full cash back, guaranteed</span>
         </motion.h1>
 
         <motion.p
@@ -276,7 +318,7 @@ function BuyerHero() {
             preserveAspectRatio="xMidYMid meet"
             aria-hidden="true"
           >
-            <g transform="rotate(-9 500 260)" fill="none" strokeWidth="1.5">
+            <g transform="rotate(0 500 260)" fill="none" strokeWidth="1.5">
               <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(0,113,227,0.16)" />
               <ellipse
                 cx="500"
@@ -301,7 +343,7 @@ function BuyerHero() {
 
           <div className={styles.orbWrap}>
             <motion.img
-              src="/images/spiral-flower.svg"
+              src="/images/spiral-flower.png"
               alt=""
               className={styles.orbFlower}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -354,17 +396,6 @@ function BuyerHero() {
             }
             label="AED 2M+ purchase"
             value="Golden Visa eligible"
-          />
-          <FloatingCard
-            cls={styles.fcardE}
-            delay={0.8}
-            icon={
-              <span className={`${styles.fcardIcon} ${styles.fcardIconInk}`}>
-                <Building2 size={17} strokeWidth={2.2} />
-              </span>
-            }
-            label="Coverage"
-            value="Off-plan · Ready"
           />
         </div>
       </div>
@@ -426,9 +457,9 @@ export function BuyerLanding() {
 
       <div id="reviews">
         <PersonaQuote
-          quote="Everything in one place. I decided in two weeks, and got the entire AED 40,000 commission back as cashback."
+          quote="Everything in one place. I decided in two weeks and got AED 40,000 back in cashback."
           name="Buyer"
-          role="2BR apartment · Dubai Hills Estate"
+          role="2BR Apartment · Dubai Hills Estate"
         />
       </div>
 
