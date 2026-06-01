@@ -527,7 +527,7 @@
   max-width: 1100px;
   text-align: center;
   position: relative;
-  z-index: 5;
+  z-index: 15;
 }
 
 /* Floating white card holding the developer logo lockups */
