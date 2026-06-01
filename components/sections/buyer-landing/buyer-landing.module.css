@@ -1766,7 +1766,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
   .hero {
-    padding: 112px 20px 40px;
+    padding: 112px 20px 160px;
   }
   /* Keep section vertical rhythm consistent on mobile */
   .toolsSection,
@@ -1777,12 +1777,17 @@
     padding: 64px 18px;
   }
   .heroStage {
-    height: 380px;
-    max-width: 520px;
+    height: 400px;
+    max-width: 100%;
+    margin: 16px auto 0;
   }
   .orbFlower {
-    width: 420px;
-    margin-bottom: -48px;
+    width: clamp(280px, 70vw, 500px);
+    margin-bottom: clamp(-40px, -5vw, -20px);
+    display: block !important;
+  }
+  .orbits {
+    width: clamp(150%, 200%, 300%);
   }
   /* Trim the two outer cards on small screens to avoid clutter/overflow */
   .fcardC,
@@ -1896,16 +1901,17 @@
     display: none;
   }
   .heroStage {
-    height: 280px;
+    height: 300px;
     margin: 12px auto 0;
+    max-width: 100%;
   }
   .orbFlower {
-    width: 260px !important;
-    margin-bottom: -40px;
+    width: clamp(240px, 65vw, 380px);
+    margin-bottom: clamp(-35px, -4vw, -20px);
     display: block !important;
   }
   .orbits {
-    width: 250%;
+    width: clamp(200%, 250%, 400%);
   }
 }
 
