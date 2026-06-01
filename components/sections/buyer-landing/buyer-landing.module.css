@@ -197,10 +197,17 @@
     display: none;
   }
   .nav {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
+    justify-items: center;
+  }
+  .navBrand {
+    justify-self: center;
+    grid-column: 2;
   }
   .navBurger {
     display: inline-flex;
+    justify-self: end;
+    grid-column: 3;
   }
 }
 
