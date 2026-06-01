@@ -1783,9 +1783,9 @@
   }
   .orbFlower {
     width: clamp(400px, 100vw, 700px);
-    margin-bottom: clamp(-60px, -8vw, -30px);
+    margin-bottom: clamp(-90px, -8vw, -60px);
     display: block !important;
-    transform: scale(1.4);
+    transform: scale(1.4) translateY(-30px);
     transform-origin: center bottom;
   }
   .orbits {
@@ -1854,9 +1854,9 @@
   }
   .orbFlower {
     width: clamp(380px, 95vw, 650px);
-    margin-bottom: clamp(-55px, -7vw, -30px);
+    margin-bottom: clamp(-85px, -7vw, -60px);
     display: block !important;
-    transform: scale(1.4);
+    transform: scale(1.4) translateY(-30px);
     transform-origin: center bottom;
   }
   .orbits {
@@ -1911,9 +1911,9 @@
   }
   .orbFlower {
     width: clamp(360px, 90vw, 600px);
-    margin-bottom: clamp(-55px, -7vw, -25px);
+    margin-bottom: clamp(-85px, -7vw, -55px);
     display: block !important;
-    transform: scale(1.4);
+    transform: scale(1.4) translateY(-30px);
     transform-origin: center bottom;
   }
   .orbits {
