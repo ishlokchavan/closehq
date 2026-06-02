@@ -399,7 +399,11 @@
   position: relative;
   width: 100%;
   max-width: 1180px;
-  height: clamp(460px, 50vw, 640px);
+  /* Height tracks the skyline's own aspect ratio (~0.325 of its width) so the
+     full-bleed skyline fills the stage instead of dropping into a gap below
+     the cards. 32.5vw ≈ 100vw * 1243/3822; the cap matches the 2000px width
+     cap on .orbSkyline. */
+  height: clamp(300px, 32.5vw, 650px);
   margin: 20px auto 0;
   overflow: visible;
 }
@@ -441,7 +445,10 @@
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-  width: min(1440px, 116vw);
+  /* Full-bleed: spans the viewport edge-to-edge (clipped by the hero's
+     overflow: hidden) and only caps on very large monitors. height: auto
+     keeps the whole skyline — Burj spire included — visible, never cropped. */
+  width: min(2000px, 101vw);
   height: auto;
   z-index: 1;
   pointer-events: none;
@@ -520,11 +527,11 @@
 }
 
 /* Left side cards */
-.fcardC { top: 40px; left: -30px; rotate: -4deg; animation: bob 9s ease-in-out infinite 1.1s; }
+.fcardC { top: clamp(80px, 13vw, 220px); left: -30px; rotate: -4deg; animation: bob 9s ease-in-out infinite 1.1s; }
 .fcardE { top: 240px; left: -35px; rotate: -5deg; animation: bob 8.5s ease-in-out infinite 0.9s; }
 
 /* Right side cards */
-.fcardA { top: 40px; right: -40px; rotate: 6deg; animation: bob 7s ease-in-out infinite; }
+.fcardA { top: clamp(80px, 13vw, 220px); right: -40px; rotate: 6deg; animation: bob 7s ease-in-out infinite; }
 .fcardVilla { top: 130px; right: -45px; rotate: 5deg; animation: bob 8.5s ease-in-out infinite 0.5s; }
 
 /* Animate the standalone `translate` property so the per-card `rotate`
