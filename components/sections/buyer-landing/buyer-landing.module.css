@@ -20,6 +20,34 @@
   background: var(--bg);
 }
 
+/* Blur overlay for scroll transitions */
+.blurOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
+  z-index: 49;
+  transition: backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.blurOverlay.active {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 1;
+}
+
+/* Panel scroll effect container */
+.panel {
+  width: 100%;
+  position: relative;
+}
+
 /* Scroll-progress bar pinned to the very top of the viewport. */
 .scrollProgress {
   position: fixed;
@@ -251,8 +279,8 @@
 }
 
 .heroTitle {
-  font-size: clamp(40px, 6.4vw, 62px);
-  line-height: 1.03;
+  font-size: clamp(21px, 5.5vw, 36px);
+  line-height: 1.1;
   font-weight: 600;
   letter-spacing: -0.035em;
   margin: 0;
@@ -268,21 +296,20 @@
   transition: background-image 0.3s ease;
 }
 
-.heroTitleAccent::before {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: var(--red-line-width, 0%);
-  height: 3px;
-  background: #ff0000;
-  border-radius: 2px;
+.heroAccentPara {
+  font-size: 17px;
+  line-height: 0.2;
+  color: var(--blue);
+  letter-spacing: -0.01em;
+  margin: 16px auto 0;
+  max-width: 600px;
+  font-weight: 500;
 }
 
 .heroSub {
   margin: 22px auto 0;
   max-width: 600px;
-  font-size: clamp(16px, 2.1vw, 19px);
+  font-size: clamp(13px, 1.6vw, 15px);
   line-height: 1.55;
   color: var(--text-muted);
   letter-spacing: -0.01em;
@@ -340,8 +367,8 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: left 0.5s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .btnPrimary:hover {
   background: #000;
@@ -372,6 +399,7 @@
   cursor: pointer;
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s;
+  position: relative;
   pointer-events: auto;
   z-index: 11;
 }
@@ -423,7 +451,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  z-index: 1;
+  z-index: 10;
   overflow: visible;
 }
 
@@ -443,6 +471,7 @@
 .orbFlower {
   width: clamp(854px, 110.4vw, 1376px);
   height: auto;
+  margin-top: 100px;
   margin-bottom: clamp(20px, 5vw, 60px);
   clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%);
   transform: none;
@@ -558,13 +587,13 @@
    (set above) is preserved during the bob. */
 @keyframes bob {
   0%, 100% { translate: 0 0; }
-  50% { translate: 0 -12px; }
+  50% { translate: 0 -6px; }
 }
 /* Bob via standalone translate/scale so the perspective `transform`
    tilt on .orbFlower is preserved during the animation. */
 @keyframes orbFloat {
   0%, 100% { translate: 0 0; scale: 1; }
-  50% { translate: 0 -14px; scale: 1.015; }
+  50% { translate: 0 -7px; scale: 1.015; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -576,12 +605,12 @@
 
 /* ---------- Trust / developer strip ---------- */
 .trust {
-  margin: -400px auto 0;
+  margin: -405px auto 0;
   padding: 0 22px;
   max-width: 1100px;
   text-align: center;
   position: relative;
-  z-index: 5;
+  z-index: 15;
 }
 
 /* Floating white card holding the developer logo lockups */
@@ -1926,13 +1955,16 @@
     z-index: 5;
   }
   .heroTitle {
-    font-size: clamp(28px, 8vw, 40px);
-    line-height: 1.1;
+    font-size: clamp(23px, 6.4vw, 30px);
+    line-height: 1.2;
   }
-  .heroSub {
-    font-size: clamp(14px, 3.5vw, 16px);
+  /* New blue sub-line uses heroAccentPara; give it a readable line-height
+     on mobile (base line-height: 0.2 overlaps once it wraps). */
+  .heroAccentPara {
+    font-size: 15px;
+    line-height: 1.45;
     max-width: 100%;
-    margin: 14px auto 0;
+    margin: 12px auto 0;
   }
   .heroCtas {
     flex-direction: column;
@@ -1972,11 +2004,12 @@
     z-index: 5;
   }
   .heroTitle {
-    font-size: clamp(26px, 7.5vw, 32px);
+    font-size: clamp(21px, 6vw, 27px);
   }
-  .heroSub {
-    font-size: clamp(13px, 3vw, 14px);
-    margin: 12px auto 0;
+  .heroAccentPara {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 10px auto 0;
   }
   .heroCtas {
     flex-direction: column;

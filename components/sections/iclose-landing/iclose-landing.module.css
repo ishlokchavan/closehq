@@ -1359,6 +1359,7 @@
   background: var(--bg-alt);
   padding: 56px 22px 28px;
   border-top: 1px solid var(--border);
+  box-shadow: 0 -1px 0 var(--border-soft), 0 -20px 40px rgba(17, 24, 39, 0.04);
 }
 
 .footerTop {
@@ -1401,9 +1402,9 @@
 }
 
 .footerHeading {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text-light);
+  color: var(--blue);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: 14px;

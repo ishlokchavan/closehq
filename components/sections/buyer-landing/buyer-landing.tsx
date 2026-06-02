@@ -224,7 +224,6 @@ function MagneticButton({
 
 function BuyerHero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const accentRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!titleRef.current) return;
@@ -239,55 +238,6 @@ function BuyerHero() {
         ease: 'power3.out',
       }
     );
-
-    const textElements = titleRef.current.querySelectorAll('span');
-    gsap.fromTo(
-      textElements,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.8,
-        delay: 0.3,
-        stagger: 0.1,
-        ease: 'power2.out',
-      }
-    );
-
-    // Underline animation on "guaranteed"
-    if (accentRef.current) {
-      gsap.fromTo(
-        accentRef.current,
-        {
-          backgroundSize: '0% 3px',
-        },
-        {
-          backgroundSize: '100% 3px',
-          duration: 1,
-          delay: 1.2,
-          ease: 'power2.inOut',
-        }
-      );
-
-      // Red line animation - moves from left to right
-      gsap.fromTo(
-        accentRef.current,
-        {
-          '--red-line-width': '0%',
-        },
-        {
-          '--red-line-width': '100%',
-          duration: 1.2,
-          delay: 1.4,
-          ease: 'power2.inOut',
-          onUpdate() {
-            const width = gsap.getProperty(accentRef.current, '--red-line-width');
-            if (accentRef.current) {
-              (accentRef.current as any).style.setProperty('--red-line-width', width);
-            }
-          },
-        }
-      );
-    }
   }, []);
 
   return (
@@ -296,22 +246,21 @@ function BuyerHero() {
         <motion.h1
           ref={titleRef}
           className={styles.heroTitle}
-          style={{ marginTop: '20px' }}
+          style={{ marginTop: '40px' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
         >
-          Smarter property buys. <br /> {' '}
-          <span ref={accentRef} className={styles.heroTitleAccent}>Your full cash back, guaranteed</span>
+         Do you want to buy real estate in UAE without an agent?
         </motion.h1>
 
         <motion.p
-          className={styles.heroSub}
+          className={styles.heroAccentPara}
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          Do you want to buy real estate in UAE without an agent? Pay zero percent commission or get 100% cash back from developers.
+          Pay zero percent commission or get 100% cash back from developers
         </motion.p>
 
         <motion.div
@@ -321,10 +270,10 @@ function BuyerHero() {
           transition={{ duration: 0.6, delay: 0.18, ease }}
         >
           <MagneticButton className={styles.btnPrimary} data-get-started="buyer">
-            Get started
+            View Properties 
           </MagneticButton>
           <a href="#how" className={styles.btnGhost}>
-            See how it works <span aria-hidden="true">→</span>
+           Buy Now <span aria-hidden="true">→</span>
           </a>
         </motion.div>
 
@@ -338,13 +287,13 @@ function BuyerHero() {
             aria-hidden="true"
           >
             <g transform="rotate(0 500 260)" fill="none" strokeWidth="1.5">
-              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(0,113,227,0.16)" />
+              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(1,113,227,0.40)" />
               <ellipse
                 cx="500"
                 cy="260"
                 rx="372"
                 ry="142"
-                stroke="rgba(110,110,125,0.30)"
+                stroke="rgba(1,113,227,0.40)"
                 strokeDasharray="1.5 10"
                 strokeLinecap="round"
               />
@@ -353,7 +302,7 @@ function BuyerHero() {
                 cy="260"
                 rx="262"
                 ry="98"
-                stroke="rgba(0,113,227,0.14)"
+                stroke="rgba(1,113,227,0.40)"
                 strokeDasharray="1.5 10"
                 strokeLinecap="round"
               />
@@ -432,50 +381,12 @@ function ScrollProgress() {
 
 export function BuyerLanding() {
   useEffect(() => {
-    // Animate "Ready to buy smarter?" - color transition black to blue
-    const readyHeading = document.querySelector(`.${styles.readyToHeading}`) as HTMLElement;
-    if (readyHeading) {
-      gsap.fromTo(
-        readyHeading,
-        { color: '#1d1d1f' },
-        {
-          color: '#0071e3',
-          duration: 1,
-          delay: 0.5,
-          ease: 'power2.inOut',
-          scrollTrigger: {
-            trigger: readyHeading,
-            start: 'top 75%',
-            once: false,
-          },
-        }
-      );
-    }
-
-    // Animate "smarter?" emphasis on scroll into view
-    const smarterEl = document.querySelector(`.${styles.smarterEmphasis}`) as HTMLElement;
-    if (smarterEl) {
-      gsap.fromTo(
-        smarterEl,
-        { scale: 1, opacity: 1 },
-        {
-          scale: 1.15,
-          repeat: 3,
-          yoyo: true,
-          duration: 0.4,
-          ease: 'power2.inOut',
-          scrollTrigger: {
-            trigger: smarterEl,
-            start: 'top center',
-            once: false,
-          },
-        }
-      );
-    }
+    // Infinite scroll effect removed - sections now scroll normally
   }, []);
 
   return (
     <div className={styles.root}>
+      <div className={styles.blurOverlay} />
       <ScrollProgress />
       <BuyerNav />
 
@@ -487,11 +398,15 @@ export function BuyerLanding() {
           we replicate it so the highlighted cards and footer resolve
           their colours correctly instead of rendering washed-out. */}
       <div className={personaStyles.root}>
-      <BuyerCompare />
+      <div className={styles.panel}>
+        <BuyerCompare />
+      </div>
 
-      <BuyerTools />
+      <div className={styles.panel}>
+        <BuyerTools />
+      </div>
 
-      <div id="how">
+      <div className={styles.panel} id="how">
         <BuyerSteps />
       </div>
 
