@@ -1787,20 +1787,48 @@
   .stmtSection {
     padding: 64px 18px;
   }
+  /* Mobile reflows the hero stage into a vertical stack: enlarged skyline,
+     then the two stat cards, then (via the sibling trust block) the
+     developer logos. The cards no longer float over the skyline. */
   .heroStage {
-    height: clamp(260px, 62vw, 360px);
+    height: auto;
     max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .orbSkyline {
-    width: 124vw;
-  }
-  /* The reference mobile hero stays clean — headline, CTAs and the skyline
-     only. The floating stat cards would crowd the narrow column, so drop
-     them below this breakpoint. */
-  .fcardA,
-  .fcardC {
+  /* Decorative orbit arcs are tied to the desktop fixed-height stage; hide
+     them here so the vertical stack stays clean. */
+  .orbits {
     display: none;
   }
+  /* Enlarge + center-crop the skyline so it reads big (Burj dominant) like
+     the reference, instead of a thin full-width strip. Driving height makes
+     width overflow the viewport; the hero's overflow: hidden crops the sides
+     evenly around the centred image. Relative (not absolute) so it sits in
+     the flow and the cards stack beneath it. */
+  .orbSkyline {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: none;
+    height: clamp(220px, 60vw, 320px);
+    order: 1;
+  }
+  /* Show the stat cards as full-width blocks stacked under the skyline. */
+  .fcardA,
+  .fcardC {
+    display: flex;
+    position: static;
+    inset: auto;
+    width: 100%;
+    max-width: 360px;
+    margin: 12px 0 0;
+    rotate: 0deg;
+    animation: none;
+  }
+  .fcardC { order: 2; }
+  .fcardA { order: 3; }
 }
 
 @media (max-width: 420px) {
