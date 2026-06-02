@@ -309,13 +309,16 @@ function BuyerHero() {
             </g>
           </svg>
 
-          {/* Dubai skyline silhouette — the hero centrepiece. Rendered as a
-             bottom-anchored, full-bleed background image so it sits cleanly
-             under the floating stat cards on every screen, never emits a
-             broken-image glyph while the asset is being swapped in, and
-             never intercepts pointer events. Drop the export (transparent
-             PNG or white-background — both work) at /public/images/dubai-skyline.png. */}
-          <motion.div
+          {/* Dubai skyline silhouette — the hero centrepiece. Anchored to the
+             bottom of the stage as a full-bleed horizon line beneath the
+             headline, CTAs and floating stat cards. `height: auto` keeps the
+             whole skyline (incl. the Burj spire) visible at any width, while
+             `pointer-events: none` keeps it purely decorative so it never
+             blocks the CTAs. Transparent PNG, so the orbit arcs read through
+             the gaps between buildings. */}
+          <motion.img
+            src="/images/dubai-skyline.png"
+            alt=""
             className={styles.orbSkyline}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

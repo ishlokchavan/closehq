@@ -428,28 +428,24 @@
    to the bottom of the stage so it reads as a horizon line beneath the
    headline, CTAs and floating stat cards.
 
-   Implementation notes:
-   - Painted as a background image (not <img>) so a missing/in-flight asset
-     never shows a broken-image glyph and the element never blocks clicks.
-   - `background-position: bottom center` + `background-size: 100% auto`
-     keeps the buildings glued to the bottom edge at full width and simply
-     crops any empty sky/whitespace above — so it looks identical whether the
-     export is a tight strip or a 16:9 frame, transparent or white-backed.
-   - Sits at z-index 1: above the decorative orbit arcs (0), below the
-     floating cards (2) — exactly the layering in the reference. */
+   - `width` bleeds slightly past the viewport while capping on huge screens;
+     `height: auto` preserves the asset's aspect ratio so the full skyline
+     (including the Burj spire) is always visible, never cropped.
+   - Centred with translateX(-50%); the hero's `overflow: hidden` clips the
+     bleed so there is no horizontal scroll.
+   - z-index 1: above the decorative orbit arcs (0), below the floating
+     cards (2) — exactly the layering in the reference. `pointer-events: none`
+     keeps it from ever intercepting a CTA click. */
 .orbSkyline {
   position: absolute;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
   width: min(1440px, 116vw);
-  height: clamp(240px, 30vw, 380px);
-  background-image: url('/images/dubai-skyline.png');
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: 100% auto;
+  height: auto;
   z-index: 1;
   pointer-events: none;
+  user-select: none;
   animation: orbFloat 9s ease-in-out infinite;
 }
 
@@ -1782,8 +1778,7 @@
     max-width: 560px;
   }
   .orbSkyline {
-    width: 116vw;
-    height: clamp(150px, 42vw, 230px);
+    width: 124vw;
   }
   /* The reference mobile hero stays clean — headline, CTAs and the skyline
      only. The floating stat cards would crowd the narrow column, so drop
