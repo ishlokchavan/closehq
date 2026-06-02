@@ -409,6 +409,22 @@
   overflow: visible;
 }
 
+/* Desktop: make the first view fill the screen with the skyline anchored to
+   its bottom. heroInner stretches to (almost) the full viewport height and the
+   stage is pushed to the bottom with margin-top: auto, so above the fold you
+   see title + CTAs + skyline, and the developer logo strip (which follows)
+   lands just below the fold, ahead of the next section. Scoped to >=761px so
+   the mobile vertical stack is unaffected. */
+@media (min-width: 761px) {
+  .heroInner {
+    min-height: calc(100svh - 96px);
+  }
+  .heroStage {
+    margin-top: auto;
+    margin-bottom: 0;
+  }
+}
+
 /* Dashed elliptical orbit rings — decorative, sit behind the flower. */
 .orbits {
   position: absolute;
@@ -458,7 +474,6 @@
   z-index: 1;
   pointer-events: none;
   user-select: none;
-  animation: orbFloat 9s ease-in-out infinite;
 }
 
 /* iOS-style floating cards */
