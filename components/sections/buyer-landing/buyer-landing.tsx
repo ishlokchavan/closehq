@@ -251,7 +251,7 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
         >
-        Pay zero Comission
+        Pay zero commission
         </motion.h1>
 
         <motion.p
@@ -279,7 +279,7 @@ function BuyerHero() {
 
         {/* Abstract centerpiece + floating stat cards */}
         <div className={styles.heroStage} aria-hidden="true">
-          {/* Dashed elliptical orbit rings behind the flower (Elegostra-style) */}
+          {/* Dashed elliptical orbit rings behind the skyline (Elegostra-style) */}
           <svg
             className={styles.orbits}
             viewBox="0 0 1000 520"
@@ -287,7 +287,6 @@ function BuyerHero() {
             aria-hidden="true"
           >
             <g transform="rotate(0 500 260)" fill="none" strokeWidth="1.5">
-              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(1,113,227,0.40)" />
               <ellipse
                 cx="500"
                 cy="260"
@@ -309,16 +308,21 @@ function BuyerHero() {
             </g>
           </svg>
 
-          <div className={styles.orbWrap}>
-            <motion.img
-              src="/images/spiral-flower.png"
-              alt=""
-              className={styles.orbFlower}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.2, ease }}
-            />
-          </div>
+          {/* Dubai skyline silhouette — the hero centrepiece. Anchored to the
+             bottom of the stage as a full-bleed horizon line beneath the
+             headline, CTAs and floating stat cards. `height: auto` keeps the
+             whole skyline (incl. the Burj spire) visible at any width, while
+             `pointer-events: none` keeps it purely decorative so it never
+             blocks the CTAs. Transparent PNG, so the orbit arcs read through
+             the gaps between buildings. */}
+          <motion.img
+            src="/images/dubai-skyline.png"
+            alt=""
+            className={styles.orbSkyline}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2, ease }}
+          />
 
           <FloatingCard
             cls={styles.fcardA}

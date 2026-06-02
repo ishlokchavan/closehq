@@ -272,8 +272,9 @@
 }
 
 .heroTitle {
-  font-size: clamp(21px, 5.5vw, 36px);
-  line-height: 1.1;
+  /* Sized to match the reference's large hero headline (~56px on desktop). */
+  font-size: clamp(28px, 5.5vw, 56px);
+  line-height: 1.08;
   font-weight: 600;
   letter-spacing: -0.035em;
   margin: 0;
@@ -399,9 +400,29 @@
   position: relative;
   width: 100%;
   max-width: 1180px;
-  height: clamp(520px, 56vw, 700px);
+  /* Height tracks the skyline's own aspect ratio (~0.325 of its width) so the
+     full-bleed skyline fills the stage instead of dropping into a gap below
+     the cards. 32.5vw ≈ 100vw * 1243/3822; the cap matches the 2000px width
+     cap on .orbSkyline. */
+  height: clamp(300px, 32.5vw, 650px);
   margin: 20px auto 0;
   overflow: visible;
+}
+
+/* Desktop: make the first view fill the screen with the skyline anchored to
+   its bottom. heroInner stretches to (almost) the full viewport height and the
+   stage is pushed to the bottom with margin-top: auto, so above the fold you
+   see title + CTAs + skyline, and the developer logo strip (which follows)
+   lands just below the fold, ahead of the next section. Scoped to >=761px so
+   the mobile vertical stack is unaffected. */
+@media (min-width: 761px) {
+  .heroInner {
+    min-height: calc(100svh - 96px);
+  }
+  .heroStage {
+    margin-top: auto;
+    margin-bottom: 0;
+  }
 }
 
 /* Dashed elliptical orbit rings — decorative, sit behind the flower. */
@@ -424,40 +445,35 @@
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Spiral-flower render centrepiece — oversized, anchored to the bottom. */
-.orbWrap {
+/* Dubai skyline silhouette — the hero centrepiece. Full-bleed and anchored
+   to the bottom of the stage so it reads as a horizon line beneath the
+   headline, CTAs and floating stat cards.
+
+   - `width` bleeds slightly past the viewport while capping on huge screens;
+     `height: auto` preserves the asset's aspect ratio so the full skyline
+     (including the Burj spire) is always visible, never cropped.
+   - Centred with translateX(-50%); the hero's `overflow: hidden` clips the
+     bleed so there is no horizontal scroll.
+   - z-index 1: above the decorative orbit arcs (0), below the floating
+     cards (2) — exactly the layering in the reference. `pointer-events: none`
+     keeps it from ever intercepting a CTA click. */
+.orbSkyline {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 10;
-  overflow: visible;
-}
-
-/* Inner orbital ring — hidden */
-.orbWrap::before {
-  display: none;
-}
-
-.orbWrap::after {
-  display: none;
-}
-
-@keyframes cosmicOrbit {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-.orbFlower {
-  width: clamp(854px, 110.4vw, 1376px);
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  /* Full-bleed: spans the viewport edge-to-edge (clipped by the hero's
+     overflow: hidden) and only caps on very large monitors. height: auto
+     keeps the whole skyline — Burj spire included — visible, never cropped.
+     max-width: none overrides Tailwind preflight's `img { max-width: 100% }`,
+     which would otherwise cap the skyline to its parent (~1180px) and stop it
+     from bleeding past the content column. */
+  width: min(2000px, 101vw);
+  max-width: none;
   height: auto;
-  margin-top: 100px;
-  margin-bottom: clamp(20px, 5vw, 60px);
-  clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%);
-  transform: none;
-  transform-origin: center 50%;
-  animation: orbFloat 9s ease-in-out infinite;
-  filter: drop-shadow(0 26px 54px rgba(0, 88, 163, 0.22));
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* iOS-style floating cards */
@@ -531,11 +547,13 @@
 }
 
 /* Left side cards */
-.fcardC { top: 40px; left: -30px; rotate: -4deg; animation: bob 9s ease-in-out infinite 1.1s; }
+/* Cards float high in the sky band (~12% down the stage), flanking the Burj's
+   upper shaft as in the reference. ~4vw tracks the skyline's 32.5vw height. */
+.fcardC { top: clamp(28px, 4vw, 80px); left: -30px; rotate: -4deg; animation: bob 9s ease-in-out infinite 1.1s; }
 .fcardE { top: 240px; left: -35px; rotate: -5deg; animation: bob 8.5s ease-in-out infinite 0.9s; }
 
 /* Right side cards */
-.fcardA { top: 40px; right: -40px; rotate: 6deg; animation: bob 7s ease-in-out infinite; }
+.fcardA { top: clamp(28px, 4vw, 80px); right: -40px; rotate: 6deg; animation: bob 7s ease-in-out infinite; }
 .fcardVilla { top: 130px; right: -45px; rotate: 5deg; animation: bob 8.5s ease-in-out infinite 0.5s; }
 
 /* Animate the standalone `translate` property so the per-card `rotate`
@@ -544,8 +562,9 @@
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -6px; }
 }
-/* Bob via standalone translate/scale so the perspective `transform`
-   tilt on .orbFlower is preserved during the animation. */
+/* Gentle float via the standalone translate/scale properties so the
+   skyline's `transform: translateX(-50%)` centring is preserved while it
+   bobs. */
 @keyframes orbFloat {
   0%, 100% { translate: 0 0; scale: 1; }
   50% { translate: 0 -7px; scale: 1.015; }
@@ -553,14 +572,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fcardA, .fcardB, .fcardC, .fcardD, .fcardE,
-  .orbFlower {
+  .orbSkyline {
     animation: none;
   }
 }
 
 /* ---------- Trust / developer strip ---------- */
 .trust {
-  margin: -405px auto 0;
+  margin: 32px auto 0;
   padding: 0 22px;
   max-width: 1100px;
   text-align: center;
@@ -1783,22 +1802,53 @@
   .stmtSection {
     padding: 64px 18px;
   }
+  /* Mobile reflows the hero stage into a vertical stack: enlarged skyline,
+     then the two stat cards, then (via the sibling trust block) the
+     developer logos. The cards no longer float over the skyline. */
   .heroStage {
-    height: 380px;
-    max-width: 520px;
+    height: auto;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .orbFlower {
-    width: 420px;
-    margin-bottom: -48px;
-  }
-  /* Trim the two outer cards on small screens to avoid clutter/overflow */
-  .fcardC,
-  .fcardE {
+  /* Decorative orbit arcs are tied to the desktop fixed-height stage; hide
+     them here so the vertical stack stays clean. */
+  .orbits {
     display: none;
   }
-  .fcardA { top: 6px; left: 0; }
-  .fcardB { top: 0; right: 0; }
-  .fcardD { bottom: 40px; right: 0; }
+  /* Enlarge + center-crop the skyline so it reads big (Burj dominant) like
+     the reference, instead of a thin full-width strip. Driving height makes
+     width overflow the viewport; the hero's overflow: hidden crops the sides
+     evenly around the centred image. Relative (not absolute) so it sits in
+     the flow and the cards stack beneath it. */
+  .orbSkyline {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: none;
+    /* Fill the first view: viewport height minus the ~330px header stack
+       (nav clearance + title + subtitle + CTAs), so only title + CTAs +
+       skyline show above the fold and the cards + developers sit below it.
+       Driven by height, the width overflows and is centre-cropped by the
+       hero's overflow: hidden — the skyline reads large, Burj-dominant. */
+    height: clamp(300px, calc(100svh - 330px), 560px);
+    order: 1;
+  }
+  /* Show the stat cards as full-width blocks stacked under the skyline. */
+  .fcardA,
+  .fcardC {
+    display: flex;
+    position: static;
+    inset: auto;
+    width: 100%;
+    max-width: 360px;
+    margin: 12px 0 0;
+    rotate: 0deg;
+    animation: none;
+  }
+  .fcardC { order: 2; }
+  .fcardA { order: 3; }
 }
 
 @media (max-width: 420px) {
