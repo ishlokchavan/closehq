@@ -279,7 +279,7 @@ function BuyerHero() {
 
         {/* Abstract centerpiece + floating stat cards */}
         <div className={styles.heroStage} aria-hidden="true">
-          {/* Dashed elliptical orbit rings behind the flower (Elegostra-style) */}
+          {/* Dashed elliptical orbit rings behind the skyline (Elegostra-style) */}
           <svg
             className={styles.orbits}
             viewBox="0 0 1000 520"
@@ -309,16 +309,18 @@ function BuyerHero() {
             </g>
           </svg>
 
-          <div className={styles.orbWrap}>
-            <motion.img
-              src="/images/spiral-flower.png"
-              alt=""
-              className={styles.orbFlower}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.2, ease }}
-            />
-          </div>
+          {/* Dubai skyline silhouette — the hero centrepiece. Rendered as a
+             bottom-anchored, full-bleed background image so it sits cleanly
+             under the floating stat cards on every screen, never emits a
+             broken-image glyph while the asset is being swapped in, and
+             never intercepts pointer events. Drop the export (transparent
+             PNG or white-background — both work) at /public/images/dubai-skyline.png. */}
+          <motion.div
+            className={styles.orbSkyline}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2, ease }}
+          />
 
           <FloatingCard
             cls={styles.fcardA}

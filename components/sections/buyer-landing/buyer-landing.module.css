@@ -399,7 +399,7 @@
   position: relative;
   width: 100%;
   max-width: 1180px;
-  height: clamp(520px, 56vw, 700px);
+  height: clamp(460px, 50vw, 640px);
   margin: 20px auto 0;
   overflow: visible;
 }
@@ -424,40 +424,33 @@
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Spiral-flower render centrepiece — oversized, anchored to the bottom. */
-.orbWrap {
+/* Dubai skyline silhouette — the hero centrepiece. Full-bleed and anchored
+   to the bottom of the stage so it reads as a horizon line beneath the
+   headline, CTAs and floating stat cards.
+
+   Implementation notes:
+   - Painted as a background image (not <img>) so a missing/in-flight asset
+     never shows a broken-image glyph and the element never blocks clicks.
+   - `background-position: bottom center` + `background-size: 100% auto`
+     keeps the buildings glued to the bottom edge at full width and simply
+     crops any empty sky/whitespace above — so it looks identical whether the
+     export is a tight strip or a 16:9 frame, transparent or white-backed.
+   - Sits at z-index 1: above the decorative orbit arcs (0), below the
+     floating cards (2) — exactly the layering in the reference. */
+.orbSkyline {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 10;
-  overflow: visible;
-}
-
-/* Inner orbital ring — hidden */
-.orbWrap::before {
-  display: none;
-}
-
-.orbWrap::after {
-  display: none;
-}
-
-@keyframes cosmicOrbit {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-.orbFlower {
-  width: clamp(854px, 110.4vw, 1376px);
-  height: auto;
-  margin-top: 100px;
-  margin-bottom: clamp(20px, 5vw, 60px);
-  clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%);
-  transform: none;
-  transform-origin: center 50%;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(1440px, 116vw);
+  height: clamp(240px, 30vw, 380px);
+  background-image: url('/images/dubai-skyline.png');
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% auto;
+  z-index: 1;
+  pointer-events: none;
   animation: orbFloat 9s ease-in-out infinite;
-  filter: drop-shadow(0 26px 54px rgba(0, 88, 163, 0.22));
 }
 
 /* iOS-style floating cards */
@@ -544,8 +537,9 @@
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -6px; }
 }
-/* Bob via standalone translate/scale so the perspective `transform`
-   tilt on .orbFlower is preserved during the animation. */
+/* Gentle float via the standalone translate/scale properties so the
+   skyline's `transform: translateX(-50%)` centring is preserved while it
+   bobs. */
 @keyframes orbFloat {
   0%, 100% { translate: 0 0; scale: 1; }
   50% { translate: 0 -7px; scale: 1.015; }
@@ -553,14 +547,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fcardA, .fcardB, .fcardC, .fcardD, .fcardE,
-  .orbFlower {
+  .orbSkyline {
     animation: none;
   }
 }
 
 /* ---------- Trust / developer strip ---------- */
 .trust {
-  margin: -405px auto 0;
+  margin: 32px auto 0;
   padding: 0 22px;
   max-width: 1100px;
   text-align: center;
@@ -1784,21 +1778,20 @@
     padding: 64px 18px;
   }
   .heroStage {
-    height: 380px;
-    max-width: 520px;
+    height: clamp(260px, 62vw, 360px);
+    max-width: 560px;
   }
-  .orbFlower {
-    width: 420px;
-    margin-bottom: -48px;
+  .orbSkyline {
+    width: 116vw;
+    height: clamp(150px, 42vw, 230px);
   }
-  /* Trim the two outer cards on small screens to avoid clutter/overflow */
-  .fcardC,
-  .fcardE {
+  /* The reference mobile hero stays clean — headline, CTAs and the skyline
+     only. The floating stat cards would crowd the narrow column, so drop
+     them below this breakpoint. */
+  .fcardA,
+  .fcardC {
     display: none;
   }
-  .fcardA { top: 6px; left: 0; }
-  .fcardB { top: 0; right: 0; }
-  .fcardD { bottom: 40px; right: 0; }
 }
 
 @media (max-width: 420px) {
