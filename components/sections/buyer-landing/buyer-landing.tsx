@@ -12,7 +12,7 @@ import {
 } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
-import { Menu, X, Check, TrendingUp, BadgePercent, Landmark } from 'lucide-react';
+import { Menu, X, Check, BadgePercent } from 'lucide-react';
 import { Logo } from '@/components/ui/logo';
 import { ICloseFooter } from '@/components/sections/iclose-landing/iclose-footer';
 import {
@@ -251,7 +251,7 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05, ease: 'easeOut' }}
         >
-         Do you want to buy real estate in UAE without an agent?
+        Pay zero Comission
         </motion.h1>
 
         <motion.p
@@ -260,7 +260,7 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          Pay zero percent commission or get  100% cash back from developers
+          100% cash back from developers
         </motion.p>
 
         <motion.div
@@ -325,7 +325,7 @@ function BuyerHero() {
             delay={0.4}
             icon={
               <span className={`${styles.fcardIcon} ${styles.fcardIconGreen}`}>
-                <Check size={17} strokeWidth={2.6} />
+                <Check size={24} strokeWidth={2.6} />
               </span>
             }
             label="Cashback received"
@@ -333,37 +333,16 @@ function BuyerHero() {
             valueGreen
           />
           <FloatingCard
-            cls={styles.fcardB}
+            cls={styles.fcardC}
             delay={0.5}
             icon={
-              <span className={`${styles.fcardIcon} ${styles.fcardIconBlue}`}>
-                <TrendingUp size={17} strokeWidth={2.4} />
-              </span>
-            }
-            label="Net rental yield"
-            value="8–12% p.a."
-          />
-          <FloatingCard
-            cls={styles.fcardC}
-            delay={0.6}
-            icon={
-              <span className={`${styles.fcardIcon} ${styles.fcardIconInk}`}>
-                <BadgePercent size={17} strokeWidth={2.2} />
+              <span className={`${styles.fcardIcon} ${styles.fcardIconGreen}`}>
+                <BadgePercent size={24} strokeWidth={2.2} />
               </span>
             }
             label="You pay the agent"
             value="0% commission"
-          />
-          <FloatingCard
-            cls={styles.fcardD}
-            delay={0.7}
-            icon={
-              <span className={`${styles.fcardIcon} ${styles.fcardIconBlue}`}>
-                <Landmark size={17} strokeWidth={2.2} />
-              </span>
-            }
-            label="AED 2M+ purchase"
-            value="Golden Visa eligible"
+            valueGreen
           />
         </div>
       </div>
@@ -402,9 +381,6 @@ function ScrollProgress() {
 }
 
 export function BuyerLanding() {
-  useEffect(() => {
-    // Infinite scroll effect removed - sections now scroll normally
-  }, []);
 
   return (
     <div className={styles.root}>
