@@ -648,6 +648,11 @@
 .trustItem:hover .trustLogo {
   opacity: 1;
 }
+/* Ellington's mark is a stacked icon+wordmark with baked-in padding, so it
+   reads ~20% smaller than the others at the same height — nudge it back up. */
+.trustLogo[alt='Ellington'] {
+  transform: scale(1.2);
+}
 
 .trustLabel {
   margin-top: 22px;
