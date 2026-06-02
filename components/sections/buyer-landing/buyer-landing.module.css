@@ -447,8 +447,12 @@
   transform: translateX(-50%);
   /* Full-bleed: spans the viewport edge-to-edge (clipped by the hero's
      overflow: hidden) and only caps on very large monitors. height: auto
-     keeps the whole skyline — Burj spire included — visible, never cropped. */
+     keeps the whole skyline — Burj spire included — visible, never cropped.
+     max-width: none overrides Tailwind preflight's `img { max-width: 100% }`,
+     which would otherwise cap the skyline to its parent (~1180px) and stop it
+     from bleeding past the content column. */
   width: min(2000px, 101vw);
+  max-width: none;
   height: auto;
   z-index: 1;
   pointer-events: none;
