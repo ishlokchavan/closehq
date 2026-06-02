@@ -1812,7 +1812,12 @@
     transform: none;
     width: auto;
     max-width: none;
-    height: clamp(220px, 60vw, 320px);
+    /* Fill the first view: viewport height minus the ~330px header stack
+       (nav clearance + title + subtitle + CTAs), so only title + CTAs +
+       skyline show above the fold and the cards + developers sit below it.
+       Driven by height, the width overflows and is centre-cropped by the
+       hero's overflow: hidden — the skyline reads large, Burj-dominant. */
+    height: clamp(300px, calc(100svh - 330px), 560px);
     order: 1;
   }
   /* Show the stat cards as full-width blocks stacked under the skyline. */

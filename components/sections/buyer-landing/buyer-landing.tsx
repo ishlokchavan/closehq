@@ -287,7 +287,6 @@ function BuyerHero() {
             aria-hidden="true"
           >
             <g transform="rotate(0 500 260)" fill="none" strokeWidth="1.5">
-              <ellipse cx="500" cy="260" rx="478" ry="190" stroke="rgba(1,113,227,0.40)" />
               <ellipse
                 cx="500"
                 cy="260"
