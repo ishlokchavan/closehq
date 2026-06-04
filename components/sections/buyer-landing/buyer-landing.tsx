@@ -249,6 +249,24 @@ function BuyerHero() {
         ease: 'power3.out',
       }
     );
+
+    // Add infinite animation to switch "zero" to "0%"
+    const zeroSpan = Array.from(spans).find((span) => span.textContent === 'zero');
+    if (zeroSpan) {
+      gsap.timeline({ repeat: -1 }).to(zeroSpan, {
+        innerHTML: '0%',
+        duration: 0.3,
+        ease: 'none',
+      }).to(
+        zeroSpan,
+        {
+          innerHTML: 'zero',
+          duration: 0.3,
+          ease: 'none',
+        },
+        0.7
+      );
+    }
   }, []);
 
   return (
