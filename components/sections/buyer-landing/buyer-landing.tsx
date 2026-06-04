@@ -228,66 +228,17 @@ function BuyerHero() {
   useEffect(() => {
     if (!titleRef.current) return;
 
-    // Split text into words for staggered animation
-    const text = titleRef.current.textContent || '';
-    const words = text.split(' ');
-    titleRef.current.innerHTML = words
-      .map((word) => `<span style="display: inline-block; overflow: hidden;"><span style="display: inline-block;">${word}</span></span>`)
-      .join(' ');
-
-    const spans = titleRef.current.querySelectorAll('span > span');
-
-    // Animate each word with stagger
+    // Simple fade-in animation for the title
     gsap.fromTo(
-      spans,
+      titleRef.current,
       { opacity: 0, y: 30 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.7,
-        stagger: 0.1,
+        duration: 1,
         ease: 'power3.out',
       }
     );
-
-    // Add infinite smooth animation to switch "zero" to "0%"
-    const zeroSpan = Array.from(spans).find((span) => span.textContent === 'zero');
-    if (zeroSpan) {
-      gsap.timeline({ repeat: -1 }).to(zeroSpan, {
-        opacity: 0,
-        duration: 0.4,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          zeroSpan.textContent = '0%';
-        },
-      }).to(
-        zeroSpan,
-        {
-          opacity: 1,
-          duration: 0.4,
-          ease: 'power2.inOut',
-        },
-        0.4
-      ).to(
-        zeroSpan,
-        {
-          opacity: 0,
-          duration: 0.4,
-          ease: 'power2.inOut',
-          delay: 1.2,
-          onComplete: () => {
-            zeroSpan.textContent = 'zero';
-          },
-        }
-      ).to(
-        zeroSpan,
-        {
-          opacity: 1,
-          duration: 0.4,
-          ease: 'power2.inOut',
-        }
-      );
-    }
   }, []);
 
   return (
