@@ -228,13 +228,24 @@ function BuyerHero() {
   useEffect(() => {
     if (!titleRef.current) return;
 
+    // Split text into words for staggered animation
+    const text = titleRef.current.textContent || '';
+    const words = text.split(' ');
+    titleRef.current.innerHTML = words
+      .map((word) => `<span style="display: inline-block; overflow: hidden;"><span style="display: inline-block;">${word}</span></span>`)
+      .join(' ');
+
+    const spans = titleRef.current.querySelectorAll('span > span');
+
+    // Animate each word with stagger
     gsap.fromTo(
-      titleRef.current,
+      spans,
       { opacity: 0, y: 30 },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
+        duration: 0.7,
+        stagger: 0.1,
         ease: 'power3.out',
       }
     );
