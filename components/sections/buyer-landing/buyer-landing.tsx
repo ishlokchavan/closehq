@@ -224,6 +224,7 @@ function MagneticButton({
 
 function BuyerHero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const percentRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!titleRef.current) return;
@@ -251,6 +252,27 @@ function BuyerHero() {
     );
   }, []);
 
+  // Add glowing effect to 100% text
+  useEffect(() => {
+    if (!percentRef.current) return;
+
+    gsap.timeline({ repeat: -1 }).to(percentRef.current, {
+      color: '#34c759',
+      textShadow: '0 0 20px #34c759, 0 0 40px #34c759, 0 0 60px #34c759',
+      duration: 1.5,
+      ease: 'sine.inOut',
+    }).to(
+      percentRef.current,
+      {
+        color: '#000',
+        textShadow: '0 0 0px #34c759, 0 0 0px #34c759, 0 0 0px #34c759',
+        duration: 1.5,
+        ease: 'sine.inOut',
+      },
+      0.5
+    );
+  }, []);
+
   return (
     <section className={styles.hero} id="top">
       <div className={styles.heroInner}>
@@ -271,7 +293,7 @@ function BuyerHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.12, ease }}
         >
-          100% cash back from developers
+          <span ref={percentRef}>100%</span> cash back from developers
         </motion.p>
 
         <motion.div
