@@ -1914,7 +1914,7 @@
 .cmpGrid {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: center;
+  align-items: stretch;
   gap: 18px;
 }
 
@@ -2185,5 +2185,515 @@
   .cmpVs,
   .cardGood::after {
     animation: none;
+  }
+}
+
+/* ---- Fast track CTA section ---- */
+.fasttrackSection {
+  padding: 60px 22px;
+  background: linear-gradient(135deg, #f9f9fb 0%, #ffffff 100%);
+}
+
+.fasttrackInner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.fasttrackContent {
+  text-align: center;
+  padding: 48px 36px;
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.fasttrackHeading {
+  font-size: clamp(24px, 3.2vw, 36px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.fasttrackSub {
+  margin: 0 auto 28px;
+  max-width: 480px;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.5;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+}
+
+.fasttrackBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 980px;
+  background: var(--blue);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+.fasttrackBtn:hover {
+  background: var(--blue-hover);
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.4);
+}
+
+@media (max-width: 640px) {
+  .fasttrackSection {
+    padding: 48px 18px;
+  }
+
+  .fasttrackContent {
+    padding: 36px 24px;
+  }
+
+  .fasttrackBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ---- Testimonials carousel ---- */
+.testimonialsSection {
+  padding: 100px 22px 80px;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+}
+
+.testimonialsInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+/* Header */
+.testimonialsHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.testimonialsHeading {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.testimonialsSubheading {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.subheadingAccent {
+  color: var(--blue);
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Marquee container - constrained to section */
+.testimonialsMarquee {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0 auto 60px;
+  padding: 20px 22px;
+  background: linear-gradient(
+    90deg,
+    var(--bg) 0%,
+    var(--bg) 4%,
+    transparent 8%,
+    transparent 92%,
+    var(--bg) 96%,
+    var(--bg) 100%
+  );
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.testimonialsInner .testimonialsMarquee {
+  max-width: calc(100% - 44px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.marqueeTrack {
+  display: flex;
+  gap: 24px;
+  animation: marquee 60s linear infinite;
+  width: fit-content;
+  will-change: transform;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+/* Card sizes for marquee */
+.testimonialCard {
+  flex: 0 0 auto;
+  width: 320px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.3s ease-out;
+}
+
+.testimonialCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.testimonialsMarquee:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+/* Card info */
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.cardHandle {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+}
+
+/* Quote text */
+.cardQuote {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Card footer */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.cardDate {
+  font-size: 11px;
+  color: var(--text-light);
+  letter-spacing: -0.005em;
+}
+
+/* CTA section */
+.testimonialsCTA {
+  text-align: center;
+}
+
+.testimonialsCtaBtn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+.testimonialsCtaBtn:hover {
+  background: var(--blue-hover);
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.4);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.cardQuote {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.cardName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.cardRole {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: -0.005em;
+}
+
+.cardBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Content section below carousel */
+.testimonialsContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.testimonialsHeading {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 600px;
+}
+
+.testimonialsHeadingAccent {
+  color: var(--blue);
+}
+
+.testimonialsCta {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+.testimonialsCta:hover {
+  background: var(--blue-hover);
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.4);
+}
+
+/* Navigation dots */
+.testimonialsNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.testimonialDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.testimonialDot:hover {
+  background: var(--border-soft);
+  transform: scale(1.2);
+}
+
+.testimonialDotActive {
+  background: var(--ink);
+  width: 24px;
+  border-radius: 4px;
+}
+
+@media (max-width: 1200px) {
+  .testimonialCard {
+    width: 300px;
+  }
+
+  .marqueeTrack {
+    gap: 20px;
+    animation: marquee 55s linear infinite;
+  }
+
+  .testimonialsMarquee {
+    padding: 20px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonialsSection {
+    padding: 80px 18px 60px;
+  }
+
+  .testimonialsHeader {
+    margin-bottom: 48px;
+  }
+
+  .testimonialsMarquee {
+    margin-bottom: 48px;
+    padding: 16px 16px;
+    border-radius: 16px;
+    background: linear-gradient(
+      90deg,
+      var(--bg) 0%,
+      var(--bg) 5%,
+      transparent 10%,
+      transparent 90%,
+      var(--bg) 95%,
+      var(--bg) 100%
+    );
+  }
+
+  .testimonialsInner .testimonialsMarquee {
+    max-width: calc(100% - 32px);
+  }
+
+  .testimonialCard {
+    width: 280px;
+    padding: 16px;
+  }
+
+  .marqueeTrack {
+    gap: 16px;
+    animation: marquee 50s linear infinite;
+  }
+
+  .cardQuote {
+    font-size: 13px;
+  }
+
+  .testimonialsHeading {
+    font-size: clamp(24px, 3.5vw, 36px);
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonialsSection {
+    padding: 60px 16px 50px;
+  }
+
+  .testimonialsHeader {
+    margin-bottom: 40px;
+  }
+
+  .testimonialsMarquee {
+    margin-bottom: 40px;
+    padding: 14px 14px;
+    border-radius: 12px;
+    background: linear-gradient(
+      90deg,
+      var(--bg) 0%,
+      var(--bg) 3%,
+      transparent 8%,
+      transparent 92%,
+      var(--bg) 97%,
+      var(--bg) 100%
+    );
+  }
+
+  .testimonialsInner .testimonialsMarquee {
+    max-width: calc(100% - 28px);
+  }
+
+  .testimonialCard {
+    width: 260px;
+    padding: 16px;
+  }
+
+  .marqueeTrack {
+    gap: 12px;
+    animation: marquee 45s linear infinite;
+  }
+
+  .cardQuote {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .cardName {
+    font-size: 12px;
+  }
+
+  .cardHandle {
+    font-size: 10px;
+  }
+
+  .cardDate {
+    font-size: 10px;
+  }
+
+  .reaction {
+    font-size: 11px;
+  }
+
+  .likeCount {
+    font-size: 10px;
+  }
+
+  .testimonialsHeading {
+    font-size: 24px;
   }
 }

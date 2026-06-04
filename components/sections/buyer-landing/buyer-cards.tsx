@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { motion, AnimatePresence, useInView, animate, type Variants } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   Check,
   ArrowDownRight,
   TrendingUp,
-  UserRound,
-  Sparkles,
   Building2,
   RotateCcw,
   LineChart,
@@ -21,10 +23,29 @@ import {
   UserPlus,
   Send,
 } from 'lucide-react';
+import { usePropertyInquiry } from '@/components/property-inquiry-modal';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const inView = { once: false, margin: '-12% 0px' } as const;
+
+/* Custom SVG icons */
+function IconStandardAgent() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+      <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M7 18c0-2.76 2.239-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function IconPremium() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+      <path d="M12 2L15.09 8.26H21.77L17.04 12.35L19.13 18.54L12 14.45L4.87 18.54L6.96 12.35L2.23 8.26H8.91L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
 
 /* Count-up micro-animation. Animates from 0 → value the first time the
    number scrolls into view, formatted with thousands separators. */
@@ -122,22 +143,22 @@ export function BuyerCompare() {
           >
             <div className={styles.cardHead}>
               <span className={`${styles.cardIcon} ${styles.cardIconBad}`}>
-                <UserRound size={18} strokeWidth={2.2} />
+                <IconStandardAgent />
               </span>
-              <span className={styles.cardName}>Standard agent</span>
+              <span className={styles.cardName}>Off-Plan Property</span>
             </div>
             <CardRows
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
-                { label: 'Buyer commission', value: '2%' },
-                { label: 'You pay the agent', value: 'AED 40,000' },
+
+                { label: 'You pay the agent', value: '0' },
               ]}
             />
             <div className={styles.result}>
-              <span className={styles.resultLabel}>You pay</span>
+              <span className={styles.resultLabel}>CASH BACK</span>
               <div className={styles.resultRow}>
                 <span className={styles.resultValue}>
-                  AED <CountUp value={40000} />
+                  AED <CountUp value={100000} />
                 </span>
                 <ArrowDownRight size={22} color="#c8392f" strokeWidth={2.4} />
               </div>
@@ -166,9 +187,9 @@ export function BuyerCompare() {
           >
             <div className={styles.cardHead}>
               <span className={`${styles.cardIcon} ${styles.cardIconGood}`}>
-                <Sparkles size={18} strokeWidth={2.2} />
+                <IconPremium />
               </span>
-              <span className={styles.cardName}>iClose</span>
+              <span className={styles.cardName}>Secondary </span>
             </div>
             <CardRows
               rows={[
@@ -178,9 +199,9 @@ export function BuyerCompare() {
               ]}
             />
             <div className={styles.result}>
-              <span className={styles.resultLabel}>You pay</span>
+              <span className={styles.resultLabel}> SAVE</span>
               <div className={styles.resultRow}>
-                <span className={styles.resultValue}>AED 0</span>
+                <span className={styles.resultValue}>AED 40,000</span>
                 <motion.span
                   className={styles.savePill}
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -806,6 +827,215 @@ export function BuyerSteps() {
               ))}
             </div>
           </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+export function BuyerFastTrack() {
+  const { open: openPropertyInquiry } = usePropertyInquiry();
+
+  return (
+    <section className={styles.fasttrackSection}>
+      <div className={styles.fasttrackInner}>
+        <motion.div
+          className={styles.fasttrackContent}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, ease }}
+        >
+          <h2 className={styles.fasttrackHeading}>Already know what you&apos;re buying?</h2>
+          <p className={styles.fasttrackSub}>
+            Tell us what property you want and we&apos;ll handle the rest. Fast-track your closing.
+          </p>
+          <motion.button
+            type="button"
+            className={styles.fasttrackBtn}
+            onClick={() => openPropertyInquiry()}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+          >
+            Start your inquiry
+            <Send size={16} strokeWidth={2} />
+          </motion.button>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+const testimonials = [
+  {
+    quote: "Everything in one place. I decided in two weeks and got AED 40,000 back in cashback.",
+    name: "Ahmed",
+    handle: "@ahmed.dubai",
+    avatar: "👨‍💼",
+    date: "3 months ago",
+    likes: 234,
+    reactions: ["❤️", "👍"],
+  },
+  {
+    quote: "The process was seamless. No surprises, no hidden fees. Just transparent.",
+    name: "Fatima",
+    handle: "@fatima.ae",
+    avatar: "👩‍💼",
+    date: "2 months ago",
+    likes: 189,
+    reactions: ["❤️", "🔥"],
+  },
+  {
+    quote: "Best decision I made. Got my full commission back and closed my deal faster.",
+    name: "Mohammed",
+    handle: "@moe_investing",
+    avatar: "👨‍💼",
+    date: "1 month ago",
+    likes: 312,
+    reactions: ["❤️", "👍", "🔥"],
+  },
+  {
+    quote: "Smooth experience. The team knew exactly what they were doing.",
+    name: "Sarah",
+    handle: "@sarah_dubai",
+    avatar: "👩‍💼",
+    date: "2 weeks ago",
+    likes: 156,
+    reactions: ["❤️"],
+  },
+  {
+    quote: "Transparent pricing, zero hidden fees. Exactly what I was looking for.",
+    name: "Hassan",
+    handle: "@hassan_properties",
+    avatar: "👨‍💼",
+    date: "1 week ago",
+    likes: 278,
+    reactions: ["❤️", "👍"],
+  },
+  {
+    quote: "Got my commission back without any hassle. Highly recommend!",
+    name: "Leila",
+    handle: "@leila_real",
+    avatar: "👩‍💼",
+    date: "3 days ago",
+    likes: 201,
+    reactions: ["❤️", "🔥"],
+  },
+];
+
+export function BuyerTestimonials() {
+  const { open: openPropertyInquiry } = usePropertyInquiry();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Animate header on scroll
+    if (headerRef.current) {
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }
+
+    // Animate marquee on scroll
+    if (marqueeRef.current) {
+      gsap.fromTo(
+        marqueeRef.current,
+        { opacity: 0, scale: 0.95 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          ease: 'back.out',
+          scrollTrigger: {
+            trigger: marqueeRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }
+  }, []);
+
+  return (
+    <section className={styles.testimonialsSection}>
+      <div className={styles.testimonialsInner}>
+        {/* Heading */}
+        <div ref={headerRef} className={styles.testimonialsHeader}>
+          <h2 className={styles.testimonialsHeading}>Don't take our word for it.</h2>
+          <p className={styles.testimonialsSubheading}>
+            <span className={styles.subheadingAccent}>Trust our customers</span>
+          </p>
+        </div>
+
+        {/* Marquee carousel - continuous scroll */}
+        <div ref={marqueeRef} className={styles.testimonialsMarquee}>
+          <div className={styles.marqueeTrack}>
+            {/* First set of cards */}
+            {testimonials.map((testimonial, idx) => (
+              <div key={idx} className={styles.testimonialCard}>
+                {/* Card info - name and handle */}
+                <div className={styles.cardInfo}>
+                  <span className={styles.cardName}>{testimonial.name}</span>
+                  <span className={styles.cardHandle}>{testimonial.handle}</span>
+                </div>
+
+                {/* Quote */}
+                <p className={styles.cardQuote}>{testimonial.quote}</p>
+
+                {/* Footer with date */}
+                <div className={styles.cardFooter}>
+                  <span className={styles.cardDate}>{testimonial.date}</span>
+                </div>
+              </div>
+            ))}
+            {/* Duplicate set for seamless loop */}
+            {testimonials.map((testimonial, idx) => (
+              <div key={`dup-${idx}`} className={styles.testimonialCard}>
+                <div className={styles.cardInfo}>
+                  <span className={styles.cardName}>{testimonial.name}</span>
+                  <span className={styles.cardHandle}>{testimonial.handle}</span>
+                </div>
+
+                <p className={styles.cardQuote}>{testimonial.quote}</p>
+
+                <div className={styles.cardFooter}>
+                  <span className={styles.cardDate}>{testimonial.date}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          className={styles.testimonialsCTA}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <motion.button
+            type="button"
+            className={styles.testimonialsCtaBtn}
+            onClick={() => openPropertyInquiry()}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Join our community
+          </motion.button>
         </motion.div>
       </div>
     </section>

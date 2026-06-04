@@ -21,7 +21,7 @@ import {
   PersonaWaitlist,
 } from '@/components/persona/persona-sections';
 import personaStyles from '@/components/persona/persona.module.css';
-import { BuyerCompare, BuyerTools, BuyerSteps } from './buyer-cards';
+import { BuyerCompare, BuyerTools, BuyerSteps, BuyerFastTrack, BuyerTestimonials } from './buyer-cards';
 import styles from './buyer-landing.module.css';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -412,12 +412,12 @@ export function BuyerLanding() {
         <BuyerSteps />
       </div>
 
+      <div className={styles.panel}>
+        <BuyerFastTrack />
+      </div>
+
       <div id="reviews">
-        <PersonaQuote
-          quote="Everything in one place. I decided in two weeks and got AED 40,000 back in cashback."
-          name="Buyer"
-          role="2BR Apartment · Dubai Hills Estate"
-        />
+        <BuyerTestimonials />
       </div>
 
       <div id="faq">
