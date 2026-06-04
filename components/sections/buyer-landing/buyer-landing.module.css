@@ -2325,12 +2325,21 @@
   );
   border-radius: 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .testimonialsInner .testimonialsMarquee {
   max-width: calc(100% - 44px);
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Marquee rows */
+.marqueeRow {
+  width: 100%;
+  overflow: hidden;
 }
 
 .marqueeTrack {
@@ -2341,6 +2350,10 @@
   will-change: transform;
 }
 
+.marqueeTrackReverse {
+  animation: marqueeReverse 60s linear infinite;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);
@@ -2348,6 +2361,19 @@
   100% {
     transform: translateX(calc(-50% - 12px));
   }
+}
+
+@keyframes marqueeReverse {
+  0% {
+    transform: translateX(calc(-50% - 12px));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.testimonialsMarquee:hover .marqueeTrack {
+  animation-play-state: paused;
 }
 
 /* Card sizes for marquee */

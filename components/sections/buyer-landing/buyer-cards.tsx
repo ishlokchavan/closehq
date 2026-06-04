@@ -980,42 +980,70 @@ export function BuyerTestimonials() {
           </p>
         </div>
 
-        {/* Marquee carousel - continuous scroll */}
+        {/* Marquee carousel - two rows continuous scroll */}
         <div ref={marqueeRef} className={styles.testimonialsMarquee}>
-          <div className={styles.marqueeTrack}>
-            {/* First set of cards */}
-            {testimonials.map((testimonial, idx) => (
-              <div key={idx} className={styles.testimonialCard}>
-                {/* Card info - name and handle */}
-                <div className={styles.cardInfo}>
-                  <span className={styles.cardName}>{testimonial.name}</span>
-                  <span className={styles.cardHandle}>{testimonial.handle}</span>
+          {/* Row 1 */}
+          <div className={styles.marqueeRow}>
+            <div className={styles.marqueeTrack}>
+              {/* First set of cards */}
+              {testimonials.slice(0, 3).map((testimonial, idx) => (
+                <div key={idx} className={styles.testimonialCard}>
+                  <div className={styles.cardInfo}>
+                    <span className={styles.cardName}>{testimonial.name}</span>
+                    <span className={styles.cardHandle}>{testimonial.handle}</span>
+                  </div>
+                  <p className={styles.cardQuote}>{testimonial.quote}</p>
+                  <div className={styles.cardFooter}>
+                    <span className={styles.cardDate}>{testimonial.date}</span>
+                  </div>
                 </div>
-
-                {/* Quote */}
-                <p className={styles.cardQuote}>{testimonial.quote}</p>
-
-                {/* Footer with date */}
-                <div className={styles.cardFooter}>
-                  <span className={styles.cardDate}>{testimonial.date}</span>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {testimonials.slice(0, 3).map((testimonial, idx) => (
+                <div key={`dup-${idx}`} className={styles.testimonialCard}>
+                  <div className={styles.cardInfo}>
+                    <span className={styles.cardName}>{testimonial.name}</span>
+                    <span className={styles.cardHandle}>{testimonial.handle}</span>
+                  </div>
+                  <p className={styles.cardQuote}>{testimonial.quote}</p>
+                  <div className={styles.cardFooter}>
+                    <span className={styles.cardDate}>{testimonial.date}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {/* Duplicate set for seamless loop */}
-            {testimonials.map((testimonial, idx) => (
-              <div key={`dup-${idx}`} className={styles.testimonialCard}>
-                <div className={styles.cardInfo}>
-                  <span className={styles.cardName}>{testimonial.name}</span>
-                  <span className={styles.cardHandle}>{testimonial.handle}</span>
-                </div>
+              ))}
+            </div>
+          </div>
 
-                <p className={styles.cardQuote}>{testimonial.quote}</p>
-
-                <div className={styles.cardFooter}>
-                  <span className={styles.cardDate}>{testimonial.date}</span>
+          {/* Row 2 */}
+          <div className={styles.marqueeRow}>
+            <div className={`${styles.marqueeTrack} ${styles.marqueeTrackReverse}`}>
+              {/* First set of cards */}
+              {testimonials.slice(3, 6).map((testimonial, idx) => (
+                <div key={idx} className={styles.testimonialCard}>
+                  <div className={styles.cardInfo}>
+                    <span className={styles.cardName}>{testimonial.name}</span>
+                    <span className={styles.cardHandle}>{testimonial.handle}</span>
+                  </div>
+                  <p className={styles.cardQuote}>{testimonial.quote}</p>
+                  <div className={styles.cardFooter}>
+                    <span className={styles.cardDate}>{testimonial.date}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {testimonials.slice(3, 6).map((testimonial, idx) => (
+                <div key={`dup-${idx}`} className={styles.testimonialCard}>
+                  <div className={styles.cardInfo}>
+                    <span className={styles.cardName}>{testimonial.name}</span>
+                    <span className={styles.cardHandle}>{testimonial.handle}</span>
+                  </div>
+                  <p className={styles.cardQuote}>{testimonial.quote}</p>
+                  <div className={styles.cardFooter}>
+                    <span className={styles.cardDate}>{testimonial.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
