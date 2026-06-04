@@ -250,21 +250,42 @@ function BuyerHero() {
       }
     );
 
-    // Add infinite animation to switch "zero" to "0%"
+    // Add infinite smooth animation to switch "zero" to "0%"
     const zeroSpan = Array.from(spans).find((span) => span.textContent === 'zero');
     if (zeroSpan) {
       gsap.timeline({ repeat: -1 }).to(zeroSpan, {
-        innerHTML: '0%',
-        duration: 0.3,
-        ease: 'none',
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          zeroSpan.textContent = '0%';
+        },
       }).to(
         zeroSpan,
         {
-          innerHTML: 'zero',
-          duration: 0.3,
-          ease: 'none',
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power2.inOut',
         },
-        0.7
+        0.4
+      ).to(
+        zeroSpan,
+        {
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power2.inOut',
+          delay: 1.2,
+          onComplete: () => {
+            zeroSpan.textContent = 'zero';
+          },
+        }
+      ).to(
+        zeroSpan,
+        {
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power2.inOut',
+        }
       );
     }
   }, []);
