@@ -2054,6 +2054,9 @@
 .rowLabelBlue {
   color: #0070f3 !important;
 }
+.cardBad .rowLabelBlue {
+  color: #5a9bff !important;
+}
 .rowValue {
   font-weight: 600;
   text-align: right;
