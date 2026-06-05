@@ -2096,10 +2096,10 @@
   line-height: 1;
 }
 .cardBad .resultValue {
-  color: #c8392f;
+  color: #34c759;
 }
 .cardGood .resultValue {
-  color: #fff;
+  color: #34c759;
 }
 .resultValueGreen {
   color: #34c759 !important;

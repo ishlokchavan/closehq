@@ -150,8 +150,9 @@ export function BuyerCompare() {
             <CardRows
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
-
-                { label: 'You pay the agent', value: '0' },
+                { label: 'Price Inclusive of', value: '5%' },
+                { label: 'Standard Deal', value: '0 AED Cashback' },
+                { label: 'with iClose', value: '100% Cashback' },
               ]}
             />
             <div className={styles.result}>
@@ -160,7 +161,7 @@ export function BuyerCompare() {
                 <span className={styles.resultValue}>
                   AED <CountUp value={100000} />
                 </span>
-                <ArrowDownRight size={22} color="#c8392f" strokeWidth={2.4} />
+                <ArrowDownRight size={22} color="#34c759" strokeWidth={2.4} />
               </div>
             </div>
           </motion.article>
@@ -194,8 +195,8 @@ export function BuyerCompare() {
             <CardRows
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
-                { label: 'Buyer commission', value: '0%' },
-                { label: 'You pay the agent', value: 'AED 0' },
+                { label: 'Standard commission', value: '2%' },
+                { label: 'with iClose', value: '0% Commission' },
               ]}
             />
             <div className={styles.result}>
