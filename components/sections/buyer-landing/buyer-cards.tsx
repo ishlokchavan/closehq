@@ -151,7 +151,7 @@ export function BuyerCompare() {
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
                 { label: 'Price Inclusive of', value: '5%' },
-                { label: 'Standard Deal', value: '0 AED Cashback', labelClass: styles.rowLabelBlue },
+                { label: 'Standard Deal', value: '0 AED Cashback', labelClass: styles.rowLabelRed },
                 { label: 'with iClose', value: '100% Cashback', labelClass: styles.rowLabelBlue },
               ]}
             />
@@ -195,7 +195,7 @@ export function BuyerCompare() {
             <CardRows
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
-                { label: 'Standard commission', value: '2%', labelClass: styles.rowLabelBlue },
+                { label: 'Standard commission', value: '2%', labelClass: styles.rowLabelRed },
                 { label: 'with iClose', value: '0% Commission', labelClass: styles.rowLabelBlue },
               ]}
             />
