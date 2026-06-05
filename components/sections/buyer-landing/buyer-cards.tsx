@@ -195,7 +195,7 @@ export function BuyerCompare() {
             <CardRows
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
-                { label: 'Standard commission', value: '2%', labelClass: styles.rowLabelRed },
+                { label: 'Standard commission', value: '2%', labelClass: styles.rowLabelRed, valueClass: styles.rowValueRed },
                 { label: 'with iClose', value: '0% Commission', labelClass: styles.rowLabelBlue },
               ]}
             />
