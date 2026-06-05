@@ -152,7 +152,7 @@ export function BuyerCompare() {
                 { label: 'Deal value', value: 'AED 2,000,000' },
                 { label: 'Price Inclusive of', value: '5%' },
                 { label: 'Standard Deal', value: '0 AED Cashback', labelClass: styles.rowLabelRed, valueClass: styles.rowValueRed },
-                { label: 'with iClose', value: '100% Cashback', labelClass: styles.rowLabelBlue },
+                { label: 'with iClose', value: '100% Cashback', labelClass: styles.rowLabelBlue, valueClass: styles.rowValueBlue },
               ]}
             />
             <div className={styles.result}>
