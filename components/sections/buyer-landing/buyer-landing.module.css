@@ -2051,6 +2051,9 @@
 .cardGood .rowLabel {
   color: #a1a1a6;
 }
+.rowLabelBlue {
+  color: #0070f3 !important;
+}
 .rowValue {
   font-weight: 600;
   text-align: right;

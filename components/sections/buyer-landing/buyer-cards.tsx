@@ -85,7 +85,7 @@ const rowItem: Variants = {
   show: { opacity: 1, x: 0, transition: { duration: 0.4, ease } },
 };
 
-type Row = { label: string; value: ReactNode };
+type Row = { label: string; value: ReactNode; labelClass?: string };
 
 function CardRows({ rows }: { rows: Row[] }) {
   return (
@@ -98,7 +98,7 @@ function CardRows({ rows }: { rows: Row[] }) {
     >
       {rows.map((r, i) => (
         <motion.div className={styles.row} key={i} variants={rowItem}>
-          <span className={styles.rowLabel}>{r.label}</span>
+          <span className={`${styles.rowLabel} ${r.labelClass || ''}`}>{r.label}</span>
           <span className={styles.rowValue}>{r.value}</span>
         </motion.div>
       ))}
@@ -152,7 +152,7 @@ export function BuyerCompare() {
                 { label: 'Deal value', value: 'AED 2,000,000' },
                 { label: 'Price Inclusive of', value: '5%' },
                 { label: 'Standard Deal', value: '0 AED Cashback' },
-                { label: 'with iClose', value: '100% Cashback' },
+                { label: 'with iClose', value: '100% Cashback', labelClass: styles.rowLabelBlue },
               ]}
             />
             <div className={styles.result}>
@@ -196,7 +196,7 @@ export function BuyerCompare() {
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
                 { label: 'Standard commission', value: '2%' },
-                { label: 'with iClose', value: '0% Commission' },
+                { label: 'with iClose', value: '0% Commission', labelClass: styles.rowLabelBlue },
               ]}
             />
             <div className={styles.result}>
