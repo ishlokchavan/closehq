@@ -2071,6 +2071,9 @@
 .rowValueRed {
   color: #ff3b30 !important;
 }
+.rowValueBlue {
+  color: #0070f3 !important;
+}
 
 /* ---- result block ---- */
 .result {

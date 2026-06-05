@@ -196,7 +196,7 @@ export function BuyerCompare() {
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
                 { label: 'Standard commission', value: '2%', labelClass: styles.rowLabelRed, valueClass: styles.rowValueRed },
-                { label: 'with iClose', value: '0% Commission', labelClass: styles.rowLabelBlue },
+                { label: 'with iClose', value: '0% Commission', labelClass: styles.rowLabelBlue, valueClass: styles.rowValueBlue },
               ]}
             />
             <div className={styles.result}>
