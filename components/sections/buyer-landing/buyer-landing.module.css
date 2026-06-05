@@ -2068,6 +2068,9 @@
 .cardGood .rowValue {
   color: #f5f5f7;
 }
+.rowValueRed {
+  color: #ff3b30 !important;
+}
 
 /* ---- result block ---- */
 .result {
