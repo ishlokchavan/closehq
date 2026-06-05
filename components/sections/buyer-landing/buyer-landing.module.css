@@ -2052,13 +2052,16 @@
   color: #a1a1a6;
 }
 .rowLabelBlue {
-  color: #0070f3 !important;
+  color: #0071e3 !important;
+  animation: highlightPulse 2s ease-in-out infinite;
 }
 .cardBad .rowLabelBlue {
-  color: #5a9bff !important;
+  color: #5fa3ff !important;
+  animation: highlightPulse 2s ease-in-out infinite;
 }
 .rowLabelRed {
-  color: #ff3b30 !important;
+  color: #ff5757 !important;
+  animation: highlightPulse 2s ease-in-out infinite;
 }
 .rowValue {
   font-weight: 600;
@@ -2069,10 +2072,23 @@
   color: #f5f5f7;
 }
 .rowValueRed {
-  color: #ff3b30 !important;
+  color: #ff5757 !important;
+  animation: highlightPulse 2s ease-in-out infinite;
 }
 .rowValueBlue {
-  color: #0070f3 !important;
+  color: #0071e3 !important;
+  animation: highlightPulse 2s ease-in-out infinite;
+}
+
+@keyframes highlightPulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.85;
+    filter: brightness(1.15);
+  }
 }
 
 /* ---- result block ---- */
