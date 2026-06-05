@@ -150,12 +150,9 @@ export function BuyerCompare() {
             <CardRows
               rows={[
                 { label: 'Deal value', value: 'AED 2,000,000' },
-                { label: 'Price Inclusuve of 5% commission', value: '2%' },
-                { label: 'Standard Deal Cashback', value: '0 AED' },
-                { label: 'Price Inclusuve of 5% commission', value: '2%' },
-
-
-                { label: 'With iClose', value: '100% Cash back' },
+                { label: 'Agent commission', value: '2% (AED 40,000)' },
+                { label: 'Your cost', value: 'You pay full commission' },
+                { label: 'Cashback', value: 'None' },
               ]}
             />
             <div className={styles.result}>
