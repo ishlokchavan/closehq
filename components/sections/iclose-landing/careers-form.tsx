@@ -212,7 +212,7 @@ export function CareersForm() {
 
       <div className={styles.field}>
         <div className={styles.fieldLabel}>
-          <label htmlFor="cf-resume">Resume / CV (PDF)</label>
+          <label htmlFor="cf-resume">Resume / CV (PDF, optional)</label>
           {resumeError && (
             <span className={styles.fieldError}>{resumeError}</span>
           )}

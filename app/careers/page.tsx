@@ -143,30 +143,36 @@ export default function CareersPage() {
       </nav>
 
       <main className={styles.careersMain}>
-        <section className={styles.careersHero}>
-          <div className={styles.legalEyebrow}>Careers · iclose.ae</div>
-          <h1 className={styles.legalTitle}>
-            Paid Internship
-            <br />
-            Opportunities
-          </h1>
+        <div className={styles.careersTop}>
+          <div className={styles.careersHero}>
+            <div className={styles.legalEyebrow}>Careers · iclose.ae</div>
+            <h1 className={styles.legalTitle}>
+              Paid Internship
+              <br />
+              Opportunities
+            </h1>
+            <p className={styles.careersHeroLede}>
+              Real work, real mentorship, real growth at our tech &amp;
+              education startup. Apply in under a minute.
+            </p>
+          </div>
 
+          <section className={styles.careersFormSection}>
+            <div className={styles.careersFormHeading}>
+              <div className={styles.careersFormEyebrow}>Apply now</div>
+              <h2>Join the team.</h2>
+            </div>
+            <CareersForm />
+          </section>
+        </div>
+
+        <section className={styles.careersSection}>
           <div className={styles.rolePills}>
             {ROLES.map((role) => (
               <span key={role} className={styles.rolePill}>
                 {role}
               </span>
             ))}
-          </div>
-
-          <div className={styles.careersNotice}>
-            <span className={styles.noticeIcon} aria-hidden="true">
-              i
-            </span>
-            <p>
-              <strong>Only Female Talent</strong> required for On-Camera
-              Content Creation roles.
-            </p>
           </div>
 
           <p className={styles.careersIntro}>
@@ -177,9 +183,7 @@ export default function CareersPage() {
             and <strong>grow</strong> through direct mentorship from an
             experienced <strong>leadership</strong> team.
           </p>
-        </section>
 
-        <section className={styles.careersSection}>
           <div className={styles.careersTwoCol}>
             <div>
               <p className={styles.careersColHeading}>What you&apos;ll do</p>
@@ -210,15 +214,6 @@ export default function CareersPage() {
               </ul>
             </div>
           </div>
-        </section>
-
-        <section className={styles.careersFormSection}>
-          <div className={styles.careersFormHeading}>
-            <div className={styles.careersFormEyebrow}>Apply now</div>
-            <h2>Join the team.</h2>
-            <p>Fill out the form below and we&apos;ll be in touch.</p>
-          </div>
-          <CareersForm />
         </section>
       </main>
 
