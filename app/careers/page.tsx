@@ -143,14 +143,30 @@ export default function CareersPage() {
       </nav>
 
       <main className={styles.careersMain}>
-        <section className={styles.careersHero}>
-          <div className={styles.legalEyebrow}>Careers · iclose.ae</div>
-          <h1 className={styles.legalTitle}>
-            Paid Internship
-            <br />
-            Opportunities
-          </h1>
+        <div className={styles.careersTop}>
+          <div className={styles.careersHero}>
+            <div className={styles.legalEyebrow}>Careers · iclose.ae</div>
+            <h1 className={styles.legalTitle}>
+              Paid Internship
+              <br />
+              Opportunities
+            </h1>
+            <p className={styles.careersHeroLede}>
+              Real work, real mentorship, real growth at our tech &amp;
+              education startup. Apply in under a minute.
+            </p>
+          </div>
 
+          <section className={styles.careersFormSection}>
+            <div className={styles.careersFormHeading}>
+              <div className={styles.careersFormEyebrow}>Apply now</div>
+              <h2>Join the team.</h2>
+            </div>
+            <CareersForm />
+          </section>
+        </div>
+
+        <section className={styles.careersSection}>
           <div className={styles.rolePills}>
             {ROLES.map((role) => (
               <span key={role} className={styles.rolePill}>
@@ -159,18 +175,6 @@ export default function CareersPage() {
             ))}
           </div>
 
-        </section>
-
-        <section className={styles.careersFormSection}>
-          <div className={styles.careersFormHeading}>
-            <div className={styles.careersFormEyebrow}>Apply now</div>
-            <h2>Join the team.</h2>
-            <p>Fill out the form below and we&apos;ll be in touch.</p>
-          </div>
-          <CareersForm />
-        </section>
-
-        <section className={styles.careersSection}>
           <p className={styles.careersIntro}>
             This isn&apos;t your typical internship with coffee runs or
             sidelines. We&apos;re building something{' '}
