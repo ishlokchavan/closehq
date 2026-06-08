@@ -168,7 +168,18 @@ export default function CareersPage() {
               Content Creation roles.
             </p>
           </div>
+        </section>
 
+        <section className={styles.careersFormSection}>
+          <div className={styles.careersFormHeading}>
+            <div className={styles.careersFormEyebrow}>Apply now</div>
+            <h2>Join the team.</h2>
+            <p>Fill out the form below and we&apos;ll be in touch.</p>
+          </div>
+          <CareersForm />
+        </section>
+
+        <section className={styles.careersSection}>
           <p className={styles.careersIntro}>
             This isn&apos;t your typical internship with coffee runs or
             sidelines. We&apos;re building something{' '}
@@ -177,9 +188,7 @@ export default function CareersPage() {
             and <strong>grow</strong> through direct mentorship from an
             experienced <strong>leadership</strong> team.
           </p>
-        </section>
 
-        <section className={styles.careersSection}>
           <div className={styles.careersTwoCol}>
             <div>
               <p className={styles.careersColHeading}>What you&apos;ll do</p>
@@ -210,15 +219,6 @@ export default function CareersPage() {
               </ul>
             </div>
           </div>
-        </section>
-
-        <section className={styles.careersFormSection}>
-          <div className={styles.careersFormHeading}>
-            <div className={styles.careersFormEyebrow}>Apply now</div>
-            <h2>Join the team.</h2>
-            <p>Fill out the form below and we&apos;ll be in touch.</p>
-          </div>
-          <CareersForm />
         </section>
       </main>
 
