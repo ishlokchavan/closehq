@@ -1720,45 +1720,6 @@
   letter-spacing: -0.008em;
 }
 
-.careersNotice {
-  margin-top: 28px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  background: rgba(0, 113, 227, 0.06);
-  border: 1px solid rgba(0, 113, 227, 0.18);
-  border-radius: var(--r-card-sm);
-  padding: 16px 18px;
-  max-width: 520px;
-}
-
-.careersNotice .noticeIcon {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: rgba(0, 113, 227, 0.12);
-  color: var(--blue);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.careersNotice p {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text);
-  letter-spacing: -0.008em;
-  margin: 0;
-}
-
-.careersNotice strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
 .careersSection {
   margin-top: 80px;
 }

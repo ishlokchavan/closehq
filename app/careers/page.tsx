@@ -159,15 +159,6 @@ export default function CareersPage() {
             ))}
           </div>
 
-          <div className={styles.careersNotice}>
-            <span className={styles.noticeIcon} aria-hidden="true">
-              i
-            </span>
-            <p>
-              <strong>Only Female Talent</strong> required for On-Camera
-              Content Creation roles.
-            </p>
-          </div>
         </section>
 
         <section className={styles.careersFormSection}>
