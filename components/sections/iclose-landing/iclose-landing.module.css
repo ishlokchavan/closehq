@@ -1806,6 +1806,7 @@
 
 .careersFormSection {
   width: 100%;
+  margin-top: 0;
 }
 
 .careersFormHeading {
@@ -1931,17 +1932,23 @@
     gap: 40px;
   }
   .careersMain {
-    padding: 32px 16px 64px;
+    padding: 16px 16px 64px;
   }
   .careersTop {
-    gap: 20px;
+    gap: 10px;
+  }
+  .careersHero .legalEyebrow {
+    margin-bottom: 6px;
   }
   .legalTitle {
-    font-size: clamp(28px, 8vw, 34px);
+    font-size: clamp(26px, 7.5vw, 32px);
     margin-bottom: 0;
   }
   .careersHeroLede {
     display: none;
+  }
+  .careersFormHeading {
+    margin-bottom: 14px;
   }
 }
 
