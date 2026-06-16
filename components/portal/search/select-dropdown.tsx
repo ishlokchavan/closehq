@@ -52,25 +52,30 @@ export function RangeDropdown({
 
   return (
     <FilterDropdown label={rangeLabel} active={!!(minVal || maxVal)}>
-      {(close) => {
-        const [lo, setLo] = useState(minVal);
-        const [hi, setHi] = useState(maxVal);
-        return (
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <input inputMode="numeric" value={lo} onChange={(e) => setLo(e.target.value.replace(/\D/g, ''))} placeholder={`Min ${unit}`}
-                className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
-              <span className="text-graphite">–</span>
-              <input inputMode="numeric" value={hi} onChange={(e) => setHi(e.target.value.replace(/\D/g, ''))} placeholder={`Max ${unit}`}
-                className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
-            </div>
-            <div className="flex justify-between">
-              <button type="button" onClick={() => { setParams({ [minKey]: null, [maxKey]: null }); close(); }} className="text-[13px] text-graphite hover:text-ink">Clear</button>
-              <button type="button" onClick={() => { setParams({ [minKey]: lo || null, [maxKey]: hi || null }); close(); }} className="h-9 px-4 rounded-full bg-accent text-white text-[13px] font-medium hover:bg-accent-hover">Apply</button>
-            </div>
-          </div>
-        );
-      }}
+      {(close) => <RangeBody unit={unit} minKey={minKey} maxKey={maxKey} minVal={minVal} maxVal={maxVal} setParams={setParams} close={close} />}
     </FilterDropdown>
+  );
+}
+
+function RangeBody({ unit, minKey, maxKey, minVal, maxVal, setParams, close }: {
+  unit: string; minKey: string; maxKey: string; minVal: string; maxVal: string;
+  setParams: (u: Record<string, string | null>) => void; close: () => void;
+}) {
+  const [lo, setLo] = useState(minVal);
+  const [hi, setHi] = useState(maxVal);
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <input inputMode="numeric" value={lo} onChange={(e) => setLo(e.target.value.replace(/\D/g, ''))} placeholder={`Min ${unit}`}
+          className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
+        <span className="text-graphite">–</span>
+        <input inputMode="numeric" value={hi} onChange={(e) => setHi(e.target.value.replace(/\D/g, ''))} placeholder={`Max ${unit}`}
+          className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
+      </div>
+      <div className="flex justify-between">
+        <button type="button" onClick={() => { setParams({ [minKey]: null, [maxKey]: null }); close(); }} className="text-[13px] text-graphite hover:text-ink">Clear</button>
+        <button type="button" onClick={() => { setParams({ [minKey]: lo || null, [maxKey]: hi || null }); close(); }} className="h-9 px-4 rounded-full bg-accent text-white text-[13px] font-medium hover:bg-accent-hover">Apply</button>
+      </div>
+    </div>
   );
 }

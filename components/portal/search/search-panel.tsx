@@ -229,25 +229,27 @@ function RangePill({ label, unit, min, max, onApply }: { label: string; unit: st
   const rangeLabel = min || max ? `${min || '0'}–${max || '∞'}` : label;
   return (
     <FilterDropdown label={rangeLabel} active={!!(min || max)}>
-      {(close) => {
-        const [lo, setLo] = useState(min ?? '');
-        const [hi, setHi] = useState(max ?? '');
-        const cls = 'w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40';
-        return (
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <input inputMode="numeric" value={lo} onChange={(e) => setLo(e.target.value.replace(/\D/g, ''))} placeholder={`Min ${unit}`} className={cls} />
-              <span className="text-graphite">–</span>
-              <input inputMode="numeric" value={hi} onChange={(e) => setHi(e.target.value.replace(/\D/g, ''))} placeholder={`Max ${unit}`} className={cls} />
-            </div>
-            <div className="flex justify-between">
-              <button type="button" onClick={() => { setLo(''); setHi(''); onApply(undefined, undefined); close(); }} className="text-[13px] text-graphite hover:text-ink">Clear</button>
-              <button type="button" onClick={() => { onApply(lo || undefined, hi || undefined); close(); }} className="h-9 px-4 rounded-full bg-accent text-white text-[13px] font-medium hover:bg-accent-hover">Apply</button>
-            </div>
-          </div>
-        );
-      }}
+      {(close) => <RangeBody unit={unit} min={min} max={max} onApply={onApply} close={close} />}
     </FilterDropdown>
+  );
+}
+
+function RangeBody({ unit, min, max, onApply, close }: { unit: string; min?: string; max?: string; onApply: (min?: string, max?: string) => void; close: () => void }) {
+  const [lo, setLo] = useState(min ?? '');
+  const [hi, setHi] = useState(max ?? '');
+  const cls = 'w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40';
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <input inputMode="numeric" value={lo} onChange={(e) => setLo(e.target.value.replace(/\D/g, ''))} placeholder={`Min ${unit}`} className={cls} />
+        <span className="text-graphite">–</span>
+        <input inputMode="numeric" value={hi} onChange={(e) => setHi(e.target.value.replace(/\D/g, ''))} placeholder={`Max ${unit}`} className={cls} />
+      </div>
+      <div className="flex justify-between">
+        <button type="button" onClick={() => { setLo(''); setHi(''); onApply(undefined, undefined); close(); }} className="text-[13px] text-graphite hover:text-ink">Clear</button>
+        <button type="button" onClick={() => { onApply(lo || undefined, hi || undefined); close(); }} className="h-9 px-4 rounded-full bg-accent text-white text-[13px] font-medium hover:bg-accent-hover">Apply</button>
+      </div>
+    </div>
   );
 }
 

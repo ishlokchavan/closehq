@@ -54,29 +54,30 @@ export function NewReleaseFilterDropdowns({ params, options }: { params: FilterP
       </FilterDropdown>
 
       <FilterDropdown label={priceLabel ?? 'Price'} active={!!(minPrice || maxPrice)}>
-        {(close) => {
-          const Range = () => {
-            const [lo, setLo] = useState(minPrice);
-            const [hi, setHi] = useState(maxPrice);
-            return (
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <input inputMode="numeric" value={lo} onChange={(e) => setLo(e.target.value.replace(/\D/g, ''))} placeholder="Min AED"
-                    className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
-                  <span className="text-graphite">–</span>
-                  <input inputMode="numeric" value={hi} onChange={(e) => setHi(e.target.value.replace(/\D/g, ''))} placeholder="Max AED"
-                    className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
-                </div>
-                <div className="flex justify-between">
-                  <button type="button" onClick={() => { setParams({ minPrice: null, maxPrice: null }); close(); }} className="text-[13px] text-graphite hover:text-ink">Clear</button>
-                  <button type="button" onClick={() => { setParams({ minPrice: lo || null, maxPrice: hi || null }); close(); }} className="h-9 px-4 rounded-full bg-accent text-white text-[13px] font-medium hover:bg-accent-hover">Apply</button>
-                </div>
-              </div>
-            );
-          };
-          return <Range />;
-        }}
+        {(close) => <PriceBody minPrice={minPrice} maxPrice={maxPrice} setParams={setParams} close={close} />}
       </FilterDropdown>
     </>
+  );
+}
+
+function PriceBody({ minPrice, maxPrice, setParams, close }: {
+  minPrice: string; maxPrice: string; setParams: (u: Record<string, string | null>) => void; close: () => void;
+}) {
+  const [lo, setLo] = useState(minPrice);
+  const [hi, setHi] = useState(maxPrice);
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <input inputMode="numeric" value={lo} onChange={(e) => setLo(e.target.value.replace(/\D/g, ''))} placeholder="Min AED"
+          className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
+        <span className="text-graphite">–</span>
+        <input inputMode="numeric" value={hi} onChange={(e) => setHi(e.target.value.replace(/\D/g, ''))} placeholder="Max AED"
+          className="w-full h-10 px-3 rounded-xl border border-hairline text-[14px] focus:outline-none focus:ring-2 focus:ring-accent/40" />
+      </div>
+      <div className="flex justify-between">
+        <button type="button" onClick={() => { setParams({ minPrice: null, maxPrice: null }); close(); }} className="text-[13px] text-graphite hover:text-ink">Clear</button>
+        <button type="button" onClick={() => { setParams({ minPrice: lo || null, maxPrice: hi || null }); close(); }} className="h-9 px-4 rounded-full bg-accent text-white text-[13px] font-medium hover:bg-accent-hover">Apply</button>
+      </div>
+    </div>
   );
 }
