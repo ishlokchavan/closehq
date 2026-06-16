@@ -1,14 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { User, Building2 } from 'lucide-react';
+import { User, Building2, BadgeCheck, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { ComingSoonNote } from '@/components/portal/listing-skeleton';
+import type { Agent, Agency } from '@/lib/portal/agents';
 
 type Tab = 'agents' | 'companies';
 
-/** Agents | Companies sub-tab toggle + placeholder result cards. */
-export function AgentsDirectory() {
+/** Agents | Companies sub-tab toggle + result cards (data from the server). */
+export function AgentsDirectory({ agents, agencies }: { agents: Agent[]; agencies: Agency[] }) {
   const [tab, setTab] = useState<Tab>('agents');
 
   return (
@@ -23,29 +23,62 @@ export function AgentsDirectory() {
               tab === t ? 'border-accent text-ink font-medium' : 'border-transparent text-graphite hover:text-ink',
             )}
           >
-            {t}
+            {t} <span className="text-graphite">({t === 'agents' ? agents.length : agencies.length})</span>
           </button>
         ))}
       </div>
 
-      <ComingSoonNote>
-        Agent and agency profiles are populated from the <code>agents</code> / <code>agencies</code>{' '}
-        data layer next.
-      </ComingSoonNote>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="card-surface p-5 flex items-center gap-4">
-            <span className="flex items-center justify-center h-14 w-14 rounded-full bg-mist text-hairline">
-              {tab === 'agents' ? <User className="h-6 w-6" /> : <Building2 className="h-6 w-6" />}
-            </span>
-            <div className="flex-1 space-y-2">
-              <div className="h-3.5 w-1/2 rounded bg-mist" />
-              <div className="h-3 w-3/4 rounded bg-mist" />
-            </div>
-          </div>
-        ))}
-      </div>
+      {tab === 'agents' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {agents.map((agent) => (
+            <article key={agent.id} className="card-surface p-5">
+              <div className="flex items-center gap-4">
+                <span className="flex items-center justify-center h-14 w-14 rounded-full bg-mist text-hairline shrink-0">
+                  <User className="h-6 w-6" />
+                </span>
+                <div className="min-w-0">
+                  <p className="flex items-center gap-1.5 text-[15px] text-ink font-medium" style={{ letterSpacing: '-0.01em' }}>
+                    <span className="truncate">{agent.fullName}</span>
+                    {agent.isVerified && <BadgeCheck className="h-4 w-4 text-journey-listing shrink-0" />}
+                  </p>
+                  {agent.agencyName && <p className="text-[13px] text-graphite truncate">{agent.agencyName}</p>}
+                  {agent.reraNo && <p className="text-[12px] text-graphite mt-0.5">BRN {agent.reraNo.replace('BRN-', '')}</p>}
+                </div>
+              </div>
+              {agent.areas.length > 0 && (
+                <p className="flex items-center gap-1.5 text-[13px] text-graphite-dark mt-3">
+                  <MapPin className="h-3.5 w-3.5 shrink-0" />
+                  <span className="truncate">{agent.areas.join(', ')}</span>
+                </p>
+              )}
+              {agent.languages.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {agent.languages.map((l) => (
+                    <span key={l} className="rounded-full border border-hairline px-2.5 py-1 text-[12px] text-ink/70">{l}</span>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {agencies.map((agency) => (
+            <article key={agency.id} className="card-surface p-5 flex items-center gap-4">
+              <span className="flex items-center justify-center h-14 w-14 rounded-full bg-mist text-hairline shrink-0">
+                <Building2 className="h-6 w-6" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[15px] text-ink font-medium truncate" style={{ letterSpacing: '-0.01em' }}>{agency.name}</p>
+                <p className="text-[13px] text-graphite">{agency.agentsCount} agents</p>
+                {agency.areas.length > 0 && (
+                  <p className="text-[12px] text-graphite mt-0.5 truncate">{agency.areas.join(', ')}</p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

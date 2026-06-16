@@ -141,6 +141,31 @@ create index if not exists listings_price_idx       on public.listings (price_ae
 create index if not exists listing_tr_locale_idx    on public.listing_translations (locale);
 
 -- ---------------------------------------------------------------------------
+-- Transactions: DLD-style sold/rented price records for the explorer.
+-- ---------------------------------------------------------------------------
+do $$ begin
+  create type transaction_kind as enum ('sold', 'rented');
+exception when duplicate_object then null; end $$;
+
+create table if not exists public.transactions (
+  id            uuid primary key default gen_random_uuid(),
+  kind          transaction_kind not null default 'sold',
+  occurred_on   date not null,
+  city          text not null default 'Dubai',
+  community     text,
+  building      text,
+  property_type property_type not null default 'apartment',
+  bedrooms      int,
+  area_sqft     numeric(10,2),
+  price_aed     numeric(14,2) not null,
+  created_at    timestamptz not null default now()
+);
+
+create index if not exists transactions_kind_idx      on public.transactions (kind);
+create index if not exists transactions_community_idx on public.transactions (community);
+create index if not exists transactions_date_idx      on public.transactions (occurred_on desc);
+
+-- ---------------------------------------------------------------------------
 -- Credits (1 credit = 0.5 AED). Ledger of credit movements per account.
 -- ---------------------------------------------------------------------------
 create table if not exists public.credit_transactions (
@@ -164,6 +189,7 @@ alter table public.agencies              enable row level security;
 alter table public.agents                enable row level security;
 alter table public.listings              enable row level security;
 alter table public.listing_translations  enable row level security;
+alter table public.transactions          enable row level security;
 alter table public.credit_transactions   enable row level security;
 
 do $$ begin
@@ -193,5 +219,10 @@ exception when duplicate_object then null; end $$;
 
 do $$ begin
   create policy "public read listing translations" on public.listing_translations
+    for select using (true);
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create policy "public read transactions" on public.transactions
     for select using (true);
 exception when duplicate_object then null; end $$;
