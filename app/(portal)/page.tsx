@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { SearchTabs } from '@/components/portal/search/search-tabs';
+import { MeshGradient } from '@/components/portal/mesh-gradient';
 import type { JourneyKey } from '@/lib/portal-config';
 
 export const metadata: Metadata = {
@@ -34,11 +35,8 @@ export default function PortalHomePage() {
   return (
     <>
       {/* Off-plan / credits notification bar (one of several entry points to credits). */}
-      <Link
-        href="/developers"
-        className="block bg-journey-offplan/20 hover:bg-journey-offplan/30 transition-colors"
-      >
-        <div className="container-wide py-2 text-center text-[13px] text-ink">
+      <Link href="/developers" className="block bg-[#ffd9dc] hover:bg-[#ffcdd1] transition-colors">
+        <div className="container-wide py-2.5 text-center text-[13px] text-ink">
           Investing in Off-Plan? Get special pricing &amp; credits
           <span className="text-accent ml-1.5 inline-flex items-center gap-0.5">
             Learn more <ArrowRight className="h-3 w-3" />
@@ -46,17 +44,23 @@ export default function PortalHomePage() {
         </div>
       </Link>
 
-      {/* Hero + tabbed search */}
-      <section className="container-wide pt-12 pb-8 text-center">
-        <h1 className="display-lg max-w-4xl mx-auto text-balance">
-          Never Pay Commission to <span className="font-bold">Buy</span>,{' '}
-          <span className="font-bold">Sell</span>, or <span className="font-bold">Close</span> Ever Again!
-        </h1>
-        <p className="subhead mt-4 max-w-2xl mx-auto">
-          Search Dubai property, off-plan new releases, transactions and agents — all in one place.
-        </p>
-        <div className="mt-9">
-          <SearchTabs active="properties" />
+      {/* Hero + tabbed search over the mesh-gradient wash (Figma mid-fi) */}
+      <section className="relative overflow-hidden">
+        <MeshGradient className="-top-10" />
+        <div className="relative container-wide pt-14 pb-16 text-center">
+          <h1 className="display-lg max-w-4xl mx-auto text-balance">
+            Never Pay Commission to <span className="font-bold">Buy</span>,{' '}
+            <span className="font-bold">Sell</span>, or <span className="font-bold">Close</span> Ever Again!
+          </h1>
+          <p className="subhead mt-4 max-w-2xl mx-auto">
+            Investing in Off-Plan? Get Special Pricing &amp; Credits
+            <Link href="/developers" className="applelink ml-1.5 text-[15px] align-baseline">
+              Learn more <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </p>
+          <div className="mt-10">
+            <SearchTabs active="properties" />
+          </div>
         </div>
       </section>
 
