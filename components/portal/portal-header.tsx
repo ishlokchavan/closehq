@@ -8,7 +8,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { PORTAL_NAV, LOCALES, type NavItem } from '@/lib/portal-config';
+import { PORTAL_NAV, type NavItem, type JourneyKey } from '@/lib/portal-config';
+import { useI18n } from '@/components/i18n/locale-provider';
+import { LOCALES } from '@/lib/i18n/config';
 
 function isActive(pathname: string, item: NavItem) {
   return pathname === item.href || pathname.startsWith(item.href + '/');
@@ -16,8 +18,11 @@ function isActive(pathname: string, item: NavItem) {
 
 export function PortalHeader() {
   const pathname = usePathname();
+  const { messages } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+
+  const navLabel = (key: JourneyKey) => messages.nav[key];
 
   return (
     <header className="sticky top-0 z-50 bg-paper/80 backdrop-blur-2xl border-b border-hairline/60">
@@ -45,7 +50,7 @@ export function PortalHeader() {
                 )}
                 style={{ letterSpacing: '-0.01em' }}
               >
-                {item.label}
+                {navLabel(item.key)}
                 {item.children && <ChevronDown className="h-3.5 w-3.5 opacity-60" />}
               </Link>
 
@@ -66,10 +71,14 @@ export function PortalHeader() {
                           className="block rounded-xl px-3 py-2.5 hover:bg-mist transition-colors"
                         >
                           <span className="block text-[14px] text-ink" style={{ letterSpacing: '-0.01em' }}>
-                            {child.label}
+                            {child.i18nKey ? messages.nav[child.i18nKey] : child.label}
                           </span>
                           {child.description && (
-                            <span className="block text-[12px] text-graphite mt-0.5">{child.description}</span>
+                            <span className="block text-[12px] text-graphite mt-0.5">
+                              {child.i18nKey
+                                ? messages.nav[`${child.i18nKey}Desc` as keyof typeof messages.nav]
+                                : child.description}
+                            </span>
                           )}
                         </Link>
                       ))}
@@ -85,10 +94,10 @@ export function PortalHeader() {
         <div className="hidden md:flex items-center gap-2">
           <LanguagePill />
           <Link href="/login">
-            <Button variant="outline" size="sm">Sign in</Button>
+            <Button variant="outline" size="sm">{messages.nav.signIn}</Button>
           </Link>
           <Link href="/signup">
-            <Button variant="primary" size="sm">Sign up</Button>
+            <Button variant="primary" size="sm">{messages.nav.signUp}</Button>
           </Link>
         </div>
 
@@ -120,7 +129,7 @@ export function PortalHeader() {
                     className="block py-4 text-ink text-[17px]"
                     style={{ letterSpacing: '-0.012em' }}
                   >
-                    {item.label}
+                    {navLabel(item.key)}
                   </Link>
                   {item.children && (
                     <div className="pb-3 pl-4 flex flex-col gap-2">
@@ -131,7 +140,7 @@ export function PortalHeader() {
                           onClick={() => setMobileOpen(false)}
                           className="text-[15px] text-graphite-dark"
                         >
-                          {child.label}
+                          {child.i18nKey ? messages.nav[child.i18nKey] : child.label}
                         </Link>
                       ))}
                     </div>
@@ -140,10 +149,10 @@ export function PortalHeader() {
               ))}
               <div className="py-4 flex gap-2">
                 <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
-                  <Button variant="outline" size="md" className="w-full">Sign in</Button>
+                  <Button variant="outline" size="md" className="w-full">{messages.nav.signIn}</Button>
                 </Link>
                 <Link href="/signup" onClick={() => setMobileOpen(false)} className="flex-1">
-                  <Button variant="primary" size="md" className="w-full">Sign up</Button>
+                  <Button variant="primary" size="md" className="w-full">{messages.nav.signUp}</Button>
                 </Link>
               </div>
             </div>
@@ -155,20 +164,21 @@ export function PortalHeader() {
 }
 
 /**
- * Language switcher pill (the "Lorem" pill next to Sign in in the Figma).
- * UI-only for now — wires into the i18n layer in a later pass.
+ * Language switcher pill (the pill next to Sign in in the Figma). Sets the
+ * locale cookie and reloads so server content + <html dir> update (RTL for AR).
  */
 function LanguagePill() {
+  const { locale, setLocale } = useI18n();
   const [open, setOpen] = useState(false);
   return (
     <div className="relative" onMouseLeave={() => setOpen(false)}>
       <button
         onClick={() => setOpen((s) => !s)}
         onMouseEnter={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-hairline text-[13px] text-ink/80 hover:text-ink hover:border-ink/40 transition-colors"
+        className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-hairline text-[13px] text-ink/80 hover:text-ink hover:border-ink/40 transition-colors uppercase"
       >
         <Globe className="h-3.5 w-3.5" />
-        EN
+        {locale}
       </button>
       <AnimatePresence>
         {open && (
@@ -177,16 +187,20 @@ function LanguagePill() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full pt-2 w-40"
+            className="absolute end-0 top-full pt-2 w-40"
           >
             <div className="card-surface shadow-elevated p-1.5">
-              {LOCALES.map((locale) => (
+              {LOCALES.map((l) => (
                 <button
-                  key={locale.code}
+                  key={l.code}
                   type="button"
-                  className="w-full text-left rounded-lg px-3 py-2 text-[13px] text-ink hover:bg-mist transition-colors"
+                  onClick={() => setLocale(l.code)}
+                  className={cn(
+                    'w-full text-start rounded-lg px-3 py-2 text-[13px] hover:bg-mist transition-colors',
+                    l.code === locale ? 'text-accent font-medium' : 'text-ink',
+                  )}
                 >
-                  {locale.label}
+                  {l.label}
                 </button>
               ))}
             </div>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { SearchHero } from '@/components/portal/search/search-hero';
 import { ListingCard } from '@/components/portal/listing-card';
 import { getListings } from '@/lib/portal/listings';
+import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Properties for Sale in Dubai | iClose',
@@ -15,9 +16,10 @@ export default async function PropertiesPage({
   searchParams: Promise<{ q?: string; tab?: string }>;
 }) {
   const { q, tab } = await searchParams;
+  const locale = await getLocale();
   // Properties sub-tabs: All / Off-plan / Ready
   const completion = tab === 'off-plan' ? 'off_plan' : tab === 'ready' ? 'ready' : undefined;
-  const listings = await getListings({ purpose: 'sale', completion, q });
+  const listings = await getListings({ purpose: 'sale', completion, q }, locale);
 
   return (
     <>

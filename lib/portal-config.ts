@@ -17,6 +17,8 @@ export interface NavChild {
   label: string;
   href: string;
   description?: string;
+  /** Key into Messages['nav'] for localized label/description. */
+  i18nKey?: 'sellList' | 'sellNow' | 'listWithCa' | 'brokerage';
 }
 
 export interface NavItem {
@@ -39,8 +41,8 @@ export const PORTAL_NAV: NavItem[] = [
     label: 'Sell',
     href: '/sell',
     children: [
-      { label: 'List your property', href: '/sell/list', description: 'List as the owner or POA' },
-      { label: 'Sell now', href: '/sell/sell-now', description: 'Sell directly through iClose' },
+      { label: 'List your property', href: '/sell/list', description: 'List as the owner or POA', i18nKey: 'sellList' },
+      { label: 'Sell now', href: '/sell/sell-now', description: 'Sell directly through iClose', i18nKey: 'sellNow' },
     ],
   },
   {
@@ -48,8 +50,8 @@ export const PORTAL_NAV: NavItem[] = [
     label: 'Close',
     href: '/close',
     children: [
-      { label: 'List with Contract A', href: '/close/list-with-ca', description: 'RERA Form A broker listing' },
-      { label: 'Brokerage portal', href: '/close/brokerage', description: 'For agents, agencies & freelancers' },
+      { label: 'List with Contract A', href: '/close/list-with-ca', description: 'RERA Form A broker listing', i18nKey: 'listWithCa' },
+      { label: 'Brokerage portal', href: '/close/brokerage', description: 'For agents, agencies & freelancers', i18nKey: 'brokerage' },
     ],
   },
 ];

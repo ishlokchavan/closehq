@@ -1,15 +1,21 @@
 import { NotificationBar } from '@/components/portal/notification-bar';
 import { PortalHeader } from '@/components/portal/portal-header';
 import { Footer } from '@/components/sections/footer';
+import { LocaleProvider } from '@/components/i18n/locale-provider';
+import { getI18n } from '@/lib/i18n/server';
 
-export default function PortalLayout({ children }: { children: React.ReactNode }) {
+export default async function PortalLayout({ children }: { children: React.ReactNode }) {
+  const { locale, messages } = await getI18n();
+
   return (
-    <div className="min-h-screen flex flex-col bg-paper">
-      {/* Promo banner sits above the nav, per the Figma. */}
-      <NotificationBar />
-      <PortalHeader />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
+    <LocaleProvider locale={locale} messages={messages}>
+      <div className="min-h-screen flex flex-col bg-paper">
+        {/* Promo banner sits above the nav, per the Figma. */}
+        <NotificationBar />
+        <PortalHeader />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+    </LocaleProvider>
   );
 }

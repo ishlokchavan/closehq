@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
+import { getLocale } from '@/lib/i18n/server';
+import { dirFor } from '@/lib/i18n/config';
 import { CookieConsent } from '@/components/cookie-consent';
 import { GetStartedProvider } from '@/components/get-started-modal';
 import { PropertyInquiryProvider } from '@/components/property-inquiry-modal';
@@ -84,11 +86,13 @@ export const metadata: Metadata = {
   category: 'Real Estate',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const dir = dirFor(locale);
   const orgSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -121,7 +125,8 @@ export default function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={dir}
       className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
     >
       <body className="font-sans bg-paper text-ink antialiased">
