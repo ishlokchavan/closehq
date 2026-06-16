@@ -16,6 +16,7 @@ interface ListingRow {
   completion: Listing['completion'];
   category: Listing['category'];
   property_type: Listing['propertyType'];
+  source: 'owner' | 'poa' | 'agent';
   city: string;
   community: string | null;
   building: string | null;
@@ -43,6 +44,7 @@ function rowToListing(row: ListingRow, locale: string): Listing {
     completion: row.completion,
     category: row.category,
     propertyType: row.property_type,
+    source: row.source === 'agent' ? 'developer' : 'owner',
     city: row.city,
     community: row.community,
     building: row.building,
@@ -68,7 +70,7 @@ export async function getListings(filters: ListingFilters = {}, locale = 'en'): 
       let query = supabase
         .from('listings')
         .select(
-          'id,reference,purpose,completion,category,property_type,city,community,building,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
+          'id,reference,purpose,completion,category,property_type,source,city,community,building,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
         )
         .eq('status', 'active');
 
@@ -99,7 +101,7 @@ export async function getListingByReference(reference: string, locale = 'en'): P
       const { data, error } = await supabase
         .from('listings')
         .select(
-          'id,reference,purpose,completion,category,property_type,city,community,building,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
+          'id,reference,purpose,completion,category,property_type,source,city,community,building,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
         )
         .eq('status', 'active')
         .eq('reference', reference)

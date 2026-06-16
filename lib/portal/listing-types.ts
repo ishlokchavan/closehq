@@ -8,6 +8,8 @@ export interface Listing {
   completion: 'ready' | 'off_plan';
   category: 'residential' | 'commercial';
   propertyType: 'apartment' | 'villa' | 'townhouse' | 'penthouse' | 'plot' | 'office' | 'retail';
+  /** Listing origin — owner/POA self-listing vs developer/agent listing. */
+  source: 'owner' | 'developer';
   city: string;
   community: string | null;
   building: string | null;
