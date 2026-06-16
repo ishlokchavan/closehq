@@ -1,18 +1,24 @@
 import type { Metadata } from 'next';
 import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
+import type { AgentOption } from '@/components/portal/search/property-filter-dropdowns';
 import { PropertyResults } from '@/components/portal/property-results';
 import type { FilterParams } from '@/components/portal/use-listing-filters';
 import { getListings } from '@/lib/portal/listings';
 import { getFilterOptions } from '@/lib/portal/filters';
+import { getAgents, getAgencies } from '@/lib/portal/agents';
+import { getDevelopers } from '@/lib/developers-data';
 import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Properties for Sale in Dubai | iClose',
   description:
-    'Search ready and secondary-market properties across Dubai and the UAE. Filter by community, property type, beds, price and amenities.',
+    'Search ready and secondary-market properties across Dubai and the UAE. Filter by community, property type, beds, price, developer, agent and keywords.',
 };
 
-const FILTER_KEYS = ['q', 'source', 'type', 'beds', 'baths', 'minPrice', 'maxPrice', 'minSize', 'maxSize', 'completion', 'verified'] as const;
+const FILTER_KEYS = [
+  'q', 'source', 'type', 'category', 'beds', 'baths', 'minPrice', 'maxPrice', 'minSize', 'maxSize',
+  'completion', 'verified', 'keywords', 'developers', 'agents',
+] as const;
 
 export default async function PropertiesPage({
   searchParams,
@@ -28,14 +34,29 @@ export default async function PropertiesPage({
 
   const locale = await getLocale();
   const q = params.q;
-  const [listings, options] = await Promise.all([
+  const [listings, options, agents, agencies] = await Promise.all([
     getListings({ purpose: 'sale', q }, locale),
     getFilterOptions(),
+    getAgents(),
+    getAgencies(),
   ]);
+
+  const developerOptions = getDevelopers().map((d) => d.name);
+  const agentOptions: AgentOption[] = [
+    ...agencies.map((a) => ({ name: a.name, type: 'company' as const })),
+    ...agents.map((a) => ({ name: a.fullName, type: 'person' as const })),
+  ];
 
   return (
     <>
-      <ResultsFilterBar active="properties" defaultQuery={q ?? ''} params={params} options={options} />
+      <ResultsFilterBar
+        active="properties"
+        defaultQuery={q ?? ''}
+        params={params}
+        options={options}
+        developerOptions={developerOptions}
+        agentOptions={agentOptions}
+      />
       <section className="container-wide py-6">
         <PropertyResults
           listings={listings}

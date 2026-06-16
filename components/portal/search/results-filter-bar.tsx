@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { SEARCH_TABS, type SearchTabKey } from '@/lib/portal-config';
 import { useListingFilters, type FilterParams } from '@/components/portal/use-listing-filters';
 import type { FilterOptions } from '@/lib/portal/filters';
-import { PropertyFilterDropdowns } from './property-filter-dropdowns';
+import { PropertyFilterDropdowns, type AgentOption } from './property-filter-dropdowns';
 import { NewReleaseFilterDropdowns } from './newrelease-filter-dropdowns';
 import { SelectDropdown, RangeDropdown } from './select-dropdown';
 
@@ -30,11 +30,15 @@ export function ResultsFilterBar({
   defaultQuery = '',
   params = {},
   options,
+  developerOptions,
+  agentOptions,
 }: {
   active: SearchTabKey;
   defaultQuery?: string;
   params?: FilterParams;
   options?: FilterOptions;
+  developerOptions?: string[];
+  agentOptions?: AgentOption[];
 }) {
   const { setParams } = useListingFilters(params);
   const [query, setQuery] = useState(defaultQuery);
@@ -78,7 +82,7 @@ export function ResultsFilterBar({
           </div>
           <div className="flex items-center gap-2 overflow-x-auto sm:flex-wrap sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-0.5 sm:pb-0">
             {active === 'properties' && options ? (
-              <PropertyFilterDropdowns params={params} options={options} />
+              <PropertyFilterDropdowns params={params} options={options} developerOptions={developerOptions} agentOptions={agentOptions} />
             ) : active === 'new-releases' && options ? (
               <NewReleaseFilterDropdowns params={params} options={options} />
             ) : active === 'transactions' && options ? (

@@ -27,6 +27,9 @@ export interface Listing {
   paymentPlan?: string | null;
   developerName?: string | null;
   developerLogo?: string | null;
+  /** Listing agent / agency (for the agent-agency filter; null for owner-only). */
+  agentName?: string | null;
+  agencyName?: string | null;
 }
 
 export interface ListingFilters {

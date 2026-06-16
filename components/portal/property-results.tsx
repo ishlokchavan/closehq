@@ -46,6 +46,7 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
 
   const source = (get('source') as Source) || 'all';
   const type = get('type') ?? '';
+  const categoryFilter = get('category') ?? '';
   const beds = get('beds') ?? '';
   const baths = get('baths') ?? '';
   const minPrice = Number(get('minPrice')) || 0;
@@ -54,6 +55,9 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
   const maxSize = Number(get('maxSize')) || Infinity;
   const completion = get('completion') ?? '';
   const verified = get('verified') === 'true';
+  const keywords = (get('keywords') ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+  const developers = (get('developers') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  const agents = (get('agents') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
 
   const bySource = useMemo(
     () => (source === 'all' ? listings : listings.filter((l) => l.source === source)),
@@ -64,6 +68,7 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
     () =>
       bySource.filter((l) => {
         if (type && l.propertyType !== type) return false;
+        if (categoryFilter && l.category !== categoryFilter) return false;
         if (beds && !matchBeds(l, beds)) return false;
         if (baths && !matchBaths(l, baths)) return false;
         if (l.priceAed < minPrice || l.priceAed > maxPrice) return false;
@@ -71,9 +76,15 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
         if (area < minSize || area > maxSize) return false;
         if (completion && l.completion !== completion) return false;
         if (verified && !l.isVerified) return false;
+        if (developers.length && !developers.includes(l.developerName ?? '')) return false;
+        if (agents.length && !agents.includes(l.agentName ?? '') && !agents.includes(l.agencyName ?? '')) return false;
+        if (keywords.length) {
+          const hay = [l.title, l.description, l.community, l.building, ...(l.amenities ?? [])].filter(Boolean).join(' ').toLowerCase();
+          if (!keywords.every((k) => hay.includes(k))) return false;
+        }
         return true;
       }),
-    [bySource, type, beds, baths, minPrice, maxPrice, minSize, maxSize, completion, verified],
+    [bySource, type, categoryFilter, beds, baths, minPrice, maxPrice, minSize, maxSize, completion, verified, developers, agents, keywords],
   );
 
   const typeCounts = useMemo(() => {

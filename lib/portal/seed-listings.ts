@@ -12,7 +12,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'owner',
     city: 'Dubai', community: 'Downtown Dubai', building: 'Burj Vista',
     bedrooms: 2, bathrooms: 3, areaSqft: 1340, priceAed: 3200000,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Concierge'], latitude: 25.1972, longitude: 55.2744,
+    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Concierge'], agentName: 'Sarah Al Mansoori', agencyName: 'Skyline Properties', latitude: 25.1972, longitude: 55.2744,
   },
   {
     id: 'seed-2', reference: 'IC-1002',
@@ -20,7 +20,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Dubai', community: 'Dubai Marina', building: 'Marina Gate',
     bedrooms: 1, bathrooms: 2, areaSqft: 820, priceAed: 1850000,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Beach access'], latitude: 25.0805, longitude: 55.1403,
+    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Beach access'], agentName: 'James Whitfield', agencyName: 'Marina Estates', latitude: 25.0805, longitude: 55.1403,
   },
   {
     id: 'seed-3', reference: 'IC-1003',
@@ -28,7 +28,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'villa', source: 'owner',
     city: 'Dubai', community: 'Palm Jumeirah', building: 'Signature Villas',
     bedrooms: 4, bathrooms: 5, areaSqft: 5200, priceAed: 22500000,
-    isVerified: true, coverImageUrl: null, amenities: ['Private pool', 'Beach access', 'Maid room'], latitude: 25.1124, longitude: 55.139,
+    isVerified: true, coverImageUrl: null, amenities: ['Private pool', 'Beach access', 'Maid room'], agentName: 'Mikhail Petrov', agencyName: 'Palm Luxury', latitude: 25.1124, longitude: 55.139,
   },
   {
     id: 'seed-4', reference: 'IC-1004',
@@ -45,7 +45,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'townhouse', source: 'owner',
     city: 'Dubai', community: 'Dubai Hills Estate', building: 'Maple',
     bedrooms: 3, bathrooms: 4, areaSqft: 2100, priceAed: 4350000,
-    isVerified: true, coverImageUrl: null, amenities: ['Park view', 'Community pool', 'Garden'], latitude: 25.103, longitude: 55.249,
+    isVerified: true, coverImageUrl: null, amenities: ['Park view', 'Community pool', 'Garden'], agentName: 'Priya Nair', agencyName: 'Hills Realty', latitude: 25.103, longitude: 55.249,
   },
   {
     id: 'seed-6', reference: 'IC-1006',
@@ -53,7 +53,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'rent', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'owner',
     city: 'Dubai', community: 'Business Bay', building: 'Peninsula',
     bedrooms: 2, bathrooms: 2, areaSqft: 1100, priceAed: 165000,
-    isVerified: true, coverImageUrl: null, amenities: ['Canal view', 'Gym', 'Furnished'], latitude: 25.186, longitude: 55.262,
+    isVerified: true, coverImageUrl: null, amenities: ['Canal view', 'Gym', 'Furnished'], agentName: 'Omar Haddad', agencyName: 'Skyline Properties', latitude: 25.186, longitude: 55.262,
   },
   {
     id: 'seed-7', reference: 'IC-1007',
@@ -70,7 +70,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'rent', completion: 'ready', category: 'commercial', propertyType: 'office', source: 'developer',
     city: 'Dubai', community: 'DIFC', building: 'Index Tower',
     bedrooms: null, bathrooms: 2, areaSqft: 3400, priceAed: 850000,
-    isVerified: true, coverImageUrl: null, amenities: ['Fitted', 'Covered parking', 'Reception'], latitude: 25.213, longitude: 55.281,
+    isVerified: true, coverImageUrl: null, amenities: ['Fitted', 'Covered parking', 'Reception'], agentName: 'Li Wei', agencyName: 'Creek Harbour Homes', latitude: 25.213, longitude: 55.281,
   },
   {
     id: 'seed-9', reference: 'IC-1009',
@@ -78,7 +78,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'villa', source: 'owner',
     city: 'Dubai', community: 'Arabian Ranches', building: 'Alvorada',
     bedrooms: 5, bathrooms: 6, areaSqft: 6100, priceAed: 9750000,
-    isVerified: true, coverImageUrl: null, amenities: ['Private pool', 'Garden', 'Maid room'], latitude: 25.052, longitude: 55.27,
+    isVerified: true, coverImageUrl: null, amenities: ['Private pool', 'Garden', 'Maid room'], agentName: 'Priya Nair', agencyName: 'Hills Realty', latitude: 25.052, longitude: 55.27,
   },
   {
     id: 'seed-10', reference: 'IC-1010',
@@ -133,6 +133,15 @@ export const SEED_LISTINGS: Listing[] = [
     bedrooms: 4, bathrooms: 5, areaSqft: 3500, priceAed: 2300000,
     isVerified: true, coverImageUrl: null, amenities: ['Beach access', 'Private pool', 'Marina'], latitude: 25.683, longitude: 55.778,
     handoverBy: 'Q2 2028', paymentPlan: '70/30', developerName: 'Al Hamra', developerLogo: 'https://d1fikckodunwer.cloudfront.net/dc32e8b3-6aef-4397-807c-03616743ff12',
+  },
+  {
+    id: 'seed-16', reference: 'IC-1016',
+    title: 'Retail unit for sale in Business Bay', description: 'Ground-floor retail/showroom unit with high footfall on the Business Bay canal.',
+    purpose: 'sale', completion: 'ready', category: 'commercial', propertyType: 'retail', source: 'developer',
+    city: 'Dubai', community: 'Business Bay', building: 'Bay Square',
+    bedrooms: null, bathrooms: 1, areaSqft: 1450, priceAed: 4200000,
+    isVerified: true, coverImageUrl: null, amenities: ['Street access', 'Parking', 'Glass frontage'],
+    agentName: 'Omar Haddad', agencyName: 'Skyline Properties', latitude: 25.188, longitude: 55.265,
   },
 ];
 
