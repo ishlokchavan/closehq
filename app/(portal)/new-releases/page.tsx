@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { Sparkles } from 'lucide-react';
 import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
-import { ProjectCard } from '@/components/portal/project-card';
+import { ProjectResults } from '@/components/portal/project-results';
+import type { FilterParams } from '@/components/portal/use-listing-filters';
 import { getListings } from '@/lib/portal/listings';
+import { getFilterOptions } from '@/lib/portal/filters';
+import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'New Releases & Off-Plan Projects in Dubai | iClose',
@@ -10,21 +13,34 @@ export const metadata: Metadata = {
     'Discover new off-plan launches in Dubai. Filter by handover date, payment plan and completion. Invest in off-plan for special pricing and credits.',
 };
 
+const FILTER_KEYS = ['q', 'type', 'handover', 'paymentPlan', 'minPrice', 'maxPrice'] as const;
+
 export default async function NewReleasesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { q } = await searchParams;
-  const listings = await getListings({ completion: 'off_plan', q });
+  const sp = await searchParams;
+  const params: FilterParams = {};
+  for (const k of FILTER_KEYS) {
+    const v = sp[k];
+    if (typeof v === 'string' && v) params[k] = v;
+  }
+
+  const locale = await getLocale();
+  const q = params.q;
+  const [projects, options] = await Promise.all([
+    getListings({ completion: 'off_plan', q }, locale),
+    getFilterOptions(),
+  ]);
 
   return (
     <>
-      <ResultsFilterBar active="new-releases" defaultQuery={q ?? ''} params={q ? { q } : {}} />
+      <ResultsFilterBar active="new-releases" defaultQuery={q ?? ''} params={params} options={options} />
       <section className="container-wide py-6">
         {/* Ask iExpert assistant entry (renamed from the competitor's "Ask Scout") */}
         <div className="mb-6 flex items-center gap-3 card-surface px-5 py-4">
-          <span className="flex items-center justify-center h-9 w-9 rounded-full bg-journey-offplan/20">
+          <span className="flex items-center justify-center h-9 w-9 rounded-full bg-journey-offplan/20 shrink-0">
             <Sparkles className="h-4 w-4 text-ink" />
           </span>
           <div>
@@ -37,21 +53,7 @@ export default async function NewReleasesPage({
           </div>
         </div>
 
-        <p className="text-[14px] text-graphite mb-5">
-          {listings.length} off-plan {listings.length === 1 ? 'project' : 'projects'} in UAE
-          {q ? <> for “{q}”</> : null}
-        </p>
-        {listings.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {listings.map((listing) => (
-              <ProjectCard key={listing.id} project={listing} />
-            ))}
-          </div>
-        ) : (
-          <div className="card-mist rounded-apple px-6 py-10 text-center text-[14px] text-graphite-dark">
-            No off-plan projects match your search yet.
-          </div>
-        )}
+        <ProjectResults projects={projects} params={params} />
       </section>
     </>
   );

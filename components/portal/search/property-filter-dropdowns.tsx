@@ -1,23 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FilterDropdown } from './filter-dropdown';
 import { useListingFilters, type FilterParams } from '@/components/portal/use-listing-filters';
-
-const TYPES: { value: string; label: string }[] = [
-  { value: '', label: 'All types' },
-  { value: 'apartment', label: 'Apartment' },
-  { value: 'villa', label: 'Villa' },
-  { value: 'townhouse', label: 'Townhouse' },
-  { value: 'penthouse', label: 'Penthouse' },
-  { value: 'plot', label: 'Plot' },
-  { value: 'office', label: 'Office' },
-  { value: 'retail', label: 'Retail' },
-];
-const BEDS = ['Studio', '1', '2', '3', '4', '5+'];
-const BATHS = ['1', '2', '3', '4', '5+'];
+import type { FilterOptions } from '@/lib/portal/filters';
 
 function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
@@ -34,21 +21,21 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
-/** Functional filter dropdowns for the Properties results bar (URL-backed). */
-export function PropertyFilterDropdowns({ params }: { params: FilterParams }) {
+/** Functional filter dropdowns for the Properties results bar (URL + DB-backed options). */
+export function PropertyFilterDropdowns({ params, options }: { params: FilterParams; options: FilterOptions }) {
   const { get, setParams } = useListingFilters(params);
 
-  const type = get('type') ?? '';
-  const beds = get('beds') ?? '';
-  const baths = get('baths') ?? '';
-  const minPrice = get('minPrice') ?? '';
-  const maxPrice = get('maxPrice') ?? '';
-  const minSize = get('minSize') ?? '';
-  const maxSize = get('maxSize') ?? '';
-  const completion = get('completion') ?? '';
+  const type = get('type');
+  const beds = get('beds');
+  const baths = get('baths');
+  const minPrice = get('minPrice');
+  const maxPrice = get('maxPrice');
+  const minSize = get('minSize');
+  const maxSize = get('maxSize');
+  const completion = get('completion');
   const verified = get('verified') === 'true';
 
-  const typeLabel = TYPES.find((t) => t.value === type)?.label;
+  const typeLabel = options.propertyTypes.find((t) => t.value === type)?.label;
   const bedBathLabel = beds || baths ? `${beds ? `${beds} bed` : ''}${beds && baths ? ' · ' : ''}${baths ? `${baths} bath` : ''}` : null;
   const priceLabel = minPrice || maxPrice ? `${minPrice || '0'}–${maxPrice || '∞'}` : null;
   const sizeLabel = minSize || maxSize ? `${minSize || '0'}–${maxSize || '∞'} sqft` : null;
@@ -57,16 +44,16 @@ export function PropertyFilterDropdowns({ params }: { params: FilterParams }) {
   return (
     <>
       {/* Type */}
-      <FilterDropdown label={typeLabel && type ? typeLabel : 'Type'} active={!!type} width="w-56">
+      <FilterDropdown label={type && typeLabel ? typeLabel : 'Type'} active={!!type} width="sm:w-56">
         {(close) => (
           <div className="grid grid-cols-1 gap-0.5">
-            {TYPES.map((t) => (
+            {options.propertyTypes.map((t) => (
               <button
                 key={t.value || 'all'}
                 type="button"
                 onClick={() => { setParams({ type: t.value || null }); close(); }}
                 className={cn(
-                  'text-start px-3 py-2 rounded-lg text-[14px] hover:bg-mist transition-colors',
+                  'text-start px-3 py-2.5 rounded-lg text-[14px] hover:bg-mist transition-colors',
                   type === t.value ? 'text-accent font-medium' : 'text-ink',
                 )}
               >
@@ -78,14 +65,14 @@ export function PropertyFilterDropdowns({ params }: { params: FilterParams }) {
       </FilterDropdown>
 
       {/* Beds & Baths */}
-      <FilterDropdown label={bedBathLabel ?? 'Beds & Baths'} active={!!(beds || baths)} width="w-72">
+      <FilterDropdown label={bedBathLabel ?? 'Beds & Baths'} active={!!(beds || baths)} width="sm:w-72">
         {() => (
           <div className="space-y-4">
             <div>
               <p className="text-[12px] text-graphite mb-2">Bedrooms</p>
               <div className="flex flex-wrap gap-2">
                 <Chip active={!beds} onClick={() => setParams({ beds: null })}>Any</Chip>
-                {BEDS.map((b) => (
+                {options.beds.map((b) => (
                   <Chip key={b} active={beds === b} onClick={() => setParams({ beds: b })}>{b}</Chip>
                 ))}
               </div>
@@ -94,7 +81,7 @@ export function PropertyFilterDropdowns({ params }: { params: FilterParams }) {
               <p className="text-[12px] text-graphite mb-2">Bathrooms</p>
               <div className="flex flex-wrap gap-2">
                 <Chip active={!baths} onClick={() => setParams({ baths: null })}>Any</Chip>
-                {BATHS.map((b) => (
+                {options.baths.map((b) => (
                   <Chip key={b} active={baths === b} onClick={() => setParams({ baths: b })}>{b}</Chip>
                 ))}
               </div>
@@ -114,14 +101,14 @@ export function PropertyFilterDropdowns({ params }: { params: FilterParams }) {
       </FilterDropdown>
 
       {/* More filters */}
-      <FilterDropdown label={moreCount ? `More filters (${moreCount})` : 'More filters'} active={moreCount > 0} width="w-64">
+      <FilterDropdown label={moreCount ? `More filters (${moreCount})` : 'More filters'} active={moreCount > 0} width="sm:w-64">
         {() => (
           <div className="space-y-4">
             <div>
               <p className="text-[12px] text-graphite mb-2">Completion</p>
               <div className="flex flex-wrap gap-2">
-                {[['', 'Any'], ['ready', 'Ready'], ['off_plan', 'Off-plan']].map(([v, l]) => (
-                  <Chip key={l} active={completion === v} onClick={() => setParams({ completion: v || null })}>{l}</Chip>
+                {options.completion.map((c) => (
+                  <Chip key={c.label} active={completion === c.value} onClick={() => setParams({ completion: c.value || null })}>{c.label}</Chip>
                 ))}
               </div>
             </div>
@@ -175,5 +162,3 @@ function RangePanel({
     </div>
   );
 }
-
-export { SlidersHorizontal };

@@ -6,7 +6,9 @@ import { Search, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SEARCH_TABS, type SearchTabKey } from '@/lib/portal-config';
 import { useListingFilters, type FilterParams } from '@/components/portal/use-listing-filters';
+import type { FilterOptions } from '@/lib/portal/filters';
 import { PropertyFilterDropdowns } from './property-filter-dropdowns';
+import { NewReleaseFilterDropdowns } from './newrelease-filter-dropdowns';
 
 /** Compact filter sets per vertical (Proffer/PF results-bar style). */
 const BAR: Record<SearchTabKey, { placeholder: string; filters: string[] }> = {
@@ -24,10 +26,12 @@ export function ResultsFilterBar({
   active,
   defaultQuery = '',
   params = {},
+  options,
 }: {
   active: SearchTabKey;
   defaultQuery?: string;
   params?: FilterParams;
+  options?: FilterOptions;
 }) {
   const { setParams } = useListingFilters(params);
   const [query, setQuery] = useState(defaultQuery);
@@ -57,9 +61,9 @@ export function ResultsFilterBar({
           ))}
         </div>
 
-        {/* Search + filter pills */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="relative flex-1 min-w-[220px]">
+        {/* Search (full-width on mobile) + filter dropdowns (scroll row on mobile) */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+          <div className="relative flex-1 min-w-0 sm:min-w-[220px]">
             <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-graphite" />
             <input
               value={query}
@@ -69,34 +73,38 @@ export function ResultsFilterBar({
               className="w-full h-10 ps-10 pe-3 rounded-full border border-hairline text-[14px] text-ink placeholder:text-graphite focus:outline-none focus:ring-2 focus:ring-accent/40"
             />
           </div>
-          {active === 'properties' ? (
-            <PropertyFilterDropdowns params={params} />
-          ) : (
-            <>
-              {cfg.filters.map((f) => (
+          <div className="flex items-center gap-2 overflow-x-auto sm:flex-wrap sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 pb-0.5 sm:pb-0">
+            {active === 'properties' && options ? (
+              <PropertyFilterDropdowns params={params} options={options} />
+            ) : active === 'new-releases' && options ? (
+              <NewReleaseFilterDropdowns params={params} options={options} />
+            ) : (
+              <>
+                {cfg.filters.map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors whitespace-nowrap"
+                  >
+                    {f} <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+                  </button>
+                ))}
                 <button
-                  key={f}
                   type="button"
-                  className="hidden sm:inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors"
+                  className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors whitespace-nowrap"
                 >
-                  {f} <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+                  <SlidersHorizontal className="h-3.5 w-3.5" /> More filters
                 </button>
-              ))}
-              <button
-                type="button"
-                className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors"
-              >
-                <SlidersHorizontal className="h-3.5 w-3.5" /> More filters
-              </button>
-            </>
-          )}
-          <button
-            type="button"
-            onClick={onSearch}
-            className="h-10 px-5 rounded-full text-[14px] font-medium text-white bg-accent hover:bg-accent-hover transition-colors"
-          >
-            Search
-          </button>
+              </>
+            )}
+            <button
+              type="button"
+              onClick={onSearch}
+              className="h-10 px-5 rounded-full text-[14px] font-medium text-white bg-accent hover:bg-accent-hover transition-colors whitespace-nowrap"
+            >
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </div>

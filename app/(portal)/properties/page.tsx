@@ -3,6 +3,7 @@ import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar'
 import { PropertyResults } from '@/components/portal/property-results';
 import type { FilterParams } from '@/components/portal/use-listing-filters';
 import { getListings } from '@/lib/portal/listings';
+import { getFilterOptions } from '@/lib/portal/filters';
 import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
@@ -27,11 +28,14 @@ export default async function PropertiesPage({
 
   const locale = await getLocale();
   const q = params.q;
-  const listings = await getListings({ purpose: 'sale', q }, locale);
+  const [listings, options] = await Promise.all([
+    getListings({ purpose: 'sale', q }, locale),
+    getFilterOptions(),
+  ]);
 
   return (
     <>
-      <ResultsFilterBar active="properties" defaultQuery={q ?? ''} params={params} />
+      <ResultsFilterBar active="properties" defaultQuery={q ?? ''} params={params} options={options} />
       <section className="container-wide py-6">
         <PropertyResults
           listings={listings}
