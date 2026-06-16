@@ -14,6 +14,17 @@ const TYPE_LABEL: Record<Listing['propertyType'], string> = {
   plot: 'Plot', office: 'Office', retail: 'Retail',
 };
 
+function priceShort(n: number): string {
+  return n >= 1_000_000 ? `${(n / 1_000_000).toFixed(1)}M` : `${Math.round(n / 1000)}K`;
+}
+
+/** Decorative pin positions over the placeholder map. */
+const PIN_POS: { top: string; left: string }[] = [
+  { top: '22%', left: '30%' }, { top: '38%', left: '62%' }, { top: '55%', left: '40%' },
+  { top: '30%', left: '78%' }, { top: '68%', left: '58%' }, { top: '48%', left: '20%' },
+  { top: '72%', left: '32%' }, { top: '60%', left: '80%' },
+];
+
 /** Proffer/PF-style results: source tabs, type quick-filters, Map/List toggle. */
 export function PropertyResults({ listings, title }: { listings: Listing[]; title: string }) {
   const [source, setSource] = useState<Source>('all');
@@ -101,12 +112,30 @@ export function PropertyResults({ listings, title }: { listings: Listing[]; titl
 
       {/* Results */}
       {view === 'map' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div className="rounded-apple bg-mist min-h-[420px] flex items-center justify-center text-graphite">
-            <span className="inline-flex items-center gap-2 text-[14px]"><MapPin className="h-4 w-4" /> Map view</span>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+          {/* Map pane with floating price pins (placeholder map) */}
+          <div className="lg:col-span-3 relative rounded-apple bg-[#eaeef0] min-h-[560px] overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center text-graphite/60">
+              <span className="inline-flex items-center gap-2 text-[13px]"><MapPin className="h-4 w-4" /> Map view</span>
+            </div>
+            {filtered.slice(0, 8).map((l, i) => (
+              <span
+                key={l.id}
+                className="absolute rounded-full bg-accent text-white text-[12px] font-medium px-2.5 py-1 shadow-card -translate-x-1/2 -translate-y-1/2"
+                style={PIN_POS[i % PIN_POS.length]}
+              >
+                From {priceShort(l.priceAed)}
+              </span>
+            ))}
           </div>
-          <div className="space-y-4 max-h-[640px] overflow-auto pe-1">
-            {filtered.map((l) => <ListingCard key={l.id} listing={l} />)}
+          {/* Side panel: "X Listings" + scrollable cards */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[15px] font-medium text-ink">{filtered.length} Listings for Buy</span>
+            </div>
+            <div className="space-y-4 max-h-[520px] overflow-auto pe-1">
+              {filtered.map((l) => <ListingCard key={l.id} listing={l} />)}
+            </div>
           </div>
         </div>
       ) : filtered.length > 0 ? (
