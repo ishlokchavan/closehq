@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   ImageIcon, BedDouble, Bath, Maximize, BadgeCheck, MapPin, ChevronLeft,
-  Building2, Tag, ShieldCheck, Phone, Mail,
+  Building2, Tag, ShieldCheck, Phone, Mail, MessageCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getListingByReference, getListingReferences, formatPriceAed } from '@/lib/portal/listings';
@@ -116,6 +116,28 @@ export default async function ListingDetailPage({
             </section>
           )}
 
+          {/* Property information (PF/Proffer-style key/value table) */}
+          <section className="mt-7">
+            <h2 className="text-[18px] font-semibold text-ink mb-3" style={{ letterSpacing: '-0.015em' }}>Property information</h2>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0 rounded-apple border border-hairline/60 overflow-hidden">
+              {[
+                ['Type', TYPE_LABEL[listing.propertyType]],
+                ['Purpose', listing.purpose === 'rent' ? 'For rent' : 'For sale'],
+                ['Completion', listing.completion === 'off_plan' ? 'Off-plan' : 'Ready'],
+                ['Category', listing.category === 'commercial' ? 'Commercial' : 'Residential'],
+                ['Reference', listing.reference],
+                ['City', listing.city],
+                ['Community', listing.community ?? '—'],
+                ['Area', listing.areaSqft != null ? `${listing.areaSqft.toLocaleString('en-US')} sqft` : '—'],
+              ].map(([k, v], i) => (
+                <div key={k} className={`flex items-center justify-between gap-4 px-4 py-3 text-[14px] ${i % 2 ? 'sm:bg-transparent' : 'bg-mist/50 sm:bg-mist/50'}`}>
+                  <dt className="text-graphite">{k}</dt>
+                  <dd className="text-ink font-medium text-end">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
           {/* Amenities */}
           {listing.amenities.length > 0 && (
             <section className="mt-7">
@@ -161,14 +183,26 @@ export default async function ListingDetailPage({
                   <Mail className="h-4 w-4" /> Enquire now
                 </Button>
               </Link>
-              <Link href={`/buy?ref=${listing.reference}`}>
-                <Button variant="outline" size="md" className="w-full">
-                  <Phone className="h-4 w-4" /> Request a call
-                </Button>
-              </Link>
+              <div className="grid grid-cols-2 gap-2.5">
+                <Link href={`/buy?ref=${listing.reference}`}>
+                  <Button variant="outline" size="md" className="w-full">
+                    <Phone className="h-4 w-4" /> Call
+                  </Button>
+                </Link>
+                <a
+                  href={`https://wa.me/${(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '971501234567').replace(/\D/g, '')}?text=${encodeURIComponent(`Hi, I'm interested in listing ${listing.reference}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" size="md" className="w-full">
+                    <MessageCircle className="h-4 w-4" /> WhatsApp
+                  </Button>
+                </a>
+              </div>
             </div>
-            <p className="text-[12px] text-graphite mt-4 text-center">
-              We&apos;ll connect you with the iClose team — no commission, ever.
+            <p className="flex items-center justify-center gap-1.5 text-[12px] text-graphite mt-4 text-center">
+              <BadgeCheck className="h-3.5 w-3.5 text-journey-listing" />
+              Verified by iClose · permit checked at review
             </p>
           </div>
         </aside>
