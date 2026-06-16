@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { TrendingUp } from 'lucide-react';
 import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
+import type { FilterParams } from '@/components/portal/use-listing-filters';
 import { cn } from '@/lib/utils';
 import { getTransactions } from '@/lib/portal/transactions';
+import { getFilterOptions } from '@/lib/portal/filters';
 
 export const metadata: Metadata = {
   title: 'Dubai Property Transactions & Sold Prices | iClose',
@@ -14,25 +16,50 @@ export const metadata: Metadata = {
 export default async function TransactionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; tab?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { q, tab } = await searchParams;
-  const activeKind: 'sold' | 'rented' = tab === 'rented' ? 'rented' : 'sold';
-  const txns = await getTransactions({ kind: activeKind, q });
+  const sp = await searchParams;
+  const str = (k: string) => (typeof sp[k] === 'string' && sp[k] ? (sp[k] as string) : undefined);
+  const q = str('q');
+  const activeKind: 'sold' | 'rented' = str('tab') === 'rented' ? 'rented' : 'sold';
+  const type = str('type');
+  const beds = str('beds');
+  const minPrice = Number(str('minPrice')) || 0;
+  const maxPrice = Number(str('maxPrice')) || Infinity;
+
+  const [allKind, options] = await Promise.all([
+    getTransactions({ kind: activeKind, q }),
+    getFilterOptions(),
+  ]);
+
+  // Client-style filters applied server-side over the kind/q result set.
+  const txns = allKind.filter((t) => {
+    if (type && t.propertyType.toLowerCase() !== type) return false;
+    if (beds) {
+      if (beds === 'Studio' ? t.bedrooms !== 0 : beds === '5+' ? (t.bedrooms ?? 0) < 5 : t.bedrooms !== Number(beds)) return false;
+    }
+    if (t.priceAed < minPrice || t.priceAed > maxPrice) return false;
+    return true;
+  });
+
+  const params: FilterParams = { tab: activeKind };
+  for (const [k, v] of Object.entries({ q, type, beds, minPrice: str('minPrice'), maxPrice: str('maxPrice') })) {
+    if (typeof v === 'string' && v) params[k] = v;
+  }
 
   const max = Math.max(1, ...txns.map((t) => t.priceAed));
   const avg = txns.length ? Math.round(txns.reduce((s, t) => s + t.priceAed, 0) / txns.length) : 0;
 
   return (
     <>
-      <ResultsFilterBar active="transactions" defaultQuery={q ?? ''} params={{ tab: activeKind, ...(q ? { q } : {}) }} />
+      <ResultsFilterBar active="transactions" defaultQuery={q ?? ''} params={params} options={options} />
       <section className="container-wide py-6 space-y-6">
         {/* Sold / Rented toggle */}
         <div className="inline-flex items-center gap-1 p-1 rounded-full bg-mist">
           {(['sold', 'rented'] as const).map((k) => (
             <Link
               key={k}
-              href={`/transactions?tab=${k}${q ? `&q=${encodeURIComponent(q)}` : ''}`}
+              href={`/transactions?${new URLSearchParams({ ...params, tab: k }).toString()}`}
               className={cn(
                 'px-4 py-1.5 text-[13px] rounded-full capitalize transition-colors',
                 activeKind === k ? 'bg-paper text-ink shadow-card font-medium' : 'text-graphite hover:text-ink',

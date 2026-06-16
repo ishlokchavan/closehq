@@ -9,6 +9,9 @@ import { useListingFilters, type FilterParams } from '@/components/portal/use-li
 import type { FilterOptions } from '@/lib/portal/filters';
 import { PropertyFilterDropdowns } from './property-filter-dropdowns';
 import { NewReleaseFilterDropdowns } from './newrelease-filter-dropdowns';
+import { SelectDropdown, RangeDropdown } from './select-dropdown';
+
+const strOpts = (vals: string[], all: string) => [{ value: '', label: all }, ...vals.map((v) => ({ value: v, label: v }))];
 
 /** Compact filter sets per vertical (Proffer/PF results-bar style). */
 const BAR: Record<SearchTabKey, { placeholder: string; filters: string[] }> = {
@@ -78,6 +81,17 @@ export function ResultsFilterBar({
               <PropertyFilterDropdowns params={params} options={options} />
             ) : active === 'new-releases' && options ? (
               <NewReleaseFilterDropdowns params={params} options={options} />
+            ) : active === 'transactions' && options ? (
+              <>
+                <SelectDropdown label="Type" paramKey="type" options={options.propertyTypes} params={params} />
+                <SelectDropdown label="Beds" paramKey="beds" options={strOpts(options.beds, 'Any beds')} params={params} />
+                <RangeDropdown label="Price" unit="AED" minKey="minPrice" maxKey="maxPrice" params={params} />
+              </>
+            ) : active === 'agents' && options ? (
+              <>
+                <SelectDropdown label="Language" paramKey="language" options={strOpts(options.languages, 'Any language')} params={params} />
+                <SelectDropdown label="Nationality" paramKey="nationality" options={strOpts(options.nationalities, 'Any nationality')} params={params} />
+              </>
             ) : (
               <>
                 {cfg.filters.map((f) => (

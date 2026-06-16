@@ -47,8 +47,8 @@ export const DEFAULT_FILTER_OPTIONS: FilterOptions = {
   ],
   handoverYears: ['2026', '2027', '2028', '2029', '2030+'],
   paymentPlans: ['40/60', '50/50', '60/40', '70/30', '80/20', '90/10'],
-  languages: ['English', 'Arabic', 'Hindi', 'Urdu', 'Russian', 'Chinese', 'French'],
-  nationalities: ['UAE', 'India', 'Pakistan', 'United Kingdom', 'Russia', 'Egypt', 'Lebanon', 'China'],
+  languages: ['English', 'Arabic', 'Hindi', 'Russian', 'Chinese', 'Urdu', 'French'],
+  nationalities: ['UAE', 'UK', 'India', 'Russia', 'China', 'Jordan', 'Pakistan', 'Egypt'],
   priceRangeAed: { min: 0, max: 50_000_000 },
   areaRangeSqft: { min: 0, max: 20_000 },
 };

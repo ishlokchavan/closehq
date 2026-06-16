@@ -3,13 +3,21 @@
 import { useState } from 'react';
 import { User, Building2, BadgeCheck, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { FilterParams } from '@/components/portal/use-listing-filters';
 import type { Agent, Agency } from '@/lib/portal/agents';
 
 type Tab = 'agents' | 'companies';
 
-/** Agents | Companies sub-tab toggle + result cards (data from the server). */
-export function AgentsDirectory({ agents, agencies }: { agents: Agent[]; agencies: Agency[] }) {
+/** Agents | Companies sub-tab toggle + result cards (filtered by language/nationality). */
+export function AgentsDirectory({ agents, agencies, params = {} }: { agents: Agent[]; agencies: Agency[]; params?: FilterParams }) {
   const [tab, setTab] = useState<Tab>('agents');
+
+  const { language, nationality } = params;
+  const filteredAgents = agents.filter((a) => {
+    if (language && !a.languages.includes(language)) return false;
+    if (nationality && a.nationality !== nationality) return false;
+    return true;
+  });
 
   return (
     <div className="space-y-5">
@@ -23,14 +31,19 @@ export function AgentsDirectory({ agents, agencies }: { agents: Agent[]; agencie
               tab === t ? 'border-accent text-ink font-medium' : 'border-transparent text-graphite hover:text-ink',
             )}
           >
-            {t} <span className="text-graphite">({t === 'agents' ? agents.length : agencies.length})</span>
+            {t} <span className="text-graphite">({t === 'agents' ? filteredAgents.length : agencies.length})</span>
           </button>
         ))}
       </div>
 
       {tab === 'agents' ? (
+        filteredAgents.length === 0 ? (
+          <div className="card-mist rounded-apple px-6 py-10 text-center text-[14px] text-graphite-dark">
+            No agents match these filters.
+          </div>
+        ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {agents.map((agent) => (
+          {filteredAgents.map((agent) => (
             <article key={agent.id} className="card-surface p-5">
               <div className="flex items-center gap-4">
                 <span className="flex items-center justify-center h-14 w-14 rounded-full bg-mist text-hairline shrink-0">
@@ -61,6 +74,7 @@ export function AgentsDirectory({ agents, agencies }: { agents: Agent[]; agencie
             </article>
           ))}
         </div>
+        )
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {agencies.map((agency) => (
