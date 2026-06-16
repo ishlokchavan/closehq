@@ -47,8 +47,11 @@ export default async function PortalHomePage() {
   return (
     <>
       {/* Hero + tabbed search over the mesh-gradient wash (Figma mid-fi) */}
-      <section className="relative overflow-hidden">
-        <MeshGradient className="-top-24" />
+      {/* Clip only the gradient layer (not the section) so open search dropdowns aren't cut off. */}
+      <section className="relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <MeshGradient className="-top-24" />
+        </div>
         <div className="relative container-wide pt-20 pb-20 text-center">
           <h1 className="display-lg max-w-4xl mx-auto text-balance">
             <CommissionHeadline locale={locale} t={t} />
