@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { SearchHero } from '@/components/portal/search/search-hero';
+import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
 import { AgentsDirectory } from '@/components/portal/agents-directory';
 import { getAgents, getAgencies } from '@/lib/portal/agents';
 
@@ -14,12 +14,8 @@ export default async function AgentsPage() {
 
   return (
     <>
-      <SearchHero
-        active="agents"
-        title="Agents"
-        subtitle="Find verified agents and agencies across Dubai — filter by area, language and nationality."
-      />
-      <section className="container-wide pb-20">
+      <ResultsFilterBar active="agents" />
+      <section className="container-wide py-6">
         <AgentsDirectory agents={agents} agencies={agencies} />
       </section>
     </>

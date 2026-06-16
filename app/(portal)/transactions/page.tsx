@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { TrendingUp } from 'lucide-react';
-import { SearchHero } from '@/components/portal/search/search-hero';
+import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
+import { cn } from '@/lib/utils';
 import { getTransactions } from '@/lib/portal/transactions';
 
 export const metadata: Metadata = {
@@ -15,20 +17,32 @@ export default async function TransactionsPage({
   searchParams: Promise<{ q?: string; tab?: string }>;
 }) {
   const { q, tab } = await searchParams;
-  const kind = tab === 'rented' ? 'rented' : tab === 'sold' ? 'sold' : undefined;
-  const txns = await getTransactions({ kind, q });
+  const activeKind: 'sold' | 'rented' = tab === 'rented' ? 'rented' : 'sold';
+  const txns = await getTransactions({ kind: activeKind, q });
 
   const max = Math.max(1, ...txns.map((t) => t.priceAed));
   const avg = txns.length ? Math.round(txns.reduce((s, t) => s + t.priceAed, 0) / txns.length) : 0;
 
   return (
     <>
-      <SearchHero
-        active="transactions"
-        title="Transactions"
-        subtitle="Explore historical sold prices and trends by area, building or community — know the market before you move."
-      />
-      <section className="container-wide pb-20 space-y-6">
+      <ResultsFilterBar active="transactions" defaultQuery={q ?? ''} />
+      <section className="container-wide py-6 space-y-6">
+        {/* Sold / Rented toggle */}
+        <div className="inline-flex items-center gap-1 p-1 rounded-full bg-mist">
+          {(['sold', 'rented'] as const).map((k) => (
+            <Link
+              key={k}
+              href={`/transactions?tab=${k}${q ? `&q=${encodeURIComponent(q)}` : ''}`}
+              className={cn(
+                'px-4 py-1.5 text-[13px] rounded-full capitalize transition-colors',
+                activeKind === k ? 'bg-paper text-ink shadow-card font-medium' : 'text-graphite hover:text-ink',
+              )}
+            >
+              {k}
+            </Link>
+          ))}
+        </div>
+
         <p className="text-[14px] text-graphite">
           {txns.length} {txns.length === 1 ? 'transaction' : 'transactions'}
           {q ? <> in “{q}”</> : null}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Sparkles } from 'lucide-react';
-import { SearchHero } from '@/components/portal/search/search-hero';
+import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
 import { ProjectCard } from '@/components/portal/project-card';
 import { getListings } from '@/lib/portal/listings';
 
@@ -20,12 +20,8 @@ export default async function NewReleasesPage({
 
   return (
     <>
-      <SearchHero
-        active="new-releases"
-        title="New Releases"
-        subtitle="Off-plan launches from Dubai's leading developers — special pricing, payment plans and credits."
-      />
-      <section className="container-wide pb-20">
+      <ResultsFilterBar active="new-releases" defaultQuery={q ?? ''} />
+      <section className="container-wide py-6">
         {/* Ask iExpert assistant entry (renamed from the competitor's "Ask Scout") */}
         <div className="mb-6 flex items-center gap-3 card-surface px-5 py-4">
           <span className="flex items-center justify-center h-9 w-9 rounded-full bg-journey-offplan/20">
