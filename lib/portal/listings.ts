@@ -9,6 +9,10 @@ function isSupabaseConfigured(): boolean {
   );
 }
 
+/** Columns selected for a listing (kept in one place to avoid drift). */
+const LISTING_SELECT =
+  'id,reference,purpose,completion,category,property_type,source,city,community,building,latitude,longitude,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,developer_name,developer_logo,handover_by,payment_plan,agent_name,agency_name,listing_translations(locale,title,description)';
+
 interface ListingRow {
   id: string;
   reference: string;
@@ -16,7 +20,7 @@ interface ListingRow {
   completion: Listing['completion'];
   category: Listing['category'];
   property_type: Listing['propertyType'];
-  source: 'owner' | 'poa' | 'agent';
+  source: 'owner' | 'developer';
   city: string;
   community: string | null;
   building: string | null;
@@ -29,6 +33,12 @@ interface ListingRow {
   is_verified: boolean;
   cover_image_url: string | null;
   amenities: string[] | null;
+  developer_name: string | null;
+  developer_logo: string | null;
+  handover_by: string | null;
+  payment_plan: string | null;
+  agent_name: string | null;
+  agency_name: string | null;
   listing_translations?: { locale: string; title: string; description: string | null }[];
 }
 
@@ -46,7 +56,7 @@ function rowToListing(row: ListingRow, locale: string): Listing {
     completion: row.completion,
     category: row.category,
     propertyType: row.property_type,
-    source: row.source === 'agent' ? 'developer' : 'owner',
+    source: row.source === 'developer' ? 'developer' : 'owner',
     city: row.city,
     community: row.community,
     building: row.building,
@@ -59,6 +69,12 @@ function rowToListing(row: ListingRow, locale: string): Listing {
     isVerified: row.is_verified,
     coverImageUrl: row.cover_image_url,
     amenities: row.amenities ?? [],
+    developerName: row.developer_name,
+    developerLogo: row.developer_logo,
+    handoverBy: row.handover_by,
+    paymentPlan: row.payment_plan,
+    agentName: row.agent_name,
+    agencyName: row.agency_name,
   };
 }
 
@@ -74,7 +90,7 @@ export async function getListings(filters: ListingFilters = {}, locale = 'en'): 
       let query = supabase
         .from('listings')
         .select(
-          'id,reference,purpose,completion,category,property_type,source,city,community,building,latitude,longitude,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
+          LISTING_SELECT,
         )
         .eq('status', 'active');
 
@@ -105,7 +121,7 @@ export async function getListingByReference(reference: string, locale = 'en'): P
       const { data, error } = await supabase
         .from('listings')
         .select(
-          'id,reference,purpose,completion,category,property_type,source,city,community,building,latitude,longitude,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
+          LISTING_SELECT,
         )
         .eq('status', 'active')
         .eq('reference', reference)

@@ -44,7 +44,7 @@ export async function getAgents(): Promise<Agent[]> {
       const { supabase } = await import('@/lib/supabase');
       const { data, error } = await supabase
         .from('agents')
-        .select('id,full_name,photo_url,rera_no,languages,nationality,is_verified,agencies(name)');
+        .select('id,full_name,photo_url,rera_no,languages,nationality,areas,is_verified,agencies(name)');
       if (!error && data && data.length > 0) {
         return (data as unknown as Array<Record<string, unknown>>).map((r) => ({
           id: String(r.id),
@@ -55,7 +55,7 @@ export async function getAgents(): Promise<Agent[]> {
           languages: (r.languages as string[]) ?? [],
           nationality: (r.nationality as string) ?? null,
           isVerified: Boolean(r.is_verified),
-          areas: [],
+          areas: (r.areas as string[]) ?? [],
         }));
       }
     } catch {
@@ -69,14 +69,17 @@ export async function getAgencies(): Promise<Agency[]> {
   if (isSupabaseConfigured()) {
     try {
       const { supabase } = await import('@/lib/supabase');
-      const { data, error } = await supabase.from('agencies').select('id,name,logo_url').eq('is_active', true);
+      const { data, error } = await supabase
+        .from('agencies')
+        .select('id,name,logo_url,areas,agents(count)')
+        .eq('is_active', true);
       if (!error && data && data.length > 0) {
         return (data as unknown as Array<Record<string, unknown>>).map((r) => ({
           id: String(r.id),
           name: String(r.name),
           logoUrl: (r.logo_url as string) ?? null,
-          agentsCount: 0,
-          areas: [],
+          agentsCount: Number((r.agents as Array<{ count?: number }> | undefined)?.[0]?.count ?? 0),
+          areas: (r.areas as string[]) ?? [],
         }));
       }
     } catch {
