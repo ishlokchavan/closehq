@@ -1,12 +1,23 @@
 import Link from 'next/link';
-import { ImageIcon, MapPin, CalendarClock, MessageCircle } from 'lucide-react';
+import { ImageIcon, MapPin, CalendarClock, MessageCircle, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import type { Listing } from '@/lib/portal/listing-types';
 
 /** Off-plan / new-project card (Property Finder new-projects pattern). */
-export function ProjectCard({ project }: { project: Listing }) {
+export function ProjectCard({
+  project,
+  selectable = false,
+  selected = false,
+  onToggleSelect,
+}: {
+  project: Listing;
+  selectable?: boolean;
+  selected?: boolean;
+  onToggleSelect?: () => void;
+}) {
   const wa = `https://wa.me/971501234567?text=${encodeURIComponent(`Hi, I'm interested in ${project.building ?? project.title} (${project.reference})`)}`;
   return (
-    <article className="card-surface overflow-hidden flex flex-col">
+    <article className={cn('card-surface overflow-hidden flex flex-col', selected && 'ring-2 ring-accent')}>
       <Link href={`/properties/${project.reference}`} className="relative aspect-[4/3] bg-mist flex items-center justify-center">
         {project.coverImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -14,7 +25,24 @@ export function ProjectCard({ project }: { project: Listing }) {
         ) : (
           <ImageIcon className="h-8 w-8 text-hairline" />
         )}
-        <div className="absolute top-3 start-3 flex flex-col gap-1.5 items-start">
+
+        {selectable && (
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleSelect?.(); }}
+            className={cn(
+              'absolute top-3 start-3 z-10 inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[12px] font-medium transition-colors',
+              selected ? 'bg-accent text-white' : 'bg-paper/90 text-ink hover:bg-paper',
+            )}
+          >
+            <span className={cn('flex items-center justify-center h-4 w-4 rounded border', selected ? 'bg-white border-white' : 'border-graphite')}>
+              {selected && <Check className="h-3 w-3 text-accent" />}
+            </span>
+            Compare
+          </button>
+        )}
+
+        <div className={cn('absolute start-3 flex flex-col gap-1.5 items-start', selectable ? 'top-12' : 'top-3')}>
           <span className="rounded-full bg-ink/80 text-white text-[11px] px-2.5 py-1">Off-Plan</span>
           {project.handoverBy && (
             <span className="inline-flex items-center gap-1 rounded-full bg-paper/90 text-ink text-[11px] px-2.5 py-1">

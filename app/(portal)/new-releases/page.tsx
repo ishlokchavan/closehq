@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
-import { Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
 import { ProjectResults } from '@/components/portal/project-results';
 import type { FilterParams } from '@/components/portal/use-listing-filters';
 import { getListings } from '@/lib/portal/listings';
 import { getFilterOptions } from '@/lib/portal/filters';
+import { getRandomExpert } from '@/lib/portal/experts';
 import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
     'Discover new off-plan launches in Dubai. Filter by handover date, payment plan and completion. Invest in off-plan for special pricing and credits.',
 };
 
-const FILTER_KEYS = ['q', 'type', 'handover', 'paymentPlan', 'minPrice', 'maxPrice'] as const;
+const FILTER_KEYS = ['q', 'type', 'handover', 'paymentPlan', 'minPrice', 'maxPrice', 'city'] as const;
 
 export default async function NewReleasesPage({
   searchParams,
@@ -38,22 +40,23 @@ export default async function NewReleasesPage({
     <>
       <ResultsFilterBar active="new-releases" defaultQuery={q ?? ''} params={params} options={options} />
       <section className="container-wide py-6">
-        {/* Ask iExpert assistant entry (renamed from the competitor's "Ask Scout") */}
-        <div className="mb-6 flex items-center gap-3 card-surface px-5 py-4">
+        {/* Ask iExpert — connects to the internal iClose team (not a third party). */}
+        <Link href="/developers/enquire" className="mb-6 flex items-center gap-3 card-surface px-5 py-4 hover:shadow-card-hover transition-shadow">
           <span className="flex items-center justify-center h-9 w-9 rounded-full bg-journey-offplan/20 shrink-0">
             <Sparkles className="h-4 w-4 text-ink" />
           </span>
-          <div>
+          <div className="flex-1">
             <p className="text-[15px] text-ink font-medium" style={{ letterSpacing: '-0.01em' }}>
-              Ask iExpert
+              Ask iExpert — talk to our team
             </p>
             <p className="text-[13px] text-graphite">
-              Get matched to off-plan projects that fit your budget and goals.
+              Our in-house experts match you to off-plan projects and confirm credits — no third parties.
             </p>
           </div>
-        </div>
+          <ArrowRight className="h-4 w-4 text-graphite rtl:rotate-180 shrink-0" />
+        </Link>
 
-        <ProjectResults projects={projects} params={params} />
+        <ProjectResults projects={projects} params={params} expert={getRandomExpert()} />
       </section>
     </>
   );

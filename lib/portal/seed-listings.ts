@@ -107,6 +107,33 @@ export const SEED_LISTINGS: Listing[] = [
     isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Park'], latitude: 25.15, longitude: 55.3,
     handoverBy: 'Q2 2029', paymentPlan: '60/40', developerName: 'Sobha', developerLogo: '/images/developers/sobha.svg',
   },
+  {
+    id: 'seed-13', reference: 'IC-1013',
+    title: 'Yas Park Views by Aldar', description: 'Off-plan apartments on Yas Island, Abu Dhabi with island and park views.',
+    purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
+    city: 'Abu Dhabi', community: 'Yas Island', building: 'Yas Park Views',
+    bedrooms: 2, bathrooms: 3, areaSqft: 1100, priceAed: 1490000,
+    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Park'], latitude: 24.498, longitude: 54.607,
+    handoverBy: 'Q1 2029', paymentPlan: '60/40', developerName: 'Aldar', developerLogo: 'https://d1fikckodunwer.cloudfront.net/e808f446-2eac-41e3-a0df-3e0849fd64ba',
+  },
+  {
+    id: 'seed-14', reference: 'IC-1014',
+    title: 'Aljada by Arada', description: 'Off-plan apartments in Sharjah’s largest mixed-use community, Aljada.',
+    purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
+    city: 'Sharjah', community: 'Aljada', building: 'Aljada',
+    bedrooms: 1, bathrooms: 1, areaSqft: 650, priceAed: 700000,
+    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Retail'], latitude: 25.327, longitude: 55.515,
+    handoverBy: 'Q4 2027', paymentPlan: '50/50', developerName: 'Arada', developerLogo: 'https://d1fikckodunwer.cloudfront.net/d24498d2-c623-476a-a82f-63ded0bfb59a',
+  },
+  {
+    id: 'seed-15', reference: 'IC-1015',
+    title: 'Falcon Island by Al Hamra', description: 'Off-plan beachfront villas on Al Hamra’s Falcon Island, Ras Al Khaimah.',
+    purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'villa', source: 'developer',
+    city: 'Ras Al Khaimah', community: 'Al Hamra Village', building: 'Falcon Island',
+    bedrooms: 4, bathrooms: 5, areaSqft: 3500, priceAed: 2300000,
+    isVerified: true, coverImageUrl: null, amenities: ['Beach access', 'Private pool', 'Marina'], latitude: 25.683, longitude: 55.778,
+    handoverBy: 'Q2 2028', paymentPlan: '70/30', developerName: 'Al Hamra', developerLogo: 'https://d1fikckodunwer.cloudfront.net/dc32e8b3-6aef-4397-807c-03616743ff12',
+  },
 ];
 
 export function filterSeed(filters: { purpose?: string; completion?: string; q?: string; limit?: number } = {}): Listing[] {
