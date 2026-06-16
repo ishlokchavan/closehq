@@ -20,6 +20,11 @@ export interface Listing {
   isVerified: boolean;
   coverImageUrl: string | null;
   amenities: string[];
+  /** Off-plan / new-project fields (null for ready secondary listings). */
+  handoverBy?: string | null;
+  paymentPlan?: string | null;
+  developerName?: string | null;
+  developerLogo?: string | null;
 }
 
 export interface ListingFilters {

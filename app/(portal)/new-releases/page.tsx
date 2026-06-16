@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Sparkles } from 'lucide-react';
 import { SearchHero } from '@/components/portal/search/search-hero';
-import { ListingCard } from '@/components/portal/listing-card';
+import { ProjectCard } from '@/components/portal/project-card';
 import { getListings } from '@/lib/portal/listings';
 
 export const metadata: Metadata = {
@@ -42,13 +42,13 @@ export default async function NewReleasesPage({
         </div>
 
         <p className="text-[14px] text-graphite mb-5">
-          {listings.length} off-plan {listings.length === 1 ? 'project' : 'projects'}
+          {listings.length} off-plan {listings.length === 1 ? 'project' : 'projects'} in UAE
           {q ? <> for “{q}”</> : null}
         </p>
         {listings.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {listings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} />
+              <ProjectCard key={listing.id} project={listing} />
             ))}
           </div>
         ) : (
