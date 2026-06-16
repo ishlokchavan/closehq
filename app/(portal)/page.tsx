@@ -30,7 +30,7 @@ const HOME_CARDS: { href: string; cta: string; image: string }[] = [
 function CommissionHeadline({ locale, t, className }: { locale: LocaleCode; t: Messages['home']; className?: string }) {
   if (locale === 'en') {
     return (
-      <span className={className}>
+      <span className={`font-normal ${className ?? ''}`}>
         Never Pay Commission to <span className="font-bold">Buy</span>,{' '}
         <span className="font-bold">Sell</span>, Or <span className="font-bold">Close</span> Ever Again!
       </span>
