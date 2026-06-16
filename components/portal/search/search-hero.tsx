@@ -1,4 +1,4 @@
-import { SearchTabs } from './search-tabs';
+import { SearchPanel } from './search-panel';
 import type { SearchTabKey } from '@/lib/portal-config';
 
 interface SearchHeroProps {
@@ -7,7 +7,7 @@ interface SearchHeroProps {
   subtitle: string;
 }
 
-/** Title + subtitle + the tabbed search hero, shared by every vertical page. */
+/** Title + subtitle + the tabbed search panel, shared by every vertical page. */
 export function SearchHero({ active, title, subtitle }: SearchHeroProps) {
   return (
     <section className="container-wide pt-10 pb-8">
@@ -15,7 +15,7 @@ export function SearchHero({ active, title, subtitle }: SearchHeroProps) {
         <h1 className="display-md">{title}</h1>
         <p className="subhead mt-3 max-w-2xl mx-auto">{subtitle}</p>
       </div>
-      <SearchTabs active={active} />
+      <SearchPanel initial={active} />
     </section>
   );
 }

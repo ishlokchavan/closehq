@@ -20,7 +20,7 @@ export function PortalHeader() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-paper/80 backdrop-blur-2xl border-b border-hairline/60">
+    <header className="sticky top-0 z-50 bg-paper/80 backdrop-blur-2xl border-b border-hairline/60">
       <div className="container-wide flex items-center justify-between h-14">
         <Link href="/" aria-label="iClose home">
           <Logo variant="dark" />
