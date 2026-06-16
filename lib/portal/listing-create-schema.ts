@@ -59,6 +59,13 @@ export const listingCreateSchema = z
       if (!data.ownerName || data.ownerName.trim().length < 2) {
         ctx.addIssue({ code: 'custom', path: ['ownerName'], message: 'Enter the owner name (as on the title deed)' });
       }
+      if (!data.trakheesiPermit || data.trakheesiPermit.trim().length < 3) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['trakheesiPermit'],
+          message: 'A Trakheesi permit number is required to advertise an owner listing',
+        });
+      }
       if (!data.attestOwnership) {
         ctx.addIssue({ code: 'custom', path: ['attestOwnership'], message: 'You must confirm ownership / POA to list' });
       }

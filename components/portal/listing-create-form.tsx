@@ -139,6 +139,16 @@ export function ListingCreateForm({ path }: { path: ListingPath }) {
               <input type="checkbox" className="h-4 w-4 accent-[#0071e3]" {...register('isPoa')} />
               I am listing as Power of Attorney (POA) for the owner
             </label>
+            <div>
+              <Field label="Trakheesi permit no." error={errors.trakheesiPermit?.message}>
+                <input className={input} placeholder="Required to advertise" {...register('trakheesiPermit')} />
+              </Field>
+              <p className="flex items-start gap-1.5 text-[12px] text-graphite-dark mt-2">
+                <AlertTriangle className="h-3.5 w-3.5 text-journey-offplan mt-0.5 shrink-0" />
+                Public advertising of a Dubai listing requires a valid Trakheesi permit. Enter your
+                permit number to submit — we verify it during review before the listing goes live.
+              </p>
+            </div>
           </>
         ) : (
           <div className="grid grid-cols-2 gap-4">
