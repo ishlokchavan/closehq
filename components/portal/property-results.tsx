@@ -115,7 +115,7 @@ export function PropertyResults({ listings, title }: { listings: Listing[]; titl
       {view === 'map' ? (
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
           {/* Map pane — real Google Map when configured, else placeholder pins */}
-          <div className="lg:col-span-3 relative rounded-apple bg-[#eaeef0] min-h-[560px] overflow-hidden">
+          <div className="lg:col-span-3 relative rounded-apple bg-[#eaeef0] h-[560px] overflow-hidden">
             {MAPS_ENABLED ? (
               <PropertyMap listings={filtered} />
             ) : (
