@@ -30,6 +30,17 @@ const config: Config = {
           dark: '#0058a3',
         },
 
+        // Portal journey color system (from the product sketch / token map).
+        // Each user journey gets a soft brand tint used for accents and section washes.
+        journey: {
+          buyer: '#ffa1f2',   // Buy
+          seller: '#9effe0',  // Sell
+          agent: '#ffcc9c',   // Close (agents / agencies)
+          offplan: '#a3bcff', // New Releases / credits
+          listing: '#5ae09b', // listing action
+          flag: '#ff0000',    // priority / needs-definition flag
+        },
+
         // Legacy aliases so existing className strings don't break
         bone: {
           DEFAULT: '#f5f5f7',
