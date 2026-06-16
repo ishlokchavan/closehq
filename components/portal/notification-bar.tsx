@@ -11,7 +11,7 @@ import { useI18n } from '@/components/i18n/locale-provider';
 export function NotificationBar() {
   const { messages } = useI18n();
   return (
-    <Link href="/developers" className="block bg-[#ffd9dc] hover:bg-[#ffcdd1] transition-colors">
+    <Link href="/credits" className="block bg-[#ffd9dc] hover:bg-[#ffcdd1] transition-colors">
       <div className="container-wide py-2.5 text-center text-[13px] text-ink">
         {messages.home.notif}
         <span className="text-accent ms-1.5 inline-flex items-center gap-0.5 font-medium">

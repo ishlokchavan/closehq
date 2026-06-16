@@ -46,7 +46,7 @@ export default async function PortalHomePage() {
           </h1>
           <p className="subhead mt-5 max-w-2xl mx-auto">
             {t.heroSub}
-            <Link href="/developers" className="applelink ms-1.5 text-[15px] align-baseline">
+            <Link href="/credits" className="applelink ms-1.5 text-[15px] align-baseline">
               {t.learnMore} <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
             </Link>
           </p>
