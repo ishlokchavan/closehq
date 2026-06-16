@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Map as MapIcon, List as ListIcon, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ListingCard } from '@/components/portal/listing-card';
+import { PropertyMap, MAPS_ENABLED } from '@/components/portal/property-map';
 import type { Listing } from '@/lib/portal/listing-types';
 
 type Source = 'all' | 'owner' | 'developer';
@@ -113,20 +114,26 @@ export function PropertyResults({ listings, title }: { listings: Listing[]; titl
       {/* Results */}
       {view === 'map' ? (
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-          {/* Map pane with floating price pins (placeholder map) */}
+          {/* Map pane — real Google Map when configured, else placeholder pins */}
           <div className="lg:col-span-3 relative rounded-apple bg-[#eaeef0] min-h-[560px] overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center text-graphite/60">
-              <span className="inline-flex items-center gap-2 text-[13px]"><MapPin className="h-4 w-4" /> Map view</span>
-            </div>
-            {filtered.slice(0, 8).map((l, i) => (
-              <span
-                key={l.id}
-                className="absolute rounded-full bg-accent text-white text-[12px] font-medium px-2.5 py-1 shadow-card -translate-x-1/2 -translate-y-1/2"
-                style={PIN_POS[i % PIN_POS.length]}
-              >
-                From {priceShort(l.priceAed)}
-              </span>
-            ))}
+            {MAPS_ENABLED ? (
+              <PropertyMap listings={filtered} />
+            ) : (
+              <>
+                <div className="absolute inset-0 flex items-center justify-center text-graphite/60">
+                  <span className="inline-flex items-center gap-2 text-[13px]"><MapPin className="h-4 w-4" /> Map view</span>
+                </div>
+                {filtered.slice(0, 8).map((l, i) => (
+                  <span
+                    key={l.id}
+                    className="absolute rounded-full bg-accent text-white text-[12px] font-medium px-2.5 py-1 shadow-card -translate-x-1/2 -translate-y-1/2"
+                    style={PIN_POS[i % PIN_POS.length]}
+                  >
+                    From {priceShort(l.priceAed)}
+                  </span>
+                ))}
+              </>
+            )}
           </div>
           {/* Side panel: "X Listings" + scrollable cards */}
           <div className="lg:col-span-2">

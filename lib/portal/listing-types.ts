@@ -20,6 +20,8 @@ export interface Listing {
   isVerified: boolean;
   coverImageUrl: string | null;
   amenities: string[];
+  latitude?: number | null;
+  longitude?: number | null;
   /** Off-plan / new-project fields (null for ready secondary listings). */
   handoverBy?: string | null;
   paymentPlan?: string | null;
