@@ -147,9 +147,26 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
 
       {/* Results */}
       {view === 'map' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-          {/* Map pane — real Google Map when configured, else placeholder pins */}
-          <div className="lg:col-span-3 relative rounded-apple bg-[#eaeef0] h-[560px] overflow-hidden">
+        // Bayut-style split: list left (2-col), sticky map right.
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          {/* List left */}
+          <div className="order-2 lg:order-1">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[15px] font-medium text-ink">{filtered.length} Listings for Buy</span>
+            </div>
+            {filtered.length > 0 ? (
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                {filtered.map((l) => <ListingCard key={l.id} listing={l} />)}
+              </div>
+            ) : (
+              <div className="card-mist rounded-apple px-6 py-10 text-center text-[14px] text-graphite-dark">
+                No properties match these filters.
+              </div>
+            )}
+          </div>
+
+          {/* Map right — real Google Map when configured, else placeholder pins */}
+          <div className="order-1 lg:order-2 lg:sticky lg:top-[140px] relative rounded-apple bg-[#eaeef0] overflow-hidden h-[420px] lg:h-[calc(100vh-160px)]">
             {MAPS_ENABLED ? (
               <PropertyMap listings={filtered} />
             ) : (
@@ -168,15 +185,6 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
                 ))}
               </>
             )}
-          </div>
-          {/* Side panel: "X Listings" + scrollable cards */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[15px] font-medium text-ink">{filtered.length} Listings for Buy</span>
-            </div>
-            <div className="space-y-4 max-h-[520px] overflow-auto pe-1">
-              {filtered.map((l) => <ListingCard key={l.id} listing={l} />)}
-            </div>
           </div>
         </div>
       ) : filtered.length > 0 ? (
