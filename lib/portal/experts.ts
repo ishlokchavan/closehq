@@ -16,7 +16,7 @@ const EXPERTS: Expert[] = [
   { id: 'e2', name: 'Ash Prakash', languages: ['English'], blurb: 'Specialises in waterfront property and off-plan portfolio strategy across Dubai.', respondsMins: 10 },
   { id: 'e3', name: 'Sara Khan', languages: ['English', 'Hindi'], blurb: 'Off-plan investment and payment-plan specialist focused on best-value launches.', respondsMins: 8 },
   { id: 'e4', name: 'Dmitry Ivanov', languages: ['English', 'Russian'], blurb: 'New launches and developer relations — early access to the most in-demand projects.', respondsMins: 12 },
-  { id: 'e5', name: 'Mei Chen', languages: ['English', 'Mandarin'], blurb: 'Investor relations across Dubai and Abu Dhabi, with a focus on rental yield and ROI.', respondsMins: 9 },
+  { id: 'e5', name: 'Mei Chen', languages: ['English', 'Mandarin'], blurb: 'Investor relations across Dubai and Abu Dhabi, with a focus on capital growth and ROI.', respondsMins: 9 },
 ];
 
 /** Pick a rotating expert (called per request on the server, so it changes per visit). */

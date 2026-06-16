@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { TrendingUp } from 'lucide-react';
 import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
 import type { FilterParams } from '@/components/portal/use-listing-filters';
-import { cn } from '@/lib/utils';
 import { getTransactions } from '@/lib/portal/transactions';
 import { getFilterOptions } from '@/lib/portal/filters';
 
@@ -21,19 +19,18 @@ export default async function TransactionsPage({
   const sp = await searchParams;
   const str = (k: string) => (typeof sp[k] === 'string' && sp[k] ? (sp[k] as string) : undefined);
   const q = str('q');
-  const activeKind: 'sold' | 'rented' = str('tab') === 'rented' ? 'rented' : 'sold';
   const type = str('type');
   const beds = str('beds');
   const minPrice = Number(str('minPrice')) || 0;
   const maxPrice = Number(str('maxPrice')) || Infinity;
 
-  const [allKind, options] = await Promise.all([
-    getTransactions({ kind: activeKind, q }),
+  const [sold, options] = await Promise.all([
+    getTransactions({ kind: 'sold', q }),
     getFilterOptions(),
   ]);
 
-  // Client-style filters applied server-side over the kind/q result set.
-  const txns = allKind.filter((t) => {
+  // Sold-only (no rentals on the platform). Refine by type/beds/price.
+  const txns = sold.filter((t) => {
     if (type && t.propertyType.toLowerCase() !== type) return false;
     if (beds) {
       if (beds === 'Studio' ? t.bedrooms !== 0 : beds === '5+' ? (t.bedrooms ?? 0) < 5 : t.bedrooms !== Number(beds)) return false;
@@ -42,7 +39,7 @@ export default async function TransactionsPage({
     return true;
   });
 
-  const params: FilterParams = { tab: activeKind };
+  const params: FilterParams = {};
   for (const [k, v] of Object.entries({ q, type, beds, minPrice: str('minPrice'), maxPrice: str('maxPrice') })) {
     if (typeof v === 'string' && v) params[k] = v;
   }
@@ -54,22 +51,6 @@ export default async function TransactionsPage({
     <>
       <ResultsFilterBar active="transactions" defaultQuery={q ?? ''} params={params} options={options} />
       <section className="container-wide py-6 space-y-6">
-        {/* Sold / Rented toggle */}
-        <div className="inline-flex items-center gap-1 p-1 rounded-full bg-mist">
-          {(['sold', 'rented'] as const).map((k) => (
-            <Link
-              key={k}
-              href={`/transactions?${new URLSearchParams({ ...params, tab: k }).toString()}`}
-              className={cn(
-                'px-4 py-1.5 text-[13px] rounded-full capitalize transition-colors',
-                activeKind === k ? 'bg-paper text-ink shadow-card font-medium' : 'text-graphite hover:text-ink',
-              )}
-            >
-              {k}
-            </Link>
-          ))}
-        </div>
-
         <p className="text-[14px] text-graphite">
           {txns.length} {txns.length === 1 ? 'transaction' : 'transactions'}
           {q ? <> in “{q}”</> : null}

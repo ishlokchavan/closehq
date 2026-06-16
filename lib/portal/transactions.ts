@@ -17,8 +17,8 @@ const SEED_TRANSACTIONS: Transaction[] = [
   { id: 't4', kind: 'sold', date: '2026-06-03', community: 'Dubai Hills Estate', building: 'Maple', propertyType: 'Townhouse', bedrooms: 3, areaSqft: 2080, priceAed: 4280000 },
   { id: 't5', kind: 'sold', date: '2026-05-29', community: 'Business Bay', building: 'Peninsula', propertyType: 'Apartment', bedrooms: 2, areaSqft: 1090, priceAed: 2350000 },
   { id: 't6', kind: 'sold', date: '2026-05-24', community: 'JVC', building: 'Binghatti Amber', propertyType: 'Studio', bedrooms: 0, areaSqft: 405, priceAed: 610000 },
-  { id: 't7', kind: 'rented', date: '2026-06-09', community: 'Business Bay', building: 'Peninsula', propertyType: 'Apartment', bedrooms: 2, areaSqft: 1090, priceAed: 165000 },
-  { id: 't8', kind: 'rented', date: '2026-06-01', community: 'Dubai Marina', building: 'Marina Gate', propertyType: 'Apartment', bedrooms: 1, areaSqft: 800, priceAed: 110000 },
+  { id: 't7', kind: 'sold', date: '2026-05-20', community: 'Dubai Creek Harbour', building: 'Creek Edge', propertyType: 'Apartment', bedrooms: 2, areaSqft: 1150, priceAed: 2780000 },
+  { id: 't8', kind: 'sold', date: '2026-05-15', community: 'Arabian Ranches', building: 'Alvorada', propertyType: 'Villa', bedrooms: 5, areaSqft: 6050, priceAed: 9450000 },
 ];
 
 function isSupabaseConfigured(): boolean {

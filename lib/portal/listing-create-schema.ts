@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const listingPurposes = ['sale', 'rent'] as const;
+export const listingPurposes = ['sale'] as const;
 export const listingCategories = ['residential', 'commercial'] as const;
 export const listingPropertyTypes = ['apartment', 'villa', 'townhouse', 'penthouse', 'plot', 'office', 'retail'] as const;
 export const listingCompletions = ['ready', 'off_plan'] as const;

@@ -49,10 +49,10 @@ export const SEED_LISTINGS: Listing[] = [
   },
   {
     id: 'seed-6', reference: 'IC-1006',
-    title: 'Business Bay 2-bed for rent', description: 'Furnished two-bedroom with canal views, available now on a yearly contract.',
-    purpose: 'rent', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'owner',
+    title: 'Furnished 2-bed with canal views in Business Bay', description: 'Furnished two-bedroom with canal views in the heart of Business Bay.',
+    purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'owner',
     city: 'Dubai', community: 'Business Bay', building: 'Peninsula',
-    bedrooms: 2, bathrooms: 2, areaSqft: 1100, priceAed: 165000,
+    bedrooms: 2, bathrooms: 2, areaSqft: 1100, priceAed: 2450000,
     isVerified: true, coverImageUrl: null, amenities: ['View of Water', 'Shared Gym', 'Furnished'], agentName: 'Omar Haddad', agencyName: 'Skyline Properties', latitude: 25.186, longitude: 55.262,
   },
   {
@@ -66,10 +66,10 @@ export const SEED_LISTINGS: Listing[] = [
   },
   {
     id: 'seed-8', reference: 'IC-1008',
-    title: 'DIFC office, fitted & ready', description: 'Grade-A fitted office floor in DIFC, ready for occupation with covered parking.',
-    purpose: 'rent', completion: 'ready', category: 'commercial', propertyType: 'office', source: 'developer',
+    title: 'DIFC office for sale, fitted & ready', description: 'Grade-A fitted office floor in DIFC, ready for occupation with covered parking.',
+    purpose: 'sale', completion: 'ready', category: 'commercial', propertyType: 'office', source: 'developer',
     city: 'Dubai', community: 'DIFC', building: 'Index Tower',
-    bedrooms: null, bathrooms: 2, areaSqft: 3400, priceAed: 850000,
+    bedrooms: null, bathrooms: 2, areaSqft: 3400, priceAed: 18500000,
     isVerified: true, coverImageUrl: null, amenities: ['Fitted', 'Covered Parking', 'Reception'], agentName: 'Li Wei', agencyName: 'Creek Harbour Homes', latitude: 25.213, longitude: 55.281,
   },
   {

@@ -22,7 +22,7 @@ interface VerticalConfig {
 const CONFIG: Record<SearchTabKey, VerticalConfig> = {
   properties: { subTabs: [{ key: 'all', param: 'all' }, { key: 'offplan', param: 'off-plan' }, { key: 'ready', param: 'ready' }] },
   'new-releases': { withLocationIcon: true },
-  transactions: { subTabs: [{ key: 'sold', param: 'sold' }, { key: 'rented', param: 'rented' }] },
+  transactions: {},
   agents: { subTabs: [{ key: 'agents', param: 'agents' }, { key: 'companies', param: 'companies' }], filters: ['Property type', 'Language', 'Nationality'] },
 };
 

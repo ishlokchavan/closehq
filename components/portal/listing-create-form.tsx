@@ -101,7 +101,7 @@ export function ListingCreateForm({ path }: { path: ListingPath }) {
       <section className="card-surface p-6 space-y-5">
         <h2 className="text-[18px] font-semibold text-ink" style={{ letterSpacing: '-0.015em' }}>Property details</h2>
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Purpose"><select className={input} {...register('purpose')}><option value="sale">For sale</option><option value="rent">For rent</option></select></Field>
+          <Field label="Purpose"><select className={input} {...register('purpose')}><option value="sale">For sale</option></select></Field>
           <Field label="Completion"><select className={input} {...register('completion')}><option value="ready">Ready</option><option value="off_plan">Off-plan</option></select></Field>
           <Field label="Category"><select className={input} {...register('category')}><option value="residential">Residential</option><option value="commercial">Commercial</option></select></Field>
           <Field label="Property type"><select className={input} {...register('propertyType')}>

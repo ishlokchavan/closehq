@@ -8,20 +8,28 @@ const openCookieSettings = () =>
 
 const NAV_COLUMNS = [
   {
-    heading: 'Platform',
+    heading: 'Explore',
     links: [
-      { href: '#how', label: 'How it works' },
-      { href: '#apply', label: 'Who it\'s for' },
-      { href: '#plans', label: 'Plans' },
-      { href: '#faq', label: 'FAQ' },
+      { href: '/properties', label: 'Properties' },
+      { href: '/new-releases', label: 'New releases' },
+      { href: '/transactions', label: 'Transactions' },
+      { href: '/agents', label: 'Agents' },
     ],
   },
   {
-    heading: 'Join',
+    heading: 'Sell & Close',
     links: [
-      { href: '#apply', label: 'Join as a Member' },
-      { href: '/specialists', label: 'Apply as a Specialist' },
+      { href: '/sell/list', label: 'List your property' },
+      { href: '/sell/sell-now', label: 'Sell now' },
+      { href: '/developers', label: 'Developers' },
+      { href: '/credits', label: 'Credits' },
+    ],
+  },
+  {
+    heading: 'Company',
+    links: [
       { href: '/careers', label: 'Careers' },
+      { href: `mailto:${siteConfig.email}`, label: 'Contact us' },
     ],
   },
   {
@@ -29,13 +37,6 @@ const NAV_COLUMNS = [
     links: [
       { href: '/privacy', label: 'Privacy policy' },
       { href: '/terms', label: 'Terms of service' },
-    ],
-  },
-  {
-    heading: 'Contact',
-    links: [
-      { href: `mailto:${siteConfig.email}`, label: siteConfig.email },
-      ...(siteConfig.phone ? [{ href: `tel:+${siteConfig.phone.replace(/\D/g, '')}`, label: siteConfig.phone }] : []),
     ],
   },
 ];
@@ -50,7 +51,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <Logo variant="dark" />
             <p className="mt-4 text-[13px] text-graphite leading-[1.6]" style={{ letterSpacing: '-0.008em' }}>
-              The community and education platform for Dubai&apos;s secondary real estate market.
+              Buy, sell and close Dubai real estate without ever paying commission.
             </p>
           </div>
 
