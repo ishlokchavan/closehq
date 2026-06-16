@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, MapPin, ChevronDown } from 'lucide-react';
+import Link from 'next/link';
+import { Search, MapPin, ChevronDown, Sparkles, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SEARCH_TABS, type SearchTabKey } from '@/lib/portal-config';
 import { useI18n } from '@/components/i18n/locale-provider';
@@ -32,7 +33,7 @@ const CONFIG: Record<SearchTabKey, VerticalConfig> = {
   },
   'new-releases': {
     withLocationIcon: true,
-    filters: ['Property type', 'Bedrooms', 'Price', 'Amenities', 'Delivery date'],
+    filters: ['Residential', 'Handover By', 'Payment Plan', '% Completion'],
   },
   transactions: {
     subTabs: [
@@ -157,6 +158,22 @@ export function SearchPanel({ initial = 'properties' }: { initial?: SearchTabKey
               <FilterPill key={filter} label={filter} />
             ))}
           </div>
+        )}
+
+        {/* Ask iExpert AI banner (New Releases) */}
+        {active === 'new-releases' && (
+          <Link
+            href="/new-releases"
+            className="mt-3 -mx-1 flex items-center justify-between gap-3 rounded-xl bg-journey-offplan/15 px-4 py-2.5 hover:bg-journey-offplan/25 transition-colors"
+          >
+            <span className="flex items-center gap-2 text-[13px] sm:text-[14px] text-ink">
+              <Sparkles className="h-4 w-4 shrink-0" />
+              Want to find out more about UAE real estate using AI?
+            </span>
+            <span className="inline-flex items-center gap-1 text-[13px] sm:text-[14px] text-accent font-medium whitespace-nowrap">
+              Try iExpert <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+            </span>
+          </Link>
         )}
       </div>
     </div>

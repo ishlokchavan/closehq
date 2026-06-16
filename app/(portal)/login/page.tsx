@@ -8,11 +8,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="container-wide py-16 max-w-md">
-      <header className="text-center mb-8">
-        <h1 className="display-md">Welcome back</h1>
-        <p className="subhead mt-3">Sign in to your iClose account.</p>
-      </header>
+    <div className="bg-mist min-h-[calc(100vh-7rem)] flex items-center justify-center px-4 py-16">
       <AuthForm mode="login" />
     </div>
   );

@@ -8,11 +8,7 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
   return (
-    <div className="container-wide py-16 max-w-md">
-      <header className="text-center mb-8">
-        <h1 className="display-md">Create your account</h1>
-        <p className="subhead mt-3">Buy, sell, list and earn credits — without commission.</p>
-      </header>
+    <div className="bg-mist min-h-[calc(100vh-7rem)] flex items-center justify-center px-4 py-16">
       <AuthForm mode="signup" />
     </div>
   );
