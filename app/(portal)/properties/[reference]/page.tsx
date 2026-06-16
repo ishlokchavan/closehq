@@ -59,7 +59,7 @@ export default async function ListingDetailPage({
           ) : (
             <ImageIcon className="h-10 w-10 text-hairline" />
           )}
-          <div className="absolute top-4 left-4 flex gap-2">
+          <div className="absolute top-4 start-4 flex gap-2">
             <span className="rounded-full bg-ink/80 text-white text-[12px] px-3 py-1">
               {listing.completion === 'off_plan' ? 'Off-plan' : 'Ready'}
             </span>

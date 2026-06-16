@@ -61,7 +61,7 @@ export function PortalHeader() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute left-0 top-full pt-2 w-64"
+                    className="absolute start-0 top-full pt-2 w-64"
                   >
                     <div className="card-surface shadow-elevated p-2">
                       {item.children.map((child) => (
@@ -132,7 +132,7 @@ export function PortalHeader() {
                     {navLabel(item.key)}
                   </Link>
                   {item.children && (
-                    <div className="pb-3 pl-4 flex flex-col gap-2">
+                    <div className="pb-3 ps-4 flex flex-col gap-2">
                       {item.children.map((child) => (
                         <Link
                           key={child.href}

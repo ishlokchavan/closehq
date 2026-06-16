@@ -60,7 +60,7 @@ export default async function TransactionsPage({
             <span className="col-span-5">Building / Community</span>
             <span className="col-span-2">Type</span>
             <span className="col-span-1 text-center">Beds</span>
-            <span className="col-span-2 text-right">Price (AED)</span>
+            <span className="col-span-2 text-end">Price (AED)</span>
           </div>
           {txns.map((t) => (
             <div key={t.id} className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-hairline/40 last:border-0 text-[14px]">
@@ -72,7 +72,7 @@ export default async function TransactionsPage({
               <span className="col-span-1 text-center text-graphite-dark">
                 {t.bedrooms === 0 ? 'Studio' : t.bedrooms ?? '—'}
               </span>
-              <span className="col-span-2 text-right text-ink font-medium">{t.priceAed.toLocaleString('en-US')}</span>
+              <span className="col-span-2 text-end text-ink font-medium">{t.priceAed.toLocaleString('en-US')}</span>
             </div>
           ))}
           {txns.length === 0 && (

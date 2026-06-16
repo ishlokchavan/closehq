@@ -21,7 +21,7 @@ export function ListingCard({ listing }: { listing: Listing }) {
         ) : (
           <ImageIcon className="h-8 w-8 text-hairline" />
         )}
-        <div className="absolute top-3 left-3 flex gap-2">
+        <div className="absolute top-3 start-3 flex gap-2">
           <span className="rounded-full bg-ink/80 text-white text-[11px] px-2.5 py-1 capitalize">
             {listing.completion === 'off_plan' ? 'Off-plan' : 'Ready'}
           </span>

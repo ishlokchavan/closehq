@@ -33,7 +33,7 @@ export function JourneyPage({ content }: { content: JourneyContent }) {
         {/* Hero video placeholder */}
         <div className="mt-10 max-w-4xl mx-auto aspect-video card-surface flex items-center justify-center">
           <span className="flex items-center justify-center h-14 w-14 rounded-full bg-mist">
-            <Play className="h-6 w-6 text-graphite ml-0.5" />
+            <Play className="h-6 w-6 text-graphite ms-0.5" />
           </span>
         </div>
       </section>
@@ -150,7 +150,7 @@ function FaqItem({ faq }: { faq: { q: string; a: string } }) {
     <button
       type="button"
       onClick={() => setOpen((s) => !s)}
-      className="w-full text-left px-5 py-4 flex items-start gap-3"
+      className="w-full text-start px-5 py-4 flex items-start gap-3"
     >
       <span className="flex-1">
         <span className="block text-[15px] text-ink font-medium" style={{ letterSpacing: '-0.01em' }}>
