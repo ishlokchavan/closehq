@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Sparkles } from 'lucide-react';
 import { SearchHero } from '@/components/portal/search/search-hero';
-import { ListingSkeleton, ComingSoonNote } from '@/components/portal/listing-skeleton';
+import { ListingCard } from '@/components/portal/listing-card';
+import { getListings } from '@/lib/portal/listings';
 
 export const metadata: Metadata = {
   title: 'New Releases & Off-Plan Projects in Dubai | iClose',
@@ -9,7 +10,14 @@ export const metadata: Metadata = {
     'Discover new off-plan launches in Dubai. Filter by handover date, payment plan and completion. Invest in off-plan for special pricing and credits.',
 };
 
-export default function NewReleasesPage() {
+export default async function NewReleasesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const listings = await getListings({ completion: 'off_plan', q });
+
   return (
     <>
       <SearchHero
@@ -19,9 +27,9 @@ export default function NewReleasesPage() {
       />
       <section className="container-wide pb-20">
         {/* Ask iExpert assistant entry (renamed from the competitor's "Ask Scout") */}
-        <div className="mb-5 flex items-center gap-3 card-surface px-5 py-4">
+        <div className="mb-6 flex items-center gap-3 card-surface px-5 py-4">
           <span className="flex items-center justify-center h-9 w-9 rounded-full bg-journey-offplan/20">
-            <Sparkles className="h-4.5 w-4.5 text-ink" />
+            <Sparkles className="h-4 w-4 text-ink" />
           </span>
           <div>
             <p className="text-[15px] text-ink font-medium" style={{ letterSpacing: '-0.01em' }}>
@@ -32,13 +40,22 @@ export default function NewReleasesPage() {
             </p>
           </div>
         </div>
-        <div className="mb-5">
-          <ComingSoonNote>
-            New-project cards (Property Finder <code>/new-projects</code>–class feature set) are
-            populated from the data layer next.
-          </ComingSoonNote>
-        </div>
-        <ListingSkeleton count={6} />
+
+        <p className="text-[14px] text-graphite mb-5">
+          {listings.length} off-plan {listings.length === 1 ? 'project' : 'projects'}
+          {q ? <> for “{q}”</> : null}
+        </p>
+        {listings.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {listings.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+        ) : (
+          <div className="card-mist rounded-apple px-6 py-10 text-center text-[14px] text-graphite-dark">
+            No off-plan projects match your search yet.
+          </div>
+        )}
       </section>
     </>
   );
