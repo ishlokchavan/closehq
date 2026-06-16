@@ -12,7 +12,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'owner',
     city: 'Dubai', community: 'Downtown Dubai', building: 'Burj Vista',
     bedrooms: 2, bathrooms: 3, areaSqft: 1340, priceAed: 3200000,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Concierge'], agentName: 'Sarah Al Mansoori', agencyName: 'Skyline Properties', latitude: 25.1972, longitude: 55.2744,
+    isVerified: true, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym', 'Concierge Service'], agentName: 'Sarah Al Mansoori', agencyName: 'Skyline Properties', latitude: 25.1972, longitude: 55.2744,
   },
   {
     id: 'seed-2', reference: 'IC-1002',
@@ -20,7 +20,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Dubai', community: 'Dubai Marina', building: 'Marina Gate',
     bedrooms: 1, bathrooms: 2, areaSqft: 820, priceAed: 1850000,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Beach access'], agentName: 'James Whitfield', agencyName: 'Marina Estates', latitude: 25.0805, longitude: 55.1403,
+    isVerified: true, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym', 'Beach access'], agentName: 'James Whitfield', agencyName: 'Marina Estates', latitude: 25.0805, longitude: 55.1403,
   },
   {
     id: 'seed-3', reference: 'IC-1003',
@@ -28,7 +28,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'villa', source: 'owner',
     city: 'Dubai', community: 'Palm Jumeirah', building: 'Signature Villas',
     bedrooms: 4, bathrooms: 5, areaSqft: 5200, priceAed: 22500000,
-    isVerified: true, coverImageUrl: null, amenities: ['Private pool', 'Beach access', 'Maid room'], agentName: 'Mikhail Petrov', agencyName: 'Palm Luxury', latitude: 25.1124, longitude: 55.139,
+    isVerified: true, coverImageUrl: null, amenities: ['Private Pool', 'Beach access', 'Maids Room'], agentName: 'Mikhail Petrov', agencyName: 'Palm Luxury', latitude: 25.1124, longitude: 55.139,
   },
   {
     id: 'seed-4', reference: 'IC-1004',
@@ -36,7 +36,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Dubai', community: 'Jumeirah Village Circle', building: 'Binghatti Amber',
     bedrooms: 0, bathrooms: 1, areaSqft: 410, priceAed: 620000,
-    isVerified: false, coverImageUrl: null, amenities: ['Pool', 'Gym'], latitude: 25.0585, longitude: 55.209,
+    isVerified: false, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym'], latitude: 25.0585, longitude: 55.209,
     handoverBy: 'Q2 2027', paymentPlan: '70/30', developerName: 'Binghatti', developerLogo: '/images/developers/binghatti.png',
   },
   {
@@ -45,7 +45,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'townhouse', source: 'owner',
     city: 'Dubai', community: 'Dubai Hills Estate', building: 'Maple',
     bedrooms: 3, bathrooms: 4, areaSqft: 2100, priceAed: 4350000,
-    isVerified: true, coverImageUrl: null, amenities: ['Park view', 'Community pool', 'Garden'], agentName: 'Priya Nair', agencyName: 'Hills Realty', latitude: 25.103, longitude: 55.249,
+    isVerified: true, coverImageUrl: null, amenities: ['View of Landmark', 'Community pool', 'Private Garden'], agentName: 'Priya Nair', agencyName: 'Hills Realty', latitude: 25.103, longitude: 55.249,
   },
   {
     id: 'seed-6', reference: 'IC-1006',
@@ -53,7 +53,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'rent', completion: 'ready', category: 'residential', propertyType: 'apartment', source: 'owner',
     city: 'Dubai', community: 'Business Bay', building: 'Peninsula',
     bedrooms: 2, bathrooms: 2, areaSqft: 1100, priceAed: 165000,
-    isVerified: true, coverImageUrl: null, amenities: ['Canal view', 'Gym', 'Furnished'], agentName: 'Omar Haddad', agencyName: 'Skyline Properties', latitude: 25.186, longitude: 55.262,
+    isVerified: true, coverImageUrl: null, amenities: ['View of Water', 'Shared Gym', 'Furnished'], agentName: 'Omar Haddad', agencyName: 'Skyline Properties', latitude: 25.186, longitude: 55.262,
   },
   {
     id: 'seed-7', reference: 'IC-1007',
@@ -61,7 +61,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'penthouse', source: 'developer',
     city: 'Dubai', community: 'Dubai Creek Harbour', building: 'Creek Edge',
     bedrooms: 4, bathrooms: 5, areaSqft: 3800, priceAed: 12800000,
-    isVerified: false, coverImageUrl: null, amenities: ['Skyline view', 'Private lift', 'Pool'], latitude: 25.207, longitude: 55.35,
+    isVerified: false, coverImageUrl: null, amenities: ['View of Landmark', 'Private lift', 'Shared Pool'], latitude: 25.207, longitude: 55.35,
     handoverBy: 'Q4 2027', paymentPlan: '80/20', developerName: 'Emaar', developerLogo: '/images/developers/emaar.svg',
   },
   {
@@ -70,7 +70,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'rent', completion: 'ready', category: 'commercial', propertyType: 'office', source: 'developer',
     city: 'Dubai', community: 'DIFC', building: 'Index Tower',
     bedrooms: null, bathrooms: 2, areaSqft: 3400, priceAed: 850000,
-    isVerified: true, coverImageUrl: null, amenities: ['Fitted', 'Covered parking', 'Reception'], agentName: 'Li Wei', agencyName: 'Creek Harbour Homes', latitude: 25.213, longitude: 55.281,
+    isVerified: true, coverImageUrl: null, amenities: ['Fitted', 'Covered Parking', 'Reception'], agentName: 'Li Wei', agencyName: 'Creek Harbour Homes', latitude: 25.213, longitude: 55.281,
   },
   {
     id: 'seed-9', reference: 'IC-1009',
@@ -78,7 +78,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'ready', category: 'residential', propertyType: 'villa', source: 'owner',
     city: 'Dubai', community: 'Arabian Ranches', building: 'Alvorada',
     bedrooms: 5, bathrooms: 6, areaSqft: 6100, priceAed: 9750000,
-    isVerified: true, coverImageUrl: null, amenities: ['Private pool', 'Garden', 'Maid room'], agentName: 'Priya Nair', agencyName: 'Hills Realty', latitude: 25.052, longitude: 55.27,
+    isVerified: true, coverImageUrl: null, amenities: ['Private Pool', 'Private Garden', 'Maids Room'], agentName: 'Priya Nair', agencyName: 'Hills Realty', latitude: 25.052, longitude: 55.27,
   },
   {
     id: 'seed-10', reference: 'IC-1010',
@@ -86,7 +86,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Dubai', community: 'Dubai Creek Harbour', building: 'Creek Bay',
     bedrooms: 1, bathrooms: 1, areaSqft: 720, priceAed: 1797888,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Waterfront'], latitude: 25.201, longitude: 55.353,
+    isVerified: true, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym', 'View of Water'], latitude: 25.201, longitude: 55.353,
     handoverBy: 'Q1 2028', paymentPlan: '90/10', developerName: 'Emaar', developerLogo: '/images/developers/emaar.svg',
   },
   {
@@ -104,7 +104,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Dubai', community: 'Sobha Sanctuary', building: 'The Brooks',
     bedrooms: 2, bathrooms: 3, areaSqft: 1250, priceAed: 3995908,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Park'], latitude: 25.15, longitude: 55.3,
+    isVerified: true, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym', 'Park'], latitude: 25.15, longitude: 55.3,
     handoverBy: 'Q2 2029', paymentPlan: '60/40', developerName: 'Sobha', developerLogo: '/images/developers/sobha.svg',
   },
   {
@@ -113,7 +113,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Abu Dhabi', community: 'Yas Island', building: 'Yas Park Views',
     bedrooms: 2, bathrooms: 3, areaSqft: 1100, priceAed: 1490000,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Park'], latitude: 24.498, longitude: 54.607,
+    isVerified: true, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym', 'Park'], latitude: 24.498, longitude: 54.607,
     handoverBy: 'Q1 2029', paymentPlan: '60/40', developerName: 'Aldar', developerLogo: 'https://d1fikckodunwer.cloudfront.net/e808f446-2eac-41e3-a0df-3e0849fd64ba',
   },
   {
@@ -122,7 +122,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'apartment', source: 'developer',
     city: 'Sharjah', community: 'Aljada', building: 'Aljada',
     bedrooms: 1, bathrooms: 1, areaSqft: 650, priceAed: 700000,
-    isVerified: true, coverImageUrl: null, amenities: ['Pool', 'Gym', 'Retail'], latitude: 25.327, longitude: 55.515,
+    isVerified: true, coverImageUrl: null, amenities: ['Shared Pool', 'Shared Gym', 'Retail'], latitude: 25.327, longitude: 55.515,
     handoverBy: 'Q4 2027', paymentPlan: '50/50', developerName: 'Arada', developerLogo: 'https://d1fikckodunwer.cloudfront.net/d24498d2-c623-476a-a82f-63ded0bfb59a',
   },
   {
@@ -131,7 +131,7 @@ export const SEED_LISTINGS: Listing[] = [
     purpose: 'sale', completion: 'off_plan', category: 'residential', propertyType: 'villa', source: 'developer',
     city: 'Ras Al Khaimah', community: 'Al Hamra Village', building: 'Falcon Island',
     bedrooms: 4, bathrooms: 5, areaSqft: 3500, priceAed: 2300000,
-    isVerified: true, coverImageUrl: null, amenities: ['Beach access', 'Private pool', 'Marina'], latitude: 25.683, longitude: 55.778,
+    isVerified: true, coverImageUrl: null, amenities: ['Beach access', 'Private Pool', 'Marina'], latitude: 25.683, longitude: 55.778,
     handoverBy: 'Q2 2028', paymentPlan: '70/30', developerName: 'Al Hamra', developerLogo: 'https://d1fikckodunwer.cloudfront.net/dc32e8b3-6aef-4397-807c-03616743ff12',
   },
   {

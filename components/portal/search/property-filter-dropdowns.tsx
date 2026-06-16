@@ -43,7 +43,7 @@ export function PropertyFilterDropdowns({
   // active "More" count
   const moreCount = ['minPrice', 'maxPrice', 'minSize', 'maxSize', 'completion'].filter((k) => get(k)).length
     + (get('verified') === 'true' ? 1 : 0)
-    + csv(get('keywords')).length + csv(get('developers')).length + csv(get('agents')).length;
+    + csv(get('keywords')).length + csv(get('developers')).length + csv(get('agents')).length + csv(get('amenities')).length;
 
   return (
     <>
@@ -140,6 +140,7 @@ function MoreFilters({
   const keywords = csv(get('keywords'));
   const developers = csv(get('developers'));
   const agents = csv(get('agents'));
+  const amenities = csv(get('amenities'));
   const completion = get('completion');
   const verified = get('verified') === 'true';
 
@@ -205,6 +206,22 @@ function MoreFilters({
         <MultiSelect title="Agent / Agency" placeholder="Search agents or agencies" selected={agents} options={agentOptions} onToggle={(v) => toggle('agents', agents, v)} />
       )}
 
+      {/* Amenities */}
+      <div>
+        <p className="text-[12px] text-graphite mb-2">Amenities</p>
+        <div className="max-h-44 overflow-auto space-y-0.5">
+          {options.amenities.map((a) => {
+            const on = amenities.includes(a);
+            return (
+              <label key={a} className="flex items-center gap-2.5 px-1 py-1.5 rounded-lg text-[14px] text-ink hover:bg-mist cursor-pointer">
+                <input type="checkbox" className="h-4 w-4 accent-[#0071e3]" checked={on} onChange={() => toggle('amenities', amenities, a)} />
+                {a}
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Completion */}
       <div>
         <p className="text-[12px] text-graphite mb-2">Completion</p>
@@ -226,7 +243,7 @@ function MoreFilters({
       {/* Done / Reset */}
       <div className="flex justify-between pt-1 border-t border-hairline/60">
         <button type="button"
-          onClick={() => { setParams({ minPrice: null, maxPrice: null, minSize: null, maxSize: null, keywords: null, developers: null, agents: null, completion: null, verified: null }); close(); }}
+          onClick={() => { setParams({ minPrice: null, maxPrice: null, minSize: null, maxSize: null, keywords: null, developers: null, agents: null, amenities: null, completion: null, verified: null }); close(); }}
           className="text-[13px] text-graphite hover:text-ink mt-3">Reset</button>
         <button type="button"
           onClick={() => { setParams({ minPrice: minP || null, maxPrice: maxP || null, minSize: minA || null, maxSize: maxA || null }); close(); }}

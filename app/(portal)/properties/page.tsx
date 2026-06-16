@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const FILTER_KEYS = [
   'q', 'source', 'type', 'category', 'beds', 'baths', 'minPrice', 'maxPrice', 'minSize', 'maxSize',
-  'completion', 'verified', 'keywords', 'developers', 'agents',
+  'completion', 'verified', 'keywords', 'developers', 'agents', 'amenities',
 ] as const;
 
 export default async function PropertiesPage({

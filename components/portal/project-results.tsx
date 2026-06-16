@@ -28,6 +28,7 @@ function handoverNum(p: Listing): number {
 function matchHandover(handoverBy: string | null | undefined, sel: string): boolean {
   if (!handoverBy) return false;
   const year = Number(handoverBy.replace(/\D/g, '').slice(-4));
+  if (sel === 'later') return year > new Date().getFullYear();
   if (sel.endsWith('+')) return year >= Number(sel.replace('+', ''));
   return handoverBy.includes(sel);
 }

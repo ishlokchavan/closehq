@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { SearchPanel } from '@/components/portal/search/search-panel';
 import { MeshGradient } from '@/components/portal/mesh-gradient';
+import { getFilterOptions } from '@/lib/portal/filters';
 import { getI18n } from '@/lib/i18n/server';
 import type { LocaleCode } from '@/lib/i18n/config';
 import type { Messages } from '@/lib/i18n/dictionaries';
@@ -34,6 +35,7 @@ function CommissionHeadline({ locale, t, className }: { locale: LocaleCode; t: M
 
 export default async function PortalHomePage() {
   const { locale, messages } = await getI18n();
+  const filterOptions = await getFilterOptions();
   const t = messages.home;
 
   return (
@@ -52,7 +54,7 @@ export default async function PortalHomePage() {
             </Link>
           </p>
           <div className="mt-12">
-            <SearchPanel initial="properties" />
+            <SearchPanel initial="properties" options={filterOptions} />
           </div>
         </div>
       </section>

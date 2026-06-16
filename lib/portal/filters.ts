@@ -23,6 +23,7 @@ export interface FilterOptions {
   paymentPlans: string[];
   languages: string[];
   nationalities: string[];
+  amenities: string[];
   priceRangeAed: { min: number; max: number };
   areaRangeSqft: { min: number; max: number };
 }
@@ -49,6 +50,13 @@ export const DEFAULT_FILTER_OPTIONS: FilterOptions = {
   paymentPlans: ['40/60', '50/50', '60/40', '70/30', '80/20', '90/10'],
   languages: ['English', 'Arabic', 'Hindi', 'Russian', 'Chinese', 'Urdu', 'French'],
   nationalities: ['UAE', 'UK', 'India', 'Russia', 'China', 'Jordan', 'Pakistan', 'Egypt'],
+  amenities: [
+    'Central AC', 'Maids Room', 'Balcony', 'Shared Pool', 'Shared Spa', 'Shared Gym',
+    'Concierge Service', 'Covered Parking', 'View of Water', 'View of Landmark', 'Pets Allowed',
+    'Study', 'Private Garden', 'Private Pool', 'Private Gym', 'Private Jacuzzi', 'Built in Wardrobes',
+    'Walk-in Closet', 'Built in Kitchen Appliances', 'Maid Service', "Children's Play Area",
+    "Children's Pool", 'Barbecue Area',
+  ],
   priceRangeAed: { min: 0, max: 50_000_000 },
   areaRangeSqft: { min: 0, max: 20_000 },
 };

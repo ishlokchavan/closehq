@@ -58,6 +58,7 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
   const keywords = (get('keywords') ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
   const developers = (get('developers') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
   const agents = (get('agents') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  const amenities = (get('amenities') ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
 
   const bySource = useMemo(
     () => (source === 'all' ? listings : listings.filter((l) => l.source === source)),
@@ -82,9 +83,13 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
           const hay = [l.title, l.description, l.community, l.building, ...(l.amenities ?? [])].filter(Boolean).join(' ').toLowerCase();
           if (!keywords.every((k) => hay.includes(k))) return false;
         }
+        if (amenities.length) {
+          const have = new Set((l.amenities ?? []).map((a) => a.toLowerCase()));
+          if (!amenities.every((sel) => have.has(sel))) return false;
+        }
         return true;
       }),
-    [bySource, type, categoryFilter, beds, baths, minPrice, maxPrice, minSize, maxSize, completion, verified, developers, agents, keywords],
+    [bySource, type, categoryFilter, beds, baths, minPrice, maxPrice, minSize, maxSize, completion, verified, developers, agents, keywords, amenities],
   );
 
   const typeCounts = useMemo(() => {
