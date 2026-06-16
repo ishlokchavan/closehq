@@ -3,13 +3,14 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronDown, Globe, Menu, X } from 'lucide-react';
+import { ChevronDown, Globe, Menu, X, User as UserIcon, LogOut, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { PORTAL_NAV, type NavItem, type JourneyKey } from '@/lib/portal-config';
 import { useI18n } from '@/components/i18n/locale-provider';
+import { useAuth } from '@/components/portal/auth-provider';
 import { LOCALES } from '@/lib/i18n/config';
 
 function isActive(pathname: string, item: NavItem) {
@@ -19,6 +20,7 @@ function isActive(pathname: string, item: NavItem) {
 export function PortalHeader() {
   const pathname = usePathname();
   const { messages, locale, setLocale } = useI18n();
+  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
@@ -93,12 +95,18 @@ export function PortalHeader() {
         {/* Desktop right: language + auth */}
         <div className="hidden md:flex items-center gap-2">
           <LanguagePill />
-          <Link href="/login">
-            <Button variant="outline" size="sm">{messages.nav.signIn}</Button>
-          </Link>
-          <Link href="/signup">
-            <Button variant="primary" size="sm">{messages.nav.signUp}</Button>
-          </Link>
+          {user ? (
+            <UserMenu />
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="outline" size="sm">{messages.nav.signIn}</Button>
+              </Link>
+              <Link href="/signup">
+                <Button variant="primary" size="sm">{messages.nav.signUp}</Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -168,19 +176,86 @@ export function PortalHeader() {
                   ))}
                 </div>
               </div>
-              <div className="py-4 flex gap-2">
-                <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
-                  <Button variant="outline" size="md" className="w-full">{messages.nav.signIn}</Button>
-                </Link>
-                <Link href="/signup" onClick={() => setMobileOpen(false)} className="flex-1">
-                  <Button variant="primary" size="md" className="w-full">{messages.nav.signUp}</Button>
-                </Link>
-              </div>
+              {user ? (
+                <div className="py-4 flex flex-col gap-2">
+                  <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
+                    <Button variant="outline" size="md" className="w-full">Dashboard</Button>
+                  </Link>
+                  <Button variant="ghost" size="md" className="w-full" onClick={() => { signOut(); setMobileOpen(false); }}>Sign out</Button>
+                </div>
+              ) : (
+                <div className="py-4 flex gap-2">
+                  <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
+                    <Button variant="outline" size="md" className="w-full">{messages.nav.signIn}</Button>
+                  </Link>
+                  <Link href="/signup" onClick={() => setMobileOpen(false)} className="flex-1">
+                    <Button variant="primary" size="md" className="w-full">{messages.nav.signUp}</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+/** Signed-in avatar + dropdown (name/email, Dashboard, Sign out). */
+function UserMenu() {
+  const { user, signOut } = useAuth();
+  const [open, setOpen] = useState(false);
+  if (!user) return null;
+  const meta = user.user_metadata ?? {};
+  const name = (meta.full_name as string) || (meta.name as string) || user.email?.split('@')[0] || 'Account';
+  const avatar = (meta.avatar_url as string) || (meta.picture as string) || null;
+
+  return (
+    <div className="relative" onMouseLeave={() => setOpen(false)}>
+      <button
+        onClick={() => setOpen((s) => !s)}
+        onMouseEnter={() => setOpen(true)}
+        className="flex items-center gap-2 h-9 ps-1 pe-2.5 rounded-full border border-hairline hover:border-ink/40 transition-colors"
+      >
+        <span className="flex items-center justify-center h-7 w-7 rounded-full bg-mist overflow-hidden text-graphite">
+          {avatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={avatar} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <UserIcon className="h-4 w-4" />
+          )}
+        </span>
+        <span className="text-[13px] text-ink max-w-[120px] truncate">{name}</span>
+        <ChevronDown className="h-3.5 w-3.5 text-graphite" />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.15 }}
+            className="absolute end-0 top-full pt-2 w-56"
+          >
+            <div className="card-surface shadow-elevated p-1.5">
+              <div className="px-3 py-2 border-b border-hairline/60 mb-1">
+                <p className="text-[13px] text-ink font-medium truncate">{name}</p>
+                <p className="text-[12px] text-graphite truncate">{user.email}</p>
+              </div>
+              <Link href="/dashboard" className="flex items-center gap-2 rounded-lg px-3 py-2 text-[14px] text-ink hover:bg-mist transition-colors">
+                <LayoutDashboard className="h-4 w-4 text-graphite" /> Dashboard
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="w-full flex items-center gap-2 rounded-lg px-3 py-2 text-[14px] text-ink hover:bg-mist transition-colors text-start"
+              >
+                <LogOut className="h-4 w-4 text-graphite" /> Sign out
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
