@@ -3,11 +3,17 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   ImageIcon, BedDouble, Bath, Maximize, BadgeCheck, MapPin, ChevronLeft,
-  Building2, Tag, ShieldCheck, Phone, Mail, MessageCircle,
+  Tag, ShieldCheck, Phone, Mail, MessageCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getListingByReference, getListingReferences, formatPriceAed } from '@/lib/portal/listings';
+import { ListingCard } from '@/components/portal/listing-card';
+import { MortgageCalculator } from '@/components/portal/mortgage-calculator';
+import { getListingByReference, getListingReferences, getListings, formatPriceAed } from '@/lib/portal/listings';
 import type { Listing } from '@/lib/portal/listing-types';
+
+function aed(n: number): string {
+  return `AED ${Math.round(n).toLocaleString('en-US')}`;
+}
 
 const TYPE_LABEL: Record<Listing['propertyType'], string> = {
   apartment: 'Apartment', villa: 'Villa', townhouse: 'Townhouse', penthouse: 'Penthouse',
@@ -43,6 +49,14 @@ export default async function ListingDetailPage({
   if (!listing) notFound();
 
   const location = [listing.building, listing.community, listing.city].filter(Boolean).join(', ');
+
+  // Cost breakdown (iClose vs typical agent) + similar listings.
+  const agentCommission = listing.priceAed * 0.02; // typical 2% buyer commission
+  const dldFee = listing.priceAed * 0.04; // DLD transfer fee 4%
+  const pricePerSqft = listing.areaSqft ? listing.priceAed / listing.areaSqft : null;
+  const similar = (await getListings({ purpose: listing.purpose }))
+    .filter((l) => l.reference !== listing.reference)
+    .slice(0, 3);
 
   return (
     <div className="container-wide py-8">
@@ -159,44 +173,54 @@ export default async function ListingDetailPage({
           </section>
         </div>
 
-        {/* Sidebar: zero-commission + enquire */}
+        {/* Sidebar: price + cost breakdown (Proffer-style) */}
         <aside className="lg:col-span-1">
           <div className="card-surface p-6 lg:sticky lg:top-20">
-            <div className="flex items-center gap-2 rounded-xl bg-journey-buyer/15 px-3.5 py-2.5 mb-5">
-              <ShieldCheck className="h-4 w-4 text-ink shrink-0" />
-              <span className="text-[13px] text-ink">Buy with <strong>0% commission</strong> &amp; 100% cashback</span>
+            <p className="text-[12px] text-graphite">Price</p>
+            <div className="flex items-baseline gap-2">
+              <span className="display-sm">{formatPriceAed(listing.priceAed, listing.purpose)}</span>
+              {pricePerSqft && <span className="text-[13px] text-graphite">{aed(pricePerSqft)} / sqft</span>}
             </div>
 
-            <div className="flex items-center gap-3 mb-5">
-              <span className="flex items-center justify-center h-12 w-12 rounded-full bg-mist text-hairline">
-                <Building2 className="h-6 w-6" />
-              </span>
-              <div>
-                <p className="text-[14px] text-ink font-medium">iClose</p>
-                <p className="text-[12px] text-graphite">Verified listing partner</p>
+            {/* Savings vs a typical agent */}
+            <div className="flex items-center gap-2 rounded-xl bg-journey-listing/15 px-3.5 py-2.5 mt-4">
+              <ShieldCheck className="h-4 w-4 text-ink shrink-0" />
+              <span className="text-[13px] text-ink">Save <strong>{aed(agentCommission)}</strong> with iClose — 0% commission</span>
+            </div>
+
+            {/* Cost rows */}
+            <dl className="mt-4 space-y-2 text-[13px]">
+              <div className="flex justify-between"><dt className="text-graphite">DLD fee (4%)</dt><dd className="text-ink">{aed(dldFee)}</dd></div>
+              <div className="flex justify-between"><dt className="text-graphite">Agent commission</dt><dd className="text-graphite line-through">{aed(agentCommission)}</dd></div>
+              <div className="flex justify-between"><dt className="text-ink font-medium">With iClose</dt><dd className="text-journey-listing font-semibold">AED 0</dd></div>
+            </dl>
+
+            {/* with iClose vs with Agent */}
+            <div className="mt-4 grid grid-cols-2 rounded-xl overflow-hidden border border-hairline/60 text-center text-[12px]">
+              <div className="bg-accent/10 py-2.5">
+                <div className="text-graphite">With iClose</div>
+                <div className="text-[15px] font-semibold text-accent mt-0.5">AED 0</div>
+              </div>
+              <div className="py-2.5 border-s border-hairline/60">
+                <div className="text-graphite">With agent</div>
+                <div className="text-[15px] font-semibold text-ink mt-0.5">{aed(agentCommission)}</div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2.5 mt-5">
               <Link href={`/buy?ref=${listing.reference}`}>
-                <Button variant="primary" size="md" className="w-full">
-                  <Mail className="h-4 w-4" /> Enquire now
-                </Button>
+                <Button variant="primary" size="md" className="w-full"><Mail className="h-4 w-4" /> Make an offer</Button>
               </Link>
               <div className="grid grid-cols-2 gap-2.5">
                 <Link href={`/buy?ref=${listing.reference}`}>
-                  <Button variant="outline" size="md" className="w-full">
-                    <Phone className="h-4 w-4" /> Call
-                  </Button>
+                  <Button variant="outline" size="md" className="w-full"><Phone className="h-4 w-4" /> Call</Button>
                 </Link>
                 <a
                   href={`https://wa.me/${(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '971501234567').replace(/\D/g, '')}?text=${encodeURIComponent(`Hi, I'm interested in listing ${listing.reference}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button variant="outline" size="md" className="w-full">
-                    <MessageCircle className="h-4 w-4" /> WhatsApp
-                  </Button>
+                  <Button variant="outline" size="md" className="w-full"><MessageCircle className="h-4 w-4" /> WhatsApp</Button>
                 </a>
               </div>
             </div>
@@ -207,6 +231,41 @@ export default async function ListingDetailPage({
           </div>
         </aside>
       </div>
+
+      {/* Mortgage calculator */}
+      <MortgageCalculator price={listing.priceAed} />
+
+      {/* Regulatory information (PF pattern) */}
+      <section className="mt-7">
+        <h2 className="text-[18px] font-semibold text-ink mb-3" style={{ letterSpacing: '-0.015em' }}>Regulatory information</h2>
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0 rounded-apple border border-hairline/60 overflow-hidden">
+          {[
+            ['Reference', listing.reference],
+            ['Listed', 'Recently'],
+            ['Trakheesi permit', 'Verified at review'],
+            ['Zone name', listing.community ?? listing.city],
+            ['DLD', 'Dubai Land Department'],
+            ['Listed by', 'iClose (verified)'],
+          ].map(([k, v], i) => (
+            <div key={k} className={`flex items-center justify-between gap-4 px-4 py-3 text-[14px] ${i % 2 ? '' : 'bg-mist/50'}`}>
+              <dt className="text-graphite">{k}</dt>
+              <dd className="text-ink font-medium text-end">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* Similar properties */}
+      {similar.length > 0 && (
+        <section className="mt-10">
+          <h2 className="display-sm mb-5">Similar properties</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {similar.map((l) => (
+              <ListingCard key={l.id} listing={l} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
