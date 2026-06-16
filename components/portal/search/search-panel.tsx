@@ -13,7 +13,6 @@ interface VerticalConfig {
   /** Leading toggle pill (e.g. Residential ⇄ Commercial). */
   segment?: string;
   filters: string[];
-  accent: 'red' | 'green';
   withLocationIcon?: boolean;
 }
 
@@ -24,32 +23,23 @@ const CONFIG: Record<SearchTabKey, VerticalConfig> = {
     placeholder: 'City, community or building',
     segment: 'Residential',
     filters: ['Property type', 'Beds & Baths', 'Price', 'Amenities', 'Area (sqft)'],
-    accent: 'red',
   },
   'new-releases': {
     placeholder: 'Location, project or developer',
     withLocationIcon: true,
     filters: ['Property type', 'Bedrooms', 'Price', 'Amenities', 'Delivery date'],
-    accent: 'green',
   },
   transactions: {
     subTabs: ['Sold', 'Rented'],
     placeholder: 'Search for any location in Dubai',
     filters: [],
-    accent: 'red',
   },
   agents: {
     subTabs: ['Agents', 'Companies'],
     placeholder: 'Enter location or agent name',
     segment: 'Residential For Sale',
     filters: ['Property type', 'Language', 'Nationality'],
-    accent: 'red',
   },
-};
-
-const ACCENT_BTN: Record<'red' | 'green', string> = {
-  red: 'bg-journey-flag text-white hover:bg-journey-flag/90',
-  green: 'bg-journey-listing text-white hover:bg-journey-listing/90',
 };
 
 /**
@@ -141,7 +131,7 @@ export function SearchPanel({ initial = 'properties' }: { initial?: SearchTabKey
           <button
             type="button"
             onClick={onSearch}
-            className={cn('h-11 px-6 rounded-full text-[15px] font-medium transition-colors', ACCENT_BTN[config.accent])}
+            className="h-11 px-6 rounded-full text-[15px] font-medium text-white bg-accent hover:bg-accent-hover active:bg-accent-dark transition-colors"
           >
             Search
           </button>
