@@ -14,10 +14,12 @@ export const metadata: Metadata = {
     'Search Dubai property, off-plan new releases, transactions and agents. Buy, sell and close real estate in the UAE without paying commission.',
 };
 
-const HOME_CARDS: { href: string; cta: string }[] = [
-  { href: '/buy', cta: 'Looking To Buy?' },
-  { href: '/sell', cta: 'Looking To Sell?' },
-  { href: '/close', cta: 'Want to List or Close?' },
+// Generated Dubai real-estate imagery (move to owned storage later).
+const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7';
+const HOME_CARDS: { href: string; cta: string; image: string }[] = [
+  { href: '/buy', cta: 'Looking To Buy?', image: `${CDN}/hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png` },
+  { href: '/sell', cta: 'Looking To Sell?', image: `${CDN}/hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png` },
+  { href: '/close', cta: 'Want to List or Close?', image: `${CDN}/hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png` },
 ];
 
 /** The commission headline — bold Buy/Sell/Close in English, plain otherwise. */
@@ -68,9 +70,10 @@ export default async function PortalHomePage() {
               href={card.href}
               className="group relative overflow-hidden rounded-apple min-h-[230px] flex flex-col items-center justify-center text-center p-8 shadow-card hover:shadow-card-hover transition-shadow"
             >
-              {/* Placeholder image + dark overlay (real photography swapped in later) */}
-              <div className="absolute inset-0 bg-gradient-to-br from-ink-700 via-ink-900 to-black" />
-              <div className="absolute inset-0 bg-black/35 group-hover:bg-black/30 transition-colors" />
+              {/* Generated Dubai imagery + dark overlay for legibility */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={card.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-black/45 group-hover:bg-black/35 transition-colors" />
 
               <div className="relative">
                 <h2 className="text-[22px] sm:text-[24px] leading-tight font-medium text-white max-w-xs mx-auto" style={{ letterSpacing: '-0.02em' }}>

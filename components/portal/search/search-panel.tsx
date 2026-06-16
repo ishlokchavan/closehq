@@ -23,7 +23,7 @@ const CONFIG: Record<SearchTabKey, VerticalConfig> = {
   properties: { subTabs: [{ key: 'all', param: 'all' }, { key: 'offplan', param: 'off-plan' }, { key: 'ready', param: 'ready' }] },
   'new-releases': { withLocationIcon: true },
   transactions: {},
-  agents: { subTabs: [{ key: 'agents', param: 'agents' }, { key: 'companies', param: 'companies' }], filters: ['Property type', 'Language', 'Nationality'] },
+  agents: {},
 };
 
 const RES_TYPES = ['apartment', 'villa', 'townhouse', 'penthouse', 'plot'];
