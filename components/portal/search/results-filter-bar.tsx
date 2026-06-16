@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SEARCH_TABS, type SearchTabKey } from '@/lib/portal-config';
+import { useListingFilters, type FilterParams } from '@/components/portal/use-listing-filters';
+import { PropertyFilterDropdowns } from './property-filter-dropdowns';
 
 /** Compact filter sets per vertical (Proffer/PF results-bar style). */
 const BAR: Record<SearchTabKey, { placeholder: string; filters: string[] }> = {
@@ -19,14 +20,22 @@ const BAR: Record<SearchTabKey, { placeholder: string; filters: string[] }> = {
  * Slim, sticky results header: vertical tabs + a search field + filter pills.
  * Keeps the focus on the map/results below (vs the big home hero).
  */
-export function ResultsFilterBar({ active, defaultQuery = '' }: { active: SearchTabKey; defaultQuery?: string }) {
-  const router = useRouter();
+export function ResultsFilterBar({
+  active,
+  defaultQuery = '',
+  params = {},
+}: {
+  active: SearchTabKey;
+  defaultQuery?: string;
+  params?: FilterParams;
+}) {
+  const { setParams } = useListingFilters(params);
   const [query, setQuery] = useState(defaultQuery);
   const cfg = BAR[active];
 
   function onSearch() {
-    const href = SEARCH_TABS.find((t) => t.key === active)!.href;
-    router.push(query.trim() ? `${href}?q=${encodeURIComponent(query.trim())}` : href);
+    // Preserve the other active filters; just update ?q on the current page.
+    setParams({ q: query.trim() || null });
   }
 
   return (
@@ -60,21 +69,27 @@ export function ResultsFilterBar({ active, defaultQuery = '' }: { active: Search
               className="w-full h-10 ps-10 pe-3 rounded-full border border-hairline text-[14px] text-ink placeholder:text-graphite focus:outline-none focus:ring-2 focus:ring-accent/40"
             />
           </div>
-          {cfg.filters.map((f) => (
-            <button
-              key={f}
-              type="button"
-              className="hidden sm:inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors"
-            >
-              {f} <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-            </button>
-          ))}
-          <button
-            type="button"
-            className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors"
-          >
-            <SlidersHorizontal className="h-3.5 w-3.5" /> More filters
-          </button>
+          {active === 'properties' ? (
+            <PropertyFilterDropdowns params={params} />
+          ) : (
+            <>
+              {cfg.filters.map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  className="hidden sm:inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors"
+                >
+                  {f} <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+                </button>
+              ))}
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full border border-hairline text-[13px] text-ink/80 hover:border-ink/40 hover:text-ink transition-colors"
+              >
+                <SlidersHorizontal className="h-3.5 w-3.5" /> More filters
+              </button>
+            </>
+          )}
           <button
             type="button"
             onClick={onSearch}

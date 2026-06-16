@@ -25,7 +25,7 @@ export default async function TransactionsPage({
 
   return (
     <>
-      <ResultsFilterBar active="transactions" defaultQuery={q ?? ''} />
+      <ResultsFilterBar active="transactions" defaultQuery={q ?? ''} params={{ tab: activeKind, ...(q ? { q } : {}) }} />
       <section className="container-wide py-6 space-y-6">
         {/* Sold / Rented toggle */}
         <div className="inline-flex items-center gap-1 p-1 rounded-full bg-mist">

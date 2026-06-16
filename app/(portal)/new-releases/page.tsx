@@ -20,7 +20,7 @@ export default async function NewReleasesPage({
 
   return (
     <>
-      <ResultsFilterBar active="new-releases" defaultQuery={q ?? ''} />
+      <ResultsFilterBar active="new-releases" defaultQuery={q ?? ''} params={q ? { q } : {}} />
       <section className="container-wide py-6">
         {/* Ask iExpert assistant entry (renamed from the competitor's "Ask Scout") */}
         <div className="mb-6 flex items-center gap-3 card-surface px-5 py-4">
