@@ -45,7 +45,7 @@ export default function DevelopersPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {developers.map((dev) => (
-          <DeveloperCard key={dev.id} developer={dev} />
+          <DeveloperCard key={dev.slug} developer={dev} />
         ))}
       </div>
     </div>
@@ -56,37 +56,37 @@ function DeveloperCard({ developer }: { developer: Developer }) {
   const isGovernment = developer.tier === 'government';
 
   return (
-    <div className="card-surface p-6 flex flex-col">
-      <div className="flex items-center gap-3 mb-5 h-10">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={developer.logo_url}
-          alt={`${developer.name} logo`}
-          className="h-9 w-9 object-contain"
-        />
-        <span className="text-[17px] text-ink font-medium" style={{ letterSpacing: '-0.015em' }}>
-          {developer.name}
+    <Link href={`/developers/${developer.slug}`} className="card-surface p-6 flex flex-col group hover:shadow-card-hover transition-shadow">
+      <div className="flex items-center gap-3 mb-5">
+        <span className="flex items-center justify-center h-12 w-12 rounded-xl bg-white border border-hairline/60 shrink-0 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={developer.logoUrl} alt={`${developer.name} logo`} className="h-9 w-9 object-contain" />
         </span>
+        <div className="min-w-0">
+          <span className="block text-[17px] text-ink font-medium truncate" style={{ letterSpacing: '-0.015em' }}>{developer.name}</span>
+          {developer.foundedYear && <span className="text-[12px] text-graphite">Since {developer.foundedYear}</span>}
+        </div>
       </div>
 
-      {/* Government developers hide the discount and show "Request details". */}
-      {isGovernment || developer.discount_pct == null ? (
-        <div className="rounded-xl bg-mist px-4 py-3 mb-5">
+      {/* Credit pill (private) or "Pricing on request" (government). */}
+      {isGovernment || developer.creditPct == null ? (
+        <div className="rounded-xl bg-mist px-4 py-3 mb-4">
           <span className="text-[14px] text-graphite-dark">Pricing on request</span>
         </div>
       ) : (
-        <div className="rounded-xl bg-journey-offplan/15 px-4 py-3 mb-5">
-          <span className="text-[13px] text-graphite-dark">Discounts up to </span>
-          <span className="text-[20px] text-ink font-semibold">{developer.discount_pct}%</span>
+        <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-journey-offplan/20 px-3.5 py-1.5 mb-4">
+          <span className="text-[13px] text-ink">Up to</span>
+          <span className="text-[15px] text-ink font-semibold">{developer.creditPct}%</span>
+          <span className="text-[13px] text-ink">credits</span>
         </div>
       )}
 
-      <Link href={developer.cta_target} className="mt-auto">
-        <Button variant="outline" size="md" className="w-full justify-between">
-          {isGovernment ? 'Request details' : 'Get this discount'}
-          <ArrowRight className="h-4 w-4" />
-        </Button>
-      </Link>
-    </div>
+      <p className="text-[13px] text-graphite-dark line-clamp-2 mb-5">{developer.tagline}</p>
+
+      <span className="mt-auto inline-flex items-center justify-between text-[14px] text-accent font-medium">
+        {isGovernment ? 'View developer' : 'View projects & credits'}
+        <ArrowRight className="h-4 w-4 rtl:rotate-180 group-hover:translate-x-0.5 transition-transform" />
+      </span>
+    </Link>
   );
 }

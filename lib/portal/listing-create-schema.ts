@@ -50,6 +50,8 @@ export const listingCreateSchema = z
     reraBrn: z.string().max(40).optional().or(z.literal('')),
     agencyName: z.string().max(120).optional().or(z.literal('')),
     trakheesiPermit: z.string().max(40).optional().or(z.literal('')),
+    /** Quality gate: the contact number must be the owner's, not the agent's. */
+    attestOwnerContact: z.boolean().optional().default(false),
 
     // honeypot
     website: z.string().optional(),
@@ -79,6 +81,13 @@ export const listingCreateSchema = z
       }
       if (data.documents.length === 0) {
         ctx.addIssue({ code: 'custom', path: ['documents'], message: 'Upload your Contract A (RERA Form A)' });
+      }
+      if (!data.attestOwnerContact) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['attestOwnerContact'],
+          message: "The contact number must be the owner's, not the agent's",
+        });
       }
     }
   });

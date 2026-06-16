@@ -200,6 +200,17 @@ export function ListingCreateForm({ path }: { path: ListingPath }) {
             {errors.attestOwnership && <p className={errCls}>{errors.attestOwnership.message as string}</p>}
           </div>
         )}
+
+        {path === 'agent' && (
+          <div>
+            <label className="flex items-start gap-2.5 text-[14px] text-ink">
+              <input type="checkbox" className="h-4 w-4 mt-0.5 accent-[#0071e3]" {...register('attestOwnerContact')} />
+              The contact number below is the property <strong>owner&apos;s</strong>, not mine or my agency&apos;s.
+              Listings with intermediary numbers are rejected to keep the database clean.
+            </label>
+            {errors.attestOwnerContact && <p className={errCls}>{errors.attestOwnerContact.message as string}</p>}
+          </div>
+        )}
       </section>
 
       {/* Contact */}
