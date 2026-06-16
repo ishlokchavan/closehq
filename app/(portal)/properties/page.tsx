@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { SearchHero } from '@/components/portal/search/search-hero';
+import { ResultsFilterBar } from '@/components/portal/search/results-filter-bar';
 import { PropertyResults } from '@/components/portal/property-results';
 import { getListings } from '@/lib/portal/listings';
 import { getLocale } from '@/lib/i18n/server';
@@ -23,12 +23,8 @@ export default async function PropertiesPage({
 
   return (
     <>
-      <SearchHero
-        active="properties"
-        title="Properties"
-        subtitle="Ready and secondary-market homes across Dubai and the UAE — never pay commission to buy."
-      />
-      <section className="container-wide pb-20">
+      <ResultsFilterBar active="properties" defaultQuery={q ?? ''} />
+      <section className="container-wide py-6">
         <PropertyResults listings={listings} title={q ? `Properties for “${q}”` : 'Properties for sale in Dubai'} />
       </section>
     </>
