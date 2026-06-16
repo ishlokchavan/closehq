@@ -18,7 +18,7 @@ function isActive(pathname: string, item: NavItem) {
 
 export function PortalHeader() {
   const pathname = usePathname();
-  const { messages } = useI18n();
+  const { messages, locale, setLocale } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
@@ -147,6 +147,27 @@ export function PortalHeader() {
                   )}
                 </div>
               ))}
+              {/* Language (not available elsewhere on mobile) */}
+              <div className="py-4 border-b border-hairline/60">
+                <div className="flex items-center gap-1.5 text-[13px] text-graphite mb-2">
+                  <Globe className="h-3.5 w-3.5" /> Language
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {LOCALES.map((l) => (
+                    <button
+                      key={l.code}
+                      type="button"
+                      onClick={() => { setLocale(l.code); setMobileOpen(false); }}
+                      className={cn(
+                        'h-9 px-3.5 rounded-full border text-[13px] transition-colors',
+                        l.code === locale ? 'border-accent text-accent bg-accent/5 font-medium' : 'border-hairline text-ink/80',
+                      )}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="py-4 flex gap-2">
                 <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
                   <Button variant="outline" size="md" className="w-full">{messages.nav.signIn}</Button>

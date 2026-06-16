@@ -85,9 +85,9 @@ export function PropertyResults({ listings, title, params }: { listings: Listing
   return (
     <div className="space-y-5">
       {/* Title + Map/List toggle */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h2 className="display-sm">{title}</h2>
-        <div className="inline-flex items-center gap-1 p-1 rounded-full bg-mist">
+        <div className="inline-flex items-center gap-1 p-1 rounded-full bg-mist self-start sm:self-auto">
           {(['map', 'list'] as View[]).map((v) => (
             <button
               key={v}
