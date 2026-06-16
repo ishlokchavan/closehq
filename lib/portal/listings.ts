@@ -88,6 +88,37 @@ export async function getListings(filters: ListingFilters = {}, locale = 'en'): 
   return filterSeed(filters);
 }
 
+/**
+ * Fetch a single active listing by its public reference. Queries Supabase when
+ * configured; otherwise falls back to the seed dataset. Returns null if absent.
+ */
+export async function getListingByReference(reference: string, locale = 'en'): Promise<Listing | null> {
+  if (isSupabaseConfigured()) {
+    try {
+      const { supabase } = await import('@/lib/supabase');
+      const { data, error } = await supabase
+        .from('listings')
+        .select(
+          'id,reference,purpose,completion,category,property_type,city,community,building,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,listing_translations(locale,title,description)',
+        )
+        .eq('status', 'active')
+        .eq('reference', reference)
+        .maybeSingle();
+      if (!error && data) return rowToListing(data as unknown as ListingRow, locale);
+    } catch {
+      // fall through to seed
+    }
+  }
+  const { SEED_LISTINGS } = await import('./seed-listings');
+  return SEED_LISTINGS.find((l) => l.reference === reference) ?? null;
+}
+
+/** All listing references (for static params / sitemaps). */
+export async function getListingReferences(): Promise<string[]> {
+  const { SEED_LISTINGS } = await import('./seed-listings');
+  return SEED_LISTINGS.map((l) => l.reference);
+}
+
 /** Format an AED price, appending /yr for rentals. */
 export function formatPriceAed(value: number, purpose: 'sale' | 'rent'): string {
   const formatted = `AED ${value.toLocaleString('en-US')}`;

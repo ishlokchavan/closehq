@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ImageIcon, BedDouble, Bath, Maximize, BadgeCheck, MapPin } from 'lucide-react';
 import { formatPriceAed } from '@/lib/portal/listings';
 import type { Listing } from '@/lib/portal/listing-types';
@@ -9,7 +10,9 @@ const TYPE_LABEL: Record<Listing['propertyType'], string> = {
 
 export function ListingCard({ listing }: { listing: Listing }) {
   return (
-    <article className="card-surface overflow-hidden group hover:shadow-card-hover transition-shadow">
+    <Link
+      href={`/properties/${listing.reference}`}
+      className="card-surface overflow-hidden group hover:shadow-card-hover transition-shadow block">
       {/* Image — placeholder block (real photos swapped in later) */}
       <div className="relative aspect-[4/3] bg-mist flex items-center justify-center">
         {listing.coverImageUrl ? (
@@ -64,6 +67,6 @@ export function ListingCard({ listing }: { listing: Listing }) {
           )}
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
