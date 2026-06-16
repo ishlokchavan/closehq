@@ -7,7 +7,7 @@ import { getLocale } from '@/lib/i18n/server';
 import type { Listing } from '@/lib/portal/listing-types';
 
 export const metadata: Metadata = {
-  title: 'Compare Off-Plan Projects | iClose',
+  title: 'Compare Off-Plan Projects',
   description: 'Compare up to five off-plan projects side by side — price, bedrooms, delivery date, type and payment plan.',
 };
 

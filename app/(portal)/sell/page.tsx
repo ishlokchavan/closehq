@@ -3,7 +3,7 @@ import { JourneyPage } from '@/components/portal/journey/journey-page';
 import { JOURNEY_CONTENT } from '@/lib/journey-content';
 
 export const metadata: Metadata = {
-  title: 'Sell Property in Dubai Without Commission | iClose',
+  title: 'Sell Property in Dubai Without Commission',
   description: 'List and sell your Dubai property as the owner without paying commission. See how selling with iClose works.',
 };
 

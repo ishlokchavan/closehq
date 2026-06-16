@@ -6,7 +6,7 @@ import { getTransactions } from '@/lib/portal/transactions';
 import { getFilterOptions } from '@/lib/portal/filters';
 
 export const metadata: Metadata = {
-  title: 'Dubai Property Transactions & Sold Prices | iClose',
+  title: 'Dubai Property Transactions & Sold Prices',
   description:
     'Explore real Dubai property transactions and historical sold prices by area, building and community. Track price trends before you buy or sell.',
 };

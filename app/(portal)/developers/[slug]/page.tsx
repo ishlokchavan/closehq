@@ -12,9 +12,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const dev = getDeveloperBySlug(slug);
-  if (!dev) return { title: 'Developer not found | iClose' };
+  if (!dev) return { title: 'Developer not found' };
   return {
-    title: `${dev.name} — Off-Plan Projects & Credits | iClose`,
+    title: `${dev.name} — Off-Plan Projects & Credits`,
     description: `${dev.name}: ${dev.tagline} Explore projects and unlock iClose credits — talk to an off-plan expert.`,
   };
 }

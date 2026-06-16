@@ -6,7 +6,7 @@ import { getAgents, getAgencies } from '@/lib/portal/agents';
 import { getFilterOptions } from '@/lib/portal/filters';
 
 export const metadata: Metadata = {
-  title: 'Find Real Estate Agents & Agencies in Dubai | iClose',
+  title: 'Find Real Estate Agents & Agencies in Dubai',
   description:
     'Browse verified Dubai real estate agents and agencies. Filter by area, property type, language and nationality.',
 };

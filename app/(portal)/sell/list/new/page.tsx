@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ListingCreateForm } from '@/components/portal/listing-create-form';
 
 export const metadata: Metadata = {
-  title: 'List Your Property as the Owner | iClose',
+  title: 'List Your Property as the Owner',
   description: 'Create a compliant owner / power-of-attorney listing with ownership verification — no commission.',
 };
 

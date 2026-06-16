@@ -10,7 +10,7 @@ import { getDevelopers } from '@/lib/developers-data';
 import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
-  title: 'Properties for Sale in Dubai | iClose',
+  title: 'Properties for Sale in Dubai',
   description:
     'Search ready and secondary-market properties across Dubai and the UAE. Filter by community, property type, beds, price, developer, agent and keywords.',
 };

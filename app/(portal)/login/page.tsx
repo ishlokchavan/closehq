@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { AuthForm } from '@/components/portal/auth-form';
 
 export const metadata: Metadata = {
-  title: 'Sign in | iClose',
+  title: 'Sign in',
   description: 'Sign in to your iClose account to manage listings, credits and enquiries.',
 };
 

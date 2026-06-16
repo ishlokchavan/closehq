@@ -6,7 +6,7 @@ import { MeshGradient } from '@/components/portal/mesh-gradient';
 import { CREDIT_AED_RATE, creditsToAed, EARN_METHODS, type IconKey } from '@/lib/portal/credits';
 
 export const metadata: Metadata = {
-  title: 'iClose Credits — Earn & Redeem | iClose',
+  title: 'iClose Credits — Earn & Redeem',
   description:
     'iClose Credits explained: 1 credit = 0.5 AED. Earn credits on off-plan investments, referrals and deals, and redeem them as cashback, off-plan payments and more.',
 };

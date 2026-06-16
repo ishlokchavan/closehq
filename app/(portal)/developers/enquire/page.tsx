@@ -5,7 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 import { DeveloperEnquiryForm } from '@/components/portal/developer-enquiry-form';
 
 export const metadata: Metadata = {
-  title: 'Talk to an Off-Plan Expert | iClose',
+  title: 'Talk to an Off-Plan Expert',
   description: 'Get off-plan advice, special pricing and credits across Dubai developers. Talk to the iClose team.',
 };
 

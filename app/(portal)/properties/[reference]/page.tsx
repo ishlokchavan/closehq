@@ -32,9 +32,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { reference } = await params;
   const listing = await getListingByReference(reference);
-  if (!listing) return { title: 'Listing not found | iClose' };
+  if (!listing) return { title: 'Listing not found' };
   return {
-    title: `${listing.title} | iClose`,
+    title: `${listing.title}`,
     description: listing.description || `${listing.title} in ${listing.community ?? listing.city}.`,
   };
 }

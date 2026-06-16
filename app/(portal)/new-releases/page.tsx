@@ -10,7 +10,7 @@ import { getRandomExpert } from '@/lib/portal/experts';
 import { getLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
-  title: 'New Releases & Off-Plan Projects in Dubai | iClose',
+  title: 'New Releases & Off-Plan Projects in Dubai',
   description:
     'Discover new off-plan launches in Dubai. Filter by handover date, payment plan and completion. Invest in off-plan for special pricing and credits.',
 };

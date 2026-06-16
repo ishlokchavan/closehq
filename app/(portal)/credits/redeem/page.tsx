@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { CREDIT_AED_RATE, REDEEM_METHODS, type IconKey } from '@/lib/portal/credits';
 
 export const metadata: Metadata = {
-  title: 'Redeem iClose Credits | iClose',
+  title: 'Redeem iClose Credits',
   description:
     'Redeem iClose Credits as cashback to your bank, off-plan payments, service-fee offsets, or gift them to a friend. 1 credit = 0.5 AED.',
 };

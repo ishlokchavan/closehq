@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ListingCreateForm } from '@/components/portal/listing-create-form';
 
 export const metadata: Metadata = {
-  title: 'List with Contract A (RERA Form A) | iClose',
+  title: 'List with Contract A (RERA Form A)',
   description: 'List compliantly as a RERA broker using a Form A listing agreement and keep 100% of your commission.',
 };
 

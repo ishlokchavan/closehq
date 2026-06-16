@@ -40,7 +40,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'iClose, Learn Dubai Real Estate from the Specialists',
+    default: 'iClose — Never Pay Commission to Buy, Sell or Close',
     template: '%s | iClose',
   },
   description: siteConfig.description,
@@ -52,20 +52,20 @@ export const metadata: Metadata = {
     locale: 'en_AE',
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: 'iClose, Learn Dubai Real Estate from the Specialists',
+    title: 'iClose — Never Pay Commission to Buy, Sell or Close',
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'iClose, The Dubai secondary market learning platform',
+        alt: 'iClose — buy, sell and close Dubai real estate without commission',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'iClose, Learn Dubai Real Estate from the Specialists',
+    title: 'iClose — Never Pay Commission to Buy, Sell or Close',
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },

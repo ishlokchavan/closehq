@@ -3,7 +3,7 @@ import { JourneyPage } from '@/components/portal/journey/journey-page';
 import { JOURNEY_CONTENT_CHILDREN } from '@/lib/journey-content';
 
 export const metadata: Metadata = {
-  title: 'Brokerage Portal for Agents & Agencies | iClose',
+  title: 'Brokerage Portal for Agents & Agencies',
   description: 'Manage listings, leads and deals in one portal — and keep 100% of your commission.',
 };
 

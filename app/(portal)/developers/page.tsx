@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { getDevelopers, type Developer } from '@/lib/developers-data';
 
 export const metadata: Metadata = {
-  title: 'Off-Plan Developer Discounts in Dubai | iClose',
+  title: 'Off-Plan Developer Discounts in Dubai',
   description:
     'Exclusive off-plan pricing and credits across Dubai developers. Talk to an iClose expert for special pricing on Emaar, Damac, Sobha, Binghatti and more.',
 };
