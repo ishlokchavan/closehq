@@ -14,12 +14,16 @@ export const metadata: Metadata = {
     'Search Dubai property, off-plan new releases, transactions and agents. Buy, sell and close real estate in the UAE without paying commission.',
 };
 
-// Generated Dubai real-estate imagery (move to owned storage later).
+// Generated Dubai real-estate imagery. To move to owned storage:
+//   1) run `bash scripts/fetch-home-images.sh` (downloads to public/images/home)
+//   2) commit the PNGs and set LOCAL_IMAGES = true below.
+const LOCAL_IMAGES = false;
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7';
+const IMG = (local: string, remote: string) => (LOCAL_IMAGES ? `/images/home/${local}` : `${CDN}/${remote}`);
 const HOME_CARDS: { href: string; cta: string; image: string }[] = [
-  { href: '/buy', cta: 'Looking To Buy?', image: `${CDN}/hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png` },
-  { href: '/sell', cta: 'Looking To Sell?', image: `${CDN}/hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png` },
-  { href: '/close', cta: 'Want to List or Close?', image: `${CDN}/hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png` },
+  { href: '/buy', cta: 'Looking To Buy?', image: IMG('buy.png', 'hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png') },
+  { href: '/sell', cta: 'Looking To Sell?', image: IMG('sell.png', 'hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png') },
+  { href: '/close', cta: 'Want to List or Close?', image: IMG('close.png', 'hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png') },
 ];
 
 /** The commission headline — bold Buy/Sell/Close in English, plain otherwise. */
