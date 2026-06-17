@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   Heart,
   Share2,
@@ -20,7 +19,7 @@ import type { ExperienceListing } from '@/lib/glass/experience-data';
 import { formatAed, formatCredits } from '@/lib/glass/experience-data';
 import { deterministicReason, likedPhrases } from '@/lib/glass/explain';
 import { useSignals } from './signal-store';
-import { SmartImage } from './smart-image';
+import { SwipeGallery } from './swipe-gallery';
 
 function haptic(ms = 12) {
   if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
@@ -51,11 +50,7 @@ export function DiscoveryCard({
   onDetails: () => void;
   headerOffset: string;
 }) {
-  const [photo, setPhoto] = useState(0);
-  const [burst, setBurst] = useState(0);
-  const lastTap = useRef(0);
   const href = `/experience/property/${listing.reference}`;
-  const count = listing.images.length;
 
   const { affinity } = useSignals();
   const [whyOpen, setWhyOpen] = useState(false);
@@ -91,25 +86,6 @@ export function DiscoveryCard({
     }
   }
 
-  function onPhotoTap(e: React.MouseEvent<HTMLDivElement>) {
-    const now = Date.now();
-    if (now - lastTap.current < 280) {
-      if (!saved) {
-        onToggleSave();
-        haptic(18);
-      }
-      setBurst((b) => b + 1);
-      lastTap.current = 0;
-      return;
-    }
-    lastTap.current = now;
-    if (count > 1) {
-      const { left, width } = e.currentTarget.getBoundingClientRect();
-      const isLeft = e.clientX - left < width / 2;
-      setPhoto((p) => (isLeft ? (p - 1 + count) % count : (p + 1) % count));
-    }
-  }
-
   return (
     <article className="lg-snap-start relative h-[100svh] w-full snap-start overflow-hidden bg-paper">
       <div
@@ -118,95 +94,67 @@ export function DiscoveryCard({
         }`}
         style={{ paddingTop: headerOffset }}
       >
-        {/* Media (≈3/4 height) */}
-        <div
-          className="relative flex-1 cursor-pointer select-none overflow-hidden bg-mist"
-          onClick={onPhotoTap}
-        >
-          {listing.images.map((src, i) => (
-            <SmartImage
-              key={src + i}
-              src={src}
-              alt={listing.title}
-              fill
-              priority={i === 0 && active}
-              sizes="(max-width: 520px) 100vw, 520px"
-              className={`object-cover transition-opacity duration-300 ${
-                i === photo ? 'opacity-100' : 'opacity-0'
-              }`}
-              draggable={false}
-            />
-          ))}
+        {/* Media (≈3/4 height) — swipe left/right for photos */}
+        <div className="relative flex-1 overflow-hidden bg-mist">
+          <SwipeGallery
+            images={listing.images}
+            alt={listing.title}
+            priority={active}
+            indicator="bars"
+            onDoubleTap={() => {
+              if (!saved) {
+                onToggleSave();
+                haptic(18);
+              }
+            }}
+          />
+
           <div className="pointer-events-none absolute inset-x-0 top-0 h-20 lg-scrim-t" />
 
-          {/* carousel progress */}
-          {count > 1 && (
-            <div className="pointer-events-none absolute inset-x-4 top-3 flex gap-1.5">
-              {listing.images.map((src, i) => (
-                <span
-                  key={src + i}
-                  className={`h-[3px] flex-1 rounded-full ${
-                    i === photo ? 'bg-white' : 'bg-white/40'
-                  }`}
-                />
-              ))}
-            </div>
-          )}
-
           {/* chips */}
-          <div className="pointer-events-none absolute inset-x-4 top-5 flex items-center gap-2">
-            <span className="lg-glass-light rounded-full px-2.5 py-1 text-[11.5px] font-medium text-ink">
+          <div className="pointer-events-none absolute inset-x-4 top-9 flex items-center gap-2">
+            <span className="lg-glass-dark rounded-full px-2.5 py-1 text-[11.5px] font-medium text-white">
               {listing.hook}
             </span>
             {listing.isVerified && (
-              <span className="lg-glass-light flex items-center gap-1 rounded-full px-2 py-1 text-[11.5px] font-medium text-ink">
+              <span className="lg-glass-dark flex items-center gap-1 rounded-full px-2 py-1 text-[11.5px] font-medium text-white">
                 <BadgeCheck className="h-3.5 w-3.5 text-journey-listing" /> Verified
               </span>
             )}
           </div>
 
-          {/* TikTok-style right action rail */}
-          <div className="absolute bottom-5 right-3 flex flex-col items-center gap-4">
+          {/* TikTok-style right action rail — dark glass chips stay readable on any bg */}
+          <div className="absolute bottom-5 right-3 flex flex-col items-center gap-3.5">
             <RailButton
               label={saved ? 'Saved' : 'Save'}
+              active={saved}
               onClick={() => {
                 onToggleSave();
                 haptic(14);
               }}
             >
-              <Heart
-                className={`h-7 w-7 ${saved ? 'fill-rose-500 text-rose-500' : 'text-white'}`}
-              />
+              <Heart className={`h-6 w-6 ${saved ? 'fill-white' : ''}`} />
             </RailButton>
             <RailButton label="Share" onClick={onShare}>
-              <Share2 className="h-[26px] w-[26px] text-white" />
+              <Share2 className="h-[22px] w-[22px]" />
             </RailButton>
-            <RailButton label="Not for me" onClick={onDislike}>
-              <X className="h-7 w-7 text-white" strokeWidth={2.4} />
+            <RailButton label="Pass" onClick={onDislike}>
+              <X className="h-6 w-6" strokeWidth={2.4} />
             </RailButton>
-            <Link href={href} onClick={onDetails} aria-label="Details" className="active:scale-90">
-              <span className="flex flex-col items-center gap-1">
-                <Info className="h-[26px] w-[26px] text-white drop-shadow" />
-                <span className="text-[11px] font-medium text-white drop-shadow">Info</span>
+            <Link
+              href={href}
+              onClick={onDetails}
+              aria-label="Details"
+              className="flex flex-col items-center gap-1 active:scale-90"
+            >
+              <span className="lg-glass-dark flex h-11 w-11 items-center justify-center rounded-full text-white">
+                <Info className="h-[22px] w-[22px]" />
+              </span>
+              <span className="text-[11px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+                Info
               </span>
             </Link>
           </div>
-
-          {/* double-tap burst */}
-          <AnimatePresence>
-            {burst > 0 && (
-              <motion.div
-                key={burst}
-                className="pointer-events-none absolute inset-0 flex items-center justify-center"
-                initial={{ scale: 0.4, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 1.25, opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Heart className="h-28 w-28 fill-white text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.45)]" />
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         {/* Info sheet (≈1/4) */}
@@ -277,10 +225,12 @@ export function DiscoveryCard({
 function RailButton({
   label,
   onClick,
+  active,
   children,
 }: {
   label: string;
   onClick: () => void;
+  active?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -290,8 +240,14 @@ function RailButton({
       aria-label={label}
       className="flex flex-col items-center gap-1 active:scale-90"
     >
-      <span className="drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]">{children}</span>
-      <span className="text-[11px] font-medium text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+      <span
+        className={`flex h-11 w-11 items-center justify-center rounded-full text-white ${
+          active ? 'bg-rose-500' : 'lg-glass-dark'
+        }`}
+      >
+        {children}
+      </span>
+      <span className="text-[11px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
         {label}
       </span>
     </button>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -17,17 +18,47 @@ import {
   Navigation,
   Coins,
   Info,
+  Phone,
+  MessageCircle,
+  CalendarCheck,
+  Check,
 } from 'lucide-react';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
 import { formatAed, formatCredits } from '@/lib/glass/experience-data';
+import { facetsOf } from '@/lib/glass/recommender';
 import { useSaved } from './saved-store';
+import { useSignals } from './signal-store';
+import { useExperience } from './experience-provider';
+import { SwipeGallery } from './swipe-gallery';
 import { SmartImage } from './smart-image';
+
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '971501234567';
+const PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+971501234567';
 
 export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
   const router = useRouter();
   const { isSaved, toggleSave } = useSaved();
+  const { track } = useSignals();
+  const { listings } = useExperience();
   const saved = isSaved(listing.reference);
   const { credits } = listing.credit;
+  const [requested, setRequested] = useState(false);
+
+  // "More like this" — facet overlap with the current listing.
+  const currentFacets = new Set(facetsOf(listing));
+  const similar = listings
+    .filter((l) => l.reference !== listing.reference)
+    .map((l) => ({
+      l,
+      score: facetsOf(l).filter((f) => currentFacets.has(f)).length,
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8)
+    .map((x) => x.l);
+
+  const waHref = `https://wa.me/${WHATSAPP.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+    `Hi, I'm interested in ${listing.title} (${listing.reference}) on iClose.`,
+  )}`;
 
   const mapsHref =
     listing.latitude && listing.longitude
@@ -38,15 +69,19 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
 
   return (
     <div className="no-scrollbar h-[100svh] overflow-y-scroll bg-paper pb-28">
-      {/* Hero gallery */}
+      {/* Hero gallery — swipe for photos */}
       <div className="relative h-[52svh] w-full bg-mist">
-        <SmartImage
-          src={listing.cover}
+        <SwipeGallery
+          images={listing.images}
           alt={listing.title}
-          fill
           priority
-          sizes="(max-width: 520px) 100vw, 520px"
-          className="object-cover"
+          indicator="dots"
+          onDoubleTap={() => {
+            if (!saved) {
+              toggleSave(listing.reference);
+              track('save', listing);
+            }
+          }}
         />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-28 lg-scrim-t" />
 
@@ -64,13 +99,23 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
             <button
               type="button"
               aria-label="Share"
+              onClick={() => {
+                track('share', listing);
+                const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/experience/property/${listing.reference}`;
+                if (typeof navigator !== 'undefined' && 'share' in navigator) {
+                  navigator.share?.({ title: listing.title, url }).catch(() => {});
+                }
+              }}
               className="lg-glass-light flex h-11 w-11 items-center justify-center rounded-full text-ink active:scale-90"
             >
               <Share2 className="h-[18px] w-[18px]" />
             </button>
             <button
               type="button"
-              onClick={() => toggleSave(listing.reference)}
+              onClick={() => {
+                if (!saved) track('save', listing);
+                toggleSave(listing.reference);
+              }}
               aria-label={saved ? 'Remove from shortlist' : 'Add to shortlist'}
               className={`flex h-11 w-11 items-center justify-center rounded-full active:scale-90 ${
                 saved ? 'bg-ink text-white' : 'lg-glass-light text-ink'
@@ -80,7 +125,6 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
             </button>
           </div>
         </div>
-
       </div>
 
       {/* Body */}
@@ -254,27 +298,85 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
             {listing.reference}
           </span>
         </section>
+
+        {/* More like this — keeps the session going, driven by the recommender */}
+        {similar.length > 0 && (
+          <section>
+            <h2 className="mb-2 px-1 text-[15px] font-semibold tracking-tight text-ink">
+              More like this
+            </h2>
+            <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
+              {similar.map((l) => (
+                <Link
+                  key={l.reference}
+                  href={`/experience/property/${l.reference}`}
+                  className="w-[148px] shrink-0 overflow-hidden rounded-2xl border border-hairline/60 bg-paper"
+                >
+                  <div className="relative aspect-[4/5] bg-mist">
+                    <SmartImage
+                      src={l.cover}
+                      alt={l.title}
+                      fill
+                      sizes="160px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-2.5">
+                    <p className="text-[14px] font-semibold leading-none tracking-tight text-ink">
+                      {formatAed(l.priceAed)}
+                    </p>
+                    <p className="mt-1 line-clamp-1 text-[12px] text-graphite">
+                      {l.community}, {l.city}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
-      {/* Sticky CTA */}
+      {/* Sticky action bar — high-intent actions (strongest recommender signals) */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 px-4 pb-[max(16px,env(safe-area-inset-bottom))]">
-        <div className="lg-glass-light pointer-events-auto flex items-center gap-2.5 rounded-full p-2">
+        <div className="lg-glass-light pointer-events-auto flex items-center gap-2 rounded-full p-2">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track('whatsapp', listing)}
+            aria-label="WhatsApp"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white active:scale-90"
+          >
+            <MessageCircle className="h-5 w-5" />
+          </a>
+          <a
+            href={`tel:${PHONE.replace(/\s/g, '')}`}
+            onClick={() => track('call', listing)}
+            aria-label="Call"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-mist text-ink active:scale-90"
+          >
+            <Phone className="h-5 w-5" />
+          </a>
           <button
             type="button"
-            onClick={() => toggleSave(listing.reference)}
-            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors ${
-              saved ? 'bg-ink text-white' : 'bg-mist text-ink'
+            onClick={() => {
+              setRequested(true);
+              track('viewing', listing);
+            }}
+            className={`flex h-12 flex-1 items-center justify-center gap-2 rounded-full text-[15px] font-semibold transition-colors active:scale-[0.98] ${
+              requested ? 'bg-journey-listing text-ink' : 'bg-ink text-white'
             }`}
-            aria-label={saved ? 'Saved' : 'Save'}
           >
-            <Heart className={`h-5 w-5 ${saved ? 'fill-white' : ''}`} />
+            {requested ? (
+              <>
+                <Check className="h-5 w-5" /> Viewing requested
+              </>
+            ) : (
+              <>
+                <CalendarCheck className="h-5 w-5" /> Book a viewing
+              </>
+            )}
           </button>
-          <Link
-            href="/experience/saved"
-            className="flex h-12 flex-1 items-center justify-center rounded-full bg-ink text-[15px] font-semibold text-white active:scale-[0.98]"
-          >
-            Request a viewing
-          </Link>
         </div>
       </div>
     </div>

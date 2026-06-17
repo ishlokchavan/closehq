@@ -17,6 +17,11 @@ export const SIGNAL_WEIGHTS = {
   save: 50,
   share: 40,
   like: 50,
+  // High-intent actions (master-prompt weights) — strongest positive signals.
+  viewing: 80, // booked a viewing
+  whatsapp: 70,
+  call: 70,
+  offer: 100,
   skip: -15, // scrolled past quickly
   dislike: -60, // explicit "not interested"
 } as const;
