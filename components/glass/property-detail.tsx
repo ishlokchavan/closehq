@@ -75,9 +75,11 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
       <div className="relative h-[52svh] w-full bg-mist">
         <SwipeGallery
           images={listing.images}
+          videos={listing.videos}
           alt={listing.title}
           priority
           indicator="dots"
+          poster={listing.cover}
           onDoubleTap={() => {
             if (!saved) {
               toggleSave(listing.reference);

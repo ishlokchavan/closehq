@@ -95,9 +95,25 @@ export interface ExperienceListing extends Listing {
   cover: string;
   /** Carousel images. Currently just the cover until galleries are generated. */
   images: string[];
+  /** Video tours (0, 1 or many). Played before the photos in the gallery. */
+  videos: string[];
   hook: string;
   credit: CreditAward;
 }
+
+/**
+ * Video tours keyed by reference. Some listings have none, some one, some many —
+ * the UI caters to all three. These are placeholder demo clips; replace with real
+ * tour uploads (or a `listing_videos` table, like the carousel images).
+ */
+const VID = 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4';
+const VIDEO_MAP: Record<string, string[]> = {
+  'IC-1001': [VID], // single tour
+  'IC-1003': [VID, VID], // multiple tours
+  'IC-1005': [VID],
+  'IC-1010': [VID],
+  // …all other listings have no video — the gallery falls back to photos.
+};
 
 function hookFor(listing: Listing): string {
   if (listing.completion === 'off_plan') {
@@ -115,15 +131,18 @@ function hookFor(listing: Listing): string {
 export function toExperienceListing(
   listing: Listing,
   extras?: string[],
+  videoExtras?: string[],
 ): ExperienceListing {
   const cover = listing.coverImageUrl ?? COVER[listing.reference] ?? FALLBACK_COVER;
   const gallery = extras?.length ? extras : EXTRA_IMAGES[listing.reference] ?? [];
   // Cover first, then the carousel extras (deduped).
   const images = [cover, ...gallery.filter((u) => u !== cover)];
+  const videos = videoExtras?.length ? videoExtras : VIDEO_MAP[listing.reference] ?? [];
   return {
     ...listing,
     cover,
     images,
+    videos,
     hook: hookFor(listing),
     credit: creditAward(listing),
   };

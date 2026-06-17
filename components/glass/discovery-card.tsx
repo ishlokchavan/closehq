@@ -98,9 +98,12 @@ export function DiscoveryCard({
         <div className="relative flex-1 overflow-hidden bg-mist">
           <SwipeGallery
             images={listing.images}
+            videos={listing.videos}
             alt={listing.title}
             priority={active}
+            active={active}
             indicator="bars"
+            poster={listing.cover}
             onDoubleTap={() => {
               if (!saved) {
                 onToggleSave();
