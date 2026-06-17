@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -20,7 +21,6 @@ import {
 import { trackEvent, persistAffinity } from '@/lib/glass/track-event';
 
 interface SignalState {
-  affinity: Affinity;
   seen: Set<string>;
   dismissed: Set<string>;
   /** Record a signal for a listing (updates affinity + logs the event). */
@@ -29,6 +29,8 @@ interface SignalState {
   rank: (listings: ExperienceListing[]) => ExperienceListing[];
   /** Cold-start: merge facet weights straight into affinity (taste picker). */
   seed: (facets: Affinity) => void;
+  /** Read the current affinity without subscribing to it (avoids re-renders). */
+  getAffinity: () => Affinity;
   /** Increments whenever affinity is seeded, so the feed can re-rank once. */
   seedVersion: number;
   reset: () => void;
@@ -39,10 +41,15 @@ const STORAGE_KEY = 'closehq.glass.affinity.v1';
 const SignalContext = createContext<SignalState | null>(null);
 
 export function SignalStoreProvider({ children }: { children: React.ReactNode }) {
-  const [affinity, setAffinity] = useState<Affinity>({});
+  // Affinity lives in a ref (read by score/rank/getAffinity) plus a state mirror
+  // used only to drive the debounced server persist. Keeping it out of the
+  // context value means recording signals never re-renders consumers — only an
+  // explicit seedVersion bump does.
+  const affinityRef = useRef<Affinity>({});
+  const [affinitySnapshot, setAffinitySnapshot] = useState<Affinity>({});
   const seenRef = useRef<Set<string>>(new Set());
   const dismissedRef = useRef<Set<string>>(new Set());
-  const [, force] = useState(0);
+  const [seedVersion, setSeedVersion] = useState(0);
   const [hydrated, setHydrated] = useState(false);
 
   // Hydrate from localStorage.
@@ -55,7 +62,10 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
           seen?: string[];
           dismissed?: string[];
         };
-        if (parsed.affinity) setAffinity(parsed.affinity);
+        if (parsed.affinity) {
+          affinityRef.current = parsed.affinity;
+          setAffinitySnapshot(parsed.affinity);
+        }
         if (parsed.seen) seenRef.current = new Set(parsed.seen);
         if (parsed.dismissed) dismissedRef.current = new Set(parsed.dismissed);
       }
@@ -70,13 +80,13 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (!hydrated) return;
     if (persistTimer.current) clearTimeout(persistTimer.current);
-    persistTimer.current = setTimeout(() => persistAffinity(affinity), 1500);
+    persistTimer.current = setTimeout(() => persistAffinity(affinitySnapshot), 1500);
     return () => {
       if (persistTimer.current) clearTimeout(persistTimer.current);
     };
-  }, [affinity, hydrated]);
+  }, [affinitySnapshot, hydrated]);
 
-  const persist = useCallback((nextAffinity: Affinity) => {
+  const persistLocal = useCallback((nextAffinity: Affinity) => {
     try {
       localStorage.setItem(
         STORAGE_KEY,
@@ -101,46 +111,45 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
       seenRef.current.add(listing.reference);
       if (type === 'dislike') dismissedRef.current.add(listing.reference);
 
-      setAffinity((prev) => {
-        const next = applySignal(prev, listing, weight);
-        persist(next);
-        return next;
-      });
-      force((n) => n + 1);
+      const next = applySignal(affinityRef.current, listing, weight);
+      affinityRef.current = next;
+      persistLocal(next);
+      setAffinitySnapshot(next); // drives the debounced server persist only
       trackEvent(type, listing.reference, weight, dwellMs);
     },
-    [persist],
+    [persistLocal],
   );
 
-  const [seedVersion, setSeedVersion] = useState(0);
   const seed = useCallback<SignalState['seed']>(
     (facets) => {
-      setAffinity((prev) => {
-        const next = { ...prev };
-        for (const [k, v] of Object.entries(facets)) next[k] = (next[k] ?? 0) + v;
-        persist(next);
-        return next;
-      });
+      const next = { ...affinityRef.current };
+      for (const [k, v] of Object.entries(facets)) next[k] = (next[k] ?? 0) + v;
+      affinityRef.current = next;
+      persistLocal(next);
+      setAffinitySnapshot(next);
       setSeedVersion((n) => n + 1);
     },
-    [persist],
+    [persistLocal],
   );
 
   const score = useCallback(
-    (listing: ExperienceListing) => scoreListing(affinity, listing),
-    [affinity],
+    (listing: ExperienceListing) => scoreListing(affinityRef.current, listing),
+    [],
   );
 
   const rank = useCallback(
     (listings: ExperienceListing[]) =>
-      rankUpcoming(listings, affinity, seenRef.current, dismissedRef.current),
-    [affinity],
+      rankUpcoming(listings, affinityRef.current, seenRef.current, dismissedRef.current),
+    [],
   );
+
+  const getAffinity = useCallback(() => affinityRef.current, []);
 
   const reset = useCallback(() => {
     seenRef.current = new Set();
     dismissedRef.current = new Set();
-    setAffinity({});
+    affinityRef.current = {};
+    setAffinitySnapshot({});
     try {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem('closehq.glass.onboarded.v1');
@@ -149,27 +158,25 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
       /* ignore */
     }
     setSeedVersion((n) => n + 1);
-    force((n) => n + 1);
   }, []);
 
-  const value: SignalState = {
-    affinity,
-    seen: seenRef.current,
-    dismissed: dismissedRef.current,
-    track,
-    score,
-    rank,
-    seed,
-    seedVersion,
-    reset,
-  };
+  // Stable context value — only changes when seedVersion changes, so recording
+  // signals (the hot path) never re-renders the feed cards.
+  const value = useMemo<SignalState>(
+    () => ({
+      seen: seenRef.current,
+      dismissed: dismissedRef.current,
+      track,
+      score,
+      rank,
+      seed,
+      getAffinity,
+      seedVersion,
+      reset,
+    }),
+    [track, score, rank, seed, getAffinity, seedVersion, reset],
+  );
 
-  // Avoid a hydration flash of un-personalised order.
-  if (!hydrated) {
-    return (
-      <SignalContext.Provider value={value}>{children}</SignalContext.Provider>
-    );
-  }
   return <SignalContext.Provider value={value}>{children}</SignalContext.Provider>;
 }
 

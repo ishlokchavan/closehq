@@ -24,6 +24,9 @@ export function DiscoveryDeck() {
   // Initial personalised order (computed once from stored affinity).
   const [order, setOrder] = useState<ExperienceListing[]>(() => rank(listings));
   const [activeIndex, setActiveIndex] = useState(0);
+  // Mirror for stable callbacks that shouldn't re-run on every scroll step.
+  const activeIndexRef = useRef(0);
+  activeIndexRef.current = activeIndex;
 
   const scrollerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -78,15 +81,16 @@ export function DiscoveryDeck() {
   // card the user is currently on.
   const reorderUpcoming = useCallback(() => {
     setOrder((prev) => {
-      const head = prev.slice(0, activeIndex + 1);
+      const cut = activeIndexRef.current + 1;
+      const head = prev.slice(0, cut);
       const headRefs = new Set(head.map((l) => l.reference));
       const tail = prev
-        .slice(activeIndex + 1)
+        .slice(cut)
         .filter((l) => !dismissed.has(l.reference) && !headRefs.has(l.reference))
         .sort((a, b) => score(b) - score(a) + (Math.random() - 0.5) * 4);
       return [...head, ...tail];
     });
-  }, [activeIndex, dismissed, score]);
+  }, [dismissed, score]);
 
   function handleSave(listing: ExperienceListing) {
     const wasSaved = isSaved(listing.reference);
@@ -148,26 +152,35 @@ export function DiscoveryDeck() {
         ref={scrollerRef}
         className="lg-snap-y no-scrollbar h-full w-full overflow-y-scroll overscroll-y-contain"
       >
-        {order.map((listing, idx) => (
-          <div
-            key={listing.reference}
-            data-idx={idx}
-            ref={(el) => {
-              cardRefs.current[idx] = el;
-            }}
-          >
-            <DiscoveryCard
-              listing={listing}
-              active={idx === activeIndex}
-              saved={isSaved(listing.reference)}
-              headerOffset={HEADER_OFFSET}
-              onToggleSave={() => handleSave(listing)}
-              onDislike={() => handleDislike(listing, idx)}
-              onShare={() => handleShare(listing)}
-              onDetails={() => track('details', listing)}
-            />
-          </div>
-        ))}
+        {order.map((listing, idx) => {
+          // Windowing: only mount the heavy card (gallery, video, images) for
+          // the cards near the viewport. Off-window slots keep their full
+          // height so scroll position and snap points stay exact.
+          const inWindow = idx >= activeIndex - 1 && idx <= activeIndex + 2;
+          return (
+            <div
+              key={listing.reference}
+              data-idx={idx}
+              ref={(el) => {
+                cardRefs.current[idx] = el;
+              }}
+              className="h-[100svh] w-full snap-start"
+            >
+              {inWindow ? (
+                <DiscoveryCard
+                  listing={listing}
+                  active={idx === activeIndex}
+                  saved={isSaved(listing.reference)}
+                  headerOffset={HEADER_OFFSET}
+                  onToggleSave={() => handleSave(listing)}
+                  onDislike={() => handleDislike(listing, idx)}
+                  onShare={() => handleShare(listing)}
+                  onDetails={() => track('details', listing)}
+                />
+              ) : null}
+            </div>
+          );
+        })}
 
         {/* End cap */}
         <section className="lg-snap-start flex h-[100svh] snap-start flex-col items-center justify-center gap-3 bg-paper px-8 text-center">

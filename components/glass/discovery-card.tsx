@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   Heart,
@@ -31,7 +31,7 @@ function haptic(ms = 12) {
   }
 }
 
-export function DiscoveryCard({
+function DiscoveryCardImpl({
   listing,
   active,
   saved,
@@ -52,7 +52,7 @@ export function DiscoveryCard({
 }) {
   const href = `/experience/property/${listing.reference}`;
 
-  const { affinity } = useSignals();
+  const { getAffinity } = useSignals();
   const [whyOpen, setWhyOpen] = useState(false);
   const [aiReason, setAiReason] = useState<string | null>(null);
   const fetched = useRef(false);
@@ -66,7 +66,7 @@ export function DiscoveryCard({
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          liked: likedPhrases(affinity),
+          liked: likedPhrases(getAffinity()),
           listing: {
             title: listing.title,
             community: listing.community,
@@ -89,8 +89,8 @@ export function DiscoveryCard({
   return (
     <article className="lg-snap-start relative h-[100svh] w-full snap-start overflow-hidden bg-paper">
       <div
-        className={`flex h-full flex-col transition-[filter,transform,opacity] duration-300 ${
-          active ? '' : 'scale-[0.97] opacity-60 blur-[7px]'
+        className={`flex h-full flex-col transition-[transform,opacity] duration-300 [will-change:transform,opacity] ${
+          active ? '' : 'scale-[0.96] opacity-50'
         }`}
         style={{ paddingTop: headerOffset }}
       >
@@ -216,7 +216,7 @@ export function DiscoveryCard({
           </button>
           {whyOpen && (
             <p className="mt-2 rounded-2xl border border-accent/15 bg-accent/[0.06] px-3 py-2 text-[13px] leading-snug text-ink">
-              {aiReason ?? deterministicReason(affinity, listing)}
+              {aiReason ?? deterministicReason(getAffinity(), listing)}
             </p>
           )}
         </div>
@@ -224,6 +224,12 @@ export function DiscoveryCard({
     </article>
   );
 }
+
+/**
+ * Memoised so recording signals / re-renders of the deck don't re-render every
+ * mounted card — only the cards whose own props (active / saved) actually change.
+ */
+export const DiscoveryCard = memo(DiscoveryCardImpl);
 
 function RailButton({
   label,

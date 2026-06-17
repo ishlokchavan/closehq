@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Image, { type ImageProps } from 'next/image';
 
 /** Guaranteed-stable fallback (Dubai skyline) if a source URL fails to load. */
@@ -9,10 +9,17 @@ const FALLBACK =
 
 /**
  * next/image with an onError fallback so the image-first feed never shows a
- * broken tile if a remote photo 404s.
+ * broken tile if a remote photo 404s. Memoised — image tiles are static once
+ * mounted, so they should never re-render just because a parent did.
  */
-export function SmartImage({ src, alt, ...rest }: ImageProps) {
+function SmartImageImpl({ src, alt, ...rest }: ImageProps) {
   const [current, setCurrent] = useState(src);
+
+  // Keep the displayed source in sync if the src prop changes.
+  useEffect(() => {
+    setCurrent(src);
+  }, [src]);
+
   return (
     <Image
       {...rest}
@@ -24,3 +31,5 @@ export function SmartImage({ src, alt, ...rest }: ImageProps) {
     />
   );
 }
+
+export const SmartImage = memo(SmartImageImpl);
