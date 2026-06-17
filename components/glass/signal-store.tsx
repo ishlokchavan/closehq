@@ -144,6 +144,7 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
     try {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem('closehq.glass.onboarded.v1');
+      localStorage.removeItem('closehq.glass.intro.v1');
     } catch {
       /* ignore */
     }

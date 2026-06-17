@@ -9,6 +9,7 @@ import { useSaved } from './saved-store';
 import { useSignals } from './signal-store';
 import { DiscoveryCard } from './discovery-card';
 import { TastePicker } from './taste-picker';
+import { IntroStory } from './intro-story';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
 
 const HEADER_OFFSET = 'calc(env(safe-area-inset-top) + 52px)';
@@ -205,8 +206,9 @@ export function DiscoveryDeck() {
         </div>
       )}
 
-      {/* Cold-start taste picker — first visit only, seeds the recommender */}
+      {/* First run: brand intro (what & why) → taste picker (personalise) */}
       <TastePicker />
+      <IntroStory />
     </div>
   );
 }
