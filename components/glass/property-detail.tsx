@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   ChevronLeft,
+  ChevronRight,
   Heart,
   Share2,
   BedDouble,
@@ -31,6 +32,7 @@ import { useSignals } from './signal-store';
 import { useExperience } from './experience-provider';
 import { SwipeGallery } from './swipe-gallery';
 import { SmartImage } from './smart-image';
+import { slugifyDeveloper } from './developer-profile';
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '971501234567';
 const PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+971501234567';
@@ -195,12 +197,24 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
         {/* Off-plan payment plan */}
         {listing.completion === 'off_plan' && (
           <section className="space-y-3 rounded-[22px] border border-hairline/70 bg-paper p-4">
-            <div className="flex items-center gap-2 text-ink">
-              <Building2 className="h-[18px] w-[18px] text-journey-offplan" />
-              <span className="text-[15px] font-semibold tracking-tight">
-                {listing.developerName ?? 'New release'}
-              </span>
-            </div>
+            {listing.developerName ? (
+              <Link
+                href={`/experience/developer/${slugifyDeveloper(listing.developerName)}`}
+                className="-m-1 flex items-center gap-2 rounded-xl p-1 text-ink active:bg-mist"
+              >
+                <Building2 className="h-[18px] w-[18px] text-journey-offplan" />
+                <span className="flex-1 text-[15px] font-semibold tracking-tight">
+                  {listing.developerName}
+                </span>
+                <span className="text-[12px] font-medium text-accent">View developer</span>
+                <ChevronRight className="h-4 w-4 text-graphite-light" />
+              </Link>
+            ) : (
+              <div className="flex items-center gap-2 text-ink">
+                <Building2 className="h-[18px] w-[18px] text-journey-offplan" />
+                <span className="text-[15px] font-semibold tracking-tight">New release</span>
+              </div>
+            )}
             <div className="grid grid-cols-2 gap-2.5">
               {listing.paymentPlan && (
                 <InfoRow icon={<Wallet className="h-4 w-4" />} label="Payment plan">
