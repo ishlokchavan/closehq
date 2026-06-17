@@ -106,11 +106,11 @@ export default function ProfilePage() {
         <Divider />
         <Row href="/experience/trending" icon={<Flame className="h-[18px] w-[18px]" />} label="Trending launches" />
         <Divider />
-        <Row href="#" icon={<FileText className="h-[18px] w-[18px]" />} label="My deals" trailing="0" />
+        <Row soon icon={<FileText className="h-[18px] w-[18px]" />} label="My deals" />
         <Divider />
         <Row href="/credits" icon={<Wallet className="h-[18px] w-[18px]" />} label="Credits & rewards" />
         <Divider />
-        <Row href="#" icon={<Settings className="h-[18px] w-[18px]" />} label="Settings" />
+        <Row soon icon={<Settings className="h-[18px] w-[18px]" />} label="Settings" />
       </section>
 
       {user ? (
@@ -156,12 +156,24 @@ function Row({
   icon,
   label,
   trailing,
+  soon,
 }: {
-  href: string;
+  href?: string;
   icon: React.ReactNode;
   label: string;
   trailing?: string;
+  /** Feature not shipped yet — render a non-interactive "Soon" row. */
+  soon?: boolean;
 }) {
+  if (soon || !href) {
+    return (
+      <div className="flex items-center gap-3 px-4 py-3.5 text-ink/40" aria-disabled>
+        <span>{icon}</span>
+        <span className="flex-1 text-[15px] font-medium">{label}</span>
+        <span className="rounded-full bg-ink/5 px-2 py-0.5 text-[11px] font-semibold text-graphite">Soon</span>
+      </div>
+    );
+  }
   return (
     <Link href={href} className="flex items-center gap-3 px-4 py-3.5 text-ink active:bg-mist">
       <span className="text-graphite-dark">{icon}</span>
