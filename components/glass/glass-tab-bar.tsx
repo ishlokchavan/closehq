@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState, useTransition } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { Home, Flame, Search, Map, User } from 'lucide-react';
 
 const TABS = [
@@ -22,8 +22,32 @@ const HIDE_ON = [
 
 export function GlassTabBar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [, startTransition] = useTransition();
+  // Optimistic target — highlight the tapped tab instantly, before the route
+  // has finished mounting, so taps feel native even on a heavier screen.
+  const [target, setTarget] = useState<string | null>(null);
+
+  // Warm every tab route up-front so switching is just a client mount, not a
+  // server round-trip.
+  useEffect(() => {
+    for (const t of TABS) router.prefetch(t.href);
+  }, [router]);
+
+  // Clear the optimistic target once the real route catches up.
+  useEffect(() => {
+    setTarget(null);
+  }, [pathname]);
 
   if (HIDE_ON.some((p) => pathname.startsWith(p))) return null;
+
+  const activePath = target ?? pathname;
+
+  function navigate(href: string) {
+    if (href === pathname) return;
+    setTarget(href);
+    startTransition(() => router.push(href));
+  }
 
   return (
     <nav
@@ -32,14 +56,16 @@ export function GlassTabBar() {
     >
       <div className="lg-glass-light pointer-events-auto flex items-center gap-0.5 rounded-full p-1.5">
         {TABS.map(({ href, label, Icon, match }) => {
-          const active = match(pathname);
+          const active = match(activePath);
           return (
-            <Link
+            <button
               key={href}
-              href={href}
+              type="button"
+              onClick={() => navigate(href)}
+              onPointerEnter={() => router.prefetch(href)}
               aria-label={label}
               aria-current={active ? 'page' : undefined}
-              className={`relative flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300 active:scale-90 ${
+              className={`relative flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 active:scale-90 ${
                 active ? 'bg-ink text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]' : 'text-graphite-dark'
               }`}
             >
@@ -49,7 +75,7 @@ export function GlassTabBar() {
                 fill={active && label === 'Home' ? 'currentColor' : 'none'}
                 aria-hidden
               />
-            </Link>
+            </button>
           );
         })}
       </div>

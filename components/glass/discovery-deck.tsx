@@ -77,6 +77,15 @@ export function DiscoveryDeck() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
 
+  // Warm the detail route for the current + next card so tapping through is
+  // instant instead of waiting on a server round-trip.
+  useEffect(() => {
+    const cur = order[activeIndex];
+    const nxt = order[activeIndex + 1];
+    if (cur) router.prefetch(`/experience/property/${cur.reference}`);
+    if (nxt) router.prefetch(`/experience/property/${nxt.reference}`);
+  }, [activeIndex, order, router]);
+
   // Re-rank the *upcoming* cards as affinity shifts, without disturbing the
   // card the user is currently on.
   const reorderUpcoming = useCallback(() => {

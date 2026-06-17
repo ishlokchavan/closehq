@@ -20,14 +20,18 @@ function isSupabaseConfigured(): boolean {
 }
 
 /** reference -> ordered carousel image URLs, from the live table. */
-async function fetchCarouselImages(): Promise<Record<string, string[]>> {
+async function fetchCarouselImages(reference?: string): Promise<Record<string, string[]>> {
   if (!isSupabaseConfigured()) return {};
   try {
     const { supabase } = await import('@/lib/supabase');
-    const { data, error } = await supabase
+    let query = supabase
       .from('listing_images')
       .select('reference,url,position')
       .order('position', { ascending: true });
+    // Single-listing detail opens only need that listing's images — avoid a
+    // full-table scan on every navigation.
+    if (reference) query = query.eq('reference', reference);
+    const { data, error } = await query;
     if (error || !data) return {};
     const map: Record<string, string[]> = {};
     for (const row of data as { reference: string; url: string }[]) {
@@ -63,7 +67,7 @@ export async function getExperienceListing(
 ): Promise<ExperienceListing | undefined> {
   const [listing, extras] = await Promise.all([
     getListingByReference(reference, locale),
-    fetchCarouselImages(),
+    fetchCarouselImages(reference),
   ]);
   if (listing) return toExperienceListing(listing, extras[reference]);
   return FALLBACK_EXPERIENCE_LISTINGS.find((l) => l.reference === reference);
