@@ -106,12 +106,19 @@ export interface ExperienceListing extends Listing {
  * the UI caters to all three. These are placeholder demo clips; replace with real
  * tour uploads (or a `listing_videos` table, like the carousel images).
  */
-const VID = 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4';
+const VID = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7';
 const VIDEO_MAP: Record<string, string[]> = {
-  'IC-1001': [VID], // single tour
-  'IC-1003': [VID, VID], // multiple tours
-  'IC-1005': [VID],
-  'IC-1010': [VID],
+  // Single tour — living room walkthrough.
+  'IC-1001': [`${VID}/hf_20260617_042811_d630e2f5-e8fb-47f3-a864-931d9b6ab0e7.mp4`],
+  // Multiple tours — aerial of the development + penthouse terrace.
+  'IC-1003': [
+    `${VID}/hf_20260617_042828_9abd9ca0-3f44-471b-b733-81fc68831593.mp4`,
+    `${VID}/hf_20260617_042832_58ddc9ba-4c26-4b73-af81-17c9048948b3.mp4`,
+  ],
+  // Single tour — kitchen & dining.
+  'IC-1005': [`${VID}/hf_20260617_042818_8171b3a7-7af2-4b78-bcc4-f2cbcc046195.mp4`],
+  // Single tour — master bedroom.
+  'IC-1010': [`${VID}/hf_20260617_042823_fbadb123-28e2-44e8-9f08-0d6b14ed96cc.mp4`],
   // …all other listings have no video — the gallery falls back to photos.
 };
 
