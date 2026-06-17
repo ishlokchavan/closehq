@@ -155,10 +155,10 @@ export function IntroStory() {
             initial="hidden"
             animate={idx === 0 ? 'show' : 'hidden'}
           >
-            {/* App icon mark — small brand anchor */}
-            <motion.div variants={fadeIn}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icon.svg" alt="iClose" className="h-11 w-11 rounded-[11px]" />
+            {/* iClose wordmark — small brand label, not competing with headline */}
+            <motion.div variants={fadeIn} className="flex items-baseline gap-0" style={{ letterSpacing: '-0.01em' }}>
+              <span className="font-display text-[17px] font-medium text-ink/40">i</span>
+              <span className="font-display text-[17px] font-semibold text-ink/40">Close</span>
             </motion.div>
 
             {/* Hero headline — font-normal base, bold only on buy/sell/close */}
