@@ -110,17 +110,19 @@ export function SwipeCard({
           <div className="pointer-events-none absolute inset-x-0 top-0 h-32 lg-scrim-t" />
         </div>
 
-        {/* Gallery progress */}
-        <div className="pointer-events-none absolute inset-x-4 top-[max(14px,env(safe-area-inset-top))] flex gap-1.5">
-          {listing.gallery.map((src, i) => (
-            <span
-              key={src}
-              className={`h-[3px] flex-1 rounded-full transition-colors ${
-                i === photo ? 'bg-white' : 'bg-white/40'
-              }`}
-            />
-          ))}
-        </div>
+        {/* Gallery progress (only with multiple photos) */}
+        {photoCount > 1 && (
+          <div className="pointer-events-none absolute inset-x-4 top-[max(14px,env(safe-area-inset-top))] flex gap-1.5">
+            {listing.gallery.map((src, i) => (
+              <span
+                key={src}
+                className={`h-[3px] flex-1 rounded-full transition-colors ${
+                  i === photo ? 'bg-white' : 'bg-white/40'
+                }`}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Top chips */}
         <div className="pointer-events-none absolute inset-x-4 top-9 flex items-center justify-between">

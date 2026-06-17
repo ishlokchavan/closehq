@@ -88,8 +88,8 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
           </div>
         </div>
 
-        {/* Gallery dots */}
-        <div className="absolute inset-x-0 bottom-4 flex justify-center gap-1.5">
+        {/* Gallery dots (only with multiple photos) */}
+        <div className={`absolute inset-x-0 bottom-4 flex justify-center gap-1.5 ${listing.gallery.length > 1 ? '' : 'hidden'}`}>
           {listing.gallery.map((src, i) => (
             <button
               key={src}
