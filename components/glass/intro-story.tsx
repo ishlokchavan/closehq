@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
   BadgePercent,
@@ -16,7 +17,8 @@ import { SmartImage } from './smart-image';
 const INTRO_KEY = 'closehq.glass.intro.v1';
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7';
 
-const HERO_IMG = `${CDN}/hf_20260617_003721_84f0c343-e903-4323-a3da-3cc2b40e1caf.png`;
+// IC-1001 — dramatic aerial Dubai Marina shot, strongest hero moment
+const HERO_IMG = `${CDN}/hf_20260617_002543_e188c27d-1f7f-41a3-9c26-76506147c6bc.png`;
 const BUY_IMG = `${CDN}/hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png`;
 const SELL_IMG = `${CDN}/hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png`;
 const CLOSE_IMG = `${CDN}/hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png`;
@@ -35,6 +37,30 @@ const USPS = [
 ];
 
 const STEPS = 3;
+
+// Shared easing for every motion in this story.
+const EASE = [0.25, 0.1, 0.25, 1] as const;
+
+/** Stagger container — children animate in sequence. */
+const stagger = (delayChildren = 0.05) => ({
+  hidden: {},
+  show: { transition: { staggerChildren: delayChildren, delayChildren: 0.12 } },
+});
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: EASE } },
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.3, ease: EASE } },
+};
+
+const slideUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: EASE } },
+};
 
 /**
  * First-run brand intro — a swipeable "what / who / what's-in-it" story shown
@@ -105,43 +131,62 @@ export function IntroStory() {
         {/* ── Slide 1 · Hero headline ───────────────────────────── */}
         <section className="relative h-full w-full shrink-0 snap-center">
           <SmartImage src={HERO_IMG} alt="" fill priority sizes="(max-width: 520px) 100vw, 520px" className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/40" />
-          <div className="absolute inset-x-0 bottom-44 px-7">
-            <span className="text-[13px] font-semibold uppercase tracking-[0.2em] text-white/70">iClose</span>
-            <h1 className="mt-3 text-[34px] font-semibold leading-[1.08] tracking-tight">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/70" />
+
+          {/* Top-anchored content, matching slides 2 & 3 */}
+          <motion.div
+            key={`slide-1-${idx === 0}`}
+            className="absolute inset-x-0 px-7 pt-[max(72px,calc(env(safe-area-inset-top)+60px))]"
+            variants={stagger(0.08)}
+            initial="hidden"
+            animate={idx === 0 ? 'show' : 'hidden'}
+          >
+            <motion.span variants={fadeIn} className="text-[13px] font-semibold uppercase tracking-[0.2em] text-white/70">
+              iClose
+            </motion.span>
+            <motion.h1 variants={fadeUp} className="mt-3 text-[34px] font-semibold leading-[1.08] tracking-tight">
               Never Pay Commission to <span className="text-accent">Buy</span>,{' '}
               <span className="text-accent">Sell</span>, Or <span className="text-accent">Close</span> Ever Again!
-            </h1>
-            <p className="mt-3 text-[15px] text-white/75">
+            </motion.h1>
+            <motion.p variants={fadeUp} className="mt-3 text-[15px] text-white/75">
               The commission-free way to move property in the UAE.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </section>
 
         {/* ── Slide 2 · What you can do ─────────────────────────── */}
         <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-ink">
           <div className="flex h-full flex-col px-6 pb-40 pt-[max(64px,calc(env(safe-area-inset-top)+52px))]">
-            <h2 className="text-[28px] font-semibold leading-tight tracking-tight">
-              One app. Three ways to win.
-            </h2>
-            <p className="mt-1.5 text-[15px] text-white/65">Whichever side you’re on, the cut stays yours.</p>
+            <motion.div
+              key={`slide-2-${idx === 1}`}
+              variants={stagger(0.06)}
+              initial="hidden"
+              animate={idx === 1 ? 'show' : 'hidden'}
+            >
+              <motion.h2 variants={fadeUp} className="text-[28px] font-semibold leading-tight tracking-tight">
+                One app. Three ways to win.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mt-1.5 text-[15px] text-white/65">
+                Whichever side you're on, the cut stays yours.
+              </motion.p>
 
-            <div className="mt-6 flex flex-col gap-3">
-              {DO_CARDS.map(({ img, Icon, label, badge, line }) => (
-                <div key={label} className="relative h-[104px] overflow-hidden rounded-3xl">
-                  <SmartImage src={img} alt="" fill sizes="(max-width: 520px) 100vw, 520px" className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
-                  <div className="absolute inset-0 flex flex-col justify-center gap-1 px-5">
-                    <div className="flex items-center gap-2">
-                      <Icon className="h-[18px] w-[18px] text-white" />
-                      <span className="text-[19px] font-semibold tracking-tight">{label}</span>
-                      <span className="rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-semibold text-ink">{badge}</span>
+              <motion.div className="mt-6 flex flex-col gap-3" variants={stagger(0.07)}>
+                {DO_CARDS.map(({ img, Icon, label, badge, line }) => (
+                  <motion.div key={label} variants={slideUp} className="relative h-[104px] overflow-hidden rounded-3xl">
+                    <SmartImage src={img} alt="" fill sizes="(max-width: 520px) 100vw, 520px" className="object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
+                    <div className="absolute inset-0 flex flex-col justify-center gap-1 px-5">
+                      <div className="flex items-center gap-2">
+                        <Icon className="h-[18px] w-[18px] text-white" />
+                        <span className="text-[19px] font-semibold tracking-tight">{label}</span>
+                        <span className="rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-semibold text-ink">{badge}</span>
+                      </div>
+                      <p className="max-w-[17rem] text-[13px] text-white/80">{line}</p>
                     </div>
-                    <p className="max-w-[17rem] text-[13px] text-white/80">{line}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -149,36 +194,58 @@ export function IntroStory() {
         <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-ink">
           <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/25 blur-[120px]" />
           <div className="flex h-full flex-col px-6 pb-40 pt-[max(64px,calc(env(safe-area-inset-top)+52px))]">
-            <h2 className="text-[28px] font-semibold leading-tight tracking-tight">Why iClose?</h2>
-            <p className="mt-1.5 text-[15px] text-white/65">Built to put money back in your pocket.</p>
+            <motion.div
+              key={`slide-3-${idx === 2}`}
+              variants={stagger(0.07)}
+              initial="hidden"
+              animate={idx === 2 ? 'show' : 'hidden'}
+            >
+              <motion.h2 variants={fadeUp} className="text-[28px] font-semibold leading-tight tracking-tight">
+                Why iClose?
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mt-1.5 text-[15px] text-white/65">
+                Built to put money back in your pocket.
+              </motion.p>
 
-            <div className="mt-6 flex flex-col gap-3.5">
-              {USPS.map(({ Icon, title, line }) => (
-                <div key={title} className="flex items-start gap-3.5 rounded-2xl bg-white/[0.06] p-3.5">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent">
-                    <Icon className="h-[22px] w-[22px]" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[16px] font-semibold tracking-tight">{title}</p>
-                    <p className="text-[13.5px] leading-snug text-white/70">{line}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+              <motion.div className="mt-6 flex flex-col gap-3.5" variants={stagger(0.07)}>
+                {USPS.map(({ Icon, title, line }) => (
+                  <motion.div key={title} variants={slideUp} className="flex items-start gap-3.5 rounded-2xl bg-white/[0.06] p-3.5">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent">
+                      <Icon className="h-[22px] w-[22px]" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-[16px] font-semibold tracking-tight">{title}</p>
+                      <p className="text-[13.5px] leading-snug text-white/70">{line}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
       </div>
 
       {/* bottom control */}
       <div className="absolute inset-x-0 bottom-0 z-20 px-7 pb-[max(26px,env(safe-area-inset-bottom))]">
-        <button
+        <motion.button
           type="button"
           onClick={() => (last ? finish() : go(idx + 1))}
           className="flex w-full items-center justify-center gap-2 rounded-full bg-white py-4 text-[16px] font-semibold text-ink active:scale-[0.99]"
+          whileTap={{ scale: 0.98 }}
         >
           {last ? 'Start exploring' : 'Next'}
-          <ArrowRight className="h-[18px] w-[18px]" />
-        </button>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={last ? 'start' : 'next'}
+              initial={{ opacity: 0, x: -4 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 4 }}
+              transition={{ duration: 0.2, ease: EASE }}
+            >
+              <ArrowRight className="h-[18px] w-[18px]" />
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
       </div>
     </div>
   );
