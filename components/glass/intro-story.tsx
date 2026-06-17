@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { ArrowRight, BadgeCheck, Coins, ShieldCheck } from 'lucide-react';
+import { ArrowRight, BadgePercent, Coins, Building2 } from 'lucide-react';
 import { SmartImage } from './smart-image';
 
 const INTRO_KEY = 'closehq.glass.intro.v1';
@@ -11,24 +10,24 @@ const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjF
 const SLIDES = [
   {
     img: `${CDN}/hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png`,
-    eyebrow: 'Welcome to iClose',
-    title: 'Buy, sell & close — without ever paying commission.',
-    sub: '0% commission. 100% cashback. On every deal.',
-    Icon: BadgeCheck,
+    eyebrow: 'What is iClose',
+    title: 'Property in the UAE, minus the commission.',
+    sub: 'Buy, sell and close directly in one app — no middleman taking a cut.',
+    Icon: BadgePercent,
   },
   {
     img: `${CDN}/hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png`,
-    eyebrow: 'iClose credits',
-    title: 'Earn real cashback on every home.',
-    sub: 'Collect iClose credits toward your purchase — yours to keep.',
+    eyebrow: "What's in it for you",
+    title: 'Buyers earn cashback. Sellers list free. Agents keep 100%.',
+    sub: 'Whichever side you’re on, the commission stays in your pocket.',
     Icon: Coins,
   },
   {
     img: `${CDN}/hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png`,
-    eyebrow: 'End to end',
-    title: 'Verified homes. The whole deal in one place.',
-    sub: 'View, offer and close — and deal with the seller direct.',
-    Icon: ShieldCheck,
+    eyebrow: 'Why now',
+    title: 'Off-plan launch pricing, plus credits worth real money.',
+    sub: 'Hundreds of verified launches a year — tour, offer and close in minutes.',
+    Icon: Building2,
   },
 ];
 
@@ -129,11 +128,6 @@ export function IntroStory() {
           {last ? 'Start exploring' : 'Next'}
           <ArrowRight className="h-[18px] w-[18px]" />
         </button>
-        <div className="mt-3 text-center">
-          <Link href="/for-buyers" className="text-[13px] font-medium text-white/70 underline-offset-4 hover:underline">
-            How it works
-          </Link>
-        </div>
       </div>
     </div>
   );
