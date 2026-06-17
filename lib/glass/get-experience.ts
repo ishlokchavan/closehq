@@ -6,18 +6,48 @@ import {
 } from './experience-data';
 
 /**
- * Server-side experience data. Reads the live `listings` table (the exact same
- * source as /properties) and enriches each row with credits + hook. Falls back
- * to the seed dataset only if the table is empty/unreachable, so the UI always
- * renders. Server components only — never import from a client component.
+ * Server-side experience data. Reads the live `listings` table (same source as
+ * /properties) plus the additive `listing_images` carousel table, enriching each
+ * row with credits + hook. Falls back to seed/code maps when Supabase isn't
+ * configured. Server components only — never import from a client component.
  */
+
+function isSupabaseConfigured(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
+}
+
+/** reference -> ordered carousel image URLs, from the live table. */
+async function fetchCarouselImages(): Promise<Record<string, string[]>> {
+  if (!isSupabaseConfigured()) return {};
+  try {
+    const { supabase } = await import('@/lib/supabase');
+    const { data, error } = await supabase
+      .from('listing_images')
+      .select('reference,url,position')
+      .order('position', { ascending: true });
+    if (error || !data) return {};
+    const map: Record<string, string[]> = {};
+    for (const row of data as { reference: string; url: string }[]) {
+      (map[row.reference] ??= []).push(row.url);
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
 
 export async function getExperienceListings(
   locale = 'en',
 ): Promise<ExperienceListing[]> {
-  const listings = await getListings({ purpose: 'sale', limit: 50 }, locale);
+  const [listings, extras] = await Promise.all([
+    getListings({ purpose: 'sale', limit: 50 }, locale),
+    fetchCarouselImages(),
+  ]);
   if (!listings.length) return FALLBACK_EXPERIENCE_LISTINGS;
-  return listings.map(toExperienceListing);
+  return listings.map((l) => toExperienceListing(l, extras[l.reference]));
 }
 
 export async function getExperienceLaunches(
@@ -31,7 +61,10 @@ export async function getExperienceListing(
   reference: string,
   locale = 'en',
 ): Promise<ExperienceListing | undefined> {
-  const listing = await getListingByReference(reference, locale);
-  if (listing) return toExperienceListing(listing);
+  const [listing, extras] = await Promise.all([
+    getListingByReference(reference, locale),
+    fetchCarouselImages(),
+  ]);
+  if (listing) return toExperienceListing(listing, extras[reference]);
   return FALLBACK_EXPERIENCE_LISTINGS.find((l) => l.reference === reference);
 }
