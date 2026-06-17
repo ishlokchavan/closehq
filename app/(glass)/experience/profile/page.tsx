@@ -13,12 +13,14 @@ import {
   Coins,
 } from 'lucide-react';
 import { useSaved } from '@/components/glass/saved-store';
+import { useSignals } from '@/components/glass/signal-store';
 import { useExperience } from '@/components/glass/experience-provider';
 import { formatCredits } from '@/lib/glass/experience-data';
 
 export default function ProfilePage() {
   const { listings } = useExperience();
   const { decisions, savedRefs, reset } = useSaved();
+  const { reset: resetSignals } = useSignals();
   const seen = Object.keys(decisions).length;
 
   const pendingCredits = listings
@@ -76,7 +78,10 @@ export default function ProfilePage() {
 
       <button
         type="button"
-        onClick={reset}
+        onClick={() => {
+          reset();
+          resetSignals();
+        }}
         className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-hairline bg-paper py-3.5 text-[14px] font-medium text-graphite-dark active:scale-[0.98]"
       >
         <RotateCcw className="h-4 w-4" />

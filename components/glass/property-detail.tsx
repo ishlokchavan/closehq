@@ -19,7 +19,7 @@ import {
   Info,
 } from 'lucide-react';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
-import { formatAed, formatCredits, CREDIT_AED_RATE } from '@/lib/glass/experience-data';
+import { formatAed, formatCredits } from '@/lib/glass/experience-data';
 import { useSaved } from './saved-store';
 import { SmartImage } from './smart-image';
 
@@ -27,7 +27,7 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
   const router = useRouter();
   const { isSaved, toggleSave } = useSaved();
   const saved = isSaved(listing.reference);
-  const { pct, valueAed, credits } = listing.credit;
+  const { credits } = listing.credit;
 
   const mapsHref =
     listing.latitude && listing.longitude
@@ -108,31 +108,29 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
           </p>
         </section>
 
-        {/* Credits panel — the hook, with the AED reveal */}
+        {/* Credits panel — plain English, no AED figure (lives on rewards page) */}
         <section className="overflow-hidden rounded-[22px] border border-accent/15 bg-accent/[0.06]">
-          <div className="flex items-center justify-between px-4 py-3.5">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/15">
-                <Coins className="h-5 w-5 text-accent" />
-              </span>
-              <div>
-                <p className="text-[12px] text-graphite">You earn</p>
-                <p className="text-[20px] font-semibold leading-tight tracking-tight text-accent">
-                  {formatCredits(credits)} credits
-                </p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-[12px] text-graphite">Redeemable</p>
-              <p className="text-[15px] font-semibold text-ink">
-                ≈ {formatAed(valueAed)}
+          <div className="flex items-center gap-2.5 px-4 py-3.5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/15">
+              <Coins className="h-5 w-5 text-accent" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[12px] text-graphite">Buy this home and get</p>
+              <p className="text-[20px] font-semibold leading-tight tracking-tight text-accent">
+                {formatCredits(credits)} iClose credits
               </p>
             </div>
+            <Link
+              href="/credits"
+              aria-label="How credits work"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent active:scale-90"
+            >
+              <Info className="h-4 w-4" />
+            </Link>
           </div>
-          <p className="flex items-center gap-1.5 border-t border-accent/15 px-4 py-2.5 text-[12px] text-graphite-dark">
-            <Info className="h-3.5 w-3.5 shrink-0 text-accent" />
-            iClose rebates the {pct}% commission as credits (1 credit ={' '}
-            {CREDIT_AED_RATE} AED). Redeem against payments, fees or more.
+          <p className="border-t border-accent/15 px-4 py-2.5 text-[12px] text-graphite-dark">
+            Credits are yours to keep and spend on iClose. Tap the info icon to
+            see what they&rsquo;re worth and how to use them.
           </p>
         </section>
 

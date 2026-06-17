@@ -68,6 +68,8 @@ export function creditAward(listing: Listing): CreditAward {
 
 export interface ExperienceListing extends Listing {
   cover: string;
+  /** Carousel images. Currently just the cover until galleries are generated. */
+  images: string[];
   hook: string;
   credit: CreditAward;
 }
@@ -86,9 +88,11 @@ function hookFor(listing: Listing): string {
 
 /** Map a live (or seed) listing into the experience shape. */
 export function toExperienceListing(listing: Listing): ExperienceListing {
+  const cover = listing.coverImageUrl ?? COVER[listing.reference] ?? FALLBACK_COVER;
   return {
     ...listing,
-    cover: listing.coverImageUrl ?? COVER[listing.reference] ?? FALLBACK_COVER,
+    cover,
+    images: [cover],
     hook: hookFor(listing),
     credit: creditAward(listing),
   };

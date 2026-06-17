@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SavedStoreProvider } from '@/components/glass/saved-store';
+import { SignalStoreProvider } from '@/components/glass/signal-store';
 import { ExperienceProvider } from '@/components/glass/experience-provider';
 import { GlassTabBar } from '@/components/glass/glass-tab-bar';
 import { getExperienceListings } from '@/lib/glass/get-experience';
@@ -18,6 +19,7 @@ export default async function GlassLayout({
 
   return (
     <ExperienceProvider listings={listings}>
+      <SignalStoreProvider>
       <SavedStoreProvider>
         <div className="relative flex min-h-[100svh] w-full justify-center overflow-hidden bg-fog">
           <div className="pointer-events-none absolute -left-40 top-0 h-[55vh] w-[55vh] rounded-full bg-accent/10 blur-[130px]" />
@@ -29,6 +31,7 @@ export default async function GlassLayout({
           </main>
         </div>
       </SavedStoreProvider>
+      </SignalStoreProvider>
     </ExperienceProvider>
   );
 }

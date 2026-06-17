@@ -1,5 +1,5 @@
-import { DiscoveryFeed } from '@/components/glass/discovery-feed';
+import { DiscoveryDeck } from '@/components/glass/discovery-deck';
 
 export default function ExperiencePage() {
-  return <DiscoveryFeed />;
+  return <DiscoveryDeck />;
 }
