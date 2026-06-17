@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import {
   Heart,
-  X,
+  Eye,
   Sparkles,
   Wallet,
   FileText,
@@ -13,16 +13,17 @@ import {
   Coins,
 } from 'lucide-react';
 import { useSaved } from '@/components/glass/saved-store';
-import { EXPERIENCE_LISTINGS, formatCredits } from '@/lib/glass/experience-data';
+import { useExperience } from '@/components/glass/experience-provider';
+import { formatCredits } from '@/lib/glass/experience-data';
 
 export default function ProfilePage() {
+  const { listings } = useExperience();
   const { decisions, savedRefs, reset } = useSaved();
-  const passedCount = Object.values(decisions).filter((d) => d === 'passed').length;
   const seen = Object.keys(decisions).length;
 
-  const pendingCredits = EXPERIENCE_LISTINGS.filter(
-    (l) => decisions[l.reference] === 'saved',
-  ).reduce((sum, l) => sum + l.credit.credits, 0);
+  const pendingCredits = listings
+    .filter((l) => decisions[l.reference] === 'saved')
+    .reduce((sum, l) => sum + l.credit.credits, 0);
 
   return (
     <div className="no-scrollbar h-[100svh] overflow-y-scroll bg-mist px-4 pb-40 pt-[max(20px,env(safe-area-inset-top))]">
@@ -55,10 +56,9 @@ export default function ProfilePage() {
       </section>
 
       {/* Stats */}
-      <section className="mb-4 grid grid-cols-3 gap-2.5">
+      <section className="mb-4 grid grid-cols-2 gap-2.5">
         <Stat icon={<Heart className="h-5 w-5" />} value={savedRefs.length} label="Saved" />
-        <Stat icon={<X className="h-5 w-5" />} value={passedCount} label="Passed" />
-        <Stat icon={<Sparkles className="h-5 w-5" />} value={seen} label="Seen" />
+        <Stat icon={<Eye className="h-5 w-5" />} value={seen} label="Viewed" />
       </section>
 
       {/* Menu */}
@@ -80,7 +80,7 @@ export default function ProfilePage() {
         className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-hairline bg-paper py-3.5 text-[14px] font-medium text-graphite-dark active:scale-[0.98]"
       >
         <RotateCcw className="h-4 w-4" />
-        Reset my swipes
+        Reset my activity
       </button>
 
       <p className="mt-5 text-center text-[12px] text-graphite-light">

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -27,7 +26,6 @@ import { SmartImage } from './smart-image';
 export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
   const router = useRouter();
   const { isSaved, toggleSave } = useSaved();
-  const [photo, setPhoto] = useState(0);
   const saved = isSaved(listing.reference);
   const { pct, valueAed, credits } = listing.credit;
 
@@ -42,19 +40,14 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
     <div className="no-scrollbar h-[100svh] overflow-y-scroll bg-paper pb-28">
       {/* Hero gallery */}
       <div className="relative h-[52svh] w-full bg-mist">
-        {listing.gallery.map((src, i) => (
-          <SmartImage
-            key={src}
-            src={src}
-            alt={listing.title}
-            fill
-            priority={i === 0}
-            sizes="(max-width: 520px) 100vw, 520px"
-            className={`object-cover transition-opacity duration-500 ${
-              i === photo ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        ))}
+        <SmartImage
+          src={listing.cover}
+          alt={listing.title}
+          fill
+          priority
+          sizes="(max-width: 520px) 100vw, 520px"
+          className="object-cover"
+        />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-28 lg-scrim-t" />
 
         {/* Top controls */}
@@ -88,20 +81,6 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
           </div>
         </div>
 
-        {/* Gallery dots (only with multiple photos) */}
-        <div className={`absolute inset-x-0 bottom-4 flex justify-center gap-1.5 ${listing.gallery.length > 1 ? '' : 'hidden'}`}>
-          {listing.gallery.map((src, i) => (
-            <button
-              key={src}
-              type="button"
-              aria-label={`Photo ${i + 1}`}
-              onClick={() => setPhoto(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === photo ? 'w-6 bg-white' : 'w-1.5 bg-white/60'
-              }`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Body */}

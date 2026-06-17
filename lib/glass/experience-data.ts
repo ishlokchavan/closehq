@@ -5,24 +5,14 @@ import { CREDIT_AED_RATE, aedToCredits } from '@/lib/portal/credits';
 /**
  * Experience-only enrichment of the canonical /properties listings.
  *
- * The seed data (the same list shown on /properties) ships with
- * `coverImageUrl: null`. The Liquid Glass prototype is image-first, so each
- * listing is mapped to a *genuinely matching* photo here (penthouse -> penthouse,
- * villa -> villa, office -> office) rather than a generic type pool. Imagery is
- * kept inside the (glass) feature so the production data layer is untouched.
- *
- * Hosts (images.unsplash.com) are already whitelisted in next.config images.
+ * Listings come from the live `listings` table (iclose-academy-db) via
+ * lib/portal/listings. Each row already carries a real `cover_image_url`. This
+ * module adds the credit award + a one-line hook, and provides a hardcoded
+ * cover fallback (the same cloudfront assets) so images still render locally /
+ * at build time when no Supabase env is configured.
  */
 
-/**
- * Real cover images, keyed by reference — the exact same assets the live
- * /properties page serves from the `listings.cover_image_url` column in the
- * iclose-academy-db Supabase project. Host is whitelisted in next.config.
- *
- * Hardcoded here (rather than fetched) so the experience shows the correct,
- * matching photo everywhere — including local/build with no Supabase env — and
- * stays in lockstep with /properties for these 16 seed references.
- */
+/** Real cover assets keyed by reference — mirror of listings.cover_image_url. */
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7';
 const COVER: Record<string, string> = {
   'IC-1001': `${CDN}/hf_20260617_002543_e188c27d-1f7f-41a3-9c26-76506147c6bc.png`,
@@ -42,7 +32,6 @@ const COVER: Record<string, string> = {
   'IC-1015': `${CDN}/hf_20260617_003856_e005de4e-b563-4f1b-9698-43052d25240b.png`,
   'IC-1016': `${CDN}/hf_20260617_003911_5c9fdb4b-ac4a-4cae-9f3a-f3d494dd6bfc.png`,
 };
-
 const FALLBACK_COVER =
   'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=80';
 
@@ -63,11 +52,8 @@ const DEV_COMMISSION: Record<string, number> = {
 };
 
 export interface CreditAward {
-  /** Commission % rebated as credits. */
   pct: number;
-  /** Redeemable AED value of the award. */
   valueAed: number;
-  /** Credit count (1 credit = 0.5 AED) — the big, motivating number. */
   credits: number;
 }
 
@@ -81,7 +67,7 @@ export function creditAward(listing: Listing): CreditAward {
 }
 
 export interface ExperienceListing extends Listing {
-  gallery: string[];
+  cover: string;
   hook: string;
   credit: CreditAward;
 }
@@ -98,25 +84,19 @@ function hookFor(listing: Listing): string {
   return listing.isVerified ? 'Verified listing' : 'Fresh to market';
 }
 
-export const EXPERIENCE_LISTINGS: ExperienceListing[] = SEED_LISTINGS.map(
-  (listing) => ({
+/** Map a live (or seed) listing into the experience shape. */
+export function toExperienceListing(listing: Listing): ExperienceListing {
+  return {
     ...listing,
-    gallery: [COVER[listing.reference] ?? listing.coverImageUrl ?? FALLBACK_COVER],
+    cover: listing.coverImageUrl ?? COVER[listing.reference] ?? FALLBACK_COVER,
     hook: hookFor(listing),
     credit: creditAward(listing),
-  }),
-);
-
-export function getExperienceListing(
-  reference: string,
-): ExperienceListing | undefined {
-  return EXPERIENCE_LISTINGS.find((l) => l.reference === reference);
+  };
 }
 
-/** Off-plan releases, surfaced as the "Launches" stories rail. */
-export const EXPERIENCE_LAUNCHES = EXPERIENCE_LISTINGS.filter(
-  (l) => l.completion === 'off_plan',
-);
+/** Fallback dataset (seed) used only if the live table is empty/unreachable. */
+export const FALLBACK_EXPERIENCE_LISTINGS: ExperienceListing[] =
+  SEED_LISTINGS.map(toExperienceListing);
 
 /** Compact AED formatter — "AED 3.2M" / "AED 620K". */
 export function formatAed(value: number): string {

@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Sparkles, Heart, User } from 'lucide-react';
+import { Home, Search, Heart, User } from 'lucide-react';
 import { useSaved } from './saved-store';
 
 const TABS = [
-  { href: '/experience', label: 'Discover', Icon: Compass, match: (p: string) => p === '/experience' },
-  { href: '/experience/launches', label: 'Launches', Icon: Sparkles, match: (p: string) => p.startsWith('/experience/launches') },
+  { href: '/experience', label: 'Home', Icon: Home, match: (p: string) => p === '/experience' },
+  { href: '/experience/search', label: 'Search', Icon: Search, match: (p: string) => p.startsWith('/experience/search') },
   { href: '/experience/saved', label: 'Saved', Icon: Heart, match: (p: string) => p.startsWith('/experience/saved') },
   { href: '/experience/profile', label: 'Profile', Icon: User, match: (p: string) => p.startsWith('/experience/profile') },
 ];
@@ -23,7 +23,7 @@ export function GlassTabBar() {
 
   return (
     <nav
-      className="pointer-events-none absolute inset-x-0 bottom-0 z-50 flex justify-center pb-[max(16px,env(safe-area-inset-bottom))]"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-50 flex justify-center pb-[max(14px,env(safe-area-inset-bottom))]"
       aria-label="Primary"
     >
       <div className="lg-glass-light pointer-events-auto flex items-center gap-1 rounded-full p-1.5">
@@ -34,21 +34,20 @@ export function GlassTabBar() {
             <Link
               key={href}
               href={href}
+              aria-label={label}
               aria-current={active ? 'page' : undefined}
-              className={`relative flex h-11 items-center gap-2 rounded-full px-4 transition-all duration-300 ${
-                active ? 'bg-ink text-white' : 'text-graphite-dark hover:text-ink'
+              className={`relative flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300 active:scale-90 ${
+                active ? 'bg-ink text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]' : 'text-graphite-dark'
               }`}
             >
-              <Icon className="h-[21px] w-[21px]" strokeWidth={active ? 2.4 : 2} aria-hidden />
-              <span
-                className={`overflow-hidden text-[14px] font-medium tracking-tight transition-all duration-300 ${
-                  active ? 'max-w-[80px] opacity-100' : 'max-w-0 opacity-0'
-                }`}
-              >
-                {label}
-              </span>
+              <Icon
+                className="h-[23px] w-[23px]"
+                strokeWidth={active ? 2.4 : 1.9}
+                fill={active && (label === 'Saved' || label === 'Home') ? 'currentColor' : 'none'}
+                aria-hidden
+              />
               {showBadge && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-semibold text-white">
+                <span className="absolute right-1 top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-semibold text-white ring-2 ring-white/70">
                   {savedRefs.length}
                 </span>
               )}

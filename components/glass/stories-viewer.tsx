@@ -5,23 +5,30 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { X, Heart, CalendarClock, Wallet, ArrowUpRight, Coins } from 'lucide-react';
-import {
-  EXPERIENCE_LAUNCHES,
-  formatAed,
-  formatCredits,
-} from '@/lib/glass/experience-data';
+import { formatAed, formatCredits } from '@/lib/glass/experience-data';
+import type { ExperienceListing } from '@/lib/glass/experience-data';
 import { useSaved } from './saved-store';
 import { SmartImage } from './smart-image';
 
 const STORY_MS = 6000;
 const TICK = 50;
 
-export function StoriesViewer() {
+export function StoriesViewer({
+  launches,
+  startReference,
+}: {
+  launches: ExperienceListing[];
+  startReference?: string;
+}) {
   const router = useRouter();
   const { isSaved, toggleSave } = useSaved();
-  const launches = EXPERIENCE_LAUNCHES;
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(() => {
+    const i = startReference
+      ? launches.findIndex((l) => l.reference === startReference)
+      : 0;
+    return i >= 0 ? i : 0;
+  });
   const [progress, setProgress] = useState(0);
   const [paused, setPaused] = useState(false);
   const elapsed = useRef(0);
@@ -70,7 +77,7 @@ export function StoriesViewer() {
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-black">
       <SmartImage
-        src={launch.gallery[0]}
+        src={launch.cover}
         alt={launch.title}
         fill
         priority

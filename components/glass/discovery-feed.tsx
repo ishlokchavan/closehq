@@ -2,140 +2,103 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
-import { SlidersHorizontal, MapPin, Coins } from 'lucide-react';
-import { EXPERIENCE_LISTINGS, formatAed, formatCredits } from '@/lib/glass/experience-data';
-import type { ExperienceListing } from '@/lib/glass/experience-data';
+import { Search, Heart } from 'lucide-react';
+import { useExperience } from './experience-provider';
 import { useSaved } from './saved-store';
-import { SwipeCard } from './swipe-card';
+import { FeedCard } from './feed-card';
 import { SmartImage } from './smart-image';
 
 export function DiscoveryFeed() {
-  const { decisions, save, pass, savedRefs } = useSaved();
-  const [matched, setMatched] = useState<ExperienceListing | null>(null);
-
-  function handleSave(listing: ExperienceListing) {
-    const firstTime = decisions[listing.reference] !== 'saved';
-    save(listing.reference);
-    if (firstTime) setMatched(listing);
-  }
+  const { listings, launches } = useExperience();
+  const { isSaved, toggleSave } = useSaved();
+  const [condensed, setCondensed] = useState(false);
 
   return (
-    <div className="relative h-[100svh] w-full overflow-hidden bg-mist">
-      {/* Top glass bar */}
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-4 pt-[max(12px,env(safe-area-inset-top))]">
-        <div className="lg-glass-light pointer-events-auto flex items-center justify-between rounded-full py-2 pl-4 pr-2">
-          <div className="flex items-center gap-2 text-ink">
-            <span className="text-[16px] font-semibold tracking-tight">Discover</span>
-            <span className="flex items-center gap-0.5 text-[13px] text-graphite">
-              <MapPin className="h-3.5 w-3.5" aria-hidden /> UAE
-            </span>
-          </div>
-          <button
-            type="button"
-            className="flex h-9 items-center gap-1.5 rounded-full bg-ink px-3.5 text-[13px] font-medium text-white active:scale-95"
+    <div className="relative h-[100svh] w-full overflow-hidden bg-paper">
+      {/* Condensing glass app bar */}
+      <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-3 pt-[max(8px,env(safe-area-inset-top))]">
+        <div
+          className={`lg-glass-light pointer-events-auto flex items-center justify-between rounded-[22px] px-4 transition-all duration-300 ${
+            condensed ? 'py-1.5' : 'py-2.5'
+          }`}
+        >
+          <span
+            className={`font-semibold tracking-tight text-ink transition-all duration-300 ${
+              condensed ? 'text-[17px]' : 'text-[22px]'
+            }`}
           >
-            <SlidersHorizontal className="h-4 w-4" aria-hidden />
-            Filters
-          </button>
+            iClose
+          </span>
+          <div className="flex items-center gap-1">
+            <Link
+              href="/experience/search"
+              aria-label="Search"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-ink active:scale-90"
+            >
+              <Search className="h-[21px] w-[21px]" strokeWidth={2} />
+            </Link>
+            <Link
+              href="/experience/saved"
+              aria-label="Saved"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-ink active:scale-90"
+            >
+              <Heart className="h-[21px] w-[21px]" strokeWidth={2} />
+            </Link>
+          </div>
         </div>
       </header>
 
-      {/* Vertical feed of swipeable cards */}
-      <div className="lg-snap-y no-scrollbar h-full w-full overflow-y-scroll overscroll-y-contain">
-        {EXPERIENCE_LISTINGS.map((listing) => (
-          <SwipeCard
+      {/* Scroll feed */}
+      <div
+        className="no-scrollbar h-full w-full overflow-y-scroll pb-28"
+        onScroll={(e) => setCondensed(e.currentTarget.scrollTop > 56)}
+      >
+        <div style={{ height: 'calc(env(safe-area-inset-top) + 60px)' }} />
+
+        {/* Stories rail — off-plan launches */}
+        {launches.length > 0 && (
+          <section className="no-scrollbar flex gap-3.5 overflow-x-auto px-4 pb-3">
+            {launches.map((l) => (
+              <Link
+                key={l.reference}
+                href={`/experience/launches?start=${l.reference}`}
+                className="flex w-[68px] shrink-0 flex-col items-center gap-1.5"
+              >
+                <span className="rounded-full bg-gradient-to-tr from-accent to-journey-offplan p-[2.5px]">
+                  <span className="block rounded-full bg-paper p-[2.5px]">
+                    <span className="relative block h-[58px] w-[58px] overflow-hidden rounded-full bg-mist">
+                      <SmartImage
+                        src={l.cover}
+                        alt={l.developerName ?? l.title}
+                        fill
+                        sizes="64px"
+                        className="object-cover"
+                      />
+                    </span>
+                  </span>
+                </span>
+                <span className="w-full truncate text-center text-[11px] text-graphite-dark">
+                  {l.developerName ?? l.community}
+                </span>
+              </Link>
+            ))}
+          </section>
+        )}
+
+        {/* Property feed */}
+        {listings.map((listing) => (
+          <FeedCard
             key={listing.reference}
             listing={listing}
-            decided={decisions[listing.reference] ?? null}
-            onSave={() => handleSave(listing)}
-            onPass={() => pass(listing.reference)}
+            saved={isSaved(listing.reference)}
+            onToggleSave={() => toggleSave(listing.reference)}
           />
         ))}
-        {/* End cap */}
-        <section className="lg-snap-start flex h-[100svh] snap-start flex-col items-center justify-center gap-4 bg-paper px-8 text-center">
-          <p className="text-[24px] font-semibold tracking-tight text-ink">
-            You&rsquo;re all caught up
-          </p>
-          <p className="max-w-xs text-[15px] text-graphite">
-            {savedRefs.length > 0
-              ? `You shortlisted ${savedRefs.length} ${savedRefs.length === 1 ? 'home' : 'homes'}. Review them and the credits you'd earn.`
-              : 'Swipe right on a home to start your shortlist.'}
-          </p>
-          <Link
-            href="/experience/saved"
-            className="mt-2 rounded-full bg-ink px-6 py-3 text-[15px] font-medium text-white active:scale-95"
-          >
-            View shortlist
-          </Link>
-        </section>
+
+        <p className="px-6 py-8 text-center text-[13px] text-graphite-light">
+          You&rsquo;re all caught up · {listings.length} homes
+        </p>
       </div>
-
-      {/* "Shortlisted" credits moment */}
-      <AnimatePresence>
-        {matched && (
-          <motion.div
-            className="absolute inset-0 z-40 flex flex-col items-center justify-center px-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMatched(null)}
-          >
-            <div className="absolute inset-0 bg-ink/40 backdrop-blur-md" />
-            <motion.div
-              className="relative z-10 w-full max-w-sm overflow-hidden rounded-[28px] bg-paper shadow-elevated"
-              initial={{ scale: 0.85, y: 24 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-            >
-              <div className="relative h-40 w-full">
-                <SmartImage
-                  src={matched.gallery[0]}
-                  alt={matched.title}
-                  fill
-                  sizes="400px"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-5 text-center">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-graphite">
-                  Added to shortlist
-                </p>
-                <h3 className="mt-2 text-[18px] font-semibold tracking-tight text-ink">
-                  {matched.title}
-                </h3>
-                <p className="mt-0.5 text-[14px] text-graphite">
-                  {formatAed(matched.priceAed)} · {matched.community}
-                </p>
-
-                <div className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-accent/10 py-3">
-                  <Coins className="h-5 w-5 text-accent" />
-                  <span className="text-[15px] font-semibold text-accent">
-                    Earn {formatCredits(matched.credit.credits)} credits
-                  </span>
-                </div>
-
-                <div className="mt-4 flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setMatched(null)}
-                    className="flex-1 rounded-full bg-mist py-3 text-[15px] font-medium text-ink active:scale-95"
-                  >
-                    Keep browsing
-                  </button>
-                  <Link
-                    href={`/experience/property/${matched.reference}`}
-                    className="flex-1 rounded-full bg-ink py-3 text-[15px] font-semibold text-white active:scale-95"
-                  >
-                    View home
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

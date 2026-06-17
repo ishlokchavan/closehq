@@ -4,25 +4,23 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, MapPin, BedDouble, Maximize, Trash2, ArrowRight, Coins } from 'lucide-react';
-import {
-  EXPERIENCE_LISTINGS,
-  formatAed,
-  formatCredits,
-} from '@/lib/glass/experience-data';
+import { formatAed, formatCredits } from '@/lib/glass/experience-data';
+import { useExperience } from './experience-provider';
 import { useSaved } from './saved-store';
 import { SmartImage } from './smart-image';
 
 export function SavedDeck() {
-  const { decisions, pass } = useSaved();
+  const { listings } = useExperience();
+  const { decisions, toggleSave } = useSaved();
   const [expanded, setExpanded] = useState(true);
 
-  const saved = EXPERIENCE_LISTINGS.filter((l) => decisions[l.reference] === 'saved');
+  const saved = listings.filter((l) => decisions[l.reference] === 'saved');
   const totalCredits = saved.reduce((sum, l) => sum + l.credit.credits, 0);
 
   return (
     <div className="no-scrollbar h-[100svh] overflow-y-scroll bg-mist px-4 pb-40 pt-[max(20px,env(safe-area-inset-top))]">
       <header className="mb-4 mt-2">
-        <h1 className="text-[30px] font-semibold tracking-tight text-ink">Shortlist</h1>
+        <h1 className="text-[30px] font-semibold tracking-tight text-ink">Saved</h1>
         <p className="mt-1 text-[14px] text-graphite">
           {saved.length === 0
             ? 'Homes you save will stack up here'
@@ -84,8 +82,8 @@ export function SavedDeck() {
                   city={listing.city}
                   beds={listing.bedrooms}
                   area={listing.areaSqft}
-                  image={listing.gallery[0]}
-                  onRemove={() => pass(listing.reference)}
+                  image={listing.cover}
+                  onRemove={() => toggleSave(listing.reference)}
                 />
               </motion.div>
             ))}
