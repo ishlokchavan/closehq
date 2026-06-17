@@ -38,27 +38,37 @@ const STEPS = 3;
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 
-const stagger = (delayChildren = 0.05) => ({
+const stagger = (delay = 0.06) => ({
   hidden: {},
-  show: { transition: { staggerChildren: delayChildren, delayChildren: 0.12 } },
+  show: { transition: { staggerChildren: delay, delayChildren: 0.1 } },
 });
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: EASE } },
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: EASE } },
 };
 
 const fadeIn = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.3, ease: EASE } },
+  show: { opacity: 1, transition: { duration: 0.28, ease: EASE } },
 };
 
 const slideUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: EASE } },
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: EASE } },
 };
 
-/** Inline mesh gradient matching the portal homepage (MeshGradient component). */
+/** iClose logotype — inline (no anchor) for use inside the story overlay. */
+function ICloseLogo({ className }: { className?: string }) {
+  return (
+    <span className={`inline-flex items-baseline ${className ?? ''}`} style={{ letterSpacing: '-0.02em' }}>
+      <span className="font-display text-[28px] font-medium text-ink">i</span>
+      <span className="font-display text-[28px] font-semibold text-ink">Close</span>
+    </span>
+  );
+}
+
+/** Mesh gradient matching the portal homepage hero (same CSS as MeshGradient). */
 function HeroMesh() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -74,7 +84,6 @@ function HeroMesh() {
           ].join(','),
         }}
       />
-      {/* Soft white core for legibility */}
       <div
         className="absolute inset-0"
         style={{
@@ -87,10 +96,9 @@ function HeroMesh() {
 }
 
 /**
- * First-run brand intro — a swipeable "what / who / what's-in-it" story shown
- * once, before the taste picker. Three purpose-built slides: the commission
- * headline (light, portal-style), what you can do (buy/sell/close), and the
- * platform USPs. Self-contained (own localStorage flag, no route dependency).
+ * First-run brand intro — a swipeable three-slide story shown once before the
+ * taste picker. All slides use the product's light theme. Self-contained (own
+ * localStorage flag, no route dependency).
  */
 export function IntroStory() {
   const [open, setOpen] = useState(false);
@@ -128,21 +136,17 @@ export function IntroStory() {
   }
 
   const last = idx === STEPS - 1;
-  // Slide 1 is light (paper bg) — progress bars and skip need dark colours.
-  const light = idx === 0;
 
   return (
-    <div className="absolute inset-0 z-[80]">
-      {/* progress bars + skip — colours adapt per slide */}
+    <div className="absolute inset-0 z-[80] bg-paper">
+      {/* progress bars + skip */}
       <div className="absolute inset-x-0 top-0 z-20 flex items-center gap-3 px-5 pt-[max(16px,env(safe-area-inset-top))]">
         <div className="flex flex-1 gap-1.5">
           {Array.from({ length: STEPS }).map((_, i) => (
             <span
               key={i}
               className={`h-[3px] flex-1 rounded-full transition-colors duration-300 ${
-                i <= idx
-                  ? light ? 'bg-ink' : 'bg-white'
-                  : light ? 'bg-ink/20' : 'bg-white/30'
+                i <= idx ? 'bg-ink' : 'bg-ink/15'
               }`}
             />
           ))}
@@ -150,7 +154,7 @@ export function IntroStory() {
         <button
           type="button"
           onClick={finish}
-          className={`text-[13px] font-medium active:scale-95 transition-colors duration-300 ${light ? 'text-ink/60' : 'text-white/80'}`}
+          className="text-[13px] font-medium text-ink/50 active:scale-95"
         >
           Skip
         </button>
@@ -162,86 +166,64 @@ export function IntroStory() {
         className="no-scrollbar flex h-full w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain"
         style={{ touchAction: 'pan-x' }}
       >
-        {/* ── Slide 1 · Hero headline (light, portal-style) ─────── */}
+        {/* ── Slide 1 · Hero headline ───────────────────────────── */}
         <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-paper">
           <HeroMesh />
 
           <motion.div
-            key={`slide-1-${idx === 0}`}
-            className="relative flex h-full flex-col items-center justify-center px-7 pb-32 pt-[max(72px,calc(env(safe-area-inset-top)+52px))]"
+            key={`s1-${idx === 0}`}
+            className="relative flex h-full flex-col items-center justify-center px-8 pb-32 pt-[max(80px,calc(env(safe-area-inset-top)+64px))]"
             variants={stagger(0.09)}
             initial="hidden"
             animate={idx === 0 ? 'show' : 'hidden'}
           >
-            {/* Brand wordmark */}
-            <motion.span
-              variants={fadeIn}
-              className="mb-6 text-[13px] font-semibold uppercase tracking-[0.22em] text-ink/40"
-            >
-              iClose
-            </motion.span>
+            <motion.div variants={fadeIn}>
+              <ICloseLogo />
+            </motion.div>
 
-            {/* Hero headline — same style as portal home */}
             <motion.h1
               variants={fadeUp}
-              className="text-center text-[32px] font-semibold leading-[1.1] tracking-tight text-ink"
+              className="mt-6 text-center text-[30px] leading-[1.12] text-ink"
               style={{ letterSpacing: '-0.02em' }}
             >
-              Never Pay Commission to{' '}
-              <span className="text-accent">Buy</span>,{' '}
-              <span className="text-accent">Sell</span>, Or{' '}
-              <span className="text-accent">Close</span>{' '}
-              Ever Again!
+              Never pay commission to{' '}
+              <strong className="font-bold">buy</strong>,{' '}
+              <strong className="font-bold">sell</strong>, or{' '}
+              <strong className="font-bold">close</strong>{' '}
+              <span className="font-normal">ever again.</span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
-              className="mt-4 text-center text-[15px] leading-snug text-ink/55"
+              className="mt-4 flex items-center gap-1 text-center text-[14px] text-ink/55"
             >
-              The commission-free way to move property in the UAE.
+              Investing in Off-Plan? Get Special Pricing &amp; Credits
+              <ArrowRight className="h-3.5 w-3.5 shrink-0" />
             </motion.p>
-
-            {/* Buy · Sell · Close pills */}
-            <motion.div variants={stagger(0.08)} className="mt-8 flex gap-2.5">
-              {[
-                { Icon: Home, label: 'Buy' },
-                { Icon: Tag, label: 'Sell' },
-                { Icon: Handshake, label: 'Close' },
-              ].map(({ Icon, label }) => (
-                <motion.span
-                  key={label}
-                  variants={slideUp}
-                  className="flex items-center gap-1.5 rounded-full border border-ink/10 bg-white/70 px-3.5 py-2 text-[13px] font-medium text-ink shadow-sm backdrop-blur-sm"
-                >
-                  <Icon className="h-3.5 w-3.5 text-accent" />
-                  {label}
-                </motion.span>
-              ))}
-            </motion.div>
           </motion.div>
         </section>
 
         {/* ── Slide 2 · What you can do ─────────────────────────── */}
-        <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-ink">
+        <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-paper">
           <div className="flex h-full flex-col px-6 pb-40 pt-[max(64px,calc(env(safe-area-inset-top)+52px))]">
             <motion.div
-              key={`slide-2-${idx === 1}`}
+              key={`s2-${idx === 1}`}
               variants={stagger(0.06)}
               initial="hidden"
               animate={idx === 1 ? 'show' : 'hidden'}
             >
-              <motion.h2 variants={fadeUp} className="text-[28px] font-semibold leading-tight tracking-tight text-white">
+              <motion.h2 variants={fadeUp} className="text-[28px] font-semibold leading-tight tracking-tight text-ink">
                 One app. Three ways to win.
               </motion.h2>
-              <motion.p variants={fadeUp} className="mt-1.5 text-[15px] text-white/65">
+              <motion.p variants={fadeUp} className="mt-1.5 text-[15px] text-ink/55">
                 Whichever side you're on, the cut stays yours.
               </motion.p>
 
               <motion.div className="mt-6 flex flex-col gap-3" variants={stagger(0.07)}>
                 {DO_CARDS.map(({ img, Icon, label, badge, line }) => (
-                  <motion.div key={label} variants={slideUp} className="relative h-[104px] overflow-hidden rounded-3xl">
+                  <motion.div key={label} variants={slideUp} className="relative h-[104px] overflow-hidden rounded-3xl shadow-sm">
                     <SmartImage src={img} alt="" fill sizes="(max-width: 520px) 100vw, 520px" className="object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
                     <div className="absolute inset-0 flex flex-col justify-center gap-1 px-5">
                       <div className="flex items-center gap-2">
                         <Icon className="h-[18px] w-[18px] text-white" />
@@ -258,31 +240,34 @@ export function IntroStory() {
         </section>
 
         {/* ── Slide 3 · Why iClose (USPs) ───────────────────────── */}
-        <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-ink">
-          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/25 blur-[120px]" />
+        <section className="relative h-full w-full shrink-0 snap-center overflow-hidden bg-paper">
           <div className="flex h-full flex-col px-6 pb-40 pt-[max(64px,calc(env(safe-area-inset-top)+52px))]">
             <motion.div
-              key={`slide-3-${idx === 2}`}
+              key={`s3-${idx === 2}`}
               variants={stagger(0.07)}
               initial="hidden"
               animate={idx === 2 ? 'show' : 'hidden'}
             >
-              <motion.h2 variants={fadeUp} className="text-[28px] font-semibold leading-tight tracking-tight text-white">
+              <motion.h2 variants={fadeUp} className="text-[28px] font-semibold leading-tight tracking-tight text-ink">
                 Why iClose?
               </motion.h2>
-              <motion.p variants={fadeUp} className="mt-1.5 text-[15px] text-white/65">
+              <motion.p variants={fadeUp} className="mt-1.5 text-[15px] text-ink/55">
                 Built to put money back in your pocket.
               </motion.p>
 
-              <motion.div className="mt-6 flex flex-col gap-3.5" variants={stagger(0.07)}>
+              <motion.div className="mt-6 flex flex-col gap-3" variants={stagger(0.07)}>
                 {USPS.map(({ Icon, title, line }) => (
-                  <motion.div key={title} variants={slideUp} className="flex items-start gap-3.5 rounded-2xl bg-white/[0.06] p-3.5">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent">
-                      <Icon className="h-[22px] w-[22px]" />
+                  <motion.div
+                    key={title}
+                    variants={slideUp}
+                    className="flex items-start gap-3.5 rounded-2xl border border-ink/[0.07] bg-ink/[0.03] p-4"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <Icon className="h-[20px] w-[20px]" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-[16px] font-semibold tracking-tight text-white">{title}</p>
-                      <p className="text-[13.5px] leading-snug text-white/70">{line}</p>
+                      <p className="text-[15px] font-semibold tracking-tight text-ink">{title}</p>
+                      <p className="text-[13px] leading-snug text-ink/55">{line}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -292,14 +277,12 @@ export function IntroStory() {
         </section>
       </div>
 
-      {/* bottom CTA — light on slide 1, dark on slides 2 & 3 */}
+      {/* bottom CTA */}
       <div className="absolute inset-x-0 bottom-0 z-20 px-7 pb-[max(26px,env(safe-area-inset-bottom))]">
         <motion.button
           type="button"
           onClick={() => (last ? finish() : go(idx + 1))}
-          className={`flex w-full items-center justify-center gap-2 rounded-full py-4 text-[16px] font-semibold transition-colors duration-300 active:scale-[0.99] ${
-            light ? 'bg-ink text-white' : 'bg-white text-ink'
-          }`}
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-ink py-4 text-[16px] font-semibold text-white active:scale-[0.99]"
           whileTap={{ scale: 0.98 }}
         >
           {last ? 'Start exploring' : 'Next'}
