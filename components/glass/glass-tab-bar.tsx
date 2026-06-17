@@ -2,18 +2,24 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Heart, User } from 'lucide-react';
+import { Home, Flame, Search, Heart, User } from 'lucide-react';
 import { useSaved } from './saved-store';
 
 const TABS = [
   { href: '/experience', label: 'Home', Icon: Home, match: (p: string) => p === '/experience' },
+  { href: '/experience/trending', label: 'Trending', Icon: Flame, match: (p: string) => p.startsWith('/experience/trending') },
   { href: '/experience/search', label: 'Search', Icon: Search, match: (p: string) => p.startsWith('/experience/search') },
   { href: '/experience/saved', label: 'Saved', Icon: Heart, match: (p: string) => p.startsWith('/experience/saved') },
   { href: '/experience/profile', label: 'Profile', Icon: User, match: (p: string) => p.startsWith('/experience/profile') },
 ];
 
 /** Full-screen surfaces hide the tab bar so it can't overlap their own chrome. */
-const HIDE_ON = ['/experience/property', '/experience/launches'];
+const HIDE_ON = [
+  '/experience/property',
+  '/experience/launches',
+  '/experience/login',
+  '/experience/sell',
+];
 
 export function GlassTabBar() {
   const pathname = usePathname();
@@ -26,7 +32,7 @@ export function GlassTabBar() {
       className="pointer-events-none absolute inset-x-0 bottom-0 z-50 flex justify-center pb-[max(14px,env(safe-area-inset-bottom))]"
       aria-label="Primary"
     >
-      <div className="lg-glass-light pointer-events-auto flex items-center gap-1 rounded-full p-1.5">
+      <div className="lg-glass-light pointer-events-auto flex items-center gap-0.5 rounded-full p-1.5">
         {TABS.map(({ href, label, Icon, match }) => {
           const active = match(pathname);
           const showBadge = label === 'Saved' && savedRefs.length > 0;
@@ -41,7 +47,7 @@ export function GlassTabBar() {
               }`}
             >
               <Icon
-                className="h-[23px] w-[23px]"
+                className="h-[22px] w-[22px]"
                 strokeWidth={active ? 2.4 : 1.9}
                 fill={active && (label === 'Saved' || label === 'Home') ? 'currentColor' : 'none'}
                 aria-hidden
