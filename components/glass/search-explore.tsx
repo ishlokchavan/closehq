@@ -1,8 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Search, SlidersHorizontal, X, Heart, Coins, Check } from 'lucide-react';
+import { Search, SlidersHorizontal, X, Heart, Coins, Check, Sparkles, Loader2, MapPin } from 'lucide-react';
 import { useExperience } from './experience-provider';
 import { useSaved } from './saved-store';
 import { formatAed, formatCredits } from '@/lib/glass/experience-data';
@@ -10,6 +10,20 @@ import type { ExperienceListing } from '@/lib/glass/experience-data';
 import { SmartImage } from './smart-image';
 
 type Completion = '' | 'ready' | 'off_plan';
+
+interface ParsedFilters {
+  completion: 'ready' | 'off_plan' | null;
+  types: string[];
+  minBeds: number | null;
+  maxBeds: number | null;
+  minPrice: number | null;
+  maxPrice: number | null;
+  community: string | null;
+  amenities: string[];
+  q: string;
+}
+
+const EXAMPLE = '2-bed near the marina under 2M with a pool';
 const BED_CHIPS = ['Studio', '1', '2', '3', '4+'];
 const TYPES = ['apartment', 'villa', 'townhouse', 'penthouse', 'office', 'retail'] as const;
 
@@ -25,19 +39,86 @@ export function SearchExplore() {
   const [maxPrice, setMaxPrice] = useState(0);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
 
+  // Natural-language ("smart") filters, set when the user submits a sentence.
+  const [smart, setSmart] = useState<ParsedFilters | null>(null);
+  const [parsing, setParsing] = useState(false);
+  const [community, setCommunity] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [minBeds, setMinBeds] = useState<number | null>(null);
+  const [maxBeds, setMaxBeds] = useState<number | null>(null);
+  const [amenities, setAmenities] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const communityOptions = useMemo(
+    () => Array.from(new Set(listings.map((l) => l.community).filter(Boolean))) as string[],
+    [listings],
+  );
+
   const activeFilters =
-    types.length + (maxPrice ? 1 : 0) + (verifiedOnly ? 1 : 0);
+    types.length +
+    (maxPrice ? 1 : 0) +
+    (minPrice ? 1 : 0) +
+    (community ? 1 : 0) +
+    amenities.length +
+    (minBeds != null ? 1 : 0) +
+    (verifiedOnly ? 1 : 0);
+
+  async function runSmart(text: string) {
+    const query = text.trim();
+    if (!query) return;
+    setParsing(true);
+    try {
+      const res = await fetch('/api/glass/search-parse', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ q: query, communities: communityOptions }),
+      });
+      const data = (await res.json()) as { filters: ParsedFilters };
+      const f = data.filters;
+      setCompletion(f.completion ?? '');
+      setTypes(f.types ?? []);
+      setMaxPrice(f.maxPrice ?? 0);
+      setMinPrice(f.minPrice ?? 0);
+      setMinBeds(f.minBeds ?? null);
+      setMaxBeds(f.maxBeds ?? null);
+      setAmenities(f.amenities ?? []);
+      setCommunity(f.community ?? '');
+      setBeds('');
+      setSmart(f);
+      inputRef.current?.blur();
+    } catch {
+      /* network error — keep the instant substring results */
+    } finally {
+      setParsing(false);
+    }
+  }
+
+  function clearSmart() {
+    setSmart(null);
+    setCommunity('');
+    setMinPrice(0);
+    setMaxPrice(0);
+    setMinBeds(null);
+    setMaxBeds(null);
+    setAmenities([]);
+    setCompletion('');
+    setTypes([]);
+    setQ('');
+  }
 
   const results = useMemo(() => {
     const query = q.trim().toLowerCase();
     return listings.filter((l) => {
-      if (query) {
+      // Plain substring only when NOT in smart mode (the sentence won't match).
+      if (!smart && query) {
         const hay = [l.title, l.community, l.building, l.city, l.developerName]
           .filter(Boolean)
           .join(' ')
           .toLowerCase();
         if (!hay.includes(query)) return false;
       }
+      if (community && !(l.community ?? '').toLowerCase().includes(community.toLowerCase()))
+        return false;
       if (completion && l.completion !== completion) return false;
       if (beds) {
         if (beds === 'Studio' && l.bedrooms !== 0) return false;
@@ -45,12 +126,21 @@ export function SearchExplore() {
         else if (!['Studio', '4+'].includes(beds) && l.bedrooms !== Number(beds))
           return false;
       }
+      if (minBeds != null && (l.bedrooms ?? -1) < minBeds) return false;
+      if (maxBeds != null && (l.bedrooms ?? 99) > maxBeds) return false;
       if (types.length && !types.includes(l.propertyType)) return false;
+      if (minPrice && l.priceAed < minPrice) return false;
       if (maxPrice && l.priceAed > maxPrice) return false;
+      if (amenities.length) {
+        const hay = [...(l.amenities ?? []), l.title, l.community ?? '']
+          .join(' ')
+          .toLowerCase();
+        if (!amenities.every((a) => hay.includes(a))) return false;
+      }
       if (verifiedOnly && !l.isVerified) return false;
       return true;
     });
-  }, [listings, q, completion, beds, types, maxPrice, verifiedOnly]);
+  }, [listings, q, smart, community, completion, beds, minBeds, maxBeds, types, minPrice, maxPrice, amenities, verifiedOnly]);
 
   return (
     <div className="relative h-[100svh] overflow-hidden bg-paper">
@@ -58,15 +148,39 @@ export function SearchExplore() {
       <div className="absolute inset-x-0 top-0 z-20 bg-paper/80 px-4 pb-2 pt-[max(16px,env(safe-area-inset-top))] backdrop-blur-xl">
         <div className="flex items-center gap-2">
           <label className="flex h-11 flex-1 items-center gap-2 rounded-full bg-mist px-4">
-            <Search className="h-[18px] w-[18px] text-graphite" />
+            {parsing ? (
+              <Loader2 className="h-[18px] w-[18px] shrink-0 animate-spin text-accent" />
+            ) : smart ? (
+              <Sparkles className="h-[18px] w-[18px] shrink-0 text-accent" />
+            ) : (
+              <Search className="h-[18px] w-[18px] shrink-0 text-graphite" />
+            )}
             <input
+              ref={inputRef}
               value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search community, project, city…"
+              onChange={(e) => {
+                setQ(e.target.value);
+                if (smart) setSmart(null);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  runSmart(q);
+                }
+              }}
+              enterKeyHint="search"
+              placeholder="Describe your ideal home…"
               className="w-full bg-transparent text-[15px] text-ink outline-none placeholder:text-graphite"
             />
             {q && (
-              <button type="button" onClick={() => setQ('')} aria-label="Clear">
+              <button
+                type="button"
+                onClick={() => {
+                  setQ('');
+                  if (smart) clearSmart();
+                }}
+                aria-label="Clear"
+              >
                 <X className="h-4 w-4 text-graphite" />
               </button>
             )}
@@ -113,6 +227,33 @@ export function SearchExplore() {
 
       {/* Results grid */}
       <div className="no-scrollbar h-full overflow-y-scroll px-3 pb-28 pt-[136px]">
+        {smart ? (
+          <SmartBanner
+            completion={completion}
+            community={community}
+            minBeds={minBeds}
+            maxBeds={maxBeds}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            types={types}
+            amenities={amenities}
+            onClear={clearSmart}
+          />
+        ) : !q ? (
+          <button
+            type="button"
+            onClick={() => {
+              setQ(EXAMPLE);
+              runSmart(EXAMPLE);
+            }}
+            className="mx-1 mb-2 flex w-[calc(100%-0.5rem)] items-center gap-2 rounded-2xl border border-accent/20 bg-accent/[0.06] px-3.5 py-2.5 text-left active:scale-[0.99]"
+          >
+            <Sparkles className="h-4 w-4 shrink-0 text-accent" />
+            <span className="text-[13px] text-graphite-dark">
+              Try: <span className="text-ink">&ldquo;{EXAMPLE}&rdquo;</span>
+            </span>
+          </button>
+        ) : null}
         <p className="px-1 pb-2 pt-1 text-[13px] text-graphite">
           {results.length} {results.length === 1 ? 'home' : 'homes'}
         </p>
@@ -151,6 +292,82 @@ export function SearchExplore() {
             setVerifiedOnly(false);
           }}
         />
+      )}
+    </div>
+  );
+}
+
+function bedsLabel(min: number | null, max: number | null): string | null {
+  if (min == null && max == null) return null;
+  if (min === 0 && max === 0) return 'Studio';
+  if (min != null && max != null) return min === max ? `${min} bed` : `${min}–${max} beds`;
+  if (min != null) return `${min}+ beds`;
+  return `up to ${max} beds`;
+}
+
+/** "Understood: …" — the parsed criteria shown back, with one tap to clear. */
+function SmartBanner({
+  completion,
+  community,
+  minBeds,
+  maxBeds,
+  minPrice,
+  maxPrice,
+  types,
+  amenities,
+  onClear,
+}: {
+  completion: Completion;
+  community: string;
+  minBeds: number | null;
+  maxBeds: number | null;
+  minPrice: number;
+  maxPrice: number;
+  types: string[];
+  amenities: string[];
+  onClear: () => void;
+}) {
+  const chips: { label: string; icon?: React.ReactNode }[] = [];
+  if (community) chips.push({ label: community, icon: <MapPin className="h-3 w-3" /> });
+  if (completion) chips.push({ label: completion === 'off_plan' ? 'Off-plan' : 'Ready' });
+  const bl = bedsLabel(minBeds, maxBeds);
+  if (bl) chips.push({ label: bl });
+  for (const t of types) chips.push({ label: t });
+  if (minPrice && maxPrice) chips.push({ label: `${formatAed(minPrice)}–${formatAed(maxPrice)}` });
+  else if (maxPrice) chips.push({ label: `≤ ${formatAed(maxPrice)}` });
+  else if (minPrice) chips.push({ label: `≥ ${formatAed(minPrice)}` });
+  for (const a of amenities) chips.push({ label: a });
+
+  return (
+    <div className="mx-1 mb-2 rounded-2xl border border-accent/20 bg-accent/[0.06] px-3.5 py-3">
+      <div className="flex items-center justify-between">
+        <span className="flex items-center gap-1.5 text-[12px] font-semibold text-accent">
+          <Sparkles className="h-3.5 w-3.5" /> Understood
+        </span>
+        <button
+          type="button"
+          onClick={onClear}
+          className="flex items-center gap-1 text-[12px] font-medium text-graphite"
+        >
+          Clear <X className="h-3.5 w-3.5" />
+        </button>
+      </div>
+      {chips.length > 0 ? (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {chips.map((c, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center gap-1 rounded-full bg-paper px-2.5 py-1 text-[12px] font-medium capitalize text-ink ring-1 ring-hairline"
+            >
+              {c.icon}
+              {c.label}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-1 text-[12.5px] text-graphite">
+          Couldn&rsquo;t pin down specifics — showing the closest matches.
+        </p>
       )}
     </div>
   );
