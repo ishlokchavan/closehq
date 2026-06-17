@@ -58,12 +58,12 @@ const slideUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: EASE } },
 };
 
-/** iClose logotype — inline (no anchor) for use inside the story overlay. */
+/** iClose logotype — small brand label, not competing with the headline. */
 function ICloseLogo({ className }: { className?: string }) {
   return (
-    <span className={`inline-flex items-baseline ${className ?? ''}`} style={{ letterSpacing: '-0.02em' }}>
-      <span className="font-display text-[28px] font-medium text-ink">i</span>
-      <span className="font-display text-[28px] font-semibold text-ink">Close</span>
+    <span className={`inline-flex items-baseline ${className ?? ''}`} style={{ letterSpacing: '-0.01em' }}>
+      <span className="font-display text-[15px] font-medium text-ink/50">i</span>
+      <span className="font-display text-[15px] font-semibold text-ink/50">Close</span>
     </span>
   );
 }
@@ -183,8 +183,8 @@ export function IntroStory() {
 
             <motion.h1
               variants={fadeUp}
-              className="mt-6 text-center text-[30px] leading-[1.12] text-ink"
-              style={{ letterSpacing: '-0.02em' }}
+              className="mt-5 text-center text-[38px] leading-[1.08] text-ink"
+              style={{ letterSpacing: '-0.03em' }}
             >
               Never pay commission to{' '}
               <strong className="font-bold">buy</strong>,{' '}
