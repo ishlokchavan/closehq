@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   ChevronLeft,
@@ -17,16 +16,20 @@ import {
   Wallet,
   Building2,
   Navigation,
+  Coins,
+  Info,
 } from 'lucide-react';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
-import { formatAed } from '@/lib/glass/experience-data';
+import { formatAed, formatCredits, CREDIT_AED_RATE } from '@/lib/glass/experience-data';
 import { useSaved } from './saved-store';
+import { SmartImage } from './smart-image';
 
 export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
   const router = useRouter();
   const { isSaved, toggleSave } = useSaved();
   const [photo, setPhoto] = useState(0);
   const saved = isSaved(listing.reference);
+  const { pct, valueAed, credits } = listing.credit;
 
   const mapsHref =
     listing.latitude && listing.longitude
@@ -36,11 +39,11 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
         )}`;
 
   return (
-    <div className="no-scrollbar h-[100svh] overflow-y-scroll bg-zinc-950 pb-32">
+    <div className="no-scrollbar h-[100svh] overflow-y-scroll bg-paper pb-28">
       {/* Hero gallery */}
-      <div className="relative h-[64svh] w-full">
+      <div className="relative h-[52svh] w-full bg-mist">
         {listing.gallery.map((src, i) => (
-          <Image
+          <SmartImage
             key={src}
             src={src}
             alt={listing.title}
@@ -53,7 +56,6 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
           />
         ))}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-28 lg-scrim-t" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-zinc-950 to-transparent" />
 
         {/* Top controls */}
         <div className="absolute inset-x-4 top-[max(16px,env(safe-area-inset-top))] flex items-center justify-between">
@@ -61,7 +63,7 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
             type="button"
             onClick={() => router.back()}
             aria-label="Back"
-            className="lg-glass-strong flex h-11 w-11 items-center justify-center rounded-full text-white active:scale-90"
+            className="lg-glass-light flex h-11 w-11 items-center justify-center rounded-full text-ink active:scale-90"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
@@ -69,7 +71,7 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
             <button
               type="button"
               aria-label="Share"
-              className="lg-glass-strong flex h-11 w-11 items-center justify-center rounded-full text-white active:scale-90"
+              className="lg-glass-light flex h-11 w-11 items-center justify-center rounded-full text-ink active:scale-90"
             >
               <Share2 className="h-[18px] w-[18px]" />
             </button>
@@ -78,16 +80,16 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
               onClick={() => toggleSave(listing.reference)}
               aria-label={saved ? 'Remove from shortlist' : 'Add to shortlist'}
               className={`flex h-11 w-11 items-center justify-center rounded-full active:scale-90 ${
-                saved ? 'bg-journey-buyer text-ink' : 'lg-glass-strong text-white'
+                saved ? 'bg-ink text-white' : 'lg-glass-light text-ink'
               }`}
             >
-              <Heart className={`h-[18px] w-[18px] ${saved ? 'fill-ink' : ''}`} />
+              <Heart className={`h-[18px] w-[18px] ${saved ? 'fill-white' : ''}`} />
             </button>
           </div>
         </div>
 
         {/* Gallery dots */}
-        <div className="absolute inset-x-0 bottom-24 flex justify-center gap-1.5">
+        <div className="absolute inset-x-0 bottom-4 flex justify-center gap-1.5">
           {listing.gallery.map((src, i) => (
             <button
               key={src}
@@ -95,39 +97,63 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
               aria-label={`Photo ${i + 1}`}
               onClick={() => setPhoto(i)}
               className={`h-1.5 rounded-full transition-all ${
-                i === photo ? 'w-6 bg-white' : 'w-1.5 bg-white/45'
+                i === photo ? 'w-6 bg-white' : 'w-1.5 bg-white/60'
               }`}
             />
           ))}
         </div>
-
-        {/* Price overlay */}
-        <div className="absolute inset-x-5 bottom-6">
-          <div className="flex items-center gap-2">
-            <span className="lg-glass-dark rounded-full px-3 py-1 text-[12px] font-medium text-white">
-              {listing.hook}
-            </span>
-            {listing.isVerified && (
-              <span className="lg-glass-dark flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-medium text-white">
-                <BadgeCheck className="h-3.5 w-3.5 text-journey-seller" /> Verified
-              </span>
-            )}
-          </div>
-          <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-white">
-            {formatAed(listing.priceAed)}
-          </p>
-        </div>
       </div>
 
       {/* Body */}
-      <div className="relative z-10 -mt-3 space-y-4 px-4">
+      <div className="space-y-4 px-4 pt-5">
         <section>
-          <h1 className="text-[21px] font-semibold leading-tight tracking-tight text-white">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-mist px-2.5 py-1 text-[12px] font-medium text-graphite-dark">
+              {listing.hook}
+            </span>
+            {listing.isVerified && (
+              <span className="flex items-center gap-1 rounded-full bg-mist px-2.5 py-1 text-[12px] font-medium text-graphite-dark">
+                <BadgeCheck className="h-3.5 w-3.5 text-journey-listing" /> Verified
+              </span>
+            )}
+          </div>
+          <p className="mt-3 text-[32px] font-semibold leading-none tracking-tight text-ink">
+            {formatAed(listing.priceAed)}
+          </p>
+          <h1 className="mt-2 text-[19px] font-semibold leading-tight tracking-tight text-ink">
             {listing.title}
           </h1>
-          <p className="mt-1.5 flex items-center gap-1 text-[14px] text-white/60">
+          <p className="mt-1.5 flex items-center gap-1 text-[14px] text-graphite">
             <MapPin className="h-4 w-4" /> {listing.building ? `${listing.building}, ` : ''}
             {listing.community}, {listing.city}
+          </p>
+        </section>
+
+        {/* Credits panel — the hook, with the AED reveal */}
+        <section className="overflow-hidden rounded-[22px] border border-accent/15 bg-accent/[0.06]">
+          <div className="flex items-center justify-between px-4 py-3.5">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/15">
+                <Coins className="h-5 w-5 text-accent" />
+              </span>
+              <div>
+                <p className="text-[12px] text-graphite">You earn</p>
+                <p className="text-[20px] font-semibold leading-tight tracking-tight text-accent">
+                  {formatCredits(credits)} credits
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-[12px] text-graphite">Redeemable</p>
+              <p className="text-[15px] font-semibold text-ink">
+                ≈ {formatAed(valueAed)}
+              </p>
+            </div>
+          </div>
+          <p className="flex items-center gap-1.5 border-t border-accent/15 px-4 py-2.5 text-[12px] text-graphite-dark">
+            <Info className="h-3.5 w-3.5 shrink-0 text-accent" />
+            iClose rebates the {pct}% commission as credits (1 credit ={' '}
+            {CREDIT_AED_RATE} AED). Redeem against payments, fees or more.
           </p>
         </section>
 
@@ -141,14 +167,14 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
           </SpecTile>
           <SpecTile icon={<Maximize className="h-5 w-5" />} label="Area">
             {listing.areaSqft ? `${(listing.areaSqft / 1000).toFixed(1)}k` : '—'}
-            <span className="text-[11px] text-white/45"> sqft</span>
+            <span className="text-[11px] text-graphite"> sqft</span>
           </SpecTile>
         </section>
 
         {/* Off-plan payment plan */}
         {listing.completion === 'off_plan' && (
-          <section className="lg-glass space-y-3 rounded-[22px] p-4">
-            <div className="flex items-center gap-2 text-white">
+          <section className="space-y-3 rounded-[22px] border border-hairline/70 bg-paper p-4">
+            <div className="flex items-center gap-2 text-ink">
               <Building2 className="h-[18px] w-[18px] text-journey-offplan" />
               <span className="text-[15px] font-semibold tracking-tight">
                 {listing.developerName ?? 'New release'}
@@ -170,11 +196,11 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
         )}
 
         {/* Description */}
-        <section className="lg-glass rounded-[22px] p-4">
-          <h2 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+        <section className="rounded-[22px] border border-hairline/70 bg-paper p-4">
+          <h2 className="mb-2 text-[15px] font-semibold tracking-tight text-ink">
             About this home
           </h2>
-          <p className="text-[14px] leading-relaxed text-white/70">
+          <p className="text-[14px] leading-relaxed text-graphite-dark">
             {listing.description}
           </p>
         </section>
@@ -182,14 +208,14 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
         {/* Amenities */}
         {listing.amenities.length > 0 && (
           <section>
-            <h2 className="mb-2 px-1 text-[15px] font-semibold tracking-tight text-white">
+            <h2 className="mb-2 px-1 text-[15px] font-semibold tracking-tight text-ink">
               Amenities
             </h2>
             <div className="flex flex-wrap gap-2">
               {listing.amenities.map((a) => (
                 <span
                   key={a}
-                  className="lg-glass rounded-full px-3 py-1.5 text-[13px] text-white/85"
+                  className="rounded-full border border-hairline/70 bg-paper px-3 py-1.5 text-[13px] text-graphite-dark"
                 >
                   {a}
                 </span>
@@ -199,37 +225,37 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
         )}
 
         {/* Map */}
-        <section className="lg-glass overflow-hidden rounded-[22px]">
-          <div className="relative h-40 bg-gradient-to-br from-zinc-800 to-zinc-700">
+        <section className="overflow-hidden rounded-[22px] border border-hairline/70">
+          <div className="relative h-40 bg-mist">
             <div
-              className="absolute inset-0 opacity-30"
+              className="absolute inset-0 opacity-60"
               style={{
                 backgroundImage:
-                  'linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)',
+                  'linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)',
                 backgroundSize: '28px 28px',
               }}
             />
-            <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-journey-buyer/30 lg-animate-float">
-              <MapPin className="h-7 w-7 fill-journey-buyer text-ink" />
+            <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent/15 lg-animate-float">
+              <MapPin className="h-7 w-7 fill-accent text-white" />
             </span>
           </div>
           <a
             href={mapsHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between px-4 py-3.5 text-[14px] text-white active:bg-white/5"
+            className="flex items-center justify-between bg-paper px-4 py-3.5 text-[14px] text-ink active:bg-mist"
           >
             <span className="flex items-center gap-2">
-              <Navigation className="h-4 w-4 text-journey-buyer" />
+              <Navigation className="h-4 w-4 text-accent" />
               {listing.community}, {listing.city}
             </span>
-            <span className="text-[13px] text-journey-buyer">Open in Maps</span>
+            <span className="text-[13px] text-accent">Open in Maps</span>
           </a>
         </section>
 
         {/* Agent / source */}
-        <section className="lg-glass flex items-center gap-3 rounded-[22px] p-3.5">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-[16px] font-semibold text-white">
+        <section className="flex items-center gap-3 rounded-[22px] border border-hairline/70 bg-paper p-3.5">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-mist text-[16px] font-semibold text-ink">
             {(listing.agentName ?? listing.developerName ?? 'iC')
               .split(' ')
               .map((w) => w[0])
@@ -237,36 +263,38 @@ export function PropertyDetail({ listing }: { listing: ExperienceListing }) {
               .join('')}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[15px] font-medium text-white">
+            <p className="truncate text-[15px] font-medium text-ink">
               {listing.agentName ?? listing.developerName ?? 'iClose listing'}
             </p>
-            <p className="truncate text-[13px] text-white/55">
+            <p className="truncate text-[13px] text-graphite">
               {listing.agencyName ??
-                (listing.source === 'owner' ? 'Listed by owner · no commission' : 'Developer direct')}
+                (listing.source === 'owner'
+                  ? 'Listed by owner · commission-free'
+                  : 'Developer direct')}
             </p>
           </div>
-          <span className="rounded-full bg-white/10 px-3 py-1 text-[12px] text-white/70">
+          <span className="rounded-full bg-mist px-3 py-1 text-[12px] text-graphite-dark">
             {listing.reference}
           </span>
         </section>
       </div>
 
-      {/* Sticky glass CTA */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 px-4 pb-[max(20px,env(safe-area-inset-bottom))]">
-        <div className="lg-glass-strong lg-specular pointer-events-auto flex items-center gap-2.5 rounded-full p-2">
+      {/* Sticky CTA */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 px-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+        <div className="lg-glass-light pointer-events-auto flex items-center gap-2.5 rounded-full p-2">
           <button
             type="button"
             onClick={() => toggleSave(listing.reference)}
             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors ${
-              saved ? 'bg-journey-buyer text-ink' : 'bg-white/12 text-white'
+              saved ? 'bg-ink text-white' : 'bg-mist text-ink'
             }`}
             aria-label={saved ? 'Saved' : 'Save'}
           >
-            <Heart className={`h-5 w-5 ${saved ? 'fill-ink' : ''}`} />
+            <Heart className={`h-5 w-5 ${saved ? 'fill-white' : ''}`} />
           </button>
           <Link
             href="/experience/saved"
-            className="flex h-12 flex-1 items-center justify-center rounded-full bg-white text-[15px] font-semibold text-ink active:scale-[0.98]"
+            className="flex h-12 flex-1 items-center justify-center rounded-full bg-ink text-[15px] font-semibold text-white active:scale-[0.98]"
           >
             Request a viewing
           </Link>
@@ -286,12 +314,10 @@ function SpecTile({
   children: React.ReactNode;
 }) {
   return (
-    <div className="lg-glass flex flex-col items-center gap-1 rounded-[18px] py-3.5">
-      <span className="text-journey-buyer">{icon}</span>
-      <span className="text-[18px] font-semibold leading-none text-white">
-        {children}
-      </span>
-      <span className="text-[11px] text-white/45">{label}</span>
+    <div className="flex flex-col items-center gap-1 rounded-[18px] border border-hairline/70 bg-paper py-3.5">
+      <span className="text-graphite">{icon}</span>
+      <span className="text-[18px] font-semibold leading-none text-ink">{children}</span>
+      <span className="text-[11px] text-graphite">{label}</span>
     </div>
   );
 }
@@ -306,12 +332,12 @@ function InfoRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl bg-white/5 p-3">
-      <span className="flex items-center gap-1.5 text-[12px] text-white/50">
+    <div className="rounded-2xl bg-mist p-3">
+      <span className="flex items-center gap-1.5 text-[12px] text-graphite">
         {icon}
         {label}
       </span>
-      <p className="mt-1 text-[16px] font-semibold text-white">{children}</p>
+      <p className="mt-1 text-[16px] font-semibold text-ink">{children}</p>
     </div>
   );
 }

@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { SlidersHorizontal, MapPin, Sparkles } from 'lucide-react';
-import { EXPERIENCE_LISTINGS, formatAed } from '@/lib/glass/experience-data';
+import { SlidersHorizontal, MapPin, Coins } from 'lucide-react';
+import { EXPERIENCE_LISTINGS, formatAed, formatCredits } from '@/lib/glass/experience-data';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
 import { useSaved } from './saved-store';
 import { SwipeCard } from './swipe-card';
+import { SmartImage } from './smart-image';
 
 export function DiscoveryFeed() {
   const { decisions, save, pass, savedRefs } = useSaved();
@@ -21,20 +21,19 @@ export function DiscoveryFeed() {
   }
 
   return (
-    <div className="relative h-[100svh] w-full overflow-hidden bg-black">
+    <div className="relative h-[100svh] w-full overflow-hidden bg-mist">
       {/* Top glass bar */}
       <header className="pointer-events-none absolute inset-x-0 top-0 z-30 px-4 pt-[max(12px,env(safe-area-inset-top))]">
-        <div className="lg-glass-strong lg-specular pointer-events-auto flex items-center justify-between rounded-full py-2 pl-4 pr-2">
-          <div className="flex items-center gap-2 text-white">
-            <Sparkles className="h-[18px] w-[18px] text-journey-buyer" aria-hidden />
-            <span className="text-[15px] font-semibold tracking-tight">Discover</span>
-            <span className="flex items-center gap-0.5 text-[13px] text-white/65">
-              <MapPin className="h-3.5 w-3.5" aria-hidden /> Dubai
+        <div className="lg-glass-light pointer-events-auto flex items-center justify-between rounded-full py-2 pl-4 pr-2">
+          <div className="flex items-center gap-2 text-ink">
+            <span className="text-[16px] font-semibold tracking-tight">Discover</span>
+            <span className="flex items-center gap-0.5 text-[13px] text-graphite">
+              <MapPin className="h-3.5 w-3.5" aria-hidden /> UAE
             </span>
           </div>
           <button
             type="button"
-            className="flex h-9 items-center gap-1.5 rounded-full bg-white/85 px-3 text-[13px] font-medium text-ink active:scale-95"
+            className="flex h-9 items-center gap-1.5 rounded-full bg-ink px-3.5 text-[13px] font-medium text-white active:scale-95"
           >
             <SlidersHorizontal className="h-4 w-4" aria-hidden />
             Filters
@@ -42,7 +41,7 @@ export function DiscoveryFeed() {
         </div>
       </header>
 
-      {/* Vertical Reels-style feed of swipeable cards */}
+      {/* Vertical feed of swipeable cards */}
       <div className="lg-snap-y no-scrollbar h-full w-full overflow-y-scroll overscroll-y-contain">
         {EXPERIENCE_LISTINGS.map((listing) => (
           <SwipeCard
@@ -54,25 +53,25 @@ export function DiscoveryFeed() {
           />
         ))}
         {/* End cap */}
-        <section className="lg-snap-start flex h-[100svh] snap-start flex-col items-center justify-center gap-4 bg-gradient-to-b from-zinc-900 to-black px-8 text-center">
-          <p className="text-2xl font-semibold tracking-tight text-white">
+        <section className="lg-snap-start flex h-[100svh] snap-start flex-col items-center justify-center gap-4 bg-paper px-8 text-center">
+          <p className="text-[24px] font-semibold tracking-tight text-ink">
             You&rsquo;re all caught up
           </p>
-          <p className="max-w-xs text-[15px] text-white/60">
+          <p className="max-w-xs text-[15px] text-graphite">
             {savedRefs.length > 0
-              ? `You shortlisted ${savedRefs.length} ${savedRefs.length === 1 ? 'home' : 'homes'}. Review them anytime.`
+              ? `You shortlisted ${savedRefs.length} ${savedRefs.length === 1 ? 'home' : 'homes'}. Review them and the credits you'd earn.`
               : 'Swipe right on a home to start your shortlist.'}
           </p>
           <Link
             href="/experience/saved"
-            className="lg-glass-strong lg-specular mt-2 rounded-full px-6 py-3 text-[15px] font-medium text-white active:scale-95"
+            className="mt-2 rounded-full bg-ink px-6 py-3 text-[15px] font-medium text-white active:scale-95"
           >
             View shortlist
           </Link>
         </section>
       </div>
 
-      {/* "It's a match" celebration */}
+      {/* "Shortlisted" credits moment */}
       <AnimatePresence>
         {matched && (
           <motion.div
@@ -82,46 +81,56 @@ export function DiscoveryFeed() {
             exit={{ opacity: 0 }}
             onClick={() => setMatched(null)}
           >
-            <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
+            <div className="absolute inset-0 bg-ink/40 backdrop-blur-md" />
             <motion.div
-              className="lg-glass-strong lg-specular relative z-10 w-full max-w-sm rounded-[28px] p-6 text-center"
-              initial={{ scale: 0.8, y: 24 }}
+              className="relative z-10 w-full max-w-sm overflow-hidden rounded-[28px] bg-paper shadow-elevated"
+              initial={{ scale: 0.85, y: 24 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22 }}
             >
-              <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-journey-buyer">
-                It&rsquo;s a match
-              </p>
-              <div className="mx-auto mt-4 h-44 w-full overflow-hidden rounded-2xl">
-                <Image
+              <div className="relative h-40 w-full">
+                <SmartImage
                   src={matched.gallery[0]}
                   alt={matched.title}
-                  width={400}
-                  height={260}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="400px"
+                  className="object-cover"
                 />
               </div>
-              <h3 className="mt-4 text-[19px] font-semibold tracking-tight text-white">
-                {matched.title}
-              </h3>
-              <p className="mt-1 text-[15px] text-white/70">
-                {formatAed(matched.priceAed)} · {matched.community}
-              </p>
-              <div className="mt-5 flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setMatched(null)}
-                  className="flex-1 rounded-full bg-white/15 py-3 text-[15px] font-medium text-white active:scale-95"
-                >
-                  Keep browsing
-                </button>
-                <Link
-                  href={`/experience/property/${matched.reference}`}
-                  className="flex-1 rounded-full bg-journey-buyer py-3 text-[15px] font-semibold text-ink active:scale-95"
-                >
-                  View home
-                </Link>
+              <div className="p-5 text-center">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-graphite">
+                  Added to shortlist
+                </p>
+                <h3 className="mt-2 text-[18px] font-semibold tracking-tight text-ink">
+                  {matched.title}
+                </h3>
+                <p className="mt-0.5 text-[14px] text-graphite">
+                  {formatAed(matched.priceAed)} · {matched.community}
+                </p>
+
+                <div className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-accent/10 py-3">
+                  <Coins className="h-5 w-5 text-accent" />
+                  <span className="text-[15px] font-semibold text-accent">
+                    Earn {formatCredits(matched.credit.credits)} credits
+                  </span>
+                </div>
+
+                <div className="mt-4 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setMatched(null)}
+                    className="flex-1 rounded-full bg-mist py-3 text-[15px] font-medium text-ink active:scale-95"
+                  >
+                    Keep browsing
+                  </button>
+                  <Link
+                    href={`/experience/property/${matched.reference}`}
+                    className="flex-1 rounded-full bg-ink py-3 text-[15px] font-semibold text-white active:scale-95"
+                  >
+                    View home
+                  </Link>
+                </div>
               </div>
             </motion.div>
           </motion.div>

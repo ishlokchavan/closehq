@@ -4,9 +4,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { X, Heart, CalendarClock, Wallet, ArrowUpRight } from 'lucide-react';
-import { EXPERIENCE_LAUNCHES, formatAed } from '@/lib/glass/experience-data';
+import { X, Heart, CalendarClock, Wallet, ArrowUpRight, Coins } from 'lucide-react';
+import {
+  EXPERIENCE_LAUNCHES,
+  formatAed,
+  formatCredits,
+} from '@/lib/glass/experience-data';
 import { useSaved } from './saved-store';
+import { SmartImage } from './smart-image';
 
 const STORY_MS = 6000;
 const TICK = 50;
@@ -64,7 +69,7 @@ export function StoriesViewer() {
 
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-black">
-      <Image
+      <SmartImage
         src={launch.gallery[0]}
         alt={launch.title}
         fill
@@ -155,8 +160,16 @@ export function StoriesViewer() {
           {launch.title}
         </h1>
         <p className="mt-1.5 text-[18px] font-medium text-white/90">
-          {formatAed(launch.priceAed)}
+          from {formatAed(launch.priceAed)}
         </p>
+
+        {/* Credits hook */}
+        <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-2">
+          <Coins className="h-4 w-4 text-accent" />
+          <span className="text-[14px] font-semibold tracking-tight text-accent">
+            Earn {formatCredits(launch.credit.credits)} credits
+          </span>
+        </div>
 
         <div className="mt-4 flex gap-2.5">
           {launch.paymentPlan && (
