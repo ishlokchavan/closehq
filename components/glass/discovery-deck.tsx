@@ -8,6 +8,7 @@ import { useExperience } from './experience-provider';
 import { useSaved } from './saved-store';
 import { useSignals } from './signal-store';
 import { DiscoveryCard } from './discovery-card';
+import { TastePicker } from './taste-picker';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
 
 const HEADER_OFFSET = 'calc(env(safe-area-inset-top) + 52px)';
@@ -17,7 +18,7 @@ export function DiscoveryDeck() {
   const router = useRouter();
   const { listings } = useExperience();
   const { isSaved, toggleSave } = useSaved();
-  const { rank, track, score, dismissed } = useSignals();
+  const { rank, track, score, dismissed, seedVersion } = useSignals();
 
   // Initial personalised order (computed once from stored affinity).
   const [order, setOrder] = useState<ExperienceListing[]>(() => rank(listings));
@@ -114,6 +115,16 @@ export function DiscoveryDeck() {
 
   const showHint = useMemo(() => order.length > 0, [order.length]);
 
+  // Re-rank once when the taste picker seeds affinity (or activity is reset),
+  // so the cold-start feed reflects the chosen taste immediately.
+  useEffect(() => {
+    if (seedVersion === 0) return;
+    setOrder(rank(listings));
+    setActiveIndex(0);
+    scrollerRef.current?.scrollTo({ top: 0 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seedVersion]);
+
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-paper">
       {/* Flat top header — logo left, search right, content begins below it. */}
@@ -193,6 +204,9 @@ export function DiscoveryDeck() {
           </span>
         </div>
       )}
+
+      {/* Cold-start taste picker — first visit only, seeds the recommender */}
+      <TastePicker />
     </div>
   );
 }

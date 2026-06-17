@@ -27,6 +27,10 @@ interface SignalState {
   track: (type: SignalType, listing: ExperienceListing, dwellMs?: number) => void;
   score: (listing: ExperienceListing) => number;
   rank: (listings: ExperienceListing[]) => ExperienceListing[];
+  /** Cold-start: merge facet weights straight into affinity (taste picker). */
+  seed: (facets: Affinity) => void;
+  /** Increments whenever affinity is seeded, so the feed can re-rank once. */
+  seedVersion: number;
   reset: () => void;
 }
 
@@ -108,6 +112,20 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
     [persist],
   );
 
+  const [seedVersion, setSeedVersion] = useState(0);
+  const seed = useCallback<SignalState['seed']>(
+    (facets) => {
+      setAffinity((prev) => {
+        const next = { ...prev };
+        for (const [k, v] of Object.entries(facets)) next[k] = (next[k] ?? 0) + v;
+        persist(next);
+        return next;
+      });
+      setSeedVersion((n) => n + 1);
+    },
+    [persist],
+  );
+
   const score = useCallback(
     (listing: ExperienceListing) => scoreListing(affinity, listing),
     [affinity],
@@ -125,9 +143,11 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
     setAffinity({});
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('closehq.glass.onboarded.v1');
     } catch {
       /* ignore */
     }
+    setSeedVersion((n) => n + 1);
     force((n) => n + 1);
   }, []);
 
@@ -138,6 +158,8 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
     track,
     score,
     rank,
+    seed,
+    seedVersion,
     reset,
   };
 
