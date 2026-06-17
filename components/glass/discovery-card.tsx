@@ -14,9 +14,12 @@ import {
   Maximize,
   BadgeCheck,
   Coins,
+  Sparkles,
 } from 'lucide-react';
 import type { ExperienceListing } from '@/lib/glass/experience-data';
 import { formatAed, formatCredits } from '@/lib/glass/experience-data';
+import { deterministicReason, likedPhrases } from '@/lib/glass/explain';
+import { useSignals } from './signal-store';
 import { SmartImage } from './smart-image';
 
 function haptic(ms = 12) {
@@ -53,6 +56,40 @@ export function DiscoveryCard({
   const lastTap = useRef(0);
   const href = `/experience/property/${listing.reference}`;
   const count = listing.images.length;
+
+  const { affinity } = useSignals();
+  const [whyOpen, setWhyOpen] = useState(false);
+  const [aiReason, setAiReason] = useState<string | null>(null);
+  const fetched = useRef(false);
+
+  async function openWhy() {
+    setWhyOpen((o) => !o);
+    if (fetched.current) return;
+    fetched.current = true;
+    try {
+      const res = await fetch('/api/glass/why', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          liked: likedPhrases(affinity),
+          listing: {
+            title: listing.title,
+            community: listing.community,
+            city: listing.city,
+            type: listing.propertyType,
+            beds: listing.bedrooms,
+            price: formatAed(listing.priceAed),
+            hook: listing.hook,
+            credits: formatCredits(listing.credit.credits),
+          },
+        }),
+      });
+      const data = (await res.json()) as { reason: string | null };
+      if (data.reason) setAiReason(data.reason);
+    } catch {
+      /* keep the deterministic reason */
+    }
+  }
 
   function onPhotoTap(e: React.MouseEvent<HTMLDivElement>) {
     const now = Date.now();
@@ -215,6 +252,22 @@ export function DiscoveryCard({
               )}
             </div>
           </Link>
+
+          {/* Why this fits you */}
+          <button
+            type="button"
+            onClick={openWhy}
+            aria-expanded={whyOpen}
+            className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-mist px-3 py-1.5 text-[12.5px] font-medium text-graphite-dark active:scale-95"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-accent" />
+            Why this fits you
+          </button>
+          {whyOpen && (
+            <p className="mt-2 rounded-2xl border border-accent/15 bg-accent/[0.06] px-3 py-2 text-[13px] leading-snug text-ink">
+              {aiReason ?? deterministicReason(affinity, listing)}
+            </p>
+          )}
         </div>
       </div>
     </article>

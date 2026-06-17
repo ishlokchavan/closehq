@@ -51,3 +51,23 @@ export function trackEvent(
     }
   })();
 }
+
+/** Upsert the per-session affinity snapshot (fire-and-forget, debounced by caller). */
+export function persistAffinity(affinity: Record<string, number>): void {
+  if (!isConfigured()) return;
+  void (async () => {
+    try {
+      const { supabase } = await import('@/lib/supabase');
+      await supabase.from('discovery_affinity').upsert(
+        {
+          session_id: sessionId(),
+          affinity,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'session_id' },
+      );
+    } catch {
+      /* non-fatal */
+    }
+  })();
+}

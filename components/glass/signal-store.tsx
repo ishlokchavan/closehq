@@ -17,7 +17,7 @@ import {
   type Affinity,
   type SignalType,
 } from '@/lib/glass/recommender';
-import { trackEvent } from '@/lib/glass/track-event';
+import { trackEvent, persistAffinity } from '@/lib/glass/track-event';
 
 interface SignalState {
   affinity: Affinity;
@@ -60,6 +60,17 @@ export function SignalStoreProvider({ children }: { children: React.ReactNode })
     }
     setHydrated(true);
   }, []);
+
+  // Debounced server-side snapshot of affinity (additive table; for future ML).
+  const persistTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (!hydrated) return;
+    if (persistTimer.current) clearTimeout(persistTimer.current);
+    persistTimer.current = setTimeout(() => persistAffinity(affinity), 1500);
+    return () => {
+      if (persistTimer.current) clearTimeout(persistTimer.current);
+    };
+  }, [affinity, hydrated]);
 
   const persist = useCallback((nextAffinity: Affinity) => {
     try {
