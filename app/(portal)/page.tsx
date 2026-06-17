@@ -20,10 +20,10 @@ export const metadata: Metadata = {
 const LOCAL_IMAGES = false;
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_373qi3JTSvYmXjqMPJT9idOjFt7';
 const IMG = (local: string, remote: string) => (LOCAL_IMAGES ? `/images/home/${local}` : `${CDN}/${remote}`);
-const HOME_CARDS: { href: string; cta: string; image: string }[] = [
-  { href: '/buy', cta: 'Looking To Buy?', image: IMG('buy.png', 'hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png') },
-  { href: '/sell', cta: 'Looking To Sell?', image: IMG('sell.png', 'hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png') },
-  { href: '/close', cta: 'Want to List or Close?', image: IMG('close.png', 'hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png') },
+const HOME_CARDS: { href: string; title: string; badge: string; image: string }[] = [
+  { href: '/buy', title: 'Looking to buy?', badge: '0% commission · 100% cashback', image: IMG('buy.png', 'hf_20260616_222225_d0f4e2b8-36a6-46aa-9625-324f1714414c.png') },
+  { href: '/sell', title: 'Looking to sell?', badge: 'List free · sell without commission', image: IMG('sell.png', 'hf_20260616_222230_e9003974-fd28-47cb-9667-44b1485ce165.png') },
+  { href: '/close', title: 'Want to list or close?', badge: 'Agents keep 100% of the commission', image: IMG('close.png', 'hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png') },
 ];
 
 /** The commission headline — bold Buy/Sell/Close in English, plain otherwise. */
@@ -68,30 +68,34 @@ export default async function PortalHomePage() {
         </div>
       </section>
 
-      {/* Journey cards — image card with overlay, repeated headline + CTA */}
+      {/* Journey cards — each its own question + incentive */}
       <section className="container-wide pb-24 -mt-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {HOME_CARDS.map((card) => (
             <Link
               key={card.href}
               href={card.href}
-              className="group relative overflow-hidden rounded-apple min-h-[230px] flex flex-col items-center justify-center text-center p-8 shadow-card hover:shadow-card-hover transition-shadow"
+              className="group relative overflow-hidden rounded-apple min-h-[240px] flex flex-col justify-between p-6 shadow-card hover:shadow-card-hover transition-shadow"
             >
               {/* Generated Dubai imagery + dark overlay for legibility */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={card.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-black/45 group-hover:bg-black/35 transition-colors" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/20 group-hover:from-black/75 transition-colors" />
 
+              {/* Incentive pill */}
+              <span className="relative w-fit rounded-full bg-white/90 backdrop-blur text-ink text-[12px] font-medium px-3 py-1">
+                {card.badge}
+              </span>
+
+              {/* Title + Learn more */}
               <div className="relative">
-                <h2 className="text-[22px] sm:text-[24px] leading-tight font-medium text-white max-w-xs mx-auto" style={{ letterSpacing: '-0.02em' }}>
-                  <CommissionHeadline locale={locale} t={t} />
+                <h2 className="text-[24px] sm:text-[26px] font-semibold text-white" style={{ letterSpacing: '-0.02em' }}>
+                  {card.title}
                 </h2>
-                <p className="mt-4 text-[15px] text-white/85">
-                  {card.cta}{' '}
-                  <span className="inline-flex items-center gap-0.5 text-accent font-medium group-hover:underline">
-                    {t.learnMore} <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
-                  </span>
-                </p>
+                <span className="mt-2 inline-flex items-center gap-1 text-[15px] text-white font-medium">
+                  {t.learnMore}
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180 group-hover:translate-x-0.5 transition-transform" />
+                </span>
               </div>
             </Link>
           ))}
