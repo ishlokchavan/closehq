@@ -2,10 +2,13 @@ import { NextResponse } from 'next/server';
 
 /**
  * "Why this matches you" — generates a one-line, grounded explanation of why a
- * listing fits the user's behaviour. Uses Claude when ANTHROPIC_API_KEY is set;
- * otherwise the client keeps its instant deterministic reason. The recommender
- * still does the ranking — this only *explains* it (never invents facts).
+ * listing fits the user's behaviour. Uses Google Gemini (free tier) when
+ * GEMINI_API_KEY is set; otherwise the client keeps its instant deterministic
+ * reason. The recommender still does the ranking — this only *explains* it
+ * (and never invents facts).
  */
+
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 
 interface Body {
   liked?: string[];
@@ -21,8 +24,14 @@ interface Body {
   };
 }
 
+const SYSTEM =
+  'You write one short, warm sentence (max 22 words) telling a home buyer why a property fits them, in second person ("you"). ' +
+  'Ground every claim ONLY in the facts provided — never invent amenities, prices, or features. ' +
+  'If the person is new with no preferences, highlight one concrete appealing fact about the home instead. ' +
+  'No preamble, no quotes, no emoji — just the sentence.';
+
 export async function POST(req: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     // Not configured — tell the client to keep its deterministic line.
     return NextResponse.json({ reason: null }, { status: 200 });
@@ -55,33 +64,47 @@ export async function POST(req: Request) {
     : `This person is new — no strong preferences yet.`;
 
   try {
-    const { default: Anthropic } = await import('@anthropic-ai/sdk');
-    const client = new Anthropic({ apiKey });
-
-    const response = await client.messages.create({
-      model: 'claude-opus-4-8',
-      max_tokens: 120,
-      system:
-        'You write one short, warm sentence (max 22 words) telling a home buyer why a property fits them, in second person ("you"). ' +
-        'Ground every claim ONLY in the facts provided — never invent amenities, prices, or features. ' +
-        'If the person is new with no preferences, highlight one concrete appealing fact about the home instead. ' +
-        'No preamble, no quotes, no emoji — just the sentence.',
-      messages: [
-        {
-          role: 'user',
-          content: `${taste}\n\nProperty facts:\n${facts}\n\nWrite the one-sentence reason.`,
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-goog-api-key': apiKey,
         },
-      ],
-    });
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM }] },
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: `${taste}\n\nProperty facts:\n${facts}\n\nWrite the one-sentence reason.`,
+                },
+              ],
+            },
+          ],
+          generationConfig: { maxOutputTokens: 120, temperature: 0.7 },
+        }),
+        // Keep the UI snappy; fall back to deterministic if Gemini is slow.
+        signal: AbortSignal.timeout(8000),
+      },
+    );
 
-    const reason = response.content
-      .map((b) => (b.type === 'text' ? b.text : ''))
-      .join(' ')
-      .trim();
+    if (!res.ok) return NextResponse.json({ reason: null }, { status: 200 });
+
+    const data = (await res.json()) as {
+      candidates?: { content?: { parts?: { text?: string }[] } }[];
+    };
+    const reason =
+      data.candidates?.[0]?.content?.parts
+        ?.map((p) => p.text ?? '')
+        .join(' ')
+        .trim() ?? '';
 
     return NextResponse.json({ reason: reason || null });
   } catch {
-    // Any API/network failure → client falls back to the deterministic line.
+    // Any API/network/timeout failure → client falls back to deterministic line.
     return NextResponse.json({ reason: null }, { status: 200 });
   }
 }
