@@ -46,18 +46,34 @@ async function fetchCarouselImages(reference?: string): Promise<Record<string, s
 }
 
 /**
+ * Resolve with `fallback` after `ms` no matter what — a hard guarantee that a
+ * paused/slow/unreachable Supabase can never block the render for more than a
+ * couple of seconds, even if the query's own abort signal fails to cancel a
+ * stuck connection.
+ */
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
+  ]);
+}
+
+/**
  * Cached so repeat loads don't re-hit Supabase on every request — the feed is
  * the same for everyone (personalisation is client-side), so a short server
  * cache makes navigation/refresh feel instant. Revalidates every 2 minutes.
  */
 const loadExperienceListings = unstable_cache(
   async (locale: string): Promise<ExperienceListing[]> => {
-    const [listings, extras] = await Promise.all([
-      getListings({ purpose: 'sale', limit: 50 }, locale),
-      fetchCarouselImages(),
-    ]);
-    if (!listings.length) return FALLBACK_EXPERIENCE_LISTINGS;
-    return listings.map((l) => toExperienceListing(l, extras[l.reference]));
+    const live = (async () => {
+      const [listings, extras] = await Promise.all([
+        getListings({ purpose: 'sale', limit: 50 }, locale),
+        fetchCarouselImages(),
+      ]);
+      if (!listings.length) return FALLBACK_EXPERIENCE_LISTINGS;
+      return listings.map((l) => toExperienceListing(l, extras[l.reference]));
+    })();
+    return withTimeout(live, 3000, FALLBACK_EXPERIENCE_LISTINGS);
   },
   ['experience-listings'],
   { revalidate: 120, tags: ['experience-listings'] },
