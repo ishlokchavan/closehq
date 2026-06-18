@@ -10,8 +10,11 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'iClose',
     short_name: 'iClose',
     description: 'Buy, sell and close UAE real estate without paying commission.',
-    start_url: '/',
-    id: '/',
+    // Launch straight into the app experience, but keep the whole origin in
+    // scope so links out (e.g. /credits) stay inside the installed app.
+    start_url: '/experience',
+    id: '/experience',
+    scope: '/',
     display: 'standalone',
     orientation: 'portrait',
     background_color: '#ffffff',
