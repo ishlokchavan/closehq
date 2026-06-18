@@ -139,6 +139,13 @@ export function DiscoveryDeck() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seedVersion]);
 
+  // Live listings arrive client-side after the instant seed render — fold them
+  // in only while the user is still on the first card, so it's seamless.
+  useEffect(() => {
+    if (activeIndexRef.current === 0) setOrder(rank(listings));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listings]);
+
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-paper">
       {/* Flat top header — logo left, search right, content begins below it. */}
