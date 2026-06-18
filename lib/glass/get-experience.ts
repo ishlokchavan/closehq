@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { getListings, getListingByReference } from '@/lib/portal/listings';
 import {
   toExperienceListing,
@@ -31,7 +32,8 @@ async function fetchCarouselImages(reference?: string): Promise<Record<string, s
     // Single-listing detail opens only need that listing's images — avoid a
     // full-table scan on every navigation.
     if (reference) query = query.eq('reference', reference);
-    const { data, error } = await query;
+    // Fail fast if Supabase is paused/unreachable rather than hanging the render.
+    const { data, error } = await query.abortSignal(AbortSignal.timeout(2500));
     if (error || !data) return {};
     const map: Record<string, string[]> = {};
     for (const row of data as { reference: string; url: string }[]) {
@@ -43,15 +45,26 @@ async function fetchCarouselImages(reference?: string): Promise<Record<string, s
   }
 }
 
-export async function getExperienceListings(
-  locale = 'en',
-): Promise<ExperienceListing[]> {
-  const [listings, extras] = await Promise.all([
-    getListings({ purpose: 'sale', limit: 50 }, locale),
-    fetchCarouselImages(),
-  ]);
-  if (!listings.length) return FALLBACK_EXPERIENCE_LISTINGS;
-  return listings.map((l) => toExperienceListing(l, extras[l.reference]));
+/**
+ * Cached so repeat loads don't re-hit Supabase on every request — the feed is
+ * the same for everyone (personalisation is client-side), so a short server
+ * cache makes navigation/refresh feel instant. Revalidates every 2 minutes.
+ */
+const loadExperienceListings = unstable_cache(
+  async (locale: string): Promise<ExperienceListing[]> => {
+    const [listings, extras] = await Promise.all([
+      getListings({ purpose: 'sale', limit: 50 }, locale),
+      fetchCarouselImages(),
+    ]);
+    if (!listings.length) return FALLBACK_EXPERIENCE_LISTINGS;
+    return listings.map((l) => toExperienceListing(l, extras[l.reference]));
+  },
+  ['experience-listings'],
+  { revalidate: 120, tags: ['experience-listings'] },
+);
+
+export function getExperienceListings(locale = 'en'): Promise<ExperienceListing[]> {
+  return loadExperienceListings(locale);
 }
 
 export async function getExperienceLaunches(

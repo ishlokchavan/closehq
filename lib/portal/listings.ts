@@ -9,6 +9,14 @@ function isSupabaseConfigured(): boolean {
   );
 }
 
+/**
+ * Hard ceiling for any single Supabase query. If the project is paused / slow /
+ * unreachable, we abort fast and fall back to seed data instead of blocking the
+ * server render for the client's full network timeout (which caused a ~10-15s
+ * black screen on cold previews).
+ */
+const QUERY_TIMEOUT_MS = 2500;
+
 /** Columns selected for a listing (kept in one place to avoid drift). */
 const LISTING_SELECT =
   'id,reference,purpose,completion,category,property_type,source,city,community,building,latitude,longitude,bedrooms,bathrooms,area_sqft,price_aed,is_verified,cover_image_url,amenities,developer_name,developer_logo,handover_by,payment_plan,agent_name,agency_name,listing_translations(locale,title,description)';
@@ -99,7 +107,7 @@ export async function getListings(filters: ListingFilters = {}, locale = 'en'): 
       if (filters.q) query = query.ilike('community', `%${filters.q}%`);
       query = query.order('published_at', { ascending: false }).limit(filters.limit ?? 24);
 
-      const { data, error } = await query;
+      const { data, error } = await query.abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
       if (!error && data && data.length > 0) {
         return (data as unknown as ListingRow[]).map((r) => rowToListing(r, locale));
       }
@@ -125,6 +133,7 @@ export async function getListingByReference(reference: string, locale = 'en'): P
         )
         .eq('status', 'active')
         .eq('reference', reference)
+        .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))
         .maybeSingle();
       if (!error && data) return rowToListing(data as unknown as ListingRow, locale);
     } catch {
