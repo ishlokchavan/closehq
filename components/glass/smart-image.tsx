@@ -17,7 +17,7 @@ const BLUR =
  * mounted, so they should never re-render just because a parent did. Defaults
  * to a blur placeholder so large covers never flash empty while optimising.
  */
-function SmartImageImpl({ src, alt, placeholder, blurDataURL, ...rest }: ImageProps) {
+function SmartImageImpl({ src, alt, placeholder, blurDataURL, quality, ...rest }: ImageProps) {
   const [current, setCurrent] = useState(src);
 
   // Keep the displayed source in sync if the src prop changes.
@@ -30,6 +30,7 @@ function SmartImageImpl({ src, alt, placeholder, blurDataURL, ...rest }: ImagePr
       {...rest}
       src={current}
       alt={alt}
+      quality={quality ?? 70}
       placeholder={placeholder ?? 'blur'}
       blurDataURL={blurDataURL ?? BLUR}
       onError={() => {
