@@ -83,7 +83,6 @@ export function SwipeGallery({
                 shouldPlay={active && i === idx}
                 muted={muted}
                 onToggleMute={() => setMuted((m) => !m)}
-                priority={priority && i === 0}
               />
             </div>
           ) : (
@@ -185,14 +184,12 @@ function FeedVideo({
   shouldPlay,
   muted,
   onToggleMute,
-  priority,
 }: {
   src: string;
   poster?: string;
   shouldPlay: boolean;
   muted: boolean;
   onToggleMute: () => void;
-  priority: boolean;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(true);
@@ -230,7 +227,7 @@ function FeedVideo({
         muted={muted}
         loop
         playsInline
-        preload={priority ? 'auto' : 'metadata'}
+        preload="metadata"
         onPlay={() => setPaused(false)}
         onPause={() => setPaused(true)}
         onClick={handleTap}
