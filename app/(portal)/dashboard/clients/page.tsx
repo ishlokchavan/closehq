@@ -5,15 +5,16 @@ import { UserSquare2, Search, Plus, Phone, Mail, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useData } from '@/components/portal/dashboard/data-context';
 import { PageHeader, Panel, StatCard, Badge, Avatar, Table, Th, Td, EmptyState } from '@/components/portal/dashboard/ui';
-import { getClients, type Client } from '@/lib/portal/dashboard/demo';
+import { type Client } from '@/lib/portal/dashboard/demo';
 import { fmtAed, timeAgo } from '@/lib/portal/dashboard/format';
 
 const TYPES: (Client['type'] | 'All')[] = ['All', 'Buyer', 'Seller', 'Investor', 'Tenant', 'Landlord'];
 
 export default function ClientsPage() {
   const { persona } = usePersona();
-  const all = getClients(persona);
+  const { clients: all } = useData();
   const [type, setType] = useState<Client['type'] | 'All'>('All');
   const [q, setQ] = useState('');
 

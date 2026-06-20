@@ -5,8 +5,9 @@ import { Target, Search, Plus, Phone, Mail, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useData } from '@/components/portal/dashboard/data-context';
 import { PageHeader, Panel, StatCard, Badge, Avatar, Table, Th, Td, EmptyState } from '@/components/portal/dashboard/ui';
-import { getLeads, LEAD_STAGES, type LeadStage, type Tone } from '@/lib/portal/dashboard/demo';
+import { LEAD_STAGES, type LeadStage, type Tone } from '@/lib/portal/dashboard/demo';
 import { fmtAed, timeAgo } from '@/lib/portal/dashboard/format';
 
 const STAGE_TONE: Record<LeadStage, Tone> = {
@@ -16,7 +17,7 @@ const STAGE_TONE: Record<LeadStage, Tone> = {
 
 export default function LeadsPage() {
   const { persona } = usePersona();
-  const all = getLeads(persona);
+  const { leads: all, live } = useData();
   const [stage, setStage] = useState<LeadStage | 'All'>('All');
   const [q, setQ] = useState('');
 
@@ -42,6 +43,7 @@ export default function LeadsPage() {
   return (
     <>
       <PageHeader title="Leads" subtitle={persona === 'agency' ? 'Every lead across your team — route, qualify and convert.' : 'Your enquiries — qualify and move them into deals.'}>
+        {live.leads && <Badge tone="success"><span className="h-1.5 w-1.5 rounded-full bg-[#059669]" /> Live</Badge>}
         <Button variant="primary" size="sm"><Plus className="h-4 w-4" /> Add lead</Button>
       </PageHeader>
 

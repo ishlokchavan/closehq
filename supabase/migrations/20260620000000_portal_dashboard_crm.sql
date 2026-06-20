@@ -76,6 +76,7 @@ create table if not exists public.deals (
   commission_aed numeric(14,2) not null default 0,
   status        text not null default 'active',         -- active|won|lost
   close_on      date,
+  client_name   text,
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now()
 );
@@ -91,6 +92,7 @@ create table if not exists public.viewings (
   client_id     uuid references public.crm_clients(id) on delete set null,
   property      text,
   community     text,
+  client_name   text,
   scheduled_at  timestamptz not null,
   status        text not null default 'scheduled',      -- scheduled|completed|cancelled|no_show
   created_at    timestamptz not null default now()

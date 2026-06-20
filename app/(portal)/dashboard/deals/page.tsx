@@ -5,13 +5,14 @@ import { Handshake, LayoutGrid, List, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useData } from '@/components/portal/dashboard/data-context';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td, Dot } from '@/components/portal/dashboard/ui';
-import { getDeals, DEAL_STAGES, type DealStage } from '@/lib/portal/dashboard/demo';
+import { DEAL_STAGES } from '@/lib/portal/dashboard/demo';
 import { fmtAed, fmtDate, timeAgo } from '@/lib/portal/dashboard/format';
 
 export default function DealsPage() {
   const { persona } = usePersona();
-  const deals = getDeals(persona);
+  const { deals } = useData();
   const [view, setView] = useState<'board' | 'list'>('board');
 
   const active = deals.filter((d) => d.status === 'active');

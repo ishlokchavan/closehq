@@ -3,8 +3,9 @@
 import { Eye, Plus, Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useData } from '@/components/portal/dashboard/data-context';
 import { PageHeader, Panel, StatCard, Badge, Avatar } from '@/components/portal/dashboard/ui';
-import { getViewings, type Viewing, type Tone } from '@/lib/portal/dashboard/demo';
+import { type Viewing, type Tone } from '@/lib/portal/dashboard/demo';
 import { fmtDateTime } from '@/lib/portal/dashboard/format';
 
 const STATUS: Record<Viewing['status'], { tone: Tone; label: string }> = {
@@ -16,7 +17,7 @@ const STATUS: Record<Viewing['status'], { tone: Tone; label: string }> = {
 
 export default function ViewingsPage() {
   const { persona } = usePersona();
-  const viewings = getViewings(persona);
+  const { viewings } = useData();
   const upcoming = viewings.filter((v) => v.status === 'scheduled').sort((a, b) => +new Date(a.whenIso) - +new Date(b.whenIso));
   const past = viewings.filter((v) => v.status !== 'scheduled');
 

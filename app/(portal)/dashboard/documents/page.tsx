@@ -2,9 +2,9 @@
 
 import { FileText, Upload, CheckCircle2, Clock, AlertTriangle, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useData } from '@/components/portal/dashboard/data-context';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td } from '@/components/portal/dashboard/ui';
-import { getDocuments, type DocumentRow } from '@/lib/portal/dashboard/demo';
+import { type DocumentRow } from '@/lib/portal/dashboard/demo';
 import { fmtDate } from '@/lib/portal/dashboard/format';
 
 const STATUS = {
@@ -15,8 +15,7 @@ const STATUS = {
 };
 
 export default function DocumentsPage() {
-  const { persona } = usePersona();
-  const docs = getDocuments(persona);
+  const { documents: docs } = useData();
   const verified = docs.filter((d) => d.status === 'verified').length;
   const action = docs.filter((d) => d.status === 'missing' || d.status === 'expired').length;
 

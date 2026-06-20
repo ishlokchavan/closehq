@@ -10,12 +10,13 @@ import {
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/components/portal/auth-provider';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useData } from '@/components/portal/dashboard/data-context';
 import { personaMeta } from '@/lib/portal/dashboard/persona';
 import {
   StatCard, Panel, Badge, Dot, Avatar, BarChart, TONE,
 } from '@/components/portal/dashboard/ui';
 import {
-  getDeals, getLeads, getListings, getSaved, getViewings, getEnquiries, getAgents,
+  getListings, getSaved, getEnquiries, getAgents,
   getCommission, getActivity, getTasks, getAnalytics, creditsBalance, DEAL_STAGES,
 } from '@/lib/portal/dashboard/demo';
 import { creditsToAed } from '@/lib/portal/credits';
@@ -56,8 +57,8 @@ function greeting() {
 // Buyer / Seller
 // ===========================================================================
 function BuyerOverview() {
+  const { viewings } = useData();
   const saved = getSaved();
-  const viewings = getViewings('buyer_seller');
   const enquiries = getEnquiries();
   const listings = getListings('buyer_seller');
   const credits = creditsBalance();
@@ -142,8 +143,7 @@ function BuyerOverview() {
 // Agent
 // ===========================================================================
 function AgentOverview() {
-  const leads = getLeads('agent');
-  const deals = getDeals('agent');
+  const { leads, deals } = useData();
   const listings = getListings('agent');
   const commission = getCommission('agent');
   const analytics = getAnalytics('agent');
@@ -201,8 +201,8 @@ function AgentOverview() {
 // Agency
 // ===========================================================================
 function AgencyOverview() {
+  const { deals } = useData();
   const agents = getAgents('agency');
-  const deals = getDeals('agency');
   const listings = getListings('agency');
   const analytics = getAnalytics('agency');
 
@@ -268,7 +268,7 @@ function AgencyOverview() {
 // Shared overview widgets
 // ===========================================================================
 function PipelineSnapshot() {
-  const deals = getDeals('agent');
+  const { deals } = useData();
   const byStage = DEAL_STAGES.map((stage) => ({
     stage,
     deals: deals.filter((d) => d.stage === stage),
