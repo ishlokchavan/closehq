@@ -84,6 +84,13 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
   category: 'Real Estate',
+  // Installable-PWA / iOS add-to-home-screen.
+  applicationName: 'iClose',
+  appleWebApp: {
+    capable: true,
+    title: 'iClose',
+    statusBarStyle: 'default',
+  },
 };
 
 export default async function RootLayout({

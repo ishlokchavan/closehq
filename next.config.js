@@ -12,7 +12,11 @@ const nextConfig = {
     '*.trycloudflare.com',
   ],
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // WebP only — AVIF encoding of the large AI-generated source PNGs is very
+    // slow on Vercel's optimiser (10-20s to encode one on a cold request),
+    // which was blocking the image-first feed's first paint. WebP encodes in
+    // ~1-2s for a fraction-of-a-percent size cost.
+    formats: ['image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -30,8 +34,11 @@ const nextConfig = {
         hostname: 'd8j0ntlcm91z4.cloudfront.net',
       },
     ],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
-    qualities: [70, 75, 80, 85, 90],
+    // Drop the largest sizes — the feed renders inside a <=520px column, so
+    // 1920/2048 just make the optimiser decode + encode far more pixels than
+    // any device shows.
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    qualities: [65, 70, 75, 80, 85, 90],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
   experimental: {
