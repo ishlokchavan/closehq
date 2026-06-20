@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
 import { useData } from '@/components/portal/dashboard/data-context';
+import { CreateRecordModal } from '@/components/portal/dashboard/create-record-modal';
 import { PageHeader, Panel, StatCard, Badge, Avatar, Table, Th, Td, EmptyState } from '@/components/portal/dashboard/ui';
 import { LEAD_STAGES, type LeadStage, type Tone } from '@/lib/portal/dashboard/demo';
 import { fmtAed, timeAgo } from '@/lib/portal/dashboard/format';
@@ -20,6 +21,7 @@ export default function LeadsPage() {
   const { leads: all, live } = useData();
   const [stage, setStage] = useState<LeadStage | 'All'>('All');
   const [q, setQ] = useState('');
+  const [adding, setAdding] = useState(false);
 
   const rows = useMemo(() => all.filter((l) =>
     (stage === 'All' || l.stage === stage) &&
@@ -44,8 +46,9 @@ export default function LeadsPage() {
     <>
       <PageHeader title="Leads" subtitle={persona === 'agency' ? 'Every lead across your team — route, qualify and convert.' : 'Your enquiries — qualify and move them into deals.'}>
         {live.leads && <Badge tone="success"><span className="h-1.5 w-1.5 rounded-full bg-[#059669]" /> Live</Badge>}
-        <Button variant="primary" size="sm"><Plus className="h-4 w-4" /> Add lead</Button>
+        <Button variant="primary" size="sm" onClick={() => setAdding(true)}><Plus className="h-4 w-4" /> Add lead</Button>
       </PageHeader>
+      <CreateRecordModal kind="lead" open={adding} onClose={() => setAdding(false)} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard icon={Target} label="New leads" value={String(newCount)} tint="bg-accent/10 text-accent" />

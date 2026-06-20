@@ -3,6 +3,7 @@
 import { CreditCard, Check, Download, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useToast, downloadFile } from '@/components/portal/dashboard/toast';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td, EmptyState } from '@/components/portal/dashboard/ui';
 import { fmtAed, fmtDate } from '@/lib/portal/dashboard/format';
 
@@ -20,6 +21,18 @@ const INVOICES = [
 
 export default function BillingPage() {
   const { persona } = usePersona();
+  const toast = useToast();
+
+  function downloadInvoice(i: typeof INVOICES[number]) {
+    downloadFile(`${i.no}.txt`,
+      `iClose — Invoice ${i.no}\nDate: ${fmtDate(i.date)}\nAmount: ${fmtAed(i.amount)}\nStatus: Paid\n\nThank you for being an iClose member.\n`);
+    toast.info(`Downloading ${i.no}.`);
+  }
+  function downloadAll() {
+    const csv = ['Invoice,Date,Amount (AED),Status', ...INVOICES.map((i) => `${i.no},${i.date},${i.amount},Paid`)].join('\n');
+    downloadFile('iclose-invoices.csv', csv, 'text/csv');
+    toast.success('Invoice history exported.');
+  }
 
   if (persona === 'buyer_seller') {
     return (<><PageHeader title="Membership" /><Panel><EmptyState icon={Lock} title="Membership plans are for agents & agencies" body="Buying and selling on iClose is free — there’s nothing to bill here." /></Panel></>);
@@ -28,7 +41,7 @@ export default function BillingPage() {
   return (
     <>
       <PageHeader title={persona === 'agency' ? 'Membership & billing' : 'Membership'} subtitle="Your plan, usage and invoices.">
-        <Button variant="outline" size="sm"><Download className="h-4 w-4" /> Invoices</Button>
+        <Button variant="outline" size="sm" onClick={downloadAll}><Download className="h-4 w-4" /> Invoices</Button>
       </PageHeader>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -49,7 +62,8 @@ export default function BillingPage() {
                 <li key={f} className="flex items-start gap-2 text-[13px] text-graphite-dark"><Check className="h-4 w-4 text-[#067a55] shrink-0 mt-0.5" /> {f}</li>
               ))}
             </ul>
-            <Button variant={p.current ? 'secondary' : 'primary'} size="md" className="w-full mt-5" disabled={p.current}>{p.current ? 'Current plan' : 'Choose plan'}</Button>
+            <Button variant={p.current ? 'secondary' : 'primary'} size="md" className="w-full mt-5" disabled={p.current}
+              onClick={() => !p.current && toast.info(`${p.label} selected — secure checkout opens here soon.`)}>{p.current ? 'Current plan' : 'Choose plan'}</Button>
           </div>
         ))}
       </div>
@@ -62,7 +76,7 @@ export default function BillingPage() {
               <Td className="text-graphite-dark">{fmtDate(i.date)}</Td>
               <Td>{fmtAed(i.amount)}</Td>
               <Td><Badge tone="success">Paid</Badge></Td>
-              <Td><button className="text-[13px] text-accent hover:underline inline-flex items-center gap-1"><Download className="h-3.5 w-3.5" /> PDF</button></Td>
+              <Td><button onClick={() => downloadInvoice(i)} className="text-[13px] text-accent hover:underline inline-flex items-center gap-1"><Download className="h-3.5 w-3.5" /> PDF</button></Td>
             </tr>
           ))}
         </Table>

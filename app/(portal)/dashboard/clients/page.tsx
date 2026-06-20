@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
 import { useData } from '@/components/portal/dashboard/data-context';
+import { CreateRecordModal } from '@/components/portal/dashboard/create-record-modal';
 import { PageHeader, Panel, StatCard, Badge, Avatar, Table, Th, Td, EmptyState } from '@/components/portal/dashboard/ui';
 import { type Client } from '@/lib/portal/dashboard/demo';
 import { fmtAed, timeAgo } from '@/lib/portal/dashboard/format';
@@ -17,6 +18,7 @@ export default function ClientsPage() {
   const { clients: all } = useData();
   const [type, setType] = useState<Client['type'] | 'All'>('All');
   const [q, setQ] = useState('');
+  const [adding, setAdding] = useState(false);
 
   const rows = useMemo(() => all.filter((c) =>
     (type === 'All' || c.type === type) &&
@@ -33,8 +35,9 @@ export default function ClientsPage() {
   return (
     <>
       <PageHeader title="Clients" subtitle={persona === 'agency' ? 'Your team’s full client book.' : 'Your buyers, sellers and investors in one CRM.'}>
-        <Button variant="primary" size="sm"><Plus className="h-4 w-4" /> Add client</Button>
+        <Button variant="primary" size="sm" onClick={() => setAdding(true)}><Plus className="h-4 w-4" /> Add client</Button>
       </PageHeader>
+      <CreateRecordModal kind="client" open={adding} onClose={() => setAdding(false)} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard icon={UserSquare2} label="Total clients" value={String(all.length)} tint="bg-accent/10 text-accent" />

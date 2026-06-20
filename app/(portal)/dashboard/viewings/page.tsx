@@ -4,6 +4,7 @@ import { Eye, Plus, Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
 import { useData } from '@/components/portal/dashboard/data-context';
+import { useToast } from '@/components/portal/dashboard/toast';
 import { PageHeader, Panel, StatCard, Badge, Avatar } from '@/components/portal/dashboard/ui';
 import { type Viewing, type Tone } from '@/lib/portal/dashboard/demo';
 import { fmtDateTime } from '@/lib/portal/dashboard/format';
@@ -18,13 +19,14 @@ const STATUS: Record<Viewing['status'], { tone: Tone; label: string }> = {
 export default function ViewingsPage() {
   const { persona } = usePersona();
   const { viewings } = useData();
+  const toast = useToast();
   const upcoming = viewings.filter((v) => v.status === 'scheduled').sort((a, b) => +new Date(a.whenIso) - +new Date(b.whenIso));
   const past = viewings.filter((v) => v.status !== 'scheduled');
 
   return (
     <>
       <PageHeader title="Viewings" subtitle={persona === 'buyer_seller' ? 'Your property viewings and appointments.' : 'Schedule and track viewings with your clients.'}>
-        <Button variant="primary" size="sm"><Plus className="h-4 w-4" /> Schedule viewing</Button>
+        <Button variant="primary" size="sm" onClick={() => toast.info('Pick a property and client to schedule a viewing — booking flow is coming soon.')}><Plus className="h-4 w-4" /> Schedule viewing</Button>
       </PageHeader>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

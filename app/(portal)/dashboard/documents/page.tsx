@@ -1,8 +1,10 @@
 'use client';
 
+import { useRef } from 'react';
 import { FileText, Upload, CheckCircle2, Clock, AlertTriangle, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useData } from '@/components/portal/dashboard/data-context';
+import { useToast, downloadFile } from '@/components/portal/dashboard/toast';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td } from '@/components/portal/dashboard/ui';
 import { type DocumentRow } from '@/lib/portal/dashboard/demo';
 import { fmtDate } from '@/lib/portal/dashboard/format';
@@ -16,13 +18,27 @@ const STATUS = {
 
 export default function DocumentsPage() {
   const { documents: docs } = useData();
+  const toast = useToast();
+  const fileInput = useRef<HTMLInputElement>(null);
   const verified = docs.filter((d) => d.status === 'verified').length;
   const action = docs.filter((d) => d.status === 'missing' || d.status === 'expired').length;
 
+  function onPick(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (f) toast.success(`“${f.name}” uploaded — pending verification.`);
+    e.target.value = '';
+  }
+  function viewDoc(d: DocumentRow) {
+    downloadFile(`${d.name.replace(/[^\w.-]+/g, '_')}.txt`,
+      `iClose document\n\n${d.name}\nType: ${d.kind}\nRelated to: ${d.related}\nStatus: ${d.status}\nUpdated: ${fmtDate(d.updatedIso)}\n`);
+    toast.info(`Downloading “${d.name}”.`);
+  }
+
   return (
     <>
+      <input ref={fileInput} type="file" className="hidden" onChange={onPick} />
       <PageHeader title="Documents" subtitle="Your verified IDs, RERA forms and contracts — securely stored.">
-        <Button variant="primary" size="sm"><Upload className="h-4 w-4" /> Upload</Button>
+        <Button variant="primary" size="sm" onClick={() => fileInput.current?.click()}><Upload className="h-4 w-4" /> Upload</Button>
       </PageHeader>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -50,7 +66,7 @@ export default function DocumentsPage() {
                 <Td className="text-graphite-dark">{d.related}</Td>
                 <Td><Badge tone={s.tone}><s.icon className="h-3 w-3" /> {s.label}</Badge></Td>
                 <Td className="text-graphite whitespace-nowrap">{fmtDate(d.updatedIso)}</Td>
-                <Td><button className="text-[13px] text-accent hover:underline">{d.status === 'missing' ? 'Upload' : 'View'}</button></Td>
+                <Td><button onClick={() => (d.status === 'missing' || d.status === 'expired') ? fileInput.current?.click() : viewDoc(d)} className="text-[13px] text-accent hover:underline">{d.status === 'missing' || d.status === 'expired' ? 'Upload' : 'View'}</button></Td>
               </tr>
             );
           })}

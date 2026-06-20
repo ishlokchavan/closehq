@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
 import { useData } from '@/components/portal/dashboard/data-context';
+import { useToast } from '@/components/portal/dashboard/toast';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td, Dot } from '@/components/portal/dashboard/ui';
 import { DEAL_STAGES } from '@/lib/portal/dashboard/demo';
 import { fmtAed, fmtDate, timeAgo } from '@/lib/portal/dashboard/format';
@@ -13,6 +14,7 @@ import { fmtAed, fmtDate, timeAgo } from '@/lib/portal/dashboard/format';
 export default function DealsPage() {
   const { persona } = usePersona();
   const { deals } = useData();
+  const toast = useToast();
   const [view, setView] = useState<'board' | 'list'>('board');
 
   const active = deals.filter((d) => d.status === 'active');
@@ -33,7 +35,7 @@ export default function DealsPage() {
           <button onClick={() => setView('board')} className={cn('h-8 w-9 inline-flex items-center justify-center rounded-full', view === 'board' ? 'bg-paper shadow-card' : 'text-graphite')} aria-label="Board view"><LayoutGrid className="h-4 w-4" /></button>
           <button onClick={() => setView('list')} className={cn('h-8 w-9 inline-flex items-center justify-center rounded-full', view === 'list' ? 'bg-paper shadow-card' : 'text-graphite')} aria-label="List view"><List className="h-4 w-4" /></button>
         </div>
-        {!isBuyer && <Button variant="primary" size="sm"><Plus className="h-4 w-4" /> New deal</Button>}
+        {!isBuyer && <Button variant="primary" size="sm" onClick={() => toast.info('Start a deal from a lead or client — full deal builder is coming soon.')}><Plus className="h-4 w-4" /> New deal</Button>}
       </PageHeader>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

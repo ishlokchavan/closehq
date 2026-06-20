@@ -1,17 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import { Users, UserPlus, Search, Star, Building2, Handshake, Lock, MoreHorizontal } from 'lucide-react';
+import { Users, UserPlus, Search, Star, Building2, Handshake, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useToast } from '@/components/portal/dashboard/toast';
+import { RowMenu } from '@/components/portal/dashboard/row-menu';
 import { PageHeader, Panel, StatCard, Badge, Avatar, EmptyState } from '@/components/portal/dashboard/ui';
 import { getAgents } from '@/lib/portal/dashboard/demo';
 import { fmtAed } from '@/lib/portal/dashboard/format';
 
 export default function AgentsPage() {
   const { persona } = usePersona();
+  const toast = useToast();
   const agents = getAgents(persona);
   const [q, setQ] = useState('');
+
+  function inviteAgent() {
+    if (typeof window === 'undefined') return;
+    const email = window.prompt('Invite an agent by email:');
+    if (email && /.+@.+\..+/.test(email)) {
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent('Join our team on iClose')}&body=${encodeURIComponent('Hi,\n\nI’d like to invite you to join our brokerage on iClose. Sign up at https://iclose.ae/signup and I’ll add you to the team.\n\nThanks')}`;
+      toast.success(`Invitation drafted for ${email}.`);
+    } else if (email) {
+      toast.error('That doesn’t look like a valid email.');
+    }
+  }
+  function copyEmail(email: string) {
+    navigator.clipboard?.writeText(email).then(() => toast.success('Email copied.'), () => toast.error('Could not copy.'));
+  }
 
   if (persona !== 'agency') {
     return (<><PageHeader title="Agents" /><Panel><EmptyState icon={Lock} title="Team management is for agencies" body="Switch to the Agency dashboard to invite agents, route leads and track team performance." /></Panel></>);
@@ -25,7 +42,7 @@ export default function AgentsPage() {
   return (
     <>
       <PageHeader title="Agents" subtitle="Invite agents, manage permissions and track performance across your brokerage.">
-        <Button variant="primary" size="sm"><UserPlus className="h-4 w-4" /> Invite agent</Button>
+        <Button variant="primary" size="sm" onClick={inviteAgent}><UserPlus className="h-4 w-4" /> Invite agent</Button>
       </PageHeader>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -52,7 +69,12 @@ export default function AgentsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <p className="text-[14.5px] font-semibold text-ink truncate">{a.name}</p>
-                    <button className="h-7 w-7 -me-1 inline-flex items-center justify-center rounded-full hover:bg-mist" aria-label="More"><MoreHorizontal className="h-4 w-4 text-graphite" /></button>
+                    <RowMenu items={[
+                      { label: 'Email agent', onClick: () => { window.location.href = `mailto:${a.email}`; } },
+                      { label: 'Copy email', onClick: () => copyEmail(a.email) },
+                      { label: 'Reassign leads', onClick: () => toast.info(`Lead reassignment for ${a.name} is coming soon.`) },
+                      { label: a.status === 'active' ? 'Suspend agent' : 'Reactivate agent', onClick: () => toast.info(`${a.name} ${a.status === 'active' ? 'suspended' : 'reactivated'} (demo).`), danger: a.status === 'active' },
+                    ]} />
                   </div>
                   <p className="text-[12px] text-graphite truncate">{a.email}</p>
                   <div className="flex items-center gap-1.5 mt-1.5">

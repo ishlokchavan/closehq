@@ -3,12 +3,14 @@
 import { BadgeDollarSign, Download, TrendingUp, Lock, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useToast, downloadFile } from '@/components/portal/dashboard/toast';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td, BarChart, EmptyState } from '@/components/portal/dashboard/ui';
 import { getCommission, getAnalytics } from '@/lib/portal/dashboard/demo';
 import { fmtAed, fmtDate } from '@/lib/portal/dashboard/format';
 
 export default function CommissionPage() {
   const { persona } = usePersona();
+  const toast = useToast();
 
   if (persona === 'buyer_seller') {
     return (<><PageHeader title="Commission" /><Panel><EmptyState icon={Lock} title="Commission tracking is for agents & agencies" body="As a buyer or seller, head to Credits & cashback to see what you’ve earned." /></Panel></>);
@@ -22,10 +24,17 @@ export default function CommissionPage() {
 
   const earnings = analytics.leadsByMonth.map((m) => ({ label: m.label, value: Math.round(m.value * (persona === 'agency' ? 9 : 6)) }));
 
+  function downloadStatement() {
+    const csv = ['Period,Deal,Gross (AED),Platform fee (AED),Net (AED),Status,Date',
+      ...rows.map((r) => `${r.period},${r.deal},${r.grossAed},0,${r.netAed},${r.status},${r.dateIso}`)].join('\n');
+    downloadFile('iclose-commission-statement.csv', csv, 'text/csv');
+    toast.success('Commission statement exported.');
+  }
+
   return (
     <>
       <PageHeader title={persona === 'agency' ? 'Commission & revenue' : 'Commission'} subtitle={persona === 'agency' ? 'Brokerage revenue across every closed deal.' : 'Every dirham you’ve earned — you keep 100%.'}>
-        <Button variant="outline" size="sm"><Download className="h-4 w-4" /> Statement</Button>
+        <Button variant="outline" size="sm" onClick={downloadStatement}><Download className="h-4 w-4" /> Statement</Button>
       </PageHeader>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

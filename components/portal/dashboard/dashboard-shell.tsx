@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Menu, X, Bell, ChevronDown, Check, LogOut, Loader2, Search, ExternalLink,
 } from 'lucide-react';
@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/logo';
 import { useAuth } from '@/components/portal/auth-provider';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useToast } from '@/components/portal/dashboard/toast';
 import { Avatar } from '@/components/portal/dashboard/ui';
 import { initials } from '@/lib/portal/dashboard/format';
 import { NAV, PERSONAS, personaMeta, type Persona } from '@/lib/portal/dashboard/persona';
@@ -43,7 +44,16 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const { user, loading, signOut } = useAuth();
   const { persona, ready } = usePersona();
   const pathname = usePathname();
+  const router = useRouter();
+  const toast = useToast();
   const [mobileNav, setMobileNav] = useState(false);
+  const [search, setSearch] = useState('');
+
+  function submitSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const q = search.trim();
+    router.push(q ? `/properties?q=${encodeURIComponent(q)}` : '/properties');
+  }
 
   if (loading || !ready) {
     return (
@@ -141,15 +151,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <button onClick={() => setMobileNav(true)} aria-label="Open menu" className="lg:hidden h-9 w-9 inline-flex items-center justify-center rounded-full hover:bg-mist">
                 <Menu className="h-5 w-5" />
               </button>
-              <div className="hidden sm:flex items-center gap-2 h-9 px-3 rounded-full bg-mist text-graphite text-[13px] flex-1 max-w-xs">
-                <Search className="h-4 w-4" />
-                <input placeholder="Search properties, clients, deals…" className="bg-transparent flex-1 outline-none placeholder:text-graphite" />
-              </div>
+              <form onSubmit={submitSearch} className="hidden sm:flex items-center gap-2 h-9 px-3 rounded-full bg-mist text-graphite text-[13px] flex-1 max-w-xs">
+                <button type="submit" aria-label="Search"><Search className="h-4 w-4" /></button>
+                <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search properties, clients, deals…" className="bg-transparent flex-1 outline-none placeholder:text-graphite" />
+              </form>
               <div className="flex-1 sm:hidden" />
               <Link href="/" className="hidden sm:inline-flex items-center gap-1 text-[13px] text-graphite-dark hover:text-ink">
                 View site <ExternalLink className="h-3.5 w-3.5" />
               </Link>
-              <button aria-label="Notifications" className="relative h-9 w-9 inline-flex items-center justify-center rounded-full hover:bg-mist">
+              <button onClick={() => toast.info('You’re all caught up — no new notifications.')} aria-label="Notifications" className="relative h-9 w-9 inline-flex items-center justify-center rounded-full hover:bg-mist">
                 <Bell className="h-[18px] w-[18px] text-ink" />
                 <span className="absolute top-2 end-2 h-2 w-2 rounded-full bg-[#e11d48] ring-2 ring-paper" />
               </button>

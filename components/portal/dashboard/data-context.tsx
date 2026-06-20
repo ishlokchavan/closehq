@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useAuth } from '@/components/portal/auth-provider';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
 import { fetchLeads, fetchClients, fetchDeals, fetchViewings, fetchDocuments } from '@/lib/portal/dashboard/live';
@@ -15,6 +15,8 @@ interface DataState {
   leads: Lead[]; clients: Client[]; deals: Deal[]; viewings: Viewing[]; documents: DocumentRow[];
   /** Whether each collection came from Supabase (true) or demo fallback (false). */
   live: Record<'leads' | 'clients' | 'deals' | 'viewings' | 'documents', boolean>;
+  /** Re-fetch live collections (e.g. after creating a record). */
+  refresh: () => Promise<void>;
 }
 
 const Ctx = createContext<DataState | null>(null);
@@ -29,24 +31,21 @@ export function DashboardDataProvider({ children }: { children: React.ReactNode 
   const { persona } = usePersona();
   const [live, setLive] = useState<Live>({});
 
-  useEffect(() => {
+  const load = useCallback(async () => {
     if (!user) { setLive({}); return; }
-    let cancelled = false;
-    (async () => {
-      const [leads, clients, deals, viewings, documents] = await Promise.all([
-        fetchLeads(), fetchClients(), fetchDeals(), fetchViewings(), fetchDocuments(),
-      ]);
-      if (cancelled) return;
-      setLive({
-        leads: leads ?? undefined,
-        clients: clients ?? undefined,
-        deals: deals ?? undefined,
-        viewings: viewings ?? undefined,
-        documents: documents ?? undefined,
-      });
-    })();
-    return () => { cancelled = true; };
+    const [leads, clients, deals, viewings, documents] = await Promise.all([
+      fetchLeads(), fetchClients(), fetchDeals(), fetchViewings(), fetchDocuments(),
+    ]);
+    setLive({
+      leads: leads ?? undefined,
+      clients: clients ?? undefined,
+      deals: deals ?? undefined,
+      viewings: viewings ?? undefined,
+      documents: documents ?? undefined,
+    });
   }, [user]);
+
+  useEffect(() => { void load(); }, [load]);
 
   const value: DataState = {
     leads: live.leads ?? getLeads(persona),
@@ -58,6 +57,7 @@ export function DashboardDataProvider({ children }: { children: React.ReactNode 
       leads: !!live.leads, clients: !!live.clients, deals: !!live.deals,
       viewings: !!live.viewings, documents: !!live.documents,
     },
+    refresh: load,
   };
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

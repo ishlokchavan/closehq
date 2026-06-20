@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { MessagesSquare, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/portal/dashboard/toast';
 import { PageHeader, Panel, StatCard, Badge, Table, Th, Td } from '@/components/portal/dashboard/ui';
 import { getEnquiries, type EnquiryRow, type Tone } from '@/lib/portal/dashboard/demo';
 import { timeAgo } from '@/lib/portal/dashboard/format';
@@ -15,6 +16,7 @@ const STATUS: Record<EnquiryRow['status'], { tone: Tone; label: string }> = {
 };
 
 export default function EnquiriesPage() {
+  const toast = useToast();
   const enquiries = getEnquiries();
   const awaiting = enquiries.filter((e) => e.status === 'awaiting').length;
   const booked = enquiries.filter((e) => e.status === 'viewing_booked').length;
@@ -41,7 +43,7 @@ export default function EnquiriesPage() {
               <Td><Badge tone="neutral">{e.channel}</Badge></Td>
               <Td><Badge tone={STATUS[e.status].tone}>{STATUS[e.status].label}</Badge></Td>
               <Td className="text-graphite whitespace-nowrap">{timeAgo(e.sentIso)}</Td>
-              <Td><button className="text-[13px] text-accent hover:underline">Open chat</button></Td>
+              <Td><button onClick={() => toast.info(`Opening your conversation with ${e.agent}…`)} className="text-[13px] text-accent hover:underline">Open chat</button></Td>
             </tr>
           ))}
         </Table>

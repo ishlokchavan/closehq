@@ -1,16 +1,26 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { Heart, Search, Bell, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PageHeader, StatCard, Badge } from '@/components/portal/dashboard/ui';
+import { useToast } from '@/components/portal/dashboard/toast';
+import { PageHeader, StatCard, Badge, EmptyState } from '@/components/portal/dashboard/ui';
 import { getSaved } from '@/lib/portal/dashboard/demo';
 import { fmtAed, fmtNum, timeAgo } from '@/lib/portal/dashboard/format';
 
 export default function SavedPage() {
-  const saved = getSaved();
+  const toast = useToast();
+  const [saved, setSaved] = useState(() => getSaved());
   const dropped = saved.filter((s) => s.priceChange < 0).length;
   const value = saved.reduce((s, x) => s + x.priceAed, 0);
+
+  function remove(e: React.MouseEvent, id: string, title: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    setSaved((list) => list.filter((x) => x.id !== id));
+    toast.success(`Removed “${title}” from your shortlist.`);
+  }
 
   return (
     <>
@@ -24,6 +34,11 @@ export default function SavedPage() {
         <StatCard icon={Heart} label="Shortlist value" value={fmtAed(value, { compact: true })} tint="bg-accent/10 text-accent" />
       </div>
 
+      {saved.length === 0 && (
+        <EmptyState icon={Heart} title="Your shortlist is empty" body="Browse listings and tap the heart to save properties here."
+          action={<Link href="/properties"><Button variant="primary" size="sm"><Search className="h-4 w-4" /> Browse properties</Button></Link>} />
+      )}
+
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {saved.map((s) => (
           <div key={s.id} className="card-surface overflow-hidden group">
@@ -33,7 +48,7 @@ export default function SavedPage() {
               {s.priceChange !== 0 && (
                 <div className="absolute top-3 start-3"><Badge tone={s.priceChange < 0 ? 'success' : 'warning'} className="bg-paper/90 backdrop-blur">{s.priceChange < 0 ? 'Price dropped' : 'Price up'} {fmtAed(Math.abs(s.priceChange), { compact: true })}</Badge></div>
               )}
-              <button className="absolute top-3 end-3 h-8 w-8 inline-flex items-center justify-center rounded-full bg-paper/90 backdrop-blur hover:bg-paper" aria-label="Remove"><Trash2 className="h-4 w-4 text-[#c81e3f]" /></button>
+              <button onClick={(e) => remove(e, s.id, s.title)} className="absolute top-3 end-3 h-8 w-8 inline-flex items-center justify-center rounded-full bg-paper/90 backdrop-blur hover:bg-paper" aria-label="Remove"><Trash2 className="h-4 w-4 text-[#c81e3f]" /></button>
             </Link>
             <div className="p-4">
               <span className="text-[11px] text-graphite font-medium">{s.ref}</span>

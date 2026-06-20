@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Building2, Plus, Eye, Target, Heart, MoreHorizontal, Search } from 'lucide-react';
+import { Building2, Plus, Eye, Target, Heart, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { usePersona } from '@/components/portal/dashboard/persona-context';
+import { useToast } from '@/components/portal/dashboard/toast';
+import { RowMenu } from '@/components/portal/dashboard/row-menu';
 import { PageHeader, StatCard, Badge } from '@/components/portal/dashboard/ui';
 import { getListings, type ListingRow, type Tone } from '@/lib/portal/dashboard/demo';
 import { fmtAed, fmtNum, timeAgo } from '@/lib/portal/dashboard/format';
@@ -19,9 +21,15 @@ const STATUS_LABEL: Record<ListingRow['status'], string> = {
 
 export default function ListingsPage() {
   const { persona } = usePersona();
+  const toast = useToast();
   const all = getListings(persona);
   const [status, setStatus] = useState<ListingRow['status'] | 'all'>('all');
   const [q, setQ] = useState('');
+
+  function copyLink(l: ListingRow) {
+    const url = typeof window !== 'undefined' ? `${window.location.origin}/properties/${l.ref}` : '';
+    navigator.clipboard?.writeText(url).then(() => toast.success('Listing link copied.'), () => toast.error('Could not copy link.'));
+  }
 
   const rows = useMemo(() => all.filter((l) =>
     (status === 'all' || l.status === status) &&
@@ -71,7 +79,18 @@ export default function ListingsPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               {l.coverImageUrl && <img src={l.coverImageUrl} alt="" className="h-full w-full object-cover" />}
               <div className="absolute top-3 start-3"><Badge tone={STATUS_TONE[l.status]} className="bg-paper/90 backdrop-blur">{STATUS_LABEL[l.status]}</Badge></div>
-              <button className="absolute top-3 end-3 h-8 w-8 inline-flex items-center justify-center rounded-full bg-paper/90 backdrop-blur hover:bg-paper" aria-label="More"><MoreHorizontal className="h-4 w-4 text-ink" /></button>
+              <div className="absolute top-3 end-3">
+                <RowMenu
+                  triggerClassName="h-8 w-8 inline-flex items-center justify-center rounded-full bg-paper/90 backdrop-blur hover:bg-paper"
+                  iconClassName="h-4 w-4 text-ink"
+                  items={[
+                    { label: 'Copy link', onClick: () => copyLink(l) },
+                    { label: 'Preview', onClick: () => { if (typeof window !== 'undefined') window.open(`/properties/${l.ref}`, '_blank'); } },
+                    { label: 'Edit listing', onClick: () => toast.info(`Editing “${l.title}” — editor opening soon.`) },
+                    { label: l.status === 'active' ? 'Mark as sold' : 'Archive', onClick: () => toast.info('Status update saved (demo).') },
+                  ]}
+                />
+              </div>
             </div>
             <div className="p-4">
               <div className="flex items-center justify-between">
