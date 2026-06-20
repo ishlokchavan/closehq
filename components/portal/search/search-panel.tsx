@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, MapPin, ChevronDown, Sparkles, ArrowRight } from 'lucide-react';
@@ -38,7 +38,7 @@ interface LocalFilters {
 }
 const EMPTY: LocalFilters = { category: 'residential', amenities: [] };
 
-export function SearchPanel({ initial = 'properties', options }: { initial?: SearchTabKey; options: FilterOptions }) {
+export function SearchPanel({ initial = 'properties', options, autoFocus = false }: { initial?: SearchTabKey; options: FilterOptions; autoFocus?: boolean }) {
   const router = useRouter();
   const { messages } = useI18n();
   const m = messages.search;
@@ -47,6 +47,13 @@ export function SearchPanel({ initial = 'properties', options }: { initial?: Sea
   const [query, setQuery] = useState('');
   const [f, setF] = useState<LocalFilters>(EMPTY);
   const set = (patch: Partial<LocalFilters>) => setF((p) => ({ ...p, ...patch }));
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-select the search field on landing so visitors can type immediately.
+  // `preventScroll` keeps the hero from jumping on load.
+  useEffect(() => {
+    if (autoFocus) inputRef.current?.focus({ preventScroll: true });
+  }, [autoFocus]);
 
   const config = CONFIG[active];
   const typeLabel = options.propertyTypes.find((t) => t.value === f.type)?.label;
@@ -124,7 +131,7 @@ export function SearchPanel({ initial = 'properties', options }: { initial?: Sea
             {config.withLocationIcon
               ? <MapPin className="absolute start-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-graphite" />
               : <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-graphite" />}
-            <input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && onSearch()}
+            <input ref={inputRef} value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && onSearch()}
               placeholder={m.ph[active === 'new-releases' ? 'newReleases' : active]}
               className="w-full h-11 ps-10 pe-3 rounded-full border border-hairline text-[15px] text-ink placeholder:text-graphite focus:outline-none focus:ring-2 focus:ring-accent/40" />
           </div>

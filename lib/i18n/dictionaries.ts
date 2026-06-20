@@ -18,6 +18,8 @@ export interface Messages {
   };
   home: {
     notif: string; learnMore: string;
+    /** Rotating notification-bar messages (falls back to `notif` when absent). */
+    notifItems?: string[];
     heroTitle: string; heroSub: string;
     cards: { buy: string; sell: string; close: string; buyCta: string; sellCta: string; closeCta: string };
   };
@@ -45,6 +47,11 @@ const en: Messages = {
   },
   home: {
     notif: 'Investing in Off-Plan? Get Special Pricing & Credits',
+    notifItems: [
+      'Investing in Off-Plan? Get Special Pricing & Credits',
+      'Buying with iClose? Get 100% Cashback & 0% Commission',
+      'Listing as an agent? Keep 100% of the Commission',
+    ],
     learnMore: 'Learn More',
     heroTitle: 'Never Pay Commission to Buy, Sell, or Close Ever Again!',
     heroSub: 'Investing in Off-Plan? Get Special Pricing & Credits',
@@ -77,6 +84,11 @@ const ar: Messages = {
   },
   home: {
     notif: 'تستثمر على الخارطة؟ احصل على أسعار خاصة ورصيد',
+    notifItems: [
+      'تستثمر على الخارطة؟ احصل على أسعار خاصة ورصيد',
+      'تشتري مع iClose؟ احصل على استرداد نقدي 100% وبدون عمولة',
+      'تُدرج كوكيل؟ احتفظ بنسبة 100% من العمولة',
+    ],
     learnMore: 'اعرف المزيد',
     heroTitle: 'لا تدفع عمولة للشراء أو البيع أو الإتمام مرة أخرى أبداً!',
     heroSub: 'تستثمر على الخارطة؟ احصل على أسعار خاصة ورصيد',

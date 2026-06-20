@@ -17,6 +17,10 @@ function isActive(pathname: string, item: NavItem) {
   return pathname === item.href || pathname.startsWith(item.href + '/');
 }
 
+// Languages shown in the switcher. Others are hidden for now (still supported
+// under the hood — just not offered in the UI yet).
+const VISIBLE_LOCALES = LOCALES.filter((l) => l.code === 'en' || l.code === 'ar');
+
 export function PortalHeader() {
   const pathname = usePathname();
   const { messages, locale, setLocale } = useI18n();
@@ -28,13 +32,13 @@ export function PortalHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-paper/80 backdrop-blur-2xl border-b border-hairline/60">
-      <div className="container-wide flex items-center justify-between h-14">
+      <div className="relative container-wide flex items-center justify-between h-14">
         {/* Logo already links to "/", so don't wrap it in another <Link> (nested <a>). */}
         <Logo variant="dark" />
 
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Desktop nav — absolutely centered in the header, independent of the
+            logo / actions widths on either side. */}
+        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1">
           {PORTAL_NAV.map((item) => (
             <div
               key={item.href}
@@ -161,7 +165,7 @@ export function PortalHeader() {
                   <Globe className="h-3.5 w-3.5" /> Language
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {LOCALES.map((l) => (
+                  {VISIBLE_LOCALES.map((l) => (
                     <button
                       key={l.code}
                       type="button"
@@ -286,7 +290,7 @@ function LanguagePill() {
             className="absolute end-0 top-full pt-2 w-40"
           >
             <div className="card-surface shadow-elevated p-1.5">
-              {LOCALES.map((l) => (
+              {VISIBLE_LOCALES.map((l) => (
                 <button
                   key={l.code}
                   type="button"

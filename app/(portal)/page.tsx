@@ -26,17 +26,34 @@ const HOME_CARDS: { href: string; title: string; badge: string; image: string }[
   { href: '/close', title: 'Want to list or close?', badge: 'Agents keep 100% of the commission', image: IMG('close.png', 'hf_20260616_222236_b69f84e1-cbcb-452d-841d-63c07a0ada81.png') },
 ];
 
-/** The commission headline — bold Buy/Sell/Close in English, plain otherwise. */
+/**
+ * Inline Buy / Sell / Close word — underlined, brand-tinted, links to its
+ * journey, and turns the accent colour on hover. Colour classes (not inline
+ * styles) so `hover:text-accent` can override the base colour via the cascade.
+ */
+function JourneyWord({ href, colorClass, children }: { href: string; colorClass: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className={`underline underline-offset-4 decoration-2 transition-colors hover:text-accent ${colorClass}`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+/** The commission headline — all-bold, with linked Buy/Sell/Close in English. */
 function CommissionHeadline({ locale, t, className }: { locale: LocaleCode; t: Messages['home']; className?: string }) {
   if (locale === 'en') {
     return (
-      <span className={`font-normal ${className ?? ''}`}>
-        Never Pay Commission to <span className="font-bold">Buy</span>,{' '}
-        <span className="font-bold">Sell</span>, Or <span className="font-bold">Close</span> Ever Again!
+      <span className={`font-bold ${className ?? ''}`}>
+        Never Pay Commission to <JourneyWord href="/buy" colorClass="text-[#c026d3]">Buy</JourneyWord>,{' '}
+        <JourneyWord href="/sell" colorClass="text-[#059669]">Sell</JourneyWord>, Or{' '}
+        <JourneyWord href="/close" colorClass="text-[#ea580c]">Close</JourneyWord> Ever Again!
       </span>
     );
   }
-  return <span className={className}>{t.heroTitle}</span>;
+  return <span className={`font-bold ${className ?? ''}`}>{t.heroTitle}</span>;
 }
 
 export default async function PortalHomePage() {
@@ -73,7 +90,7 @@ export default async function PortalHomePage() {
             </Link>
           </div>
           <div className="mt-10">
-            <SearchPanel initial="properties" options={filterOptions} />
+            <SearchPanel initial="properties" options={filterOptions} autoFocus />
           </div>
         </div>
       </section>
