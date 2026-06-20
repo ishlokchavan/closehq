@@ -29,9 +29,9 @@ export function PortalHeader() {
   return (
     <header className="sticky top-0 z-50 bg-paper/80 backdrop-blur-2xl border-b border-hairline/60">
       <div className="container-wide flex items-center justify-between h-14">
-        <Link href="/" aria-label="iClose home">
-          <Logo variant="dark" />
-        </Link>
+        {/* Logo already links to "/", so don't wrap it in another <Link> (nested <a>). */}
+        <Logo variant="dark" />
+
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
