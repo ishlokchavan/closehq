@@ -54,7 +54,7 @@ const en: Messages = {
     ],
     learnMore: 'Learn More',
     heroTitle: 'Never Pay Commission to Buy, Sell, or Close Ever Again!',
-    heroSub: 'Investing in Off-Plan? Get Special Pricing & Credits',
+    heroSub: 'Search Dubai property, off-plan launches and sold prices — and close every deal commission-free.',
     cards: {
       buy: 'Buy with zero commission', sell: 'Sell without commission', close: 'Close & keep 100% commission',
       buyCta: 'How to buy', sellCta: 'How to sell', closeCta: 'How to close',
@@ -91,7 +91,7 @@ const ar: Messages = {
     ],
     learnMore: 'اعرف المزيد',
     heroTitle: 'لا تدفع عمولة للشراء أو البيع أو الإتمام مرة أخرى أبداً!',
-    heroSub: 'تستثمر على الخارطة؟ احصل على أسعار خاصة ورصيد',
+    heroSub: 'ابحث عن عقارات دبي ومشاريع على الخارطة وأسعار البيع — وأتمم كل صفقة بدون عمولة.',
     cards: {
       buy: 'اشترِ بدون عمولة', sell: 'بِع بدون عمولة', close: 'أتمم واحتفظ بـ 100% من العمولة',
       buyCta: 'كيف تشتري', sellCta: 'كيف تبيع', closeCta: 'كيف تُتمم',

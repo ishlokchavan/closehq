@@ -35,21 +35,25 @@ function JourneyWord({ href, colorClass, children }: { href: string; colorClass:
   return (
     <Link
       href={href}
-      className={`underline underline-offset-4 decoration-2 transition-colors hover:text-accent ${colorClass}`}
+      className={`underline underline-offset-4 decoration-2 transition-colors ${colorClass}`}
     >
       {children}
     </Link>
   );
 }
 
-/** The commission headline — all-bold, with linked Buy/Sell/Close in English. */
+/**
+ * The commission headline — all-bold, with linked Buy/Sell/Close in English.
+ * Each word keeps the ink text colour with a brand-tinted underline, then the
+ * text turns that same colour on hover (`decoration-[hex]` + `hover:text-[hex]`).
+ */
 function CommissionHeadline({ locale, t, className }: { locale: LocaleCode; t: Messages['home']; className?: string }) {
   if (locale === 'en') {
     return (
       <span className={`font-bold ${className ?? ''}`}>
-        Never Pay Commission to <JourneyWord href="/buy" colorClass="text-[#c026d3]">Buy</JourneyWord>,{' '}
-        <JourneyWord href="/sell" colorClass="text-[#059669]">Sell</JourneyWord>, Or{' '}
-        <JourneyWord href="/close" colorClass="text-[#ea580c]">Close</JourneyWord> Ever Again!
+        Never Pay Commission to <JourneyWord href="/buy" colorClass="decoration-[#c026d3] hover:text-[#c026d3]">Buy</JourneyWord>,{' '}
+        <JourneyWord href="/sell" colorClass="decoration-[#059669] hover:text-[#059669]">Sell</JourneyWord>, Or{' '}
+        <JourneyWord href="/close" colorClass="decoration-[#ea580c] hover:text-[#ea580c]">Close</JourneyWord> Ever Again!
       </span>
     );
   }
@@ -75,10 +79,12 @@ export default async function PortalHomePage() {
           </h1>
           <p className="subhead mt-5 max-w-2xl mx-auto">
             {t.heroSub}
-            <Link href="/credits" className="applelink ms-1.5 text-[15px] align-baseline">
+          </p>
+          <div className="mt-3 flex justify-center">
+            <Link href="/credits" className="applelink text-[15px]">
               {t.learnMore} <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
             </Link>
-          </p>
+          </div>
           <div className="mt-10">
             <SearchPanel initial="properties" options={filterOptions} autoFocus />
           </div>
