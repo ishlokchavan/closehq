@@ -33,8 +33,8 @@ export function NotificationBar() {
   const tail = m ? m[2] : '';
 
   return (
-    <Link href="/credits" className="block bg-[#ffd9dc] hover:bg-[#ffcdd1] transition-colors">
-      <div className="container-wide py-3 sm:py-3.5 flex items-center justify-center gap-1.5 text-center text-[13px] sm:text-[14px] text-ink">
+    <Link href="/credits" className="block bg-[#e11d48] hover:bg-[#c81840] transition-colors">
+      <div className="container-wide py-3 sm:py-3.5 flex items-center justify-center gap-1.5 text-center text-[13px] sm:text-[14px] text-white">
         <AnimatePresence mode="wait">
           <motion.span
             key={index}
@@ -46,7 +46,7 @@ export function NotificationBar() {
             {lead} {tail && <strong className="font-semibold">{tail}</strong>}
           </motion.span>
         </AnimatePresence>
-        <span className="text-accent inline-flex items-center gap-0.5 font-semibold whitespace-nowrap">
+        <span className="text-white underline underline-offset-2 inline-flex items-center gap-0.5 font-semibold whitespace-nowrap">
           {messages.home.learnMore} <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
         </span>
       </div>

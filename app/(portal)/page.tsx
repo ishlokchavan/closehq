@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SearchPanel } from '@/components/portal/search/search-panel';
 import { MeshGradient } from '@/components/portal/mesh-gradient';
 import { getFilterOptions } from '@/lib/portal/filters';
@@ -79,16 +79,6 @@ export default async function PortalHomePage() {
               {t.learnMore} <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
             </Link>
           </p>
-          <div className="mt-6">
-            <Link
-              href="/experience"
-              className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-5 py-2.5 text-[14px] font-medium shadow-card hover:shadow-card-hover transition-shadow"
-            >
-              <Sparkles className="h-4 w-4" />
-              Explore homes the new way
-              <ArrowRight className="h-4 w-4 rtl:rotate-180" />
-            </Link>
-          </div>
           <div className="mt-10">
             <SearchPanel initial="properties" options={filterOptions} autoFocus />
           </div>

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Search, MapPin, ChevronDown, Sparkles, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SEARCH_TABS, type SearchTabKey } from '@/lib/portal-config';
+import { matchLocations } from '@/lib/portal/locations';
 import { useI18n } from '@/components/i18n/locale-provider';
 import { FilterDropdown } from './filter-dropdown';
 import type { FilterOptions } from '@/lib/portal/filters';
@@ -55,6 +56,39 @@ export function SearchPanel({ initial = 'properties', options, autoFocus = false
     if (autoFocus) inputRef.current?.focus({ preventScroll: true });
   }, [autoFocus]);
 
+  // --- Location autocomplete (typeahead) ---
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const [highlight, setHighlight] = useState(-1);
+  const suggestions = matchLocations(query);
+  const showSuggest = suggestOpen && suggestions.length > 0;
+
+  function pickSuggestion(value: string) {
+    setQuery(value);
+    setSuggestOpen(false);
+    setHighlight(-1);
+    inputRef.current?.focus();
+  }
+
+  function onInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (showSuggest && e.key === 'ArrowDown') {
+      e.preventDefault();
+      setHighlight((h) => (h + 1) % suggestions.length);
+    } else if (showSuggest && e.key === 'ArrowUp') {
+      e.preventDefault();
+      setHighlight((h) => (h <= 0 ? suggestions.length - 1 : h - 1));
+    } else if (e.key === 'Enter') {
+      if (showSuggest && highlight >= 0) {
+        e.preventDefault();
+        pickSuggestion(suggestions[highlight]);
+      } else {
+        onSearch();
+      }
+    } else if (e.key === 'Escape') {
+      setSuggestOpen(false);
+      setHighlight(-1);
+    }
+  }
+
   const config = CONFIG[active];
   const typeLabel = options.propertyTypes.find((t) => t.value === f.type)?.label;
   const year = new Date().getFullYear();
@@ -64,6 +98,8 @@ export function SearchPanel({ initial = 'properties', options, autoFocus = false
     setActive(key);
     setSubTab(0);
     setF(EMPTY);
+    setSuggestOpen(false);
+    setHighlight(-1);
   }
 
   function onSearch() {
@@ -131,9 +167,38 @@ export function SearchPanel({ initial = 'properties', options, autoFocus = false
             {config.withLocationIcon
               ? <MapPin className="absolute start-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-graphite" />
               : <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-graphite" />}
-            <input ref={inputRef} value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && onSearch()}
+            <input
+              ref={inputRef}
+              value={query}
+              onChange={(e) => { setQuery(e.target.value); setSuggestOpen(true); setHighlight(-1); }}
+              onFocus={() => setSuggestOpen(true)}
+              onBlur={() => setTimeout(() => setSuggestOpen(false), 120)}
+              onKeyDown={onInputKeyDown}
+              role="combobox"
+              aria-expanded={showSuggest}
+              aria-autocomplete="list"
               placeholder={m.ph[active === 'new-releases' ? 'newReleases' : active]}
               className="w-full h-11 ps-10 pe-3 rounded-full border border-hairline text-[15px] text-ink placeholder:text-graphite focus:outline-none focus:ring-2 focus:ring-accent/40" />
+
+            {showSuggest && (
+              <ul className="absolute z-30 top-full inset-x-0 mt-2 max-h-72 overflow-auto rounded-2xl border border-hairline bg-paper shadow-elevated py-1.5 text-start">
+                {suggestions.map((s, i) => (
+                  <li key={s}>
+                    <button
+                      type="button"
+                      // Fire before the input's blur so the pick still registers.
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => pickSuggestion(s)}
+                      onMouseEnter={() => setHighlight(i)}
+                      className={cn('w-full flex items-center gap-2.5 px-4 py-2.5 text-[14px] text-ink text-start transition-colors',
+                        i === highlight ? 'bg-mist' : 'hover:bg-mist')}>
+                      <MapPin className="h-4 w-4 text-graphite shrink-0" />
+                      {s}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <button type="button" onClick={onSearch}
             className="h-11 px-6 rounded-full text-[15px] font-medium text-white bg-accent hover:bg-accent-hover active:bg-accent-dark transition-colors">
