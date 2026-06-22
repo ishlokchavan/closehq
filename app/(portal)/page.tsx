@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Handshake, MessageSquare } from 'lucide-react';
 import { SearchPanel } from '@/components/portal/search/search-panel';
 import { MeshGradient } from '@/components/portal/mesh-gradient';
 import { getFilterOptions } from '@/lib/portal/filters';
@@ -91,8 +91,55 @@ export default async function PortalHomePage() {
         </div>
       </section>
 
+      {/* Two clear next steps — whether you know exactly what you want, or not */}
+      <section className="container-wide pt-2 pb-6">
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="text-[26px] sm:text-[30px] font-semibold text-ink" style={{ letterSpacing: '-0.02em' }}>
+            Know what you want — or not sure yet?
+          </h2>
+          <p className="subhead mt-3">Two ways to move forward. Either way, it&apos;s commission-free.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+          <Link
+            href="/close-deal"
+            className="group card-surface p-6 sm:p-7 flex items-start gap-4 hover:shadow-card-hover transition-shadow"
+          >
+            <span className="inline-flex items-center justify-center h-12 w-12 shrink-0 rounded-2xl bg-journey-agent/20 text-[#b45309]">
+              <Handshake className="h-6 w-6" />
+            </span>
+            <div>
+              <h3 className="text-[19px] font-semibold text-ink">Close a deal</h3>
+              <p className="text-[14.5px] text-graphite-dark mt-1.5">
+                Already know the property — or an agent ready to close? Do the whole deal on iClose and keep 100% of the commission.
+              </p>
+              <span className="mt-3 inline-flex items-center gap-1 text-[15px] text-accent font-medium">
+                Start closing <ArrowRight className="h-4 w-4 rtl:rotate-180 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
+          </Link>
+
+          <Link
+            href="/enquire"
+            className="group card-surface p-6 sm:p-7 flex items-start gap-4 hover:shadow-card-hover transition-shadow"
+          >
+            <span className="inline-flex items-center justify-center h-12 w-12 shrink-0 rounded-2xl bg-journey-buyer/15 text-[#b51e9e]">
+              <MessageSquare className="h-6 w-6" />
+            </span>
+            <div>
+              <h3 className="text-[19px] font-semibold text-ink">Post an enquiry</h3>
+              <p className="text-[14.5px] text-graphite-dark mt-1.5">
+                Just exploring? Tell us roughly what you&apos;re after and one of our executives will get in touch to handle everything.
+              </p>
+              <span className="mt-3 inline-flex items-center gap-1 text-[15px] text-accent font-medium">
+                Post an enquiry <ArrowRight className="h-4 w-4 rtl:rotate-180 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       {/* Journey cards — each its own question + incentive */}
-      <section className="container-wide pb-24 -mt-4">
+      <section className="container-wide pb-24 pt-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {HOME_CARDS.map((card) => (
             <Link

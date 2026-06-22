@@ -35,6 +35,11 @@ export const PORTAL_NAV: NavItem[] = [
     key: 'buy',
     label: 'Buy',
     href: '/buy',
+    children: [
+      { label: 'Browse properties', href: '/properties', description: 'Search every listing across Dubai' },
+      { label: 'Close a deal', href: '/close-deal', description: 'Know what you want? Close it directly' },
+      { label: 'Post an enquiry', href: '/enquire', description: 'Not sure yet? An executive will help' },
+    ],
   },
   {
     key: 'sell',
@@ -50,6 +55,7 @@ export const PORTAL_NAV: NavItem[] = [
     label: 'Close',
     href: '/close',
     children: [
+      { label: 'Close a deal', href: '/close-deal', description: 'Buyers & agents: close on iClose' },
       { label: 'List with Contract A', href: '/close/list-with-ca', description: 'RERA Form A broker listing', i18nKey: 'listWithCa' },
       { label: 'Brokerage portal', href: '/close/brokerage', description: 'For agents, agencies & freelancers', i18nKey: 'brokerage' },
     ],
