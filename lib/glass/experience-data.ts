@@ -1,6 +1,6 @@
 import { SEED_LISTINGS } from '@/lib/portal/seed-listings';
 import type { Listing } from '@/lib/portal/listing-types';
-import { CREDIT_AED_RATE, aedToCredits } from '@/lib/portal/credits';
+import { aedToCredits } from '@/lib/portal/credits';
 
 /**
  * Experience-only enrichment of the canonical /properties listings.
@@ -173,5 +173,3 @@ export function formatAed(value: number): string {
 export function formatCredits(credits: number): string {
   return credits.toLocaleString('en-US');
 }
-
-export { CREDIT_AED_RATE };

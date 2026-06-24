@@ -1,17 +1,23 @@
 'use client';
 
 import Link from 'next/link';
-import { Wallet, Gift, Users, Building2, ArrowDownToLine, Plus, Minus } from 'lucide-react';
+import { Wallet, Gift, Users, Building2, ArrowDownToLine, Plus, Minus, Banknote, DollarSign, Coins } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PageHeader, Panel, StatCard, Badge } from '@/components/portal/dashboard/ui';
 import { getCredits, creditsBalance } from '@/lib/portal/dashboard/demo';
-import { creditsToAed } from '@/lib/portal/credits';
-import { fmtAed, fmtNum, fmtDate } from '@/lib/portal/dashboard/format';
+import { fmtNum, fmtDate } from '@/lib/portal/dashboard/format';
 
 const EARN = [
   { icon: Building2, title: 'Invest in off-plan', body: 'Earn credits on every off-plan reservation, on top of special pricing.' },
   { icon: Users, title: 'Refer a friend', body: 'You both earn credits when someone you refer transacts.' },
   { icon: Gift, title: 'Complete verification', body: 'Verify your profile and documents to unlock bonus credits.' },
+];
+
+const FORMATS = [
+  { icon: Banknote, label: 'AED' },
+  { icon: DollarSign, label: 'USD' },
+  { icon: Coins, label: 'USDT' },
+  { icon: Gift, label: 'Gifts' },
 ];
 
 export default function CreditsPage() {
@@ -22,7 +28,7 @@ export default function CreditsPage() {
 
   return (
     <>
-      <PageHeader title="Credits & cashback" subtitle="1 credit = AED 0.50. Earn on every deal, redeem as cashback.">
+      <PageHeader title="Credits & rewards" subtitle="Earn on every deal. Redeem as AED, USD, USDT or a gift.">
         <Link href="/credits/redeem"><Button variant="primary" size="sm"><ArrowDownToLine className="h-4 w-4" /> Redeem</Button></Link>
       </PageHeader>
 
@@ -34,11 +40,17 @@ export default function CreditsPage() {
           </div>
           <div>
             <p className="text-[34px] font-semibold leading-tight">{fmtNum(balance)} <span className="text-[18px] text-white/60">credits</span></p>
-            <p className="text-[14px] text-white/70 mt-1">≈ {fmtAed(creditsToAed(balance))} cashback</p>
+            <div className="flex flex-wrap items-center gap-1.5 mt-3">
+              {FORMATS.map((f) => (
+                <span key={f.label} className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-1 text-[12px] text-white/90">
+                  <f.icon className="h-3.5 w-3.5" /> {f.label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-        <StatCard icon={Plus} label="Total earned" value={fmtNum(earned)} hint={`≈ ${fmtAed(creditsToAed(earned), { compact: true })}`} tint="bg-journey-seller/30 text-[#067a55]" />
-        <StatCard icon={Minus} label="Total redeemed" value={fmtNum(redeemed)} hint={`≈ ${fmtAed(creditsToAed(redeemed), { compact: true })}`} tint="bg-journey-agent/30 text-[#b45309]" />
+        <StatCard icon={Plus} label="Total earned" value={fmtNum(earned)} hint="credits" tint="bg-journey-seller/30 text-[#067a55]" />
+        <StatCard icon={Minus} label="Total redeemed" value={fmtNum(redeemed)} hint="credits" tint="bg-journey-agent/30 text-[#b45309]" />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">

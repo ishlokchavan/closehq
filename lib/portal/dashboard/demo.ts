@@ -266,10 +266,10 @@ export function getSaved(): SavedRow[] {
 // Credits ledger
 // ---------------------------------------------------------------------------
 const CREDITS: CreditEntry[] = [
-  { id: 'cr1', reason: 'Off-plan reservation cashback — Creek Edge', delta: 24000, dateIso: days(3) },
+  { id: 'cr1', reason: 'Off-plan reservation reward — Creek Edge', delta: 24000, dateIso: days(3) },
   { id: 'cr2', reason: 'Referral bonus — Priya Nair joined', delta: 2000, dateIso: days(7) },
   { id: 'cr3', reason: 'Profile verification bonus', delta: 1000, dateIso: days(20) },
-  { id: 'cr4', reason: 'Redeemed — service fee offset', delta: -5000, dateIso: days(24) },
+  { id: 'cr4', reason: 'Redeemed — withdrawn as USDT', delta: -5000, dateIso: days(24) },
 ];
 export function getCredits(): CreditEntry[] {
   return CREDITS;
@@ -285,7 +285,7 @@ export function getActivity(persona: Persona): ActivityItem[] {
   if (persona === 'buyer_seller') {
     return [
       { id: 'ac1', icon: 'eye', text: 'Layla Hassan confirmed your viewing at Marina Gate', whenIso: hrs(3), tone: 'success' },
-      { id: 'ac2', icon: 'wallet', text: 'AED 24,000 cashback credited from your Creek Edge reservation', whenIso: days(3), tone: 'accent' },
+      { id: 'ac2', icon: 'wallet', text: '24,000 credits earned from your Creek Edge reservation', whenIso: days(3), tone: 'accent' },
       { id: 'ac3', icon: 'heart', text: 'Price dropped AED 50,000 on a saved property (Marina Gate)', whenIso: days(1), tone: 'info' },
       { id: 'ac4', icon: 'message', text: 'New reply on your enquiry about Maple · 3BR Villa', whenIso: days(2), tone: 'neutral' },
     ];

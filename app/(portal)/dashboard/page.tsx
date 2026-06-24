@@ -19,7 +19,6 @@ import {
   getListings, getSaved, getEnquiries, getAgents,
   getCommission, getActivity, getTasks, getAnalytics, creditsBalance, DEAL_STAGES,
 } from '@/lib/portal/dashboard/demo';
-import { creditsToAed } from '@/lib/portal/credits';
 import { fmtAed, fmtNum, timeAgo, fmtDateTime } from '@/lib/portal/dashboard/format';
 
 export default function DashboardOverview() {
@@ -68,7 +67,7 @@ function BuyerOverview() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={Heart} label="Saved properties" value={String(saved.length)} delta={12} tint="bg-journey-buyer/25 text-[#b51e9e]" />
         <StatCard icon={Eye} label="Upcoming viewings" value={String(viewings.filter((v) => v.status === 'scheduled').length)} tint="bg-accent/10 text-accent" />
-        <StatCard icon={Wallet} label="Credits & cashback" value={fmtAed(creditsToAed(credits), { compact: true })} hint={`${fmtNum(credits)} credits`} delta={8} tint="bg-journey-seller/30 text-[#067a55]" />
+        <StatCard icon={Wallet} label="Credits & rewards" value={fmtNum(credits)} hint="AED · USD · USDT · gifts" delta={8} tint="bg-journey-seller/30 text-[#067a55]" />
         <StatCard icon={Building2} label="Active listings" value={String(listings.filter((l) => l.status === 'active').length)} tint="bg-journey-agent/30 text-[#b45309]" />
       </div>
 

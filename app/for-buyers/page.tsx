@@ -231,7 +231,7 @@ export default function ForBuyersPage() {
       />
 
       <PersonaQuote
-        quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks. And got the entire AED 40,000 commission back as cashback."
+        quote="I spent three months comparing projects on my own and still felt unsure. iClose's platform had everything in one place. I made a decision in two weeks. And got my full commission back as credits — which I redeemed however I wanted."
         name="Buyer"
         role="2BR apartment · Dubai Hills Estate"
       />
