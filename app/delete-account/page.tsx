@@ -69,7 +69,7 @@ export default function DeleteAccountPage() {
         <h2>Prefer to email us?</h2>
         <p>
           Send a deletion request from your registered email address to{' '}
-          <a href="mailto:hello@iclose.ae?subject=Delete%20my%20iClose%20account">hello@iclose.ae</a> with the
+          <a href="mailto:hello@iclose.ae?subject=Delete%20my%20iClose%20account">hello@iclose.ae</a>{' '}with the
           subject &ldquo;Delete my account.&rdquo; We verify ownership and complete the deletion within{' '}
           <strong>30 days</strong>.
         </p>
