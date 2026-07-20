@@ -16,6 +16,8 @@ export async function sendEmail(opts: {
   to: string;
   subject: string;
   html: string;
+  from?: string;
+  replyTo?: string;
 }) {
   if (!process.env.BREVO_SMTP_USER || !process.env.BREVO_SMTP_KEY) {
     throw new Error(
@@ -23,6 +25,14 @@ export async function sendEmail(opts: {
     );
   }
   const from =
-    process.env.BREVO_FROM_EMAIL ?? 'iClose <noreply.iclose@gmail.com>';
-  await transporter.sendMail({ from, ...opts });
+    opts.from ??
+    process.env.BREVO_FROM_EMAIL ??
+    'iClose <noreply.iclose@gmail.com>';
+  await transporter.sendMail({
+    from,
+    to: opts.to,
+    subject: opts.subject,
+    html: opts.html,
+    ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
+  });
 }
