@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import styles from './early-access.module.css';
 
 type Audience = 'buyers' | 'agents';
@@ -49,6 +49,21 @@ export function EarlyAccess() {
   const [error, setError] = useState<string | null>(null);
 
   const c = CONTENT[audience];
+
+  /* The site's global background is white; paint the document dark while
+     this hero is shown so iOS overscroll and the safe areas behind the
+     browser chrome match the page instead of flashing white. */
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const prev = { html: html.style.backgroundColor, body: body.style.backgroundColor };
+    html.style.backgroundColor = '#050505';
+    body.style.backgroundColor = '#050505';
+    return () => {
+      html.style.backgroundColor = prev.html;
+      body.style.backgroundColor = prev.body;
+    };
+  }, []);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

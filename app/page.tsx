@@ -1,5 +1,12 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { EarlyAccess } from '@/components/sections/early-access/early-access';
+
+/* Dark hero page: tint the browser chrome (iOS status bar / Safari
+   toolbars) to match so there are no white bands above and below. */
+export const viewport: Viewport = {
+  themeColor: '#050505',
+  colorScheme: 'dark',
+};
 
 export const metadata: Metadata = {
   title: 'iClose Early Access | Buy or Sell Dubai Property Without the Agent Fees',
