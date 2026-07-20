@@ -163,7 +163,7 @@ export function EarlyAccess() {
                 <div className={styles.joinedCard}>
                   <span className={styles.joinedTick}>✓</span>
                   <span className={styles.joinedText}>
-                    You&apos;re on the list — we&apos;ll email your invite.
+                    You&apos;re on the list. We&apos;ll email your invite.
                   </span>
                 </div>
               ) : (

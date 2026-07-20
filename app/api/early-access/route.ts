@@ -6,7 +6,7 @@ import { sendEmail } from '@/lib/mailer';
 /* Early-access capture for the single-field hero form. Deliberately
    lightweight: the hero only asks for an email, so we store what we
    have (email + which audience toggle they were on) and notify the
-   team. DB persistence is best-effort — if the leads table rejects a
+   team. DB persistence is best-effort: if the leads table rejects a
    name/phone-less row we still email the team so no signup is lost. */
 
 const schema = z.object({
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
           referer,
         });
         if (error && error.code === '23505') {
-          // Already on the list — treat as success from the user's side.
+          // Already on the list: treat as success from the user's side.
           return NextResponse.json({ ok: true });
         }
         if (error) {

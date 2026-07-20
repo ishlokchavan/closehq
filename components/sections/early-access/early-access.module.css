@@ -1,4 +1,4 @@
-/* Early Access landing — faithful port of the standalone iClose
+/* Early Access landing: faithful port of the standalone iClose
    early-access hero. Self-contained dark theme; does not inherit the
    site's light palette. */
 
@@ -499,6 +499,23 @@
   /* The phone stack already provides separation above the CTA. */
   .copyCta .earlyWrap {
     margin-top: 4px !important;
+  }
+  /* Email field and button stack full-width and centred. */
+  .form {
+    justify-content: center;
+    width: 100%;
+    max-width: 420px;
+  }
+  .input,
+  .submit {
+    flex: 1 1 100%;
+    min-width: 0;
+    text-align: center;
+  }
+  /* App Store button on its own row, "Android coming soon" below it. */
+  .storeRow {
+    flex-direction: column;
+    gap: 12px;
   }
 }
 @media (max-width: 640px) {
