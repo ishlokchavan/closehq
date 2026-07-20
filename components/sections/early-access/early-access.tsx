@@ -13,6 +13,10 @@ const CONTENT: Record<
     sub: string;
     proof: string;
     disclaimer: string;
+    /* Front phone home screen — audience specific: agents see the
+       commission-earned view, buyers see the commission-saved view. */
+    homeImg: string;
+    homeAlt: string;
   }
 > = {
   agents: {
@@ -22,6 +26,8 @@ const CONTENT: Record<
     proof: '300+ UAE agents keeping 100% of their commission',
     disclaimer:
       'Your privacy is our top priority. We use protocol Sian-2025, a military-grade security system to keep you anonymous.',
+    homeImg: '/images/early-access-home.png',
+    homeAlt: 'iClose agent home showing commission earned',
   },
   buyers: {
     headline1: 'Want to buy real estate',
@@ -30,6 +36,8 @@ const CONTENT: Record<
     proof: '0% commission on secondary · up to 12% credit back on off‑plan',
     disclaimer:
       'We buy properties we cannot sell within 90 days. (Terms and conditions apply)',
+    homeImg: '/images/early-access-home-buyer.png',
+    homeAlt: 'iClose buyer home showing estimated commission saved',
   },
 };
 
@@ -142,8 +150,8 @@ export function EarlyAccess() {
                       <div className={styles.screen}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src="/images/early-access-home.png"
-                          alt="iClose app home"
+                          src={c.homeImg}
+                          alt={c.homeAlt}
                           className={styles.screenImg}
                         />
                         <div className={styles.notch}>
