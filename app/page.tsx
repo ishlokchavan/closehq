@@ -1,18 +1,20 @@
 import type { Metadata } from 'next';
-import { BuyerLanding } from '@/components/sections/buyer-landing/buyer-landing';
+import { EarlyAccess } from '@/components/sections/early-access/early-access';
 
 export const metadata: Metadata = {
-  title: 'iClose - Dubai Real Estate No Commission | Buy Property with 100% Cashback',
+  title: 'iClose — Early Access | Buy or Sell Dubai Property Without the Agent Fees',
   description:
-    'Buy Dubai real estate with zero commission. iClose offers 100% cashback on all agent fees for UAE property buyers. Off-plan and ready properties across Dubai, Abu Dhabi, and the UAE.',
-  keywords: 'Dubai real estate, no commission, real estate agent Dubai, property buying Dubai, zero commission property, cashback real estate, buy property UAE',
+    'Get early access to iClose. Buyers skip agent fees and close ready or off-plan Dubai deals directly. Agents keep 100% of their commission on personal leads.',
+  keywords:
+    'iClose, Dubai real estate, no commission, early access, off-plan, secondary market, keep 100% commission, agent-free property',
   openGraph: {
-    title: 'iClose - Dubai Real Estate with Zero Commission',
-    description: 'Get 100% cashback on agent commission when buying property in Dubai and UAE',
+    title: 'iClose — Early Access',
+    description:
+      'Buy or sell Dubai property without the agent fees. Buyers skip fees; agents keep 100% of their commission.',
     type: 'website',
   },
 };
 
 export default function HomePage() {
-  return <BuyerLanding />;
+  return <EarlyAccess />;
 }

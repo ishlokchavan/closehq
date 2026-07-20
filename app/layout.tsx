@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Inter, Inter_Tight, JetBrains_Mono, Archivo } from 'next/font/google';
 import Script from 'next/script';
 import { siteConfig } from '@/lib/site-config';
 import { CookieConsent } from '@/components/cookie-consent';
@@ -25,6 +25,13 @@ const fontMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   weight: ['400', '500'],
+  display: 'swap',
+});
+
+const fontArchivo = Archivo({
+  subsets: ['latin'],
+  variable: '--font-archivo',
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
@@ -122,7 +129,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
+      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable} ${fontArchivo.variable}`}
     >
       <body className="font-sans bg-paper text-ink antialiased">
         <GetStartedProvider>
