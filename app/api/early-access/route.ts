@@ -16,6 +16,13 @@ const schema = z.object({
 
 const APP_STORE_URL = 'https://apps.apple.com/in/app/iclose/id6783816832';
 const ACCENT = '#c6ff3d';
+
+/* Signups are stored in the iClose app database (not the academy DB).
+   The anon/publishable key is public by design; the waitlist table's RLS
+   policy only permits inserts, so it is safe to ship as a default. */
+const WAITLIST_SUPABASE_URL = 'https://jvdmwvzlunmouvlvtebg.supabase.co';
+const WAITLIST_SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2ZG13dnpsdW5tb3V2bHZ0ZWJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzOTUyNDYsImV4cCI6MjA5NTk3MTI0Nn0.QLrklMFP8zpYkhwWXs9l5zNgAzTLsXMFm29hs-UGX_8';
 /* All iClose mail is sent from and replied to at hello@iclose.ae so it
    aligns with the domain (deliverability) and replies reach the team. */
 const MAIL_FROM = 'iClose <hello@iclose.ae>';
@@ -89,36 +96,28 @@ export async function POST(request: Request) {
     const userAgent = request.headers.get('user-agent') || undefined;
     const referer = request.headers.get('referer') || undefined;
     const source = referer ? new URL(referer).hostname : 'direct';
-    // Store the audience on the lead. The leads table's intent enum is
-    // buyer | closer, so an agent maps to "closer".
-    const intent = audience === 'agents' ? 'closer' : 'buyer';
 
-    // Persist the lead. The leads table requires a non-null phone, but its
-    // unique index on phone is partial (excludes empty strings), so an
-    // empty phone is safe for these email-only signups.
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (supabaseUrl && supabaseKey) {
-      try {
-        const db = createClient(supabaseUrl, supabaseKey);
-        const { error } = await db.from('leads').insert({
-          name: email.split('@')[0],
-          phone: '',
-          email,
-          source: 'early_access',
-          intent,
-          consent_marketing: true,
-          consented_at: new Date().toISOString(),
-          user_agent: userAgent,
-          referer,
-        });
-        if (error && error.code !== '23505') {
-          // 23505 = duplicate email; already on the list, not an error.
-          console.warn('[early-access] lead insert failed:', error.message);
-        }
-      } catch (err) {
-        console.warn('[early-access] DB unavailable:', err);
+    // Persist the signup to the iClose app database (waitlist table). The
+    // audience (buyer/agent) is stored so onboarding can be segmented.
+    const waitlistUrl =
+      process.env.WAITLIST_SUPABASE_URL || WAITLIST_SUPABASE_URL;
+    const waitlistKey =
+      process.env.WAITLIST_SUPABASE_ANON_KEY || WAITLIST_SUPABASE_ANON_KEY;
+    try {
+      const db = createClient(waitlistUrl, waitlistKey);
+      const { error } = await db.from('waitlist').insert({
+        email,
+        audience: audience === 'agents' ? 'agent' : 'buyer',
+        source: 'early_access',
+        user_agent: userAgent,
+        referer,
+      });
+      if (error && error.code !== '23505') {
+        // 23505 = duplicate email; already on the list, not an error.
+        console.warn('[early-access] waitlist insert failed:', error.message);
       }
+    } catch (err) {
+      console.warn('[early-access] DB unavailable:', err);
     }
 
     // Welcome email to the user (audience-specific).
