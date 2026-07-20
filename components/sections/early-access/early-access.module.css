@@ -311,7 +311,9 @@
   margin-top: 20px;
   animation: fadeUp 0.6s ease-out 0.44s both;
 }
-.storeBtn {
+/* Static badge (not a link) — the app is on iOS, but the download CTAs
+   are the email and the post-submit button. */
+.storeBadge {
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -319,12 +321,6 @@
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 13px;
   padding: 11px 20px 11px 16px;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-.storeBtn:hover {
-  transform: translateY(-2px);
-  border-color: rgba(198, 255, 61, 0.5);
-  background: #0b0b0b;
 }
 .storeMeta {
   text-align: left;

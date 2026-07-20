@@ -190,12 +190,7 @@ export function EarlyAccess() {
             </div>
 
             <div className={styles.storeRow}>
-              <a
-                href={APP_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.storeBtn}
-              >
+              <div className={styles.storeBadge} aria-label="Available on the App Store">
                 <svg
                   width="22"
                   height="26"
@@ -209,7 +204,7 @@ export function EarlyAccess() {
                   <span className={styles.storeSmall}>Available on the</span>
                   <span className={styles.storeBig}>App Store</span>
                 </span>
-              </a>
+              </div>
               <span className={styles.storeNote}>Android coming soon</span>
             </div>
           </div>
