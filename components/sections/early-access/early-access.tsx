@@ -92,8 +92,11 @@ export function EarlyAccess() {
                 audience === 'agents' ? styles.navBtnActive : ''
               }`}
             >
-              For Agents
+              <span className={styles.forPrefix}>For </span>Agents
             </button>
+            <span className={styles.navSep} aria-hidden="true">
+              •
+            </span>
             <button
               type="button"
               onClick={() => setAudience('buyers')}
@@ -101,7 +104,7 @@ export function EarlyAccess() {
                 audience === 'buyers' ? styles.navBtnActive : ''
               }`}
             >
-              For Buyers
+              <span className={styles.forPrefix}>For </span>Buyers
             </button>
           </div>
         </nav>

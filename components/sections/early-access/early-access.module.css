@@ -81,6 +81,16 @@
   color: var(--accent);
 }
 
+/* "For " prefix shows on desktop; the bullet separator only on mobile. */
+.forPrefix {
+  display: inline;
+}
+.navSep {
+  display: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+}
+
 .heroGrid {
   flex: 1;
   display: grid;
@@ -472,20 +482,27 @@
    CTA on the left with the phone mockup beside it on the right. Matches
    the provided mobile reference (left-aligned, not stacked). */
 @media (max-width: 1000px) {
+  /* Nav: logo then "AGENTS · BUYERS" clustered together on the left. */
   .nav {
     flex-wrap: nowrap;
-    justify-content: space-between !important;
-    gap: 10px;
+    justify-content: flex-start !important;
+    gap: 22px;
     padding: 20px 0;
   }
   .navLinks {
-    gap: 16px;
+    gap: 12px;
     flex-wrap: nowrap;
   }
   .navBtn {
-    font-size: 13px;
-    letter-spacing: 0.04em;
+    font-size: 14px;
+    letter-spacing: 0.06em;
     padding: 4px 0;
+  }
+  .forPrefix {
+    display: none;
+  }
+  .navSep {
+    display: inline;
   }
 
   .heroGrid {
@@ -520,23 +537,45 @@
     margin-top: 20px;
   }
 
-  /* Phone mockup sits in the right column, scaled down. The scene keeps
-     its 430px layout box; scaling from the top-left keeps the visual
-     within the narrow column while the overflow is clipped by the shell. */
+  /* One phone only on mobile (the front home screen), larger. The back
+     calculator phone is hidden; the front phone moves to the top-left of
+     the scene and the scene scales from its top-left so the single device
+     fills the right column. */
   .phoneStack {
     grid-column: 2 !important;
     grid-row: 2 !important;
     align-self: start !important;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 300px;
-    margin: 4px 0 0 !important;
+    height: 320px;
+    margin: 2px 0 0 !important;
     overflow: visible;
   }
+  .phoneA {
+    display: none;
+  }
+  .phoneB {
+    top: 0;
+    left: 0;
+  }
   .phoneScene {
-    transform: scale(0.36);
+    width: 250px;
+    height: 540px;
+    transform: scale(0.56);
     transform-origin: top left;
     margin: 0;
+  }
+  /* Near-upright on mobile so the single device stays inside its column
+     and doesn't swing over the CTA. */
+  .tiltB,
+  .tiltB:hover {
+    transform: rotate(5deg) !important;
+  }
+  .glow {
+    top: 30%;
+    left: 38%;
+    width: 340px;
+    height: 340px;
   }
 
   /* Email + button stay on one compact row. */
@@ -571,26 +610,26 @@
 
 @media (max-width: 560px) {
   .heroGrid {
-    grid-template-columns: minmax(0, 1fr) minmax(96px, 36%) !important;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 42%) !important;
     column-gap: 12px !important;
   }
   .phoneStack {
-    height: 250px;
+    height: 300px;
   }
   .phoneScene {
-    transform: scale(0.3);
+    transform: scale(0.54);
   }
 }
 
 @media (max-width: 400px) {
+  .phoneStack {
+    height: 270px;
+  }
   .phoneScene {
-    transform: scale(0.26);
+    transform: scale(0.48);
   }
   .navLinks {
-    gap: 12px;
-  }
-  .navBtn {
-    font-size: 12px;
+    gap: 10px;
   }
 }
 
