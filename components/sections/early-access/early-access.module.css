@@ -515,12 +515,14 @@
   }
   .heroGrid {
     grid-template-columns: minmax(0, 1fr) minmax(120px, 42%) !important;
-    column-gap: 16px !important;
-    row-gap: 0 !important;
+    column-gap: 18px !important;
+    /* Gap between the headline row, the sub/phone row, and the footer row
+       so the headline clears the phone and the sections breathe. */
+    row-gap: 30px !important;
     /* Pack rows at the top so the grid never stretches them apart. */
     align-content: start !important;
     align-items: start !important;
-    padding: 8px 0 30px !important;
+    padding: 10px 0 30px !important;
   }
   /* Row 1: badge + headline, full width. */
   .copyText {
@@ -541,13 +543,12 @@
   .copyFoot {
     grid-column: 1 / -1;
     grid-row: 3;
-    margin-top: 10px;
   }
   .sub {
-    margin-top: 18px;
+    margin-top: 0;
   }
   .copyCta .earlyWrap {
-    margin-top: 20px;
+    margin-top: 32px;
   }
 
   /* Row 2 right: a single, larger phone (front home screen). The back
@@ -560,7 +561,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     height: 330px;
-    margin: 2px 0 0;
+    margin: 0;
     overflow: visible;
   }
   .phoneA {
@@ -613,15 +614,16 @@
   .storeRow {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 16px;
+    align-items: center;
+    gap: 14px;
+    margin-top: 26px;
   }
   .proof {
-    margin-top: 20px;
+    margin-top: 0;
   }
   .disclaimer {
     font-size: 11.5px;
-    margin-top: 16px;
+    margin-top: 18px;
     max-width: none;
   }
 }
