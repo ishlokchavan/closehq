@@ -123,10 +123,10 @@ export function EarlyAccess() {
               </h1>
             </div>
 
-            <div className={styles.copyCta}>
             <p className={styles.sub}>{c.sub}</p>
 
-            <div id="early" className={styles.earlyWrap}>
+            <div className={styles.copyCta}>
+              <div id="early" className={styles.earlyWrap}>
               {joined ? (
                 <div className={styles.joinedCard}>
                   <span className={styles.joinedTick}>✓</span>

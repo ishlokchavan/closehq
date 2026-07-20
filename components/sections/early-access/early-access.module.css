@@ -533,22 +533,27 @@
   .copyText .badge {
     align-self: flex-start;
   }
-  /* Row 2 left: sub + CTA. */
-  .copyCta {
+  /* Row 2 left: sub copy, beside the phone. */
+  .sub {
     grid-column: 1;
     grid-row: 2;
+    margin-top: 0;
     text-align: left;
   }
-  /* Row 3: proof + disclaimer, full width below the phone. */
-  .copyFoot {
+  /* Row 3: the CTA (email + button, App Store) full width below the
+     phone, so the device never crowds the inputs. */
+  .copyCta {
     grid-column: 1 / -1;
     grid-row: 3;
+    text-align: left;
   }
-  .sub {
-    margin-top: 0;
+  /* Row 4: proof + disclaimer, full width. */
+  .copyFoot {
+    grid-column: 1 / -1;
+    grid-row: 4;
   }
   .copyCta .earlyWrap {
-    margin-top: 32px;
+    margin-top: 0;
   }
 
   /* Row 2 right: a single, larger phone (front home screen). The back
