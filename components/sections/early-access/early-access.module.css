@@ -303,11 +303,12 @@
 
 .proof {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 9px;
   margin-top: 26px;
   color: rgba(255, 255, 255, 0.62);
   font-size: 14px;
+  line-height: 1.45;
   animation: fadeUp 0.6s ease-out 0.52s both;
 }
 .proofDot {
@@ -316,6 +317,8 @@
   border-radius: 50%;
   background: var(--accent);
   flex: none;
+  /* Keep the dot level with the first line of text when it wraps. */
+  margin-top: 7px;
   animation: ringPulse 2.6s ease-out 0.6s infinite;
 }
 

@@ -27,7 +27,7 @@ const CONTENT: Record<
     headline1: 'Want to buy real estate',
     headline2: 'without involving an agent?',
     sub: "Already know what you want to buy? Skip the agent fees. We'll close your ready or off-plan deal directly and secure exclusive agent-free discounts you can't get anywhere else.",
-    proof: '0% commission on secondary · up to 12% credit back on off-plan',
+    proof: '0% commission on secondary · up to 12% credit back on off‑plan',
     disclaimer:
       'We buy properties we cannot sell within 90 days. (Terms and conditions apply)',
   },
