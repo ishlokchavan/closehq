@@ -468,87 +468,129 @@
   background: radial-gradient(circle at 35% 30%, #223447, #05080c);
 }
 
-@media (max-width: 1200px) {
-  /* Single column, stacked: text → mockup → CTA. minmax(0,1fr) lets the
-     column shrink below the fixed 430px phone scene so the copy wraps to
-     the viewport instead of being pushed off-screen. */
+/* Compact two-column mobile layout: full-width headline, then the sub +
+   CTA on the left with the phone mockup beside it on the right. Matches
+   the provided mobile reference (left-aligned, not stacked). */
+@media (max-width: 1000px) {
+  .nav {
+    flex-wrap: nowrap;
+    justify-content: space-between !important;
+    gap: 10px;
+    padding: 20px 0;
+  }
+  .navLinks {
+    gap: 16px;
+    flex-wrap: nowrap;
+  }
+  .navBtn {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    padding: 4px 0;
+  }
+
   .heroGrid {
-    grid-template-columns: minmax(0, 1fr) !important;
-    padding: 8px 0 40px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(104px, 40%) !important;
+    column-gap: 16px !important;
+    row-gap: 0 !important;
+    align-items: start !important;
+    padding: 6px 0 30px !important;
   }
-  .copyText,
-  .copyCta {
-    grid-column: 1 !important;
-    align-self: auto !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
+  /* Badge + headline span the full width above the sub/phone row. */
   .copyText {
+    grid-column: 1 / -1 !important;
     grid-row: 1 !important;
+    align-self: auto !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
   .copyText .badge {
-    align-self: center !important;
+    align-self: flex-start !important;
   }
-  .phoneStack {
+  .copyCta {
     grid-column: 1 !important;
     grid-row: 2 !important;
     align-self: auto !important;
-    min-height: 0 !important;
-    margin: 20px 0 26px !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
-  .copyCta {
-    grid-row: 3 !important;
+  .sub {
+    margin-top: 18px;
   }
-  /* The phone stack already provides separation above the CTA. */
   .copyCta .earlyWrap {
-    margin-top: 4px !important;
+    margin-top: 20px;
   }
-  /* Email field and button stack full-width and centred. */
-  .form {
-    justify-content: center;
-    width: 100%;
-    max-width: 420px;
+
+  /* Phone mockup sits in the right column, scaled down. The scene keeps
+     its 430px layout box; scaling from the top-left keeps the visual
+     within the narrow column while the overflow is clipped by the shell. */
+  .phoneStack {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: start !important;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 300px;
+    margin: 4px 0 0 !important;
+    overflow: visible;
   }
-  .input,
-  .submit {
-    flex: 1 1 100%;
-    min-width: 0;
-    text-align: center;
-  }
-  /* App Store button on its own row, "Android coming soon" below it. */
-  .storeRow {
-    flex-direction: column;
-    gap: 12px;
-  }
-}
-@media (max-width: 640px) {
-  .nav {
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center !important;
-  }
-  .navLinks {
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  /* Scale the scene (not the whole stack) so the phones fit the
-     viewport without clipping, and pull the following CTA up by the
-     height the scale frees at the bottom (720 * (1 - scale)). */
   .phoneScene {
-    transform: scale(0.82);
-    transform-origin: top center;
-    margin-bottom: -130px;
+    transform: scale(0.36);
+    transform-origin: top left;
+    margin: 0;
+  }
+
+  /* Email + button stay on one compact row. */
+  .form {
+    flex-wrap: nowrap;
+    gap: 8px;
+    max-width: none;
+  }
+  .input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 13px 12px;
+    font-size: 14px;
+  }
+  .submit {
+    flex: 0 0 auto;
+    padding: 13px 14px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .storeRow {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .disclaimer {
+    font-size: 11.5px;
+    max-width: none;
   }
 }
+
+@media (max-width: 560px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(96px, 36%) !important;
+    column-gap: 12px !important;
+  }
+  .phoneStack {
+    height: 250px;
+  }
+  .phoneScene {
+    transform: scale(0.3);
+  }
+}
+
 @media (max-width: 400px) {
   .phoneScene {
-    transform: scale(0.68);
-    transform-origin: top center;
-    margin-bottom: -230px;
+    transform: scale(0.26);
   }
   .navLinks {
-    gap: 14px;
+    gap: 12px;
+  }
+  .navBtn {
+    font-size: 12px;
   }
 }
 

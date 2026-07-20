@@ -117,8 +117,6 @@ export function EarlyAccess() {
               <span className={styles.h1Line1}>{c.headline1}</span>
               <span className={styles.h1Line2}>{c.headline2}</span>
             </h1>
-
-            <p className={styles.sub}>{c.sub}</p>
           </div>
 
           <div className={styles.phoneStack}>
@@ -166,6 +164,8 @@ export function EarlyAccess() {
           </div>
 
           <div className={styles.copyCta}>
+            <p className={styles.sub}>{c.sub}</p>
+
             <div id="early" className={styles.earlyWrap}>
               {joined ? (
                 <div className={styles.joinedCard}>
