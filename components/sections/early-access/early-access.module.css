@@ -196,6 +196,30 @@
   animation: fadeUp 0.4s ease-out both;
 }
 
+/* color needs !important to beat the global `.root a` link colour, which
+   is otherwise more specific and turns the label green-on-green. */
+.joinedCta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  background: var(--accent);
+  color: #050505 !important;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 13px 22px;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+.joinedCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(198, 255, 61, 0.4);
+}
+
 .joinedCard {
   display: inline-flex;
   align-items: center;

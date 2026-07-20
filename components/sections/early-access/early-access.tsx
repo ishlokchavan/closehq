@@ -162,8 +162,7 @@ export function EarlyAccess() {
                     href={APP_STORE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.submit}
-                    style={{ display: 'inline-block', marginTop: '12px' }}
+                    className={styles.joinedCta}
                   >
                     Download on the App Store
                   </a>
