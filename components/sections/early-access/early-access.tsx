@@ -5,6 +5,8 @@ import styles from './early-access.module.css';
 
 type Audience = 'buyers' | 'agents';
 
+const APP_STORE_URL = 'https://apps.apple.com/in/app/iclose/id6783816832';
+
 const CONTENT: Record<
   Audience,
   {
@@ -81,6 +83,11 @@ export function EarlyAccess() {
         throw new Error(body?.error || 'Something went wrong. Please try again.');
       }
       setJoined(true);
+      /* Show the confirmation briefly, then send them to the App Store to
+         download the iOS app. */
+      window.setTimeout(() => {
+        window.location.assign(APP_STORE_URL);
+      }, 1400);
     } catch (err) {
       setError(
         err instanceof Error
@@ -143,11 +150,23 @@ export function EarlyAccess() {
             <div className={styles.copyCta}>
               <div id="early" className={styles.earlyWrap}>
               {joined ? (
-                <div className={styles.joinedCard}>
-                  <span className={styles.joinedTick}>✓</span>
-                  <span className={styles.joinedText}>
-                    You&apos;re on the list. We&apos;ll email your invite.
-                  </span>
+                <div className={styles.joinedWrap}>
+                  <div className={styles.joinedCard}>
+                    <span className={styles.joinedTick}>✓</span>
+                    <span className={styles.joinedText}>
+                      You&apos;re in. Check your inbox. Taking you to the App
+                      Store…
+                    </span>
+                  </div>
+                  <a
+                    href={APP_STORE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.submit}
+                    style={{ display: 'inline-block', marginTop: '12px' }}
+                  >
+                    Download on the App Store
+                  </a>
                 </div>
               ) : (
                 <form className={styles.form} onSubmit={submit} noValidate>
@@ -172,7 +191,12 @@ export function EarlyAccess() {
             </div>
 
             <div className={styles.storeRow}>
-              <a href="#early" className={styles.storeBtn}>
+              <a
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.storeBtn}
+              >
                 <svg
                   width="22"
                   height="26"
