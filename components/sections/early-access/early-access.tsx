@@ -99,7 +99,7 @@ export function EarlyAccess() {
         </nav>
 
         <div className={styles.heroGrid}>
-          <div className={styles.copy}>
+          <div className={styles.copyText}>
             <div className={styles.badge}>
               <span className={styles.badgeDot} />
               Early access · iOS
@@ -111,7 +111,53 @@ export function EarlyAccess() {
             </h1>
 
             <p className={styles.sub}>{c.sub}</p>
+          </div>
 
+          <div className={styles.phoneStack}>
+            <div className={styles.phoneScene}>
+              <div aria-hidden="true" className={styles.glow} />
+              <div className={styles.phoneA}>
+                <div className={styles.tiltA}>
+                  <div className={styles.frameOuterA}>
+                    <div className={styles.frameInner}>
+                      <div className={styles.screen}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/images/early-access-calculator.png"
+                          alt="iClose commission calculator"
+                          className={styles.screenImg}
+                        />
+                        <div className={styles.notch}>
+                          <span className={styles.notchCam} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.phoneB}>
+                <div className={styles.tiltB}>
+                  <div className={styles.frameOuterB}>
+                    <div className={styles.frameInner}>
+                      <div className={styles.screen}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/images/early-access-home.png"
+                          alt="iClose app home"
+                          className={styles.screenImg}
+                        />
+                        <div className={styles.notch}>
+                          <span className={styles.notchCam} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.copyCta}>
             <div id="early" className={styles.earlyWrap}>
               {joined ? (
                 <div className={styles.joinedCard}>
@@ -167,50 +213,6 @@ export function EarlyAccess() {
             </div>
 
             <p className={styles.disclaimer}>{c.disclaimer}</p>
-          </div>
-
-          <div className={styles.phoneStack}>
-            <div className={styles.phoneScene}>
-              <div aria-hidden="true" className={styles.glow} />
-              <div className={styles.phoneA}>
-                <div className={styles.tiltA}>
-                  <div className={styles.frameOuterA}>
-                    <div className={styles.frameInner}>
-                      <div className={styles.screen}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/images/early-access-calculator.png"
-                          alt="iClose commission calculator"
-                          className={styles.screenImg}
-                        />
-                        <div className={styles.notch}>
-                          <span className={styles.notchCam} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.phoneB}>
-                <div className={styles.tiltB}>
-                  <div className={styles.frameOuterB}>
-                    <div className={styles.frameInner}>
-                      <div className={styles.screen}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="/images/early-access-home.png"
-                          alt="iClose app home"
-                          className={styles.screenImg}
-                        />
-                        <div className={styles.notch}>
-                          <span className={styles.notchCam} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
