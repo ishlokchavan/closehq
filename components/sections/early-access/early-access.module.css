@@ -435,9 +435,11 @@
 }
 .screenImg {
   position: absolute;
-  top: -136px;
-  left: -36px;
-  width: 301px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
 }
 .notch {
