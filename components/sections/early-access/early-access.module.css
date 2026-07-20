@@ -91,12 +91,15 @@
   font-weight: 700;
 }
 
+/* Desktop: two columns — the left column (badge/headline, sub+CTA,
+   proof/disclaimer, stacked) and the phone on the right, both vertically
+   centred. On mobile the left column dissolves (display:contents) so the
+   phone can slot between the headline and the CTA — see the media query. */
 .heroGrid {
   flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
   column-gap: clamp(24px, 4vw, 64px);
-  row-gap: 0;
   align-items: center;
   max-width: 1440px;
   width: 100%;
@@ -106,23 +109,25 @@
   z-index: 1;
 }
 
-/* Desktop: text block (row 1) and CTA block (row 2) share the left
-   column; the phone stack spans both rows on the right. The phone's
-   height pads both left rows evenly, so aligning the text to the row
-   boundary keeps the two blocks as one vertically-centred group. */
+.copyCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .copyText {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: end;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
 .copyCta {
-  grid-column: 1;
-  grid-row: 2;
-  align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.copyFoot {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -342,8 +347,6 @@
 }
 
 .phoneStack {
-  grid-column: 2;
-  grid-row: 1 / 3;
   align-self: center;
   display: flex;
   justify-content: center;
@@ -505,30 +508,40 @@
     display: inline;
   }
 
+  /* Dissolve the left column so its three blocks become direct grid
+     items and the phone can slot between the headline and the CTA. */
+  .copyCol {
+    display: contents;
+  }
   .heroGrid {
-    grid-template-columns: minmax(0, 1fr) minmax(104px, 40%) !important;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 42%) !important;
     column-gap: 16px !important;
     row-gap: 0 !important;
+    /* Pack rows at the top so the grid never stretches them apart. */
+    align-content: start !important;
     align-items: start !important;
-    padding: 6px 0 30px !important;
+    padding: 8px 0 30px !important;
   }
-  /* Badge + headline span the full width above the sub/phone row. */
+  /* Row 1: badge + headline, full width. */
   .copyText {
-    grid-column: 1 / -1 !important;
-    grid-row: 1 !important;
-    align-self: auto !important;
-    align-items: flex-start !important;
-    text-align: left !important;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    text-align: left;
   }
   .copyText .badge {
-    align-self: flex-start !important;
+    align-self: flex-start;
   }
+  /* Row 2 left: sub + CTA. */
   .copyCta {
-    grid-column: 1 !important;
-    grid-row: 2 !important;
-    align-self: auto !important;
-    align-items: flex-start !important;
-    text-align: left !important;
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+  /* Row 3: proof + disclaimer, full width below the phone. */
+  .copyFoot {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 10px;
   }
   .sub {
     margin-top: 18px;
@@ -537,18 +550,17 @@
     margin-top: 20px;
   }
 
-  /* One phone only on mobile (the front home screen), larger. The back
+  /* Row 2 right: a single, larger phone (front home screen). The back
      calculator phone is hidden; the front phone moves to the top-left of
-     the scene and the scene scales from its top-left so the single device
-     fills the right column. */
+     the scene, which scales from its top-left to fill the column. */
   .phoneStack {
-    grid-column: 2 !important;
-    grid-row: 2 !important;
-    align-self: start !important;
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 320px;
-    margin: 2px 0 0 !important;
+    height: 330px;
+    margin: 2px 0 0;
     overflow: visible;
   }
   .phoneA {
@@ -561,37 +573,39 @@
   .phoneScene {
     width: 250px;
     height: 540px;
-    transform: scale(0.56);
+    transform: scale(0.58);
     transform-origin: top left;
     margin: 0;
   }
-  /* Near-upright on mobile so the single device stays inside its column
-     and doesn't swing over the CTA. */
+  /* Near-upright so the device stays inside its column, not over the CTA. */
   .tiltB,
   .tiltB:hover {
     transform: rotate(5deg) !important;
   }
   .glow {
     top: 30%;
-    left: 38%;
-    width: 340px;
-    height: 340px;
+    left: 34%;
+    width: 330px;
+    height: 330px;
   }
 
-  /* Email + button stay on one compact row. */
+  /* Fill the column and wrap: email + button share a row when there is
+     room, otherwise the button drops full-width below the input, so the
+     form never overflows its column onto the phone. */
   .form {
-    flex-wrap: nowrap;
+    width: 100%;
+    flex-wrap: wrap;
     gap: 8px;
     max-width: none;
   }
   .input {
-    flex: 1 1 auto;
+    flex: 1 1 150px;
     min-width: 0;
     padding: 13px 12px;
     font-size: 14px;
   }
   .submit {
-    flex: 0 0 auto;
+    flex: 1 1 120px;
     padding: 13px 14px;
     font-size: 14px;
     white-space: nowrap;
@@ -602,15 +616,19 @@
     gap: 12px;
     margin-top: 16px;
   }
+  .proof {
+    margin-top: 20px;
+  }
   .disclaimer {
     font-size: 11.5px;
+    margin-top: 16px;
     max-width: none;
   }
 }
 
 @media (max-width: 560px) {
   .heroGrid {
-    grid-template-columns: minmax(0, 1fr) minmax(120px, 42%) !important;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 40%) !important;
     column-gap: 12px !important;
   }
   .phoneStack {
@@ -623,10 +641,10 @@
 
 @media (max-width: 400px) {
   .phoneStack {
-    height: 270px;
+    height: 280px;
   }
   .phoneScene {
-    transform: scale(0.48);
+    transform: scale(0.5);
   }
   .navLinks {
     gap: 10px;
